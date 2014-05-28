@@ -11,6 +11,10 @@
     {
       "name": "puppetlabs-stdlib",
       "version_range": ">= 1.0.0"
+    },
+    {
+      "name": "nanliu-staging",
+      "version_range": ">= 0.3.1"
     }
   ]
 }
