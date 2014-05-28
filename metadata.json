@@ -1,0 +1,17 @@
+{
+  "name": "puppetlabs-tomcat",
+  "version": "0.1.0",
+  "author": "puppetlabs",
+  "summary": "Puppet module for managing Apache Tomcat.",
+  "license": "Apache 2.0",
+  "source": "http://github.com/puppetlabs/puppetlabs-tomcat",
+  "project_page": "https://github.com/puppetlabs/puppetlabs-tomcat",
+  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= 1.0.0"
+    }
+  ]
+}
+
