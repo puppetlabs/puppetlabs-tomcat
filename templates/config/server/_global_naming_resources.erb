@@ -1,0 +1,13 @@
+<% if @global_naming_resources -%>
+  <GlobalNamingResources>
+<%   @global_naming_resources.sort.each do |resourcename, options| -%>
+     <Resource name="<%= resourcename %>"
+<%     if options.is_a?(Hash) and not options.empty? then -%>
+<%       options.sort.each do |key, value| -%>
+               <%= key %>="<%= value %>"
+<%       end -%>
+<%     end -%>
+     />
+<%   end -%>
+  </GlobalNamingResources>
+<% end -%>

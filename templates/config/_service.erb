@@ -1,0 +1,68 @@
+  <Service name="<%= @name %>"<% if @class_name %> className="<%= @class_name %>"<% end %>>
+<% if @connectors -%>
+<%   @connectors.each do |connector| -%>
+    <Connector
+<%    connector.sort.each do |key,value| -%>
+        <%= key %>="<%= value %>"
+<%    end -%>
+    />
+<%   end -%>
+<% end -%>
+<% engine_attributes = "name=\"#{@engine_name}\" defaultHost=\"#{@engine_default_host}\"" -%>
+<% if @engine_background_processor_delay -%>
+<%   engine_attributes << " backgroundProcessorDelay=\"#{@engine_background_processor_delay}\"" %>
+<% end -%>
+<% if @engine_class_name -%>
+<%   engine_attributes << " className=\"#{@engine_class_name}\"" -%>
+<% end -%>
+<% if @engine_jvm_route -%>
+<%   engine_attributes << " jvmRoute=\"#{@engine_jvm_route}\"" -%>
+<% end -%>
+<% if @engine_start_stop_threads -%>
+<%   engine_attributes << " startStopThreads=\"#{@engine_start_stop_threads}\"" -%>
+<% end -%>
+    <Engine <%= engine_attributes %>>
+<% Array(@engine_hosts).each do |host| -%>
+<%   attributes_string = "" -%>
+<%   if host.has_key?('attributes') -%>
+<%     host['attributes'].sort.each do |key,value| -%>
+<%       attributes_string << " #{key}=\"#{value}\"" -%>
+<%     end -%>
+<%   end -%>
+      <Host <%= attributes_string %>>
+<%   host.sort.each do |key,values| -%>
+<%     unless key.eq?('attributes') -%>
+<%       Array(values).each do |value| -%>
+<%         entry_string = "<#{key}" %>
+<%         value.sort.each do |k,v| %>
+<%           entry_string << " #{k}=\"#{v}\"" -%>
+<%         end -%>
+<%         entry_string << " />" -%>
+        <%= entry_string %>
+<%       end -%>
+<%     end -%>
+<%   end -%>
+      </Host>
+<% end %>
+<% attributes_string = "" -%>
+<% if @engine_realm.has_key('attributes') -%>
+<%   @engine_realm['attributes'].sort.each do |key,value| -%>
+<%     attributes_string << " #{key}=\"#{value}\"" -%>
+<%   end -%>
+<% end -%>
+      <Realm <%= attributes_string %>>
+<% @engine_realm.sort.each do |key,values| %>
+<%   unless key.eq?('attributes') -%>
+<%     Array(values).each do |value| -%>
+<%       entry_string = "<#{key}" %>
+<%       value.sort.each do |k,v| %>
+<%         entry_string << " #{k}=\"#{v}\"" -%>
+<%       end -%>
+<%       entry_string << " />" -%>
+        <%= entry_string %>
+<%     end -%>
+<%   end -%>
+<% end -%>
+      </Realm>
+    </Engine>
+  </Service>
