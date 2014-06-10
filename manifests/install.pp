@@ -4,10 +4,18 @@ define tomcat::install (
   $install_from_source    = true,
   $source_url             = undef,
   $source_strip_first_dir = undef,
+  $package_ensure         = undef,
+  $package_name           = undef,
 ) {
 
-  if $install_from_source and !$source_url {
+  validate_bool($install_from_source)
+
+  if $install_from_source and ! $source_url {
     fail("If installing from source $source_url must be specified")
+  }
+
+  if ! $install_from_source and ! $package_name {
+    fail("If not installing from source $package_name must be specified")
   }
 
   if $install_from_source {
@@ -23,6 +31,10 @@ define tomcat::install (
       source_url             => $source_url,
       source_strip_first_dir => $source_strip,
       require                => File[$catalina_base],
+    }
+  } else {
+    tomcat::install::package { $package_name:
+      package_ensure => $package_ensure,
     }
   }
 
