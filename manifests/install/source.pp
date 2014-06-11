@@ -18,6 +18,8 @@ define tomcat::install::source (
     target  => $catalina_base,
     require => Staging::File[$filename],
     unless  => "test \"\$(ls -A ${catalina_base})\"",
+    user    => $::tomcat::user,
+    group   => $::tomcat::group,
     strip   => $source_strip_first_dir ? {
       true    => 1,
       default => undef,

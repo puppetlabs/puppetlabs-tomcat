@@ -28,6 +28,7 @@ define tomcat::service (
     $_hasrestart   = false
     $_start        =  "export CATALINA_HOME=${catalina_home}; export CATALINA_BASE=${catalina_base};
       \$CATALINA_HOME/bin/jsvc \
+        -user ${::tomcat::user} \
         -classpath \$CATALINA_HOME/bin/bootstrap.jar:\$CATALINA_HOME/bin/tomcat-juli.jar \
         -outfile \$CATALINA_BASE/logs/catalina.out \
         -errfile \$CATALINA_BASE/logs/catalina.err \

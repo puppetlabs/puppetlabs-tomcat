@@ -37,7 +37,13 @@
 #
 class tomcat (
   $catalina_home = $::tomcat::params::catalina_home,
+  $user          = $::tomcat::params::user,
+  $group         = $::tomcat::params::group,
+  $manage_user   = true,
+  $manage_group  = true,
 ) inherits ::tomcat::params {
+  validate_bool($manage_user)
+  validate_bool($manage_group)
 
   case $::osfamily {
     'windows': {
@@ -48,6 +54,20 @@ class tomcat (
 
   file { $catalina_home:
     ensure => directory,
+    owner  => $user,
+    group  => $group,
   }
 
+  if $manage_user {
+    user { $user:
+      ensure => present,
+      gid    => $group
+    }
+  }
+
+  if $manage_group {
+    group { $group:
+      ensure => present,
+    }
+  }
 }

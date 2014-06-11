@@ -1,3 +1,5 @@
+#
+#
 define tomcat::config::service (
   $catalina_base   = $::tomcat::catalina_home,
   $custom_source   = undef,
@@ -23,34 +25,30 @@ define tomcat::config::service (
   $engine_class_name                 = undef,
   $engine_jvm_route                  = undef,
   $engine_start_stop_threads         = undef,
-  $engine_hosts                      = [
-    { 
-      'attributes' => {
-        'name' => 'localhost',
-        'appBase' => 'webapps',
-        'unpackWARs' => 'true',
-        'autoDeploy' => 'true',
-      },
-      'Valve' => [
-        {
-          'className' => 'org.apache.catalina.valves.AccessLogValve',
-          'directory' => 'logs',
-          'prefix'    => 'localhost_access_log',
-          'suffix'    => '.txt',
-          'pattern'   => '%h %l %u %t &quot;%r&quot; %s %b',
-        },
-      ],
+  $engine_hosts                      = {
+    'attributes' => {
+      'name' => 'localhost',
+      'appBase' => 'webapps',
+      'unpackWARs' => 'true',
+      'autoDeploy' => 'true',
     },
-  ],
+    'Valve' => {
+        'className' => 'org.apache.catalina.valves.AccessLogValve',
+        'directory' => 'logs',
+        'prefix'    => 'localhost_access_log',
+        'suffix'    => '.txt',
+        'pattern'   => '%h %l %u %t &quot;%r&quot; %s %b',
+    },
+  },
   $engine_realm                      = {
     'attributes' => {
       'className' => 'org.apache.catalina.realm.LockOutRealm',
     },
     'Realm'     => {
-      'className'    => 'org.apache.catalina.realm.UserDatabaseRealm',
-      'resourceName' => 'UserDatabase',
+        'className'    => 'org.apache.catalina.realm.UserDatabaseRealm',
+        'resourceName' => 'UserDatabase',
     },
-  }
+  },
 ) {
 
   if $custom_content and $custom_source {
@@ -69,7 +67,7 @@ define tomcat::config::service (
   }
 
   concat::fragment { "service-${name}":
-    target  => "$catalina_base/server.xml",
+    target  => "$catalina_base/conf/server.xml",
     content => $_content,
     source  => $_source,
   }

@@ -40,7 +40,9 @@ define tomcat::install (
 
   if $catalina_base != $catalina_home {
     file { $catalina_base:
-      ensure => directory
+      ensure => directory,
+      owner  => $::tomcat::user,
+      group  => $::tomcat::group,
     }
   }
 }

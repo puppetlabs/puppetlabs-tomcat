@@ -10,7 +10,7 @@
 <% end -%>
 <% engine_attributes = "name=\"#{@engine_name}\" defaultHost=\"#{@engine_default_host}\"" -%>
 <% if @engine_background_processor_delay -%>
-<%   engine_attributes << " backgroundProcessorDelay=\"#{@engine_background_processor_delay}\"" %>
+<%   engine_attributes << " backgroundProcessorDelay=\"#{@engine_background_processor_delay}\"" -%>
 <% end -%>
 <% if @engine_class_name -%>
 <%   engine_attributes << " className=\"#{@engine_class_name}\"" -%>
@@ -22,6 +22,9 @@
 <%   engine_attributes << " startStopThreads=\"#{@engine_start_stop_threads}\"" -%>
 <% end -%>
     <Engine <%= engine_attributes %>>
+<% if @engine_hosts.is_a?(Hash) -%>
+<%   @engine_hosts = [ @engine_hosts ] -%>
+<% end -%>
 <% Array(@engine_hosts).each do |host| -%>
 <%   attributes_string = "" -%>
 <%   if host.has_key?('attributes') -%>
@@ -31,10 +34,13 @@
 <%   end -%>
       <Host <%= attributes_string %>>
 <%   host.sort.each do |key,values| -%>
-<%     unless key.eq?('attributes') -%>
+<%     unless key == 'attributes' -%>
+<%       if values.is_a?(Hash) -%>
+<%         values = [ values ] -%>
+<%       end -%>
 <%       Array(values).each do |value| -%>
-<%         entry_string = "<#{key}" %>
-<%         value.sort.each do |k,v| %>
+<%         entry_string = "<#{key}" -%>
+<%         value.sort.each do |k,v| -%>
 <%           entry_string << " #{k}=\"#{v}\"" -%>
 <%         end -%>
 <%         entry_string << " />" -%>
@@ -43,19 +49,22 @@
 <%     end -%>
 <%   end -%>
       </Host>
-<% end %>
+<% end -%>
 <% attributes_string = "" -%>
-<% if @engine_realm.has_key('attributes') -%>
+<% if @engine_realm.has_key?('attributes') -%>
 <%   @engine_realm['attributes'].sort.each do |key,value| -%>
 <%     attributes_string << " #{key}=\"#{value}\"" -%>
 <%   end -%>
 <% end -%>
       <Realm <%= attributes_string %>>
-<% @engine_realm.sort.each do |key,values| %>
-<%   unless key.eq?('attributes') -%>
+<% @engine_realm.sort.each do |key,values| -%>
+<%   unless key == 'attributes' -%>
+<%       if values.is_a?(Hash) -%>
+<%         values = [ values ] -%>
+<%       end -%>
 <%     Array(values).each do |value| -%>
-<%       entry_string = "<#{key}" %>
-<%       value.sort.each do |k,v| %>
+<%       entry_string = "<#{key}" -%>
+<%       value.sort.each do |k,v| -%>
 <%         entry_string << " #{k}=\"#{v}\"" -%>
 <%       end -%>
 <%       entry_string << " />" -%>
