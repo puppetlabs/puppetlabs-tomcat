@@ -1,3 +1,17 @@
+# Definition: tomcat::config::server::service
+#
+# Configure a Service element nested in the Server element in
+# $CATALINA_BASE/conf/server.xml
+#
+# Parameters:
+# - $catalina_base is the root of the Tomcat installation.
+# - $class_name is the optional className attribute
+# - $class_name_ensure specifies whether you are trying to set or remove the
+#   className attribute. Valid values are 'true', 'false', 'present', or
+#   'absent'. Defaults to 'present'.
+# - $service_ensure specifies whether you are trying to add or remove the
+#   service element. Valid values are 'true', 'false', 'present', or 'absent'.
+#   Defaults to 'present'.
 define tomcat::config::server::service (
   $catalina_base     = $::tomcat::catalina_home,
   $class_name        = undef,

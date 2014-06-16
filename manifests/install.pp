@@ -1,3 +1,21 @@
+# Definition: tomcat::install
+#
+# This class installs Tomcat.
+#
+# Parameters:
+# - $catalina_home is the root of the Tomcat installation.
+# - $catalina_base is the base directory for the Tomcat installation.
+# - $install_from_source is a boolean specifying whether or not to install from
+#   source. Defaults to true.
+# - The $source_url to install from. Required if $install_from_source is true.
+# - $source_strip_first_dir is a boolean specifying whether or not to strip
+#   the first directory when unpacking the source tarball. Defaults to true
+#   when installing from source on non-Solaris systems. Requires nanliu/staging
+#   > 0.4.0
+# - $package_ensure when installing from package, what the ensure should be set
+#   to in the package resource.
+# - $package_name is the name of the package you want to install. Required if
+#   $install_from_source is false.
 define tomcat::install (
   $catalina_home          = $::tomcat::catalina_home,
   $catalina_base          = $::tomcat::catalina_home,
@@ -9,13 +27,14 @@ define tomcat::install (
 ) {
 
   validate_bool($install_from_source)
+  validate_bool($source_strip_first_dir)
 
   if $install_from_source and ! $source_url {
-    fail("If installing from source $source_url must be specified")
+    fail("If installing from source ${source_url} must be specified")
   }
 
   if ! $install_from_source and ! $package_name {
-    fail("If not installing from source $package_name must be specified")
+    fail("If not installing from source ${package_name} must be specified")
   }
 
   if $install_from_source {

@@ -1,3 +1,16 @@
+# Definition: tomcat::service
+#
+# Service management for Tomcat.
+#
+# Parameters:
+# - $catalina_home is the root of the Tomcat installation.
+# - $catalina_base is the base directory for the Tomcat installation.
+# - Whether or not to $use_jsvc for service management. Boolean defaulting to
+#   true. One of $use_jsvc and $use_init must be true.
+# - $service_ensure is passed on to the service resource.
+# - Whether or not to $use_init scripts for service management. Boolean
+#   defaulting to false. One of $use_jsvc and $use_init must be true.
+# - The $service_name to use when $use_init is true.
 define tomcat::service (
   $catalina_home  = $::tomcat::catalina_home,
   $catalina_base  = $::tomcat::catalina_home,

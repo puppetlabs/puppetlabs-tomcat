@@ -1,8 +1,24 @@
+# Definition: tomcat::config::server::connector
+#
+# Configure Connector elements in $CATALINA_BASE/conf/server.xml
+#
+# Parameters:
+# - The required $port attribute.
+# - $catalina_base is the base directory for the Tomcat installation.
+# - $connector_ensure specifies whether you are trying to add or remove the
+#   Connector element. Valid values are 'true', 'false', 'present', and
+#   'absent'. Defaults to 'present'.
+# - The $protocol attribute. Defaults to $name when not specified.
+# - $parent_service is the Service element this Connector should be nested
+#   beneath. Defaults to 'Catalina'.
+# - An optional hash of $additional_attributes to add to the Connector. Should
+#   be of the format 'attribute' => 'value'.
+# - An optional array of $attributes_to_remove from the Connector.
 define tomcat::config::server::connector (
+  $port,
   $catalina_base         = $::tomcat::catalina_base,
   $connector_ensure      = 'present',
   $protocol              = undef,
-  $port,
   $parent_service        = 'Catalina',
   $additional_attributes = {},
   $attributes_to_remove  = [],

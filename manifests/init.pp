@@ -1,39 +1,23 @@
 # == Class: tomcat
 #
-# Full description of class tomcat here.
+# Class to manage installation and configuration of Tomcat.
 #
 # === Parameters
 #
-# Document parameters here.
+# [*catalina_home*]
+#   The base directory for the Tomcat installation.
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*user*]
+#   The user to run Tomcat as.
 #
-# === Variables
+# [*group*]
+#   The group to run Tomcat as.
 #
-# Here you should define a list of variables that this module would require.
+# [*manage_user*]
+#   Boolean specifying whether or not to manage the user. Defaults to true.
 #
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
-#
-# === Examples
-#
-#  class { tomcat:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#  }
-#
-# === Authors
-#
-# Author Name <author@domain.com>
-#
-# === Copyright
-#
-# Copyright 2014 Your name here, unless otherwise noted.
+# [*manage_group*]
+#   Boolean specifying whether or not to manage the group. Defaults to true.
 #
 class tomcat (
   $catalina_home = $::tomcat::params::catalina_home,
@@ -47,7 +31,7 @@ class tomcat (
 
   case $::osfamily {
     'windows': {
-      fail("Unsupported osfamily: ${osfamily}")
+      fail("Unsupported osfamily: ${::osfamily}")
     }
     default: { }
   }
