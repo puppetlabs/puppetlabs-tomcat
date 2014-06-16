@@ -28,8 +28,8 @@ exec { 'make jsvc':
   provider => shell,
 }->
 file { 'jsvc':
-  path   => "${::tomcat::catalina_home}/bin/jsvc",
   ensure => link,
+  path   => "${::tomcat::catalina_home}/bin/jsvc",
   target => "${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix/jsvc",
 }->
 tomcat::service { 'default': }

@@ -25,6 +25,40 @@ describe 'tomcat', :type => :class do
     }
   end
 
+  context "not managing user/group" do
+    let :facts do
+      {
+        :osfamily => 'Debian'
+      }
+    end
+    let :params do
+      {
+        :manage_user  => false,
+        :manage_group => false
+      }
+    end
+    it { should_not contain_user("tomcat") }
+    it { should_not contain_group("tomcat") }
+  end
+
+  context "with invalid $manage_user" do
+    let :facts do
+      {
+        :osfamily => 'Debian'
+      }
+    end
+    let :params do
+      {
+        :manage_user => 'foo'
+      }
+    end
+    it do
+      expect {
+        should compile
+      }.to raise_error(Puppet::Error, /is not a boolean/)
+    end
+  end
+
   context "on an unsupported OS" do
     let :facts do
       {

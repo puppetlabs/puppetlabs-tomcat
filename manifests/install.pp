@@ -26,15 +26,19 @@ define tomcat::install (
   $package_name           = undef,
 ) {
 
-  validate_bool($install_from_source)
-  validate_bool($source_strip_first_dir)
+  if $install_from_source {
+    validate_bool($install_from_source)
+  }
+  if $source_strip_first_dir {
+    validate_bool($source_strip_first_dir)
+  }
 
   if $install_from_source and ! $source_url {
-    fail("If installing from source ${source_url} must be specified")
+    fail('If installing from source $source_url must be specified')
   }
 
   if ! $install_from_source and ! $package_name {
-    fail("If not installing from source ${package_name} must be specified")
+    fail('If not installing from source $package_name must be specified')
   }
 
   if $install_from_source {
