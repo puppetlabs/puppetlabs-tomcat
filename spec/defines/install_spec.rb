@@ -19,8 +19,8 @@ describe 'tomcat::install', :type => :define do
         :source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
       }
     end
-    it { should contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
-    it { should contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
+    it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
+    it { is_expected.to contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
       'target' => '/opt/apache-tomcat',
       'user'   => 'tomcat',
       'group'  => 'tomcat',
@@ -39,8 +39,8 @@ describe 'tomcat::install', :type => :define do
         :source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
       }
     end
-    it { should contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
-    it { should contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
+    it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
+    it { is_expected.to contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
       'target' => '/opt/apache-tomcat',
       'user'   => 'tomcat',
       'group'  => 'tomcat',
@@ -55,15 +55,15 @@ describe 'tomcat::install', :type => :define do
         :source_url    => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
       }
     end
-    it { should contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
-    it { should contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
+    it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
+    it { is_expected.to contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
       'target' => '/opt/apache-tomcat/test-tomcat',
       'user'   => 'tomcat',
       'group'  => 'tomcat',
       'strip'  => 1,
     )
     }
-    it { should contain_file('/opt/apache-tomcat/test-tomcat').with(
+    it { is_expected.to contain_file('/opt/apache-tomcat/test-tomcat').with(
       'ensure' => 'directory',
       'owner'  => 'tomcat',
       'group'  => 'tomcat',
@@ -78,7 +78,7 @@ describe 'tomcat::install', :type => :define do
         :package_name        => 'tomcat',
       }
     end
-    it { should contain_package('tomcat').with(
+    it { is_expected.to contain_package('tomcat').with(
       'ensure' => 'installed',
     )
     }
@@ -88,7 +88,7 @@ describe 'tomcat::install', :type => :define do
     context "no source specified" do
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error, /\$source_url must be specified/)
       end
     end
@@ -100,7 +100,7 @@ describe 'tomcat::install', :type => :define do
       end
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error, /\$package_name must be specified/)
       end
     end
@@ -112,7 +112,7 @@ describe 'tomcat::install', :type => :define do
       end
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end
@@ -124,7 +124,7 @@ describe 'tomcat::install', :type => :define do
       end
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end

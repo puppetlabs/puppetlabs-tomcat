@@ -7,19 +7,19 @@ describe 'tomcat', :type => :class do
         :osfamily => 'Debian'
       }
     end
-    it { should contain_class("tomcat::params") }
-    it { should contain_file("/opt/apache-tomcat").with(
+    it { is_expected.to contain_class("tomcat::params") }
+    it { is_expected.to contain_file("/opt/apache-tomcat").with(
       'ensure' => 'directory',
       'owner'  => 'tomcat',
       'group'  => 'tomcat',
       )
     }
-    it { should contain_user("tomcat").with(
+    it { is_expected.to contain_user("tomcat").with(
       'ensure' => 'present',
       'gid'    => 'tomcat',
       )
     }
-    it { should contain_group("tomcat").with(
+    it { is_expected.to contain_group("tomcat").with(
       'ensure' => 'present'
       )
     }
@@ -37,8 +37,8 @@ describe 'tomcat', :type => :class do
         :manage_group => false
       }
     end
-    it { should_not contain_user("tomcat") }
-    it { should_not contain_group("tomcat") }
+    it { is_expected.not_to contain_user("tomcat") }
+    it { is_expected.not_to contain_group("tomcat") }
   end
 
   context "with invalid $manage_user" do
@@ -54,7 +54,7 @@ describe 'tomcat', :type => :class do
     end
     it do
       expect {
-        should compile
+        is_expected.to compile
       }.to raise_error(Puppet::Error, /is not a boolean/)
     end
   end
@@ -67,7 +67,7 @@ describe 'tomcat', :type => :class do
     end
     it do
       expect {
-       should compile
+       is_expected.to compile
       }.to raise_error(Puppet::Error, /Unsupported osfamily/)
     end
   end

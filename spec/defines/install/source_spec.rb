@@ -22,7 +22,7 @@ describe 'tomcat::install::source', :type => :define do
     end
     it do
       expect {
-        should compile
+        is_expected.to compile
       }.to raise_error(Puppet::Error, /Use of private class/)
     end
   end
