@@ -32,7 +32,7 @@ define tomcat::config::server (
   } elsif $class_name {
     $_class_name = "set Server/#attribute/className ${class_name}"
   }
-  if $address =~ /^(absent|false)$/ {
+  if $address_ensure =~ /^(absent|false)$/ {
     $_address = 'rm Server/#attribute/address'
   } elsif $address {
     $_address = "set Server/#attribute/address ${address}"

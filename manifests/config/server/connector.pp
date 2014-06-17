@@ -15,9 +15,9 @@
 #   be of the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Connector.
 define tomcat::config::server::connector (
-  $port,
   $catalina_base         = $::tomcat::catalina_base,
   $connector_ensure      = 'present',
+  $port                  = undef,
   $protocol              = undef,
   $parent_service        = 'Catalina',
   $additional_attributes = {},
@@ -36,6 +36,10 @@ define tomcat::config::server::connector (
   if $connector_ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
   } else {
+    if ! $port {
+      fail('$port must be specified if you aren\'t removing the connector')
+    }
+
     $_protocol_change = "set ${base_path}/#attribute/protocol ${_protocol}"
     $_port = "set ${base_path}/#attribute/port ${port}"
     if ! empty($additional_attributes) {

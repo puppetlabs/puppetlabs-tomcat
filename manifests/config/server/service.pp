@@ -30,7 +30,7 @@ define tomcat::config::server::service (
       $_class_name = "set Server/Service[#attribute/name='${name}']/#attribute/className ${class_name}"
     }
     $_service = "set Server/Service[#attribute/name='${name}']/#attribute/name ${name}"
-    $changes = delete_undef_values([$_class_name, $_service])
+    $changes = delete_undef_values([$_service, $_class_name])
   }
 
   if ! empty($changes) {
