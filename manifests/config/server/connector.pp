@@ -53,11 +53,9 @@ define tomcat::config::server::connector (
     $changes = delete_undef_values(flatten([$_protocol_change, $_port, $_additional_attributes, $_attributes_to_remove]))
   }
 
-  if ! empty($changes) {
-    augeas { "server-${catalina_base}-${parent_service}-connector-${_protocol}":
-      lens    => 'Xml.lns',
-      incl    => "${catalina_base}/conf/server.xml",
-      changes => $changes,
-    }
+  augeas { "server-${catalina_base}-${parent_service}-connector-${_protocol}":
+    lens    => 'Xml.lns',
+    incl    => "${catalina_base}/conf/server.xml",
+    changes => $changes,
   }
 }
