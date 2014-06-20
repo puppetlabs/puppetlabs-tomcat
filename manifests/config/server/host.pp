@@ -25,6 +25,7 @@ define tomcat::config::server::host (
   $attributes_to_remove  = [],
 ) {
   validate_re($host_ensure, '^(present|absent|true|false)$')
+  validate_hash($additional_attributes)
 
   if $host_name {
     $_host_name = $host_name

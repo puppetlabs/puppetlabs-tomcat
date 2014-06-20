@@ -74,6 +74,18 @@ describe 'tomcat::config::server::connector', :type => :define do
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
+    context 'bad additional_attributes' do
+      let :params do
+        {
+          :additional_attributes => 'foo'
+        }
+      end
+      it do
+        expect {
+          is_expected.to compile
+        }.to raise_error(Puppet::Error, /is not a Hash/)
+      end
+    end
     context 'no port' do
       let :params do
         {

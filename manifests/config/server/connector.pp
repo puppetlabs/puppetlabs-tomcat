@@ -25,6 +25,7 @@ define tomcat::config::server::connector (
   $attributes_to_remove  = [],
 ) {
   validate_re($connector_ensure, '^(present|absent|true|false)$')
+  validate_hash($additional_attributes)
 
   if $protocol {
     $_protocol = $protocol

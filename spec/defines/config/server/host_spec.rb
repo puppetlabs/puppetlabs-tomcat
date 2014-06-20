@@ -85,6 +85,18 @@ describe 'tomcat::config::server::host', :type => :define do
         }.to raise_error(Puppet::Error, /\$app_base must be specified/)
       end
     end
+    context 'bad additional_attributes' do
+      let :params do
+        {
+          :additional_attributes => 'foo'
+        }
+      end
+      it do
+        expect {
+          is_expected.to compile
+        }.to raise_error(Puppet::Error, /is not a Hash/)
+      end
+    end
     context 'invalid host_ensure' do
       let :params do
         {
