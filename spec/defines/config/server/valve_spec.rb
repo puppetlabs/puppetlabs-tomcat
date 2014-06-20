@@ -1,0 +1,89 @@
+require 'spec_helper'
+
+describe 'tomcat::config::server::valve', :type => :define do
+  let :pre_condition do
+    'class { "tomcat": }'
+  end
+  let :facts do
+    {
+      :osfamily => 'Debian'
+    }
+  end
+  let :title do
+    'org.apache.catalina.AccessLog'
+  end
+  context 'default' do
+    it { is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.AccessLog').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/conf/server.xml',
+      'changes' => 'set Server/Service[#attribute/name=\'Catalina\']/Engine/Valve[#attribute/className=\'org.apache.catalina.AccessLog\']/#attribute/className org.apache.catalina.AccessLog',
+    )
+    }
+  end
+  context 'set all the things' do
+    let :params do
+      {
+        :catalina_base         => '/opt/apache-tomcat/test',
+        :class_name            => 'foo',
+        :parent_host           => 'localhost',
+        :parent_service        => 'Catalina2',
+        :additional_attributes => {
+          'suffix'    => '.txt',
+          'directory' => 'logs',
+        },
+        :attributes_to_remove  => ['foo', 'bar']
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-foo').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/className foo',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/suffix .txt',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/directory logs',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/foo',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/bar',
+      ]
+    )
+    }
+  end
+  context 'remove the valve' do
+    let :params do
+      {
+        :valve_ensure => 'false'
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.AccessLog').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/conf/server.xml',
+      'changes' => 'rm Server/Service[#attribute/name=\'Catalina\']/Engine/Valve[#attribute/className=\'org.apache.catalina.AccessLog\']',
+    )
+    }
+  end
+  describe 'failing tests' do
+    context 'bad valve_ensure' do
+      let :params do
+        {
+          :valve_ensure => 'foo'
+        }
+      end
+      it do
+        expect {
+          is_expected.to compile
+        }.to raise_error(Puppet::Error, /does not match/)
+      end
+    end
+    context 'bad additional_attributes' do
+      let :params do
+        {
+          :additional_attributes => 'foo'
+        }
+      end
+      it do
+        expect {
+          is_expected.to compile
+        }.to raise_error(Puppet::Error, /not a Hash/)
+      end
+    end
+  end
+end
