@@ -1,6 +1,6 @@
-# Definition: tomcat::install::source
+# Definition: tomcat::instance::source
 #
-# Private class to install Tomcat from source.
+# Private define to install Tomcat from source.
 #
 # Parameters:
 # - $catalina_home is the root of the Tomcat installation.
@@ -10,7 +10,7 @@
 #   the first directory when unpacking the source tarball. Defaults to true
 #   when installing from source on non-Solaris systems. Requires nanliu/staging
 #   > 0.4.0
-define tomcat::install::source (
+define tomcat::instance::source (
   $catalina_home,
   $catalina_base,
   $source_url,

@@ -1,6 +1,6 @@
-# Definition: tomcat::install
+# Definition: tomcat::instance
 #
-# This class installs Tomcat.
+# This define installs an instance of Tomcat.
 #
 # Parameters:
 # - $catalina_home is the root of the Tomcat installation.
@@ -16,7 +16,7 @@
 #   to in the package resource.
 # - $package_name is the name of the package you want to install. Required if
 #   $install_from_source is false.
-define tomcat::install (
+define tomcat::instance (
   $catalina_home          = $::tomcat::catalina_home,
   $catalina_base          = $::tomcat::catalina_home,
   $install_from_source    = true,
@@ -48,7 +48,7 @@ define tomcat::install (
       $source_strip = $source_strip_first_dir
     }
 
-    tomcat::install::source { $name:
+    tomcat::instance::source { $name:
       catalina_home          => $catalina_home,
       catalina_base          => $catalina_base,
       source_url             => $source_url,
@@ -56,7 +56,7 @@ define tomcat::install (
       require                => File[$catalina_base],
     }
   } else {
-    tomcat::install::package { $package_name:
+    tomcat::instance::package { $package_name:
       package_ensure => $package_ensure,
     }
   }

@@ -1,11 +1,11 @@
-# Definition: tomcat::install::package
+# Definition: tomcat::instance::package
 #
-# Private class to install Tomcat from a package.
+# Private define to install Tomcat from a package.
 #
 # Parameters:
 # - $package_ensure is the ensure passed to the package resource.
 # - The $package_name you want to install.
-define tomcat::install::package (
+define tomcat::instance::package (
   $package_ensure = 'installed',
   $package_name = undef,
 ) {

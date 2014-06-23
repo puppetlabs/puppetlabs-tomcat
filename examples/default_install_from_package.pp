@@ -2,7 +2,7 @@
 #
 class { 'tomcat': }
 class { 'epel': }->
-tomcat::install { 'default':
+tomcat::instance { 'default':
   install_from_source => false,
   package_name        => 'tomcat',
 }->

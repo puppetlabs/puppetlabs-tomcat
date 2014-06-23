@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'tomcat::install', :type => :define do
+describe 'tomcat::instance', :type => :define do
   let :pre_condition do
     'class { "tomcat": }'
   end
