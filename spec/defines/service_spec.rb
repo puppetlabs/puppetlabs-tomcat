@@ -13,6 +13,11 @@ describe 'tomcat::service', :type => :define do
     'default'
   end
   context 'using jsvc' do
+    let :params do
+      {
+        :use_jsvc => true
+      }
+    end
     it { is_expected.to contain_service('tomcat-default').with(
       'hasstatus'  => false,
       'hasrestart' => false,
@@ -20,10 +25,26 @@ describe 'tomcat::service', :type => :define do
     )
     }
   end
+  context 'set start/stop with jsvc' do
+    let :params do
+      {
+        :use_jsvc      => true,
+        :start_command => '/bin/true',
+        :stop_command  => '/bin/true',
+      }
+    end
+    it { is_expected.to contain_service('tomcat-default').with(
+      'hasstatus'  => false,
+      'hasrestart' => false,
+      'ensure'     => 'running',
+      'start'      => '/bin/true',
+      'stop'      => '/bin/true',
+    )
+    }
+  end
   context 'using init' do
     let :params do
       {
-        :use_jsvc       => false,
         :use_init       => true,
         :service_name   => 'tomcat',
         :service_ensure => 'stopped',
@@ -33,6 +54,50 @@ describe 'tomcat::service', :type => :define do
       'hasstatus'  => true,
       'hasrestart' => true,
       'ensure'     => 'stopped'
+    )
+    }
+  end
+  context 'set start/stop with init' do
+    let :params do
+      {
+        :use_init      => true,
+        :start_command => '/bin/true',
+        :stop_command  => '/bin/true',
+        :service_name  => 'tomcat',
+      }
+    end
+    it { is_expected.to contain_service('tomcat').with(
+      'hasstatus'  => true,
+      'hasrestart' => true,
+      'ensure'     => 'running',
+      'start'      => '/bin/true',
+      'stop'      => '/bin/true',
+    )
+    }
+  end
+  context "neither jsvc or init" do
+    it { is_expected.to contain_service('tomcat-default').with(
+      'hasstatus'  => false,
+      'hasrestart' => false,
+      'ensure'     => 'running',
+      'start'      => "su -s /bin/bash -c '/opt/apache-tomcat/bin/catalina.sh start' tomcat",
+      'stop'       => "su -s /bin/bash -c '/opt/apache-tomcat/bin/catalina.sh stop' tomcat",
+    )
+    }
+  end
+  context "default, set start/stop" do
+    let :params do
+      {
+        :start_command => '/bin/true',
+        :stop_command  => '/bin/true',
+      }
+    end
+    it { is_expected.to contain_service('tomcat-default').with(
+      'hasstatus'  => false,
+      'hasrestart' => false,
+      'ensure'     => 'running',
+      'start'      => '/bin/true',
+      'stop'       => '/bin/true',
     )
     }
   end
@@ -72,19 +137,6 @@ describe 'tomcat::service', :type => :define do
         expect {
           is_expected.to compile
         }.to raise_error(Puppet::Error, /Only one of \$use_jsvc and \$use_init/)
-      end
-    end
-    context "neither jsvc or init" do
-      let :params do
-        {
-          :use_jsvc => false,
-          :use_init => false,
-        }
-      end
-      it do
-        expect {
-          is_expected.to compile
-        }.to raise_error(Puppet::Error, /One of \$use_init and \$use_jsvc must/)
       end
     end
     context "init without servicename" do
