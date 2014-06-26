@@ -46,7 +46,7 @@ describe 'tomcat::war', :type => :define do
         :war_source    => '/tmp/sample.war',
       }
     end
-    it { is_expected.to contain_staging__file('sample2.war').with(
+    it { is_expected.to contain_staging__file('sample.war').with(
       'source' => '/tmp/sample.war',
       'target' => '/opt/apache-tomcat/test/webapps2/sample2.war',
     )
