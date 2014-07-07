@@ -9,7 +9,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
 
       tomcat::instance { 'tomcat8':
         catalina_base => '/opt/apache-tomcat/tomcat8',
-        source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
+        source_url => 'http://apache.mirrors.hoobly.com/tomcat/tomcat-8/v8.0.9/bin/apache-tomcat-8.0.9.tar.gz'
       }->
       tomcat::war { 'sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat8',
@@ -77,7 +77,8 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         },
       }->
       tomcat::war { 'tomcat7-sample.war':
-        catalina_base => '/opt/apache-tomcat/tomcat7',
+
+       catalina_base => '/opt/apache-tomcat/tomcat7',
         war_name      => 'sample.war',
         war_source    => '/opt/apache-tomcat/tomcat7/webapps/docs/appdev/sample/sample.war',
       }->
@@ -89,6 +90,130 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       apply_manifest(pp, :catch_failures => true)
       expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
     end
+    it 'should have deployed the sample JSP on 8080' do
+      shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'should have deployed the sample servlet on 8080' do
+      shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application Servlet Page/)
+      end
+    end
+    it 'should have deployed the sample JSP on 8180' do
+      shell("/usr/bin/curl localhost:8180/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'should have deployed the sample servlet on 8180' do
+      shell("/usr/bin/curl localhost:8180/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application Servlet Page/)
+      end
+    end
+    it 'should have deployed the sample JSP on 8280' do
+      shell("/usr/bin/curl localhost:8280/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'should have deployed the sample servlet on 8280' do
+      shell("/usr/bin/curl localhost:8280/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application Servlet Page/)
+      end
+    end
+    it 'should be able to stop an instance' do
+      pp = <<-EOS
+      class { 'tomcat': }
+      class { 'java': }
 
+      tomcat::service { 'default':
+        catalina_base  => '/opt/apache-tomcat/tomcat8',
+        service_ensure => stopped,
+      }
+      tomcat::service { 'tomcat7':
+        catalina_base => '/opt/apache-tomcat/tomcat7',
+        service_ensure => stopped,
+      }
+      tomcat::war { 'tomcat6-sample2.war':
+        catalina_base => '/opt/apache-tomcat/tomcat6',
+        war_source    => '/opt/apache-tomcat/tomcat6/webapps/docs/appdev/sample/sample.war',
+        war_name      => 'sample2.war',
+      }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
+      # give tomcat time to stop and deploy the new WAR
+      shell("sleep 10")
+    end
+    it 'should not have deployed the sample JSP on 8080' do
+      shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 7}) do |r|
+        r.stderr.should match(/couldn't connect to host/)
+      end
+    end
+    it 'should not have deployed the sample servlet on 8080' do
+      shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 7}) do |r|
+        r.stderr.should match(/couldn't connect to host/)
+      end
+    end
+    it 'should have deployed the sample JSP on 8180' do
+      shell("/usr/bin/curl localhost:8180/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'should have deployed the sample servlet on 8180' do
+      shell("/usr/bin/curl localhost:8180/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application Servlet Page/)
+      end
+    end
+    it 'should have deployed the sample JSP on 8180 again' do
+      shell("/usr/bin/curl localhost:8180/sample2/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'should have deployed the sample servlet on 8180 again' do
+      shell("/usr/bin/curl localhost:8180/sample2/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application Servlet Page/)
+      end
+    end
+    it 'should not have deployed the sample JSP on 8280' do
+      shell("/usr/bin/curl localhost:8280/sample/hello.jsp", {:acceptable_exit_codes => 7}) do |r|
+        r.stderr.should match(/couldn't connect to host/)
+      end
+    end
+    it 'should not have deployed the sample servlet on 8280' do
+      shell("/usr/bin/curl localhost:8280/sample/hello", {:acceptable_exit_codes => 7}) do |r|
+        r.stderr.should match(/couldn't connect to host/)
+      end
+    end
+    it 'should be able to undeploy a WAR' do
+      pp = <<-EOS
+      tomcat::war { 'tomcat6-sample2.war':
+        war_ensure    => 'absent',
+        catalina_base => '/opt/apache-tomcat/tomcat6',
+        war_name      => 'sample2.war',
+      }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
+    end
+    it 'should have deployed the sample JSP on 8180' do
+      shell("/usr/bin/curl localhost:8180/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'should have deployed the sample servlet on 8180' do
+      shell("/usr/bin/curl localhost:8180/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application Servlet Page/)
+      end
+    end
+    it 'should have removed the sample JSP on 8180' do
+      shell("/usr/bin/curl localhost:8180/sample2/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/HTTP Status 404/)
+      end
+    end
+    it 'should have removed the sample servlet on 8180' do
+      shell("/usr/bin/curl localhost:8180/sample2/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/HTTP Status 404/)
+      end
+    end
   end
 end
