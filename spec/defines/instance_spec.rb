@@ -28,25 +28,6 @@ describe 'tomcat::instance', :type => :define do
     )
     }
   end
-  context 'default install from source, Solaris' do
-    let :facts do
-      {
-        :osfamily => 'Solaris'
-      }
-    end
-    let :params do
-      {
-        :source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
-      }
-    end
-    it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
-    it { is_expected.to contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
-      'target' => '/opt/apache-tomcat',
-      'user'   => 'tomcat',
-      'group'  => 'tomcat',
-    )
-    }
-  end
   context 'install from source, different catalina_base' do
     let :facts do default_facts end
     let :params do

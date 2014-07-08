@@ -30,7 +30,7 @@ class tomcat (
   validate_bool($manage_group)
 
   case $::osfamily {
-    'windows': {
+    'windows','Solaris','Darwin': {
       fail("Unsupported osfamily: ${::osfamily}")
     }
     default: { }

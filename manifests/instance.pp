@@ -10,8 +10,7 @@
 # - The $source_url to install from. Required if $install_from_source is true.
 # - $source_strip_first_dir is a boolean specifying whether or not to strip
 #   the first directory when unpacking the source tarball. Defaults to true
-#   when installing from source on non-Solaris systems. Requires nanliu/staging
-#   > 0.4.0
+#   when installing from source. Requires nanliu/staging > 0.4.0
 # - $package_ensure when installing from package, what the ensure should be set
 #   to in the package resource.
 # - $package_name is the name of the package you want to install. Required if
@@ -42,7 +41,7 @@ define tomcat::instance (
   }
 
   if $install_from_source {
-    if ! $source_strip_first_dir and $::osfamily != 'Solaris' {
+    if ! $source_strip_first_dir {
       $source_strip = true
     } else {
       $source_strip = $source_strip_first_dir
