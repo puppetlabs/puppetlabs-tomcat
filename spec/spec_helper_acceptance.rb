@@ -13,7 +13,7 @@ unless ENV['RS_PROVISION'] == 'no'
   end
 end
 
-UNSUPPORTED_PLATFORMS = ['windows']
+UNSUPPORTED_PLATFORMS = ['windows','Solaris','Darwin']
 
 RSpec.configure do |c|
   # Project root
@@ -29,6 +29,7 @@ RSpec.configure do |c|
     hosts.each do |host|
       on host, puppet('module','install','puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-java'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module','install','puppetlabs-gcc'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','nanliu-staging'), { :acceptable_exit_codes => [0,1] }
     end
   end

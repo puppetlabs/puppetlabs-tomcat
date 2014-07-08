@@ -45,9 +45,9 @@ define tomcat::service (
     $_hasrestart   = false
     $_start        = $start_command ? {
       undef   => "export CATALINA_HOME=${catalina_home}; export CATALINA_BASE=${catalina_base};
-                 \$CATALINA_HOME/bin/jsvc \
+                 \$CATALINA_BASE/bin/jsvc \
                    -user ${::tomcat::user} \
-                   -classpath \$CATALINA_HOME/bin/bootstrap.jar:\$CATALINA_HOME/bin/tomcat-juli.jar \
+                   -classpath \$CATALINA_BASE/bin/bootstrap.jar:\$CATALINA_BASE/bin/tomcat-juli.jar \
                    -outfile \$CATALINA_BASE/logs/catalina.out \
                    -errfile \$CATALINA_BASE/logs/catalina.err \
                    -pidfile \$CATALINA_BASE/logs/jsvc.pid \
@@ -60,7 +60,7 @@ define tomcat::service (
     }
     $_stop         = $stop_command ? {
       undef   => "export CATALINA_HOME=${catalina_home}; export CATALINA_BASE=${catalina_base};
-                 \$CATALINA_HOME/bin/jsvc \
+                 \$CATALINA_BASE/bin/jsvc \
                    -pidfile \$CATALINA_BASE/logs/jsvc.pid \
                    -stop org.apache.catalina.startup.Bootstrap",
       default => $stop_command,

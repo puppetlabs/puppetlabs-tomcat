@@ -194,6 +194,8 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       EOS
       apply_manifest(pp, :catch_failures => true)
       expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
+      # give tomcat time to undeploy the WAR
+      shell("sleep 10")
     end
     it 'should have deployed the sample JSP on 8180' do
       shell("/usr/bin/curl localhost:8180/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
@@ -214,6 +216,69 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       shell("/usr/bin/curl localhost:8180/sample2/hello", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/HTTP Status 404/)
       end
+    end
+    it 'should be able to run with jsvc on port below 1024' do
+      pp = <<-EOS
+      class { 'tomcat': }
+      class { 'gcc': }
+      class { 'java': }
+
+      tomcat::instance { 'test':
+        source_url    => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.9/bin/apache-tomcat-8.0.9.tar.gz',
+        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+      }->
+      staging::extract { 'commons-daemon-native.tar.gz':
+        source => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-native.tar.gz",
+        target => "/opt/apache-tomcat/tomcat8-jsvc/bin",
+        unless => "test -d /opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src",
+      }->
+      exec { 'configure jsvc':
+        command  => 'JAVA_HOME=/etc/alternatives/java_sdk configure',
+        creates  => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix/Makefile",
+        cwd      => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix",
+        path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix",
+        require  => [ Class['gcc'], Class['java'] ],
+        provider => shell,
+      }->
+      exec { 'make jsvc':
+        command  => 'make',
+        creates  => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix/jsvc",
+        cwd      => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix",
+        path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix",
+        provider => shell,
+      }->
+      file { 'jsvc':
+        ensure => link,
+        path   => "/opt/apache-tomcat/tomcat8-jsvc/bin/jsvc",
+        target => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix/jsvc",
+      }->
+    tomcat::config::server { 'tomcat8-jsvc':
+        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+        port          => '80',
+      }->
+      tomcat::config::server::connector { 'tomcat8-jsvc':
+        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        port                  => '80',
+        protocol              => 'HTTP/1.1',
+        additional_attributes => {
+          'redirectPort' => '443'
+        },
+      }->
+      tomcat::config::server::connector { 'tomcat8-ajp':
+        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        port                  => '8309',
+        protocol              => 'AJP/1.3',
+        additional_attributes => {
+          'redirectPort' => '443'
+        },
+      }->
+      tomcat::service { 'default':
+          catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+          use_jsvc      => true,
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
     end
   end
 end
