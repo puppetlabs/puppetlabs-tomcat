@@ -66,6 +66,7 @@ define tomcat::service (
       default => $stop_command,
     }
     $_status       = "ps p `cat ${catalina_base}/logs/jsvc.pid` > /dev/null"
+    $_provider     = 'base'
   } elsif $use_init {
     $_service_name = $service_name
     $_hasstatus    = true
@@ -73,6 +74,7 @@ define tomcat::service (
     $_start        = $start_command
     $_stop         = $stop_command
     $_status       = undef
+    $_provider     = undef
   } else {
     $_service_name = "tomcat-${name}"
     $_hasstatus    = false
@@ -86,6 +88,7 @@ define tomcat::service (
       default => $stop_command
     }
     $_status       = "ps aux | grep 'catalina.base=${catalina_base} ' | grep -v grep"
+    $_provider     = 'base'
   }
 
   service { $_service_name:
@@ -95,5 +98,6 @@ define tomcat::service (
     start      => $_start,
     stop       => $_stop,
     status     => $_status,
+    provider   => $_provider,
   }
 }
