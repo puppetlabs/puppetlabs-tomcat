@@ -277,7 +277,8 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         war_source => '/opt/apache-tomcat/tomcat8-jsvc/webapps/docs/appdev/sample/sample.war',
       }->
       tomcat::setenv::entry { 'JAVA_HOME':
-        value => $java_home
+        base_dir => '/opt/apache-tomcat/tomcat8-jsvc/bin',
+        value    => $java_home,
       }->
       tomcat::service { 'jsvc-default':
           catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',

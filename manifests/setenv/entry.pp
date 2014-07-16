@@ -13,7 +13,7 @@ define tomcat::setenv::entry (
   $value,
   $ensure     = 'present',
   $base_path  = "${::tomcat::catalina_home}/bin",
-  $parameter  = $name,
+  $param      = $name,
   $quote_char = undef,
 ) {
 
@@ -27,6 +27,9 @@ define tomcat::setenv::entry (
   concat::fragment { "setenv-${name}":
     ensure  => $ensure,
     target  => "${base_path}/setenv.sh",
-    content => inline_template("<%= parameter %>=<%= quote_char %><%= value %><%= quote_char %>")
+    content => $quote_char ? {
+      undef   => inline_template("<%= param %>=<%= value %>"),
+      default => inline_template("<%= param %>=<%= quote_char %><%= value %><%= quote_char %>"),
+    },
   }
 }
