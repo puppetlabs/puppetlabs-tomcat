@@ -233,7 +233,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         unless => "test -d /opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src",
       }->
       exec { 'configure jsvc':
-        command  => "JAVA_HOME=${java_home} configure",
+        command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",
         creates  => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix/Makefile",
         cwd      => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix",
         path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix",
@@ -277,11 +277,12 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         war_source => '/opt/apache-tomcat/tomcat8-jsvc/webapps/docs/appdev/sample/sample.war',
       }->
       tomcat::setenv::entry { 'JAVA_HOME':
-        base_dir => '/opt/apache-tomcat/tomcat8-jsvc/bin',
-        value    => $java_home,
+        base_path => '/opt/apache-tomcat/tomcat8-jsvc/bin',
+        value     => $java_home,
       }->
       tomcat::service { 'jsvc-default':
           catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+          java_home     => $java_home,
           use_jsvc      => true,
       }
       tomcat::service { 'tomcat8-default':
