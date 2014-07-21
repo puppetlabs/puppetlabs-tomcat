@@ -20,7 +20,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       }
 
       tomcat::instance { 'tomcat6':
-        source_url => 'http://apache.mirror.quintex.com/tomcat/tomcat-6/v6.0.41/bin/apache-tomcat-6.0.41.tar.gz',
+        source_url => 'http://mirror.symnds.com/software/Apache/tomcat/tomcat-6/v6.0.41/bin/apache-tomcat-6.0.41.tar.gz',
         catalina_base => '/opt/apache-tomcat/tomcat6',
       }->
       tomcat::config::server { 'tomcat6':
@@ -89,6 +89,8 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
 
       apply_manifest(pp, :catch_failures => true)
       expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
+      # give tomcat time to start and deploy things
+      shell("sleep 10")
     end
     it 'should have deployed the sample JSP on 8080' do
       shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
@@ -145,14 +147,10 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       shell("sleep 10")
     end
     it 'should not have deployed the sample JSP on 8080' do
-      shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 7}) do |r|
-        r.stderr.should match(/couldn't connect to host/)
-      end
+      shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 7})
     end
     it 'should not have deployed the sample servlet on 8080' do
-      shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 7}) do |r|
-        r.stderr.should match(/couldn't connect to host/)
-      end
+      shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 7})
     end
     it 'should have deployed the sample JSP on 8180' do
       shell("/usr/bin/curl localhost:8180/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
@@ -175,14 +173,10 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       end
     end
     it 'should not have deployed the sample JSP on 8280' do
-      shell("/usr/bin/curl localhost:8280/sample/hello.jsp", {:acceptable_exit_codes => 7}) do |r|
-        r.stderr.should match(/couldn't connect to host/)
-      end
+      shell("/usr/bin/curl localhost:8280/sample/hello.jsp", {:acceptable_exit_codes => 7})
     end
     it 'should not have deployed the sample servlet on 8280' do
-      shell("/usr/bin/curl localhost:8280/sample/hello", {:acceptable_exit_codes => 7}) do |r|
-        r.stderr.should match(/couldn't connect to host/)
-      end
+      shell("/usr/bin/curl localhost:8280/sample/hello", {:acceptable_exit_codes => 7})
     end
     it 'should be able to undeploy a WAR' do
       pp = <<-EOS
@@ -223,6 +217,12 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       class { 'gcc': }
       class { 'java': }
 
+      $java_home = $::osfamily ? {
+        'RedHat' => '/etc/alternatives/java_sdk',
+        'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
+        default  => undef
+      }
+
       tomcat::instance { 'test':
         source_url    => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.9/bin/apache-tomcat-8.0.9.tar.gz',
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
@@ -233,7 +233,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         unless => "test -d /opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src",
       }->
       exec { 'configure jsvc':
-        command  => 'JAVA_HOME=/etc/alternatives/java_sdk configure',
+        command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",
         creates  => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix/Makefile",
         cwd      => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix",
         path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src/unix",
@@ -272,13 +272,47 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
           'redirectPort' => '443'
         },
       }->
-      tomcat::service { 'default':
+      tomcat::war { 'sample.war':
+        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+        war_source => '/opt/apache-tomcat/tomcat8-jsvc/webapps/docs/appdev/sample/sample.war',
+      }->
+      tomcat::setenv::entry { 'JAVA_HOME':
+        base_path => '/opt/apache-tomcat/tomcat8-jsvc/bin',
+        value     => $java_home,
+      }->
+      tomcat::service { 'jsvc-default':
           catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+          java_home     => $java_home,
           use_jsvc      => true,
-        }
+      }
+      tomcat::service { 'tomcat8-default':
+          catalina_base => '/opt/apache-tomcat/tomcat8',
+      }
       EOS
       apply_manifest(pp, :catch_failures => true)
       expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
+      #give tomcat time to start up
+      shell("sleep 10")
+    end
+    it 'should have deployed the sample JSP on 8080' do
+      shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'should have deployed the sample servlet on 8080' do
+      shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application Servlet Page/)
+      end
+    end
+    it 'should have deployed the sample JSP on 80' do
+      shell("/usr/bin/curl localhost:80/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'should have deployed the sample servlet on 80' do
+      shell("/usr/bin/curl localhost:80/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+        r.stdout.should match(/Sample Application Servlet Page/)
+      end
     end
   end
 end
