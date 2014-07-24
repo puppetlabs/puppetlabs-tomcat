@@ -16,17 +16,22 @@ define tomcat::instance::source (
   $source_url,
   $source_strip_first_dir = undef,
 ) {
+  include staging
+
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
   $filename = regsubst($source_url, '.*/(.*)', '\1')
 
-  staging::file { $filename:
-    source => $source_url,
+  if ! defined(Staging::File[$filename]) {
+    staging::file { $filename:
+      source => $source_url,
+    }
   }
 
-  staging::extract { $filename:
+  staging::extract { "${name}-${filename}":
+    source  => "${::staging::path}/tomcat/${filename}",
     target  => $catalina_base,
     require => Staging::File[$filename],
     unless  => "test \"\$(ls -A ${catalina_base})\"",

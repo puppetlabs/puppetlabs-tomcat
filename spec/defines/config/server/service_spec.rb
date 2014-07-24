@@ -6,7 +6,8 @@ describe 'tomcat::config::server::service', :type => :define do
   end
   let :facts do
     {
-      :osfamily => 'Debian'
+      :osfamily => 'Debian',
+      :augeasversion => '1.0.0'
     }
   end
   let :title do
@@ -94,6 +95,19 @@ describe 'tomcat::config::server::service', :type => :define do
         expect {
           is_expected.to compile
         }.to raise_error(Puppet::Error, /does not match/)
+      end
+    end
+    context 'old augeas' do
+      let :facts do
+        {
+          :osfamily      => 'Debian',
+          :augeasversion => '0.10.0'
+        }
+      end
+      it do
+        expect {
+          is_expected.to compile
+        }.to raise_error(Puppet::Error, /configurations require Augeas/)
       end
     end
   end

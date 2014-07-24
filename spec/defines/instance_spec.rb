@@ -20,7 +20,7 @@ describe 'tomcat::instance', :type => :define do
       }
     end
     it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
-    it { is_expected.to contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
+    it { is_expected.to contain_staging__extract('default-apache-tomcat-8.0.8.tar.gz').with(
       'target' => '/opt/apache-tomcat',
       'user'   => 'tomcat',
       'group'  => 'tomcat',
@@ -37,7 +37,7 @@ describe 'tomcat::instance', :type => :define do
       }
     end
     it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
-    it { is_expected.to contain_staging__extract('apache-tomcat-8.0.8.tar.gz').with(
+    it { is_expected.to contain_staging__extract('default-apache-tomcat-8.0.8.tar.gz').with(
       'target' => '/opt/apache-tomcat/test-tomcat',
       'user'   => 'tomcat',
       'group'  => 'tomcat',

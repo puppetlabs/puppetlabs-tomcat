@@ -13,6 +13,10 @@
       "version_range": ">= 4.0.0"
     },
     {
+      "name": "puppetlabs-concat",
+      "version_range": ">= 1.0.4"
+    },
+    {
       "name": "nanliu-staging",
       "version_range": ">= 0.4.1"
     }
