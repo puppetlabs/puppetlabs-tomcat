@@ -12,6 +12,11 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
           catalina_base => '/opt/apache-tomcat/tomcat7-default',
           source_url => 'http://www.carfab.com/apachesoftware/tomcat/tomcat-7/v7.0.54/bin/apache-tomcat-7.0.54.tar.gz'
         }->
+        tomcat::config::server::connector { 'tomcat7-default-http':
+          catalina_base         => '/opt/apache-tomcat/tomcat7-default',
+          port                  => '8082',
+          protocol              => 'HTTP/1.1',
+        }->
         tomcat::war { 'sample.war':
           catalina_base => '/opt/apache-tomcat/tomcat7-default',
           war_source => '/opt/apache-tomcat/tomcat7-default/webapps/docs/appdev/sample/sample.war',
@@ -27,6 +32,11 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         tomcat::war { 'sample.war':
           catalina_base => '/opt/apache-tomcat/tomcat8',
           war_source => '/opt/apache-tomcat/tomcat8/webapps/docs/appdev/sample/sample.war',
+        }->
+        tomcat::config::server::connector { 'tomcat7-default-http':
+          catalina_base         => '/opt/apache-tomcat/tomcat8',
+          port                  => '8082',
+          protocol              => 'HTTP/1.1',
         }->
         tomcat::service { 'default':
           catalina_base => '/opt/apache-tomcat/tomcat8',
@@ -106,13 +116,13 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       # give tomcat time to start and deploy things
       shell("sleep 10")
     end
-    it 'should have deployed the sample JSP on 8080' do
-      shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+    it 'should have deployed the sample JSP on 8082' do
+      shell("/usr/bin/curl localhost:8082/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
-    it 'should have deployed the sample servlet on 8080' do
-      shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+    it 'should have deployed the sample servlet on 8082' do
+      shell("/usr/bin/curl localhost:8082/sample/hello", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/Sample Application Servlet Page/)
       end
     end
@@ -167,11 +177,11 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       # give tomcat time to stop and deploy the new WAR
       shell("sleep 10")
     end
-    it 'should not have deployed the sample JSP on 8080' do
-      shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 7})
+    it 'should not have deployed the sample JSP on 8082' do
+      shell("/usr/bin/curl localhost:8082/sample/hello.jsp", {:acceptable_exit_codes => 7})
     end
-    it 'should not have deployed the sample servlet on 8080' do
-      shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 7})
+    it 'should not have deployed the sample servlet on 8082' do
+      shell("/usr/bin/curl localhost:8082/sample/hello", {:acceptable_exit_codes => 7})
     end
     it 'should have deployed the sample JSP on 8180' do
       shell("/usr/bin/curl localhost:8180/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
@@ -315,13 +325,13 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       #give tomcat time to start up
       shell("sleep 10")
     end
-    it 'should have deployed the sample JSP on 8080', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
-      shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+    it 'should have deployed the sample JSP on 8082', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
+      shell("/usr/bin/curl localhost:8082/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
-    it 'should have deployed the sample servlet on 8080', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
-      shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+    it 'should have deployed the sample servlet on 8082', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
+      shell("/usr/bin/curl localhost:8082/sample/hello", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/Sample Application Servlet Page/)
       end
     end

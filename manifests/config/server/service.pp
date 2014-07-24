@@ -18,6 +18,10 @@ define tomcat::config::server::service (
   $class_name_ensure = 'present',
   $service_ensure    = 'present',
 ) {
+  if versioncmp($::augeasversion, '1.0.0') < 0 {
+    fail("Server configurations require Augeas >= 1.0.0")
+  }
+
   validate_re($service_ensure, '^(present|absent|true|false)$')
   validate_re($class_name_ensure, '^(present|absent|true|false)$')
 
