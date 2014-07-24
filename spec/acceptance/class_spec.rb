@@ -7,16 +7,30 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       class { 'tomcat': }
       class { 'java': }
 
-      tomcat::instance { 'tomcat8':
-        catalina_base => '/opt/apache-tomcat/tomcat8',
-        source_url => 'http://apache.mirrors.hoobly.com/tomcat/tomcat-8/v8.0.9/bin/apache-tomcat-8.0.9.tar.gz'
-      }->
-      tomcat::war { 'sample.war':
-        catalina_base => '/opt/apache-tomcat/tomcat8',
-        war_source => '/opt/apache-tomcat/tomcat8/webapps/docs/appdev/sample/sample.war',
-      }->
-      tomcat::service { 'default':
-        catalina_base => '/opt/apache-tomcat/tomcat8',
+      if $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
+        tomcat::instance { 'tomcat7-default':
+          catalina_base => '/opt/apache-tomcat/tomcat7-default',
+          source_url => 'http://www.carfab.com/apachesoftware/tomcat/tomcat-7/v7.0.54/bin/apache-tomcat-7.0.54.tar.gz'
+        }->
+        tomcat::war { 'sample.war':
+          catalina_base => '/opt/apache-tomcat/tomcat7-default',
+          war_source => '/opt/apache-tomcat/tomcat7-default/webapps/docs/appdev/sample/sample.war',
+        }->
+        tomcat::service { 'default':
+          catalina_base => '/opt/apache-tomcat/tomcat7-default',
+        }
+      } else {
+        tomcat::instance { 'tomcat8':
+          catalina_base => '/opt/apache-tomcat/tomcat8',
+          source_url => 'http://apache.mirrors.hoobly.com/tomcat/tomcat-8/v8.0.9/bin/apache-tomcat-8.0.9.tar.gz'
+        }->
+        tomcat::war { 'sample.war':
+          catalina_base => '/opt/apache-tomcat/tomcat8',
+          war_source => '/opt/apache-tomcat/tomcat8/webapps/docs/appdev/sample/sample.war',
+        }->
+        tomcat::service { 'default':
+          catalina_base => '/opt/apache-tomcat/tomcat8',
+        }
       }
 
       tomcat::instance { 'tomcat6':
@@ -127,9 +141,16 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       class { 'tomcat': }
       class { 'java': }
 
-      tomcat::service { 'default':
-        catalina_base  => '/opt/apache-tomcat/tomcat8',
-        service_ensure => stopped,
+      if $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
+        tomcat::service { 'default':
+          catalina_base  => '/opt/apache-tomcat/tomcat7-default',
+          service_ensure => stopped,
+        }
+      } else {
+        tomcat::service { 'default':
+          catalina_base  => '/opt/apache-tomcat/tomcat8',
+          service_ensure => stopped,
+        }
       }
       tomcat::service { 'tomcat7':
         catalina_base => '/opt/apache-tomcat/tomcat7',
@@ -211,7 +232,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         r.stdout.should match(/HTTP Status 404/)
       end
     end
-    it 'should be able to run with jsvc on port below 1024' do
+    it 'should be able to run with jsvc on port below 1024', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
       pp = <<-EOS
       class { 'tomcat': }
       class { 'gcc': }
@@ -294,22 +315,22 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       #give tomcat time to start up
       shell("sleep 10")
     end
-    it 'should have deployed the sample JSP on 8080' do
+    it 'should have deployed the sample JSP on 8080', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
       shell("/usr/bin/curl localhost:8080/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
-    it 'should have deployed the sample servlet on 8080' do
+    it 'should have deployed the sample servlet on 8080', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
       shell("/usr/bin/curl localhost:8080/sample/hello", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/Sample Application Servlet Page/)
       end
     end
-    it 'should have deployed the sample JSP on 80' do
+    it 'should have deployed the sample JSP on 80', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
       shell("/usr/bin/curl localhost:80/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
-    it 'should have deployed the sample servlet on 80' do
+    it 'should have deployed the sample servlet on 80', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
       shell("/usr/bin/curl localhost:80/sample/hello", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should match(/Sample Application Servlet Page/)
       end
