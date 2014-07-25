@@ -80,6 +80,7 @@ describe 'tomcat::instance', :type => :define do
         }
       end
       it do
+        # TestRail test case c10019
         expect {
           is_expected.to compile
         }.to raise_error(Puppet::Error, /\$package_name must be specified/)

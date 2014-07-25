@@ -60,6 +60,7 @@ describe 'tomcat', :type => :class do
   end
 
   context "on windows" do
+    # TestRail test case c9982
     let :facts do
       {
         :osfamily => 'windows'
@@ -72,6 +73,7 @@ describe 'tomcat', :type => :class do
     end
   end
   context "on Solaris" do
+    # TestRail test case c9983
     let :facts do
       {
         :osfamily => 'Solaris'
@@ -84,6 +86,7 @@ describe 'tomcat', :type => :class do
     end
   end
   context "on OSX" do
+    # TestRail test case c13850
     let :facts do
       {
         :osfamily => 'Darwin'
