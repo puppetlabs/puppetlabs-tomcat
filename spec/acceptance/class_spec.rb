@@ -242,6 +242,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         r.stdout.should match(/HTTP Status 404/)
       end
     end
+    # TestRail test case c11790
     it 'should be able to run with jsvc on port below 1024', :unless => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') do
       pp = <<-EOS
       class { 'tomcat': }
