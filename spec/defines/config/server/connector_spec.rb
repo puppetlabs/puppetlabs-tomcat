@@ -63,6 +63,7 @@ describe 'tomcat::config::server::connector', :type => :define do
     }
   end
   describe 'failing tests' do
+    # TestRail test case c10038
     context 'bad connector_ensure' do
       let :params do
         {
@@ -87,6 +88,7 @@ describe 'tomcat::config::server::connector', :type => :define do
         }.to raise_error(Puppet::Error, /is not a Hash/)
       end
     end
+    # TestRail test case c12687
     context 'no port' do
       let :params do
         {

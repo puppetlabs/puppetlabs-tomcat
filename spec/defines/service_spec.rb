@@ -77,6 +77,7 @@ describe 'tomcat::service', :type => :define do
     )
     }
   end
+  # TestRail test cases C9996/9998/10001/10007
   context "neither jsvc or init" do
     it { is_expected.to contain_service('tomcat-default').with(
       'hasstatus'  => false,
