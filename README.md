@@ -1,67 +1,510 @@
-# tomcat
+#tomcat
 
-#### Table of Contents
+####Table of Contents
 
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with tomcat](#setup)
-    * [What tomcat affects](#what-tomcat-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with tomcat](#beginning-with-tomcat)
 4. [Usage - Configuration options and additional functionality](#usage)
+    * [I want to install Tomcat from a specific source.](#i-want-to-install-tomcat-from-a-specific-source)
+    * [I want to run multiple copies of Tomcat on a single node.](#i-want-to-run-multiple-copies-of-tomcat-on-a-single-node)
+    * [I want to deploy WAR files.](#i-want-to-deploy-are-files)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+    * [Classes](#classes)
+    * [Defined Types](#defined-types)
+    * [Parameters](#parameters)
+        - [tomcat](#tomcat)
+        - [tomcat::config::server](#tomcatconfigserver)
+        - [tomcat::config::server::connector](#tomcatconfigserverconnector)
+        - [tomcat::config::server::engine](#tomcatconfigserverengine)
+        - [tomcat::config::server::host](#tomcatconfigserverhost)
+        - [tomcat::config::server::service](#tomcatconfigserverservice)
+        - [tomcat::config::server::valve](#tomcatconfigservervalve)
+        - [tomcat::instance](#tomcatinstance)
+        - [tomcat::service](#tomcatservice)
+        - [tomcat::setenv::entry](#tomcatsetenventry)
+        - [tomcat::war](#tomcatwar)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
+    * [Contributing](#contributing)
+    * [Tests](#running-tests)
 
-## Overview
+##Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+The tomcat module enables you to install, deploy, and configure Tomcat web services.
 
-## Module Description
+##Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
+Tomcat is a Java web service provider. The Puppet Labs module gives you a way to install multiple versions of Tomcat, as well as multiple copies of a version, and deploy web apps to it. The tomcat module also manages the Tomcat configuration file with Puppet.
 
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+##Setup
 
-## Setup
+**NOTE: You must have Java installed in order to use this module. The version of Java needed will depend on the version of Tomcat you are installing. Older versions of Tomcat require >=java6, while the latest version of Tomcat needs >=java7.**
 
-### What tomcat affects
+###Beginning with tomcat
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+The simplest way to get Tomcat up and running with the tomcat module is to install the Tomcat package from EPEL,
 
-### Beginning with tomcat
+```puppet
+class { 'tomcat': }
+class { 'epel': }->
+tomcat::instance{ 'default':
+  install_from_source => false,
+  package_name        => 'tomcat',
+}->
+```
 
-The very basic steps needed for a user to get the module up and running.
+and then start the service.
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+```puppet
+tomcat::service { 'default':
+  use_jsvc     => false,
+  use_init     => true,
+  service_name => 'tomcat',
+}
+```
 
-## Usage
+##Usage
 
-See the examples directory!
+###I want to install Tomcat from a specific source.
 
-## Reference
+To download Tomcat from a specific source and then start the service,
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+```puppet
+class { 'tomcat': }
+class { 'java': }
+tomcat::instance { 'test':
+  source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
+}->
+tomcat::service { 'default': }
+```
 
-## Limitations
+###I want to run multiple copies of Tomcat on a single node.
+
+```puppet
+class { 'tomcat': }
+class { 'java': }
+
+tomcat::instance { 'tomcat8':
+  catalina_base => '/opt/apache-tomcat/tomcat8',
+  source_url    => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
+}->
+tomcat::service { 'default':
+  catalina_base => '/opt/apache-tomcat/tomcat8',
+}
+
+tomcat::instance { 'tomcat6':
+  source_url    => 'http://apache.mirror.quintex.com/tomcat/tomcat-6/v6.0.41/bin/apache-tomcat-6.0.41.tar.gz',
+  catalina_base => '/opt/apache-tomcat/tomcat6',
+}->
+tomcat::config::server { 'tomcat6':
+  catalina_base => '/opt/apache-tomcat/tomcat6',
+  port          => '8105',
+}->
+tomcat::config::server::connector { 'tomcat6-http':
+  catalina_base         => '/opt/apache-tomcat/tomcat6',
+  port                  => '8180',
+  protocol              => 'HTTP/1.1',
+  additional_attributes => {
+    'redirectPort' => '8543'
+  },
+}->
+tomcat::config::server::connector { 'tomcat6-ajp':
+  catalina_base         => '/opt/apache-tomcat/tomcat6',
+  port                  => '8109',
+  protocol              => 'AJP/1.3',
+  additional_attributes => {
+    'redirectPort' => '8543'
+  },
+}->
+tomcat::service { 'tomcat6':
+  catalina_base => '/opt/apache-tomcat/tomcat6'
+```
+
+###I want to deploy WAR files.
+
+```puppet
+tomcat::war { 'sample.war':
+        catalina_base => '/opt/apache-tomcat/tomcat8',
+        war_source => '/opt/apache-tomcat/tomcat8/webapps/docs/appdev/sample/sample.war',
+      }
+```
+The `war_source` can be a local file, puppet:/// file, http, or ftp.
+
+##Reference
+
+###Classes
+
+####Public Classes
+
+* `tomcat`: Main class, manages the installation and configuration of Tomcat.
+
+####Private Classes
+
+* `tomcat::params`: Manages Tomcat parameters.
+
+###Defined Types
+
+####Public Defined Types
+
+* `tomcat::config::server`: Configures attributes for the [Server](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html) element in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::connector`: Configures [Connector](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) elements in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::engine`: Configures [Engine](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Introduction) elements in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::host`: Configures [Host](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html) elements in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::service`: Configures a [Service](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html) element nested in the Server element in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/server.xml.
+* `tomcat::instance`: Installs a Tomcat instance.
+* `tomcat::service`: Provides Tomcat service management.
+* `tomcat::setenv::entry`: Adds an entry to the setenv.sh script.
+* `tomcat::war`:  Manages the deployment of WAR files.
+
+####Private Defined Types
+
+* `tomcat::instance::package`: Installs Tomcat from a package.
+* `tomcat::instance::source`: Installs Tomcat from source.
+
+###Parameters
+
+####tomcat
+
+#####`$catalina_home`
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$user`
+
+Sets the user to run Tomcat as.
+
+#####`$group`
+
+Sets the group to run Tomcat as.
+
+#####`$manage_user`
+
+Specifies whether or not to manage the user. Boolean that defaults to 'true'.
+
+#####`$manage_group`
+
+Specifies whether or not to manage the group. Boolean that defaults to 'true'.
+
+####tomcat::config::server
+
+#####`$catalina_base`
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$class_name`
+
+Specifies the Java class name of the implementation to use, and maps to the [className](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) XML attribute in the Tomcat config file. This parameter is optional.
+
+#####`$class_name_ensure`
+
+Specifies whether to set or remove the [className](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) XML attribute. Valid values are 'true', 'false', 'present', or 'absent'. Defaults to 'present'.
+
+#####`$address` 
+
+Sets the TCP/IP address on which the server waits for a shutdown command, and maps to the [address](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) XML attribute. This parameter is optional.
+
+#####`$address_ensure` 
+
+Specifies whether to set or remove the [address](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) XML attribute. Valid values are 'true', 'false', 'present', or 'absent'. Defaults to 'present'.
+
+#####`$port` 
+
+Sets the port to wait for shutdown commands on.
+
+#####`$shutdown`
+
+Specifies the command that must be sent to `$port`.
+
+####tomcat::config::server::connector
+
+#####`$catalina_base`
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$connector_ensure` 
+
+Specifies whether to add or remove ports that Tomcat will listen to for requests, and maps to the [Connector](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) XML element. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$port` 
+
+Sets the TCP port number on which the Connector will create a server socket and await incoming connections. Maps to the [port](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes) XML attribute. Required unless `$connector_ensure` is set to 'false'.
+
+#####`$protocol` 
+
+Sets the protocol to handle incoming traffic. Maps to the [protocol](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes) XML attribute. Defaults to '[name]' passed in the define.
+
+#####`$parent_service` 
+
+Specifies the [Service](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) element this Connector should be nested
+beneath. Defaults to 'Catalina'.
+
+#####`$additional_attributes` 
+
+Specifies any additional attributes to add to the Connector. Should
+be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`$attributes_to_remove`
+
+Specifies any attributes to remove from the Connector. Should
+be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+####tomcat::config::server::engine
+
+#####`$default_host`
+
+Specifies the default host name for the host that will process requests directed to host names on this server, but which are not configured in this configuration file. Maps to the [defaultHost](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute for the Engine. This parameter is required.
+
+#####`$catalina_base` 
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$background_processor_delay` 
+
+Determines the delay (in seconds) between the invocation of the backgroundProcess method on this engine and its child containers. Maps to the [backgroundProcessorDelay](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. This parameter is optional.
+
+#####`$background_processor_delay_ensure`
+
+Specifies whether to add or remove the [backgroundProcessorDelay](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$class_name`
+
+Specifies the Java class name of the implementation to use, and maps to the [className](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute in the Tomcat config file. This parameter is optional.
+
+#####`$class_name_ensure` 
+
+Specifies whether to add or remove the [className](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$engine_name` 
+
+Specifies the logical name of the Engine, used in log and error messages. Maps to the [name](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. Defaults to '[name]' passed in the define.
+
+#####`$jvm_route` 
+
+Specifies the identifier which must be used in load balancing scenarios to enable session affinity. Maps to the [jvmRoute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. This parameter is optional.
+
+#####`$jvm_route_ensure` 
+
+Specifies whether to add or remove the [jvmRoute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$parent_service` 
+
+Specifies the Service element the Engine should be nested beneath. Defaults to 'Catalina'.
+
+#####`$start_stop_threads` 
+
+Sets the number of threads the Engine will use to start child Host elements in parallel. Maps to the [startStopThreads](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. This parameter is optional.
+
+#####`$start_stop_threads_ensure` 
+
+Specifies whether to add or remove the [startStopThreads](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. Valid values are 'true', 'false', 'present' and 'absent'. Defaults to 'present'.
+
+####tomcat::config::server::host
+
+#####`$app_base` 
+
+Specifies the Application Base directory for the virtual host, and maps to the [appBase](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes) XML attribute for the Host. This parameter is required
+unless [`$host_ensure`](#host_ensure) is set to 'false' or 'absent'.
+
+#####`$catalina_base` 
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$host_ensure` 
+
+Specifies whether to add or remove the virtual host, or [Host](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Introduction) element. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$host_name` 
+
+Specifies the the network name of the virtual host, as registered in your DNS server. Maps to the [name](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes) XML attribute for the Host. Defaults to '[name]' passed in the define.
+
+#####`$parent_service` 
+
+Specifies the Service element the Host should be nested beneath. Defaults to 'Catalina'.
+
+#####`$additional_attributes`
+
+Specifies any additional attributes to add to the Host. Should
+be a hash of the format 'attribute' => 'value'. This parameter is optional
+
+#####`$attributes_to_remove` 
+
+Specifies any attributes to remove from the Host. Should
+be an array of the format 'attribute' => 'value'. This parameter is optional.
+
+####tomcat::config::server::service
+
+#####`$catalina_base` 
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$class_name` 
+
+Specifies the Java class name of the implementation to use, and maps to the [className](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes) XML attribute. This parameter is optional.
+
+#####`$class_name_ensure` 
+
+Specifies whether to set or remove the [className](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes) XML attribute. Valid values are 'true', 'false', 'present', or 'absent'. Defaults to 'present'.
+
+#####`$service_ensure` 
+
+Specifies whether to add or remove the [Service](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) element. Valid values are 'true', 'false', 'present', or 'absent'. Defaults to 'present'.
+
+####tomcat::config::server::valve
+
+#####`$catalina_base`
+
+Specifies the root of the Tomcat installation.
+
+#####`$class_name`
+
+Specifies the Java class name of the implementation to use. Maps to the [className](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Access_Logging/Attributes) XML attribute. Defaults to '[name]' passed in the define.
+
+#####`$parent_host` 
+
+Specifies the virtual host ([Host](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes) XML element) the Valve should be nested beneath. If not specified, the Valve will be nested beneath the Engine under `$parent_service`.
+
+#####`$parent_service` 
+
+Specifies is the Service element this Valve should be nested beneath. Defaults to 'Catalina'.
+
+#####`$valve_ensure` 
+
+Specifies whether to add or remove the component that will be inserted into the request processing pipeline for the associated Catalina container. Maps to the  [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Introduction) XML element. Valid values are 'true', 'false', 'present', or 'absent'. Defaults to 'present'.
+
+#####`$additional_attributes`
+
+Specifies any additional attributes to add to the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`$attributes_to_remove`
+
+Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+####tomcat::instance
+
+#####`$catalina_home` 
+
+Specifies the root of the Tomcat installation.
+
+#####`$catalina_base` 
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$install_from_source` 
+
+Specifies whether or not to install from source. A Boolean that defaults to 'true'.
+
+#####`$source_url` 
+
+Specifies the source URL to install from. Required if `$install_from_source` is true.
+
+#####`$source_strip_first_dir` 
+
+Specifies whether or not to strip the first directory when unpacking the source tarball. A Boolean that defaults to 'true' when installing from source. Requires nanliu/staging > 0.4.0
+
+#####`$package_ensure` 
+
+Specifies what the ensure should be set to in the package resource when installing from a package.
+
+#####`$package_name` 
+
+Specifies the the name of the package you want to install. Required if `$install_from_source` is false.
+
+####tomcat::service
+
+#####`$catalina_home` 
+
+Specifies the root of the Tomcat installation.
+
+#####`$catalina_base` 
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$use_jsvc`
+
+Specifies whether or not to use Jsvc for service management. A Boolean that defaults to 'false'. If both `$use_jsvc` and `$use_init` are false,
+`$CATALINA_BASE/bin/catalina.sh start` and `$CATALIN/A_BASE/bin/catalina.sh stop` are used for service management.
+
+#####`$java_home`
+
+Specifies the path Java is installed under. Only applies if `$use_jsvc = 'true'`
+
+#####`$service_ensure` 
+
+Determines whether the Tomcat service is on or off. (To determine whether the service is present/absent, see [tomcat::config::server::service](#tomcatconfigserverservice).)
+
+#####`$use_init`
+
+Specifies whether or not to use init.pp for service management. A Boolean that  defaults to 'false'. If both `$use_jsvc` and `$use_init` are false,
+`$CATALINA_BASE/bin/catalina.sh start` and `$CATALIN/A_BASE/bin/catalina.sh stop` are used for service management.
+
+#####`$service_name` 
+
+Specifies the name to use for the service when `$use_init` is 'true'.
+
+#####`$start_command` 
+
+Sets the start command to use for the service.
+
+#####`$stop_command` 
+
+Sets the stop command to use for the service.
+
+####tomcat::setenv::entry
+
+#####`$value` 
+
+Specifies the value of the parameter you're setting.
+
+#####`$ensure` 
+
+Determines whether the fragment should be present or absent.
+
+#####`$base_path` 
+
+Sets the path to create the setenv.sh script under. Should be either '$catalina_base/bin' or '$catalina_home/bin'.
+
+#####`$parameter` 
+
+Specifies the parameter you're setting. Defaults to '[name]' passed in the define.
+
+#####`$quote_char`
+
+Specifies the character with which to quote the value. This parameter is optional.
+
+####tomcat::war
+
+#####`$catalina_base` 
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$app_base`
+
+Specifies the path relative to `$catalina_base` to deploy the WAR to. Defaults to 'webapps'.
+
+#####`$deployment_path`
+
+Specifies the path to deploy the WAR to. This parameter is optional. You may only specify either `$app_base` or `$deployment_path`, but not both..
+
+#####`$war_ensure` 
+
+Specifies whether to add or remove the WAR. Valid values are 'present', 'absent', 'true', and 'false'. Defaults to 'present'.
+
+#####`$war_name`
+
+Specifies the name of the WAR. Defaults to '[name]' passed in the define. This parameter is optional.
+
+#####`$war_source` 
+
+Specifies the source to deploy the WAR from. Currently supports http(s)://, puppet://, and ftp:// paths. `$war_source` must be specified unless `$war_ensure` is set to 'false' or 'absent'.
+
+##Limitations
 
 This module only supports Tomcat installations on \*nix systems.
 
-## Development
+##Development
 
 ###Contributing
 
