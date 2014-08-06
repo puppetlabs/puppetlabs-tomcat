@@ -43,11 +43,11 @@ define tomcat::service (
   }
 
   if $java_home and ! $use_jsvc {
-    warn('$java_home has no affect unless $use_jsvc = true')
+    warning('$java_home has no affect unless $use_jsvc = true')
   }
 
   if $java_home and $start_command {
-    warn('$java_home is used in the $start_command, so this may not work as planned')
+    warning('$java_home is used in the $start_command, so this may not work as planned')
   }
 
   if $use_jsvc {
