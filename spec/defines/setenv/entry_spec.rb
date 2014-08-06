@@ -1,0 +1,62 @@
+require 'spec_helper'
+
+describe 'tomcat::setenv::entry', :type => :define do
+  let :pre_condition do
+    'class { "tomcat": }'
+  end
+  let :facts do
+    {
+      :osfamily       => 'Debian',
+      :concat_basedir => '/tmp',
+    }
+  end
+  let :title do
+    'FOO'
+  end
+  context 'no quotes' do
+    let :params do
+      {
+        'value' => '/bin/true',
+      }
+    end
+
+    it { is_expected.to contain_concat('/opt/apache-tomcat/bin/setenv.sh') }
+    it { is_expected.to contain_concat__fragment('setenv-FOO').with_content(/FOO=\/bin\/true/).with({
+      'ensure' => 'present',
+      'target' => '/opt/apache-tomcat/bin/setenv.sh',
+    })
+    }
+  end
+  context 'quotes' do
+    let :params do
+      {
+        'param'      => 'BAR',
+        'value'      => '/bin/true',
+        'quote_char' => '"',
+        'base_path'  => '/opt/apache-tomcat/foo/bin'
+      }
+    end
+
+    it { is_expected.to contain_concat('/opt/apache-tomcat/foo/bin/setenv.sh') }
+    it { is_expected.to contain_concat__fragment('setenv-FOO').with_content(/BAR="\/bin\/true"/).with({
+      'ensure' => 'present',
+      'target' => '/opt/apache-tomcat/foo/bin/setenv.sh',
+    })
+    }
+  end
+  context 'ensure absent' do
+    let :params do
+      {
+        'value'  => '/bin/true',
+        'ensure' => 'absent',
+      }
+    end
+
+    it { is_expected.to contain_concat('/opt/apache-tomcat/bin/setenv.sh') }
+    it { is_expected.to contain_concat__fragment('setenv-FOO').with({
+      'ensure' => 'absent',
+      'target' => '/opt/apache-tomcat/bin/setenv.sh',
+    })
+    }
+  end
+end

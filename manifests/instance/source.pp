@@ -22,6 +22,10 @@ define tomcat::instance::source (
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  if $source_strip_first_dir {
+    $_strip = 1
+  }
+
   $filename = regsubst($source_url, '.*/(.*)', '\1')
 
   if ! defined(Staging::File[$filename]) {
@@ -37,9 +41,6 @@ define tomcat::instance::source (
     unless  => "test \"\$(ls -A ${catalina_base})\"",
     user    => $::tomcat::user,
     group   => $::tomcat::group,
-    strip   => $source_strip_first_dir ? {
-      true    => 1,
-      default => undef,
-    },
+    strip   => $_strip,
   }
 }

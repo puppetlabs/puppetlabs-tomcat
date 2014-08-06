@@ -41,7 +41,7 @@ define tomcat::config::server::engine (
   $start_stop_threads_ensure         = 'present',
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
-    fail("Server configurations require Augeas >= 1.0.0")
+    fail('Server configurations require Augeas >= 1.0.0')
   }
 
   validate_re($background_processor_delay_ensure, '^(present|absent|true|false)$')

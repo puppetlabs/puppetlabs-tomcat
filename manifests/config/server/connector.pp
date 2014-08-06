@@ -25,7 +25,7 @@ define tomcat::config::server::connector (
   $attributes_to_remove  = [],
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
-    fail("Server configurations require Augeas >= 1.0.0")
+    fail('Server configurations require Augeas >= 1.0.0')
   }
 
   validate_re($connector_ensure, '^(present|absent|true|false)$')
