@@ -26,7 +26,7 @@ define tomcat::config::server::valve (
   $attributes_to_remove  = [],
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
-    fail("Server configurations require Augeas >= 1.0.0")
+    fail('Server configurations require Augeas >= 1.0.0')
   }
 
   validate_re($valve_ensure, '^(present|absent|true|false)$')

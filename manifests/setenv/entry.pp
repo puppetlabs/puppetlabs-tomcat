@@ -17,6 +17,12 @@ define tomcat::setenv::entry (
   $quote_char = undef,
 ) {
 
+  if ! $quote_char {
+    $_quote_char = ''
+  } else {
+    $_quote_char = $quote_char
+  }
+
   if ! defined(Concat["${base_path}/setenv.sh"]) {
     concat { "${base_path}/setenv.sh":
       owner => $::tomcat::user,
@@ -27,9 +33,6 @@ define tomcat::setenv::entry (
   concat::fragment { "setenv-${name}":
     ensure  => $ensure,
     target  => "${base_path}/setenv.sh",
-    content => $quote_char ? {
-      undef   => inline_template("<%= param %>=<%= value %>"),
-      default => inline_template("<%= param %>=<%= quote_char %><%= value %><%= quote_char %>"),
-    },
+    content => inline_template('<%= @param %>=<%= @_quote_char %><%= @value %><%= @_quote_char %>'),
   }
 }
