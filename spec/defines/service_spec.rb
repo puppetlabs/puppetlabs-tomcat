@@ -152,5 +152,24 @@ describe 'tomcat::service', :type => :define do
         }.to raise_error(Puppet::Error, /\$service_name must be specified/)
       end
     end
+    context "java_home without use_jsvc warning" do
+      let :params do
+        {
+          :java_home => 'foo',
+        }
+      end
+
+      it { is_expected.to compile }
+    end
+    context "java_home with start_command" do
+      let :params do
+        {
+          :java_home => 'foo',
+          :start_command => '/bin/true'
+        }
+      end
+
+      it { is_expected.to compile }
+    end
   end
 end
