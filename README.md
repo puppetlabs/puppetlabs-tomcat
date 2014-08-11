@@ -425,7 +425,7 @@ Specifies the base directory for the Tomcat installation.
 #####`$use_jsvc`
 
 Specifies whether or not to use Jsvc for service management. A Boolean that defaults to 'false'. If both `$use_jsvc` and `$use_init` are false,
-`$CATALINA_BASE/bin/catalina.sh start` and `$CATALIN/A_BASE/bin/catalina.sh stop` are used for service management.
+`$CATALINA_BASE/bin/catalina.sh start` and `$CATALINA_BASE/bin/catalina.sh stop` are used for service management.
 
 #####`$java_home`
 
@@ -437,8 +437,8 @@ Determines whether the Tomcat service is on or off. (To determine whether the se
 
 #####`$use_init`
 
-Specifies whether or not to use init.pp for service management. A Boolean that  defaults to 'false'. If both `$use_jsvc` and `$use_init` are false,
-`$CATALINA_BASE/bin/catalina.sh start` and `$CATALIN/A_BASE/bin/catalina.sh stop` are used for service management.
+Specifies whether or not to use the package-provided init script for service management. A Boolean that  defaults to 'false'. If both `$use_jsvc` and `$use_init` are false,
+`$CATALINA_BASE/bin/catalina.sh start` and `$CATALINA_BASE/bin/catalina.sh stop` are used for service management.
 
 #####`$service_name` 
 
