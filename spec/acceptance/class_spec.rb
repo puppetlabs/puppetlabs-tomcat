@@ -10,7 +10,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       if $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
         tomcat::instance { 'tomcat7-default':
           catalina_base => '/opt/apache-tomcat/tomcat7-default',
-          source_url => 'http://www.carfab.com/apachesoftware/tomcat/tomcat-7/v7.0.54/bin/apache-tomcat-7.0.54.tar.gz'
+          source_url => 'http://www.dsgnwrld.com/am/tomcat/tomcat-7/v7.0.55/bin/apache-tomcat-7.0.55.tar.gz'
         }->
         tomcat::config::server::connector { 'tomcat7-default-http':
           catalina_base         => '/opt/apache-tomcat/tomcat7-default',
@@ -77,7 +77,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       }
 
       tomcat::instance { 'tomcat7':
-        source_url => 'http://www.carfab.com/apachesoftware/tomcat/tomcat-7/v7.0.54/bin/apache-tomcat-7.0.54.tar.gz',
+        source_url => 'http://www.dsgnwrld.com/am/tomcat/tomcat-7/v7.0.55/bin/apache-tomcat-7.0.55.tar.gz',
         catalina_base => '/opt/apache-tomcat/tomcat7',
       }->
       tomcat::config::server { 'tomcat7':
