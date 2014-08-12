@@ -3,13 +3,14 @@ require 'beaker-rspec/helpers/serverspec'
 
 
 unless ENV['RS_PROVISION'] == 'no'
+  if default.is_pe?
+    install_pe
+  else
+    install_puppet
+  end
+
   hosts.each do |host|
-    if host.is_pe?
-      install_pe
-    else
-      install_puppet
       on host, "mkdir -p #{host['distmoduledir']}"
-    end
   end
 end
 
