@@ -13,6 +13,7 @@ describe 'tomcat::service', :type => :define do
     'default'
   end
   context 'using jsvc' do
+    # TestRail test case c10000
     let :params do
       {
         :use_jsvc => true
@@ -43,6 +44,7 @@ describe 'tomcat::service', :type => :define do
     }
   end
   context 'using init' do
+    # TestRail test case c9999, c10002
     let :params do
       {
         :use_init       => true,
@@ -75,6 +77,7 @@ describe 'tomcat::service', :type => :define do
     )
     }
   end
+  # TestRail test cases C9996/9998/10001/10007
   context "neither jsvc or init" do
     it { is_expected.to contain_service('tomcat-default').with(
       'hasstatus'  => false,
@@ -127,6 +130,7 @@ describe 'tomcat::service', :type => :define do
       end
     end
     context "both jsvc and init" do
+      # TestRail test case c9995
       let :params do
         {
           :use_jsvc => true,
@@ -140,6 +144,7 @@ describe 'tomcat::service', :type => :define do
       end
     end
     context "init without servicename" do
+      # TestRail test case c10005
       let :params do
         {
           :use_jsvc     => false,

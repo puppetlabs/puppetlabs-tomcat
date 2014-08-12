@@ -12,6 +12,7 @@ describe 'tomcat::instance', :type => :define do
   let :title do
     'default'
   end
+  # TestRail test case c10058
   context 'default install from source' do
     let :facts do default_facts end
     let :params do
@@ -28,6 +29,7 @@ describe 'tomcat::instance', :type => :define do
     )
     }
   end
+  # TestRail test case c10010
   context 'install from source, different catalina_base' do
     let :facts do default_facts end
     let :params do
@@ -66,6 +68,7 @@ describe 'tomcat::instance', :type => :define do
   end
   describe "test install failures" do
     let :facts do default_facts end
+    # TestRail test case c12554
     context "no source specified" do
       it do
         expect {
@@ -80,6 +83,7 @@ describe 'tomcat::instance', :type => :define do
         }
       end
       it do
+        # TestRail test case c10019
         expect {
           is_expected.to compile
         }.to raise_error(Puppet::Error, /\$package_name must be specified/)

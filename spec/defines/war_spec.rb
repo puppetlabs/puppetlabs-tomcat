@@ -80,6 +80,7 @@ describe 'tomcat::war', :type => :define do
       end
     end
     context 'bad ensure' do
+      #TestRail test case c10030
       let :params do
         {
           :war_ensure => 'foo',
@@ -93,6 +94,7 @@ describe 'tomcat::war', :type => :define do
       end
     end
     context 'invalid source' do
+      #TestRail test case c10032
       let :params do
         {
           :war_source => 'foo',
@@ -112,6 +114,7 @@ describe 'tomcat::war', :type => :define do
       end
     end
     context 'both app_base and deployment_path' do
+      #TestRail test case c10025
       let :params do
         {
           :war_source      => '/tmp/sample.war',
