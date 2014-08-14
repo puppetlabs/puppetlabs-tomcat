@@ -1,0 +1,19 @@
+HOSTS:
+  h5ikbu5ibj4g5xi:
+    roles:
+      - master
+      - agent
+      - database
+      - dashboard
+    platform: el-6-x86_64
+    template: Delivery/Quality Assurance/Templates/vCloud/centos-6-x86_64
+    hypervisor: vcloud
+CONFIG:
+#  type: foss
+  pooling_api: http://vcloud.delivery.puppetlabs.net
+  nfs_server: none
+  consoleport: 443
+  datastore: instance0
+  folder: Delivery/Quality Assurance/Staging/Dynamic
+  resourcepool: delivery/Quality Assurance/Staging/Dynamic
+  pe_dir: http://neptune.puppetlabs.lan/3.3/ci-ready
