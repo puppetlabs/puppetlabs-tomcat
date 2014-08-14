@@ -5,13 +5,13 @@ require 'spec_helper_acceptance'
 #confine array
 confine_array = [
   (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04'),
-  ($::osfamily == 'RedHat' and $::operatingsystemmajrelease == '5')
+  (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5')
 ]
 
 stop_test = false
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || confine_array.any?
 
-describe 'Acceptance case one' do , :unless => stop_test do
+describe 'Acceptance case one', :unless => stop_test do
 
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do
@@ -91,33 +91,30 @@ describe 'Acceptance case one' do , :unless => stop_test do
         use_jsvc      => true,
       }
       EOS
-      #is 0 the correct exit code??? keeps exiting 2
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be(0)
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should be serving a page on port 80' do
       shell("/usr/bin/curl localhost:80/war_one/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/Sample Application JSP Page/)
+        wait_for(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
   end
 
-  context 'Stop tomcat with verification' do
+  context 'Stop tomcat with verification!!!' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
       class{ 'tomcat':}
-      tomcat::service{ 'tomcat_one':
-        service_ensure => 'false',
+      tomcat::service{ 'jsvc-default'':
+        service_ensure => 'stopped',
+        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+        use_jsvc      => true,
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should not be serving a page on port 80' do
       shell("/usr/bin/curl localhost:80/war_one/hello.jsp") do |r|
-        r.stdout.should match(/404/)
+        wait_for(r.stdout).to match(/404/)
       end
     end
   end
@@ -126,19 +123,18 @@ describe 'Acceptance case one' do , :unless => stop_test do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
       class{ 'tomcat':}
-      tomcat::service{ 'tomcat_one':
+      tomcat::service{ 'jsvc-default'':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
         service_ensure => 'true',
-        # the docs dont say what valid values are for service_ensure
+        use_jsvc      => true,
+        # test if use_jsvc will accept 'true' as well as true
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should be serving a page on port 80' do
       shell("/usr/bin/curl localhost:80/war_one/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/Sample Application JSP Page/)
+        wait_for(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
   end
@@ -152,18 +148,16 @@ describe 'Acceptance case one' do , :unless => stop_test do
         war_source => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should not have deployed the war' do
       shell('/usr/bin/curl localhost:80/war_one/sample.war', {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/The requested resource is not available/)
+        wait_for(r.stdout).to match(/The requested resource is not available/)
       end
     end
     it 'Should still have the server running on port 80' do
       shell('/usr/bin/curl localhost:80', :acceptable_exit_codes => 0) do |r|
-        r.stdout.should match(/Apache Tomcat/)
+        wait_for(r.stdout).to match(/Apache Tomcat/)
       end
     end
   end
@@ -183,13 +177,11 @@ describe 'Acceptance case one' do , :unless => stop_test do
         connector_ensure => 'absent',
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should not be able to serve pages over port 80' do
       shell("/usr/bin/curl localhost:80") do |r|
-        r.stdout.should match(/SERVER STUFF/)
+        wait_for(r.stdout).to match(/404/)
       end
     end
   end
@@ -242,8 +234,7 @@ describe 'Acceptance case one' do , :unless => stop_test do
 
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should countain the correct settings in the xml file' do
       shell('cat /opt/apache-tomcat/tomcat8-jsvc/conf/server.xml', :acceptable_exit_codes => 0) do |r|

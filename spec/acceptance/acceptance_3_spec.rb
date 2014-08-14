@@ -18,16 +18,13 @@ before(:all) do
     }
   }
     #scp war file to host
-    #acceptable exit codes???
-    #TODO get sample war file
     #what directory is this file going to be run from
     scp_to(master, 'lib/sample.war', "#{source_files_dir}/sample.war")
 end
 
-# ALL DEFAULTS ALL THE TIME!!!!
-describe 'Tomcat Install source -defaults' do
+stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
-  confine(:except, UNSUPPORTED_PLATFORMS)
+describe 'Tomcat Install source -defaults', :unless => stop_test do
 
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do
@@ -50,18 +47,16 @@ describe 'Tomcat Install source -defaults' do
         catalina_base => '/opt/apache-tomcat/tomcat_three',
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should be serving a page on port 8082'
-      shell("/usr/bin/curl localhost:8082/server", {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/TOMCAT STUFF/)
+      shell("/usr/bin/curl localhost:8082", {:acceptable_exit_codes => 0}) do |r|
+        wait_for(r.stdout).to match(/Apache Tomcat/)
       end
     end
     it 'Should be serving a JSP page from the war'
       shell('/usr/bin/curl localhost:8082/sample/hello.jsp', {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/TOMCAT STUFF/)
+        wait_for(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
   end
@@ -74,12 +69,12 @@ describe 'Tomcat Install source -defaults' do
         service_ensure => 'stopped',
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should not be serving a page on port 8082' do
-      expect(shell("/usr/bin/curl localhost:8082/server???").exit_code).to be(7)
+      shell("/usr/bin/curl localhost:8082/") do |r|
+        wait_for(r.stdout).to match(/404/)
+      end
     end
   end
 
@@ -91,13 +86,11 @@ describe 'Tomcat Install source -defaults' do
         service_ensure => 'running',
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should be serving a page on port 8082'
-      shell("/usr/bin/curl localhost:8082/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/TOMCAT STUFF/)
+      shell("/usr/bin/curl localhost:8082", {:acceptable_exit_codes => 0}) do |r|
+        wait_for(r.stdout).to match(/Apache Tomcat/)
       end
     end
   end
@@ -111,13 +104,11 @@ describe 'Tomcat Install source -defaults' do
         war_ensure => false,
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should not have deployed the war' do
-      shell('/usr/bin/curl localhost:8082/sample.war', {:acceptable_exit_codes => 7}) do |r|
-        r.stdout.should match(/OOPS YOUR WAR IS NOT HERE!!!/)
+      shell('/usr/bin/curl localhost:8082/sample/hello.jsp', {:acceptable_exit_codes => 7}) do |r|
+        wait_for(r.stdout).to match(/The requested resource is not available/)
       end
     end
   end
@@ -129,15 +120,15 @@ describe 'Tomcat Install source -defaults' do
         catalina_base => '/opt/apache-tomcat/tomcat_three',
         port => '8082',
         protocol => 'HTTP/1.1',
-        connector_ensure => false,
+        connector_ensure => 'false',
       }
       EOS
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
-      # sleep to give Tomcat time to catch up
-      sleep 10
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'Should not be abble to serve pages over port 8082' do
-      expect(shell("/usr/bin/curl localhost:8082/server???").exit_code).to be(7) #TODO test ????
+      shell("/usr/bin/curl localhost:8082", :acceptable_exit_codes => 7) do |r|
+        wait_for(r.stdout).to match(/ERROR????/)
+      end
     end
   end
 
