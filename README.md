@@ -502,7 +502,7 @@ Specifies the source to deploy the WAR from. Currently supports http(s)://, pupp
 
 ##Limitations
 
-This module only supports Tomcat installations on \*nix systems.
+This module only supports Tomcat installations on \*nix systems.  The `tomcat::config::server*` defines require augeas >= 1.0.0.
 
 ##Development
 
