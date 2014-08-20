@@ -1,26 +1,12 @@
 {
   "name": "puppetlabs-tomcat",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "puppetlabs",
   "summary": "Puppet module for managing Apache Tomcat.",
   "license": "Apache 2.0",
   "source": "http://github.com/puppetlabs/puppetlabs-tomcat",
   "project_page": "https://github.com/puppetlabs/puppetlabs-tomcat",
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
-  "dependencies": [
-    {
-      "name": "puppetlabs-stdlib",
-      "version_range": ">= 4.0.0"
-    },
-    {
-      "name": "puppetlabs-concat",
-      "version_range": ">= 1.0.4"
-    },
-    {
-      "name": "nanliu-staging",
-      "version_range": ">= 0.4.1"
-    }
-  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -66,6 +52,19 @@
         "14.04"
       ]
     }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= 4.0.0"
+    },
+    {
+      "name": "puppetlabs-concat",
+      "version_range": ">= 1.0.4"
+    },
+    {
+      "name": "nanliu-staging",
+      "version_range": ">= 0.4.1"
+    }
   ]
 }
-

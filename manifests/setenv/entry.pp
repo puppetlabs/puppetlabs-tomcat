@@ -25,14 +25,15 @@ define tomcat::setenv::entry (
 
   if ! defined(Concat["${base_path}/setenv.sh"]) {
     concat { "${base_path}/setenv.sh":
-      owner => $::tomcat::user,
-      group => $::tomcat::group,
+      owner          => $::tomcat::user,
+      group          => $::tomcat::group,
+      ensure_newline => true,
     }
   }
 
   concat::fragment { "setenv-${name}":
     ensure  => $ensure,
     target  => "${base_path}/setenv.sh",
-    content => inline_template('<%= @param %>=<%= @_quote_char %><%= @value %><%= @_quote_char %>'),
+    content => inline_template('<%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %>'),
   }
 }

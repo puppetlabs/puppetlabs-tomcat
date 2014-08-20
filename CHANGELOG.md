@@ -1,3 +1,8 @@
+##2014-08-20 - Release 0.1.2
+###Summary
+
+This release adds compatibility information and updates the README with information on the requirement of augeas >= 1.0.0.
+
 ##2014-08-14 - Release 0.1.1
 ###Summary
 
