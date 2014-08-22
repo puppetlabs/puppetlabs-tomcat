@@ -7,7 +7,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       class { 'tomcat': }
       class { 'java': }
 
-      if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04') or ($::osfamily == 'RedHat' and $::operatingsystemmajrelease == '5') {
+      if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04') or ($::osfamily == 'RedHat' and $::operatingsystemmajrelease == '5') or ($::operatingsystem == 'Debian' and $::operatingsystemmajrelease == '6') {
         tomcat::instance { 'tomcat7-default':
           catalina_base => '/opt/apache-tomcat/tomcat7-default',
           source_url => 'http://www.dsgnwrld.com/am/tomcat/tomcat-7/v7.0.55/bin/apache-tomcat-7.0.55.tar.gz'
@@ -151,7 +151,7 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       class { 'tomcat': }
       class { 'java': }
 
-      if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04') or ($::osfamily == 'RedHat' and $::operatingsystemmajrelease == '5') {
+      if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04') or ($::osfamily == 'RedHat' and $::operatingsystemmajrelease == '5') or ($::operatingsystem == 'Debian' and $::operatingsystemmajrelease == '6') {
         tomcat::service { 'default':
           catalina_base  => '/opt/apache-tomcat/tomcat7-default',
           service_ensure => stopped,
@@ -242,8 +242,10 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
         r.stdout.should match(/HTTP Status 404/)
       end
     end
-    it 'should be able to run with jsvc on port below 1024', :unless => ((fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5')) do
-      pp = <<-EOS
+    # jsvc tests require java6 and gcc, so don't run these tests on platforms without those.
+    context 'jsvc tests', :unless => ((fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5') or (fact('operatingsystem') == 'Debian' and fact('operatingsystemmajrelease') == '6') or fact('osfamily') == 'Suse')  do
+      it 'should be able to run with jsvc on port below 1024' do
+        pp = <<-EOS
       class { 'tomcat': }
       class { 'gcc': }
       class { 'java': }
@@ -319,30 +321,31 @@ describe 'tomcat class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       tomcat::service { 'tomcat8-default':
           catalina_base => '/opt/apache-tomcat/tomcat8',
       }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
-      #give tomcat time to start up
-      shell("sleep 10")
-    end
-    it 'should have deployed the sample JSP on 8082', :unless => ((fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5')) do
-      shell("/usr/bin/curl localhost:8082/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/Sample Application JSP Page/)
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+        expect(apply_manifest(pp, :catch_failues => true).exit_code).to be_zero
+        #give tomcat time to start up
+        shell("sleep 10")
       end
-    end
-    it 'should have deployed the sample servlet on 8082', :unless => ((fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5')) do
-      shell("/usr/bin/curl localhost:8082/sample/hello", {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/Sample Application Servlet Page/)
+      it 'should have deployed the sample JSP on 8082' do
+        shell("/usr/bin/curl localhost:8082/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+          r.stdout.should match(/Sample Application JSP Page/)
+        end
       end
-    end
-    it 'should have deployed the sample JSP on 80', :unless => ((fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5')) do
-      shell("/usr/bin/curl localhost:80/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/Sample Application JSP Page/)
+      it 'should have deployed the sample servlet on 8082' do
+        shell("/usr/bin/curl localhost:8082/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+          r.stdout.should match(/Sample Application Servlet Page/)
+        end
       end
-    end
-    it 'should have deployed the sample servlet on 80', :unless => ((fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') == '10.04') or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5')) do
-      shell("/usr/bin/curl localhost:80/sample/hello", {:acceptable_exit_codes => 0}) do |r|
-        r.stdout.should match(/Sample Application Servlet Page/)
+      it 'should have deployed the sample JSP on 80' do
+        shell("/usr/bin/curl localhost:80/sample/hello.jsp", {:acceptable_exit_codes => 0}) do |r|
+          r.stdout.should match(/Sample Application JSP Page/)
+        end
+      end
+      it 'should have deployed the sample servlet on 80' do
+        shell("/usr/bin/curl localhost:80/sample/hello", {:acceptable_exit_codes => 0}) do |r|
+          r.stdout.should match(/Sample Application Servlet Page/)
+        end
       end
     end
   end
