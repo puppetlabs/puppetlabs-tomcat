@@ -386,11 +386,11 @@ Specifies any attributes to remove from the Valve. Should be a hash of the forma
 
 #####`$catalina_home` 
 
-Specifies the root of the Tomcat installation.
+Specifies the root of the Tomcat installation. Only affects the instance installation if `$install_from_source` is true.
 
 #####`$catalina_base` 
 
-Specifies the base directory for the Tomcat installation.
+Specifies the base directory for the Tomcat installation. Only affects the instance installation if `$install_from_source` is true.
 
 #####`$install_from_source` 
 
@@ -503,6 +503,10 @@ Specifies the source to deploy the WAR from. Currently supports http(s)://, pupp
 ##Limitations
 
 This module only supports Tomcat installations on \*nix systems.  The `tomcat::config::server*` defines require augeas >= 1.0.0.
+
+###Multiple Instances
+
+If you are not installing Tomcat instances from source, depending on your packaging, multiple instances may not work.
 
 ##Development
 

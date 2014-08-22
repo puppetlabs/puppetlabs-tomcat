@@ -3,8 +3,10 @@
 # This define installs an instance of Tomcat.
 #
 # Parameters:
-# - $catalina_home is the root of the Tomcat installation.
-# - $catalina_base is the base directory for the Tomcat installation.
+# - $catalina_home is the root of the Tomcat installation. This parameter only
+#   affects the instance when $install_from_source is true.
+# - $catalina_base is the base directory for the Tomcat installation. This
+#   parameter only affects the instance when $install_from_source is true.
 # - $install_from_source is a boolean specifying whether or not to install from
 #   source. Defaults to true.
 # - The $source_url to install from. Required if $install_from_source is true.
@@ -16,8 +18,8 @@
 # - $package_name is the name of the package you want to install. Required if
 #   $install_from_source is false.
 define tomcat::instance (
-  $catalina_home          = $::tomcat::catalina_home,
-  $catalina_base          = $::tomcat::catalina_home,
+  $catalina_home          = undef,
+  $catalina_base          = undef,
   $install_from_source    = true,
   $source_url             = undef,
   $source_strip_first_dir = undef,
@@ -40,6 +42,22 @@ define tomcat::instance (
     fail('If not installing from source $package_name must be specified')
   }
 
+  if ! $install_from_source and ($catalina_home or $catalina_base) {
+    warning('Setting $catalina_home or $catalina_base when not installing from source doesn\'t affect the installation.')
+  }
+
+  if ! $catalina_home {
+    $_catalina_home = $::tomcat::catalina_home
+  } else {
+    $_catalina_home = $catalina_home
+  }
+
+  if ! $catalina_base {
+    $_catalina_base = $::tomcat::catalina_home
+  } else {
+    $_catalina_base = $catalina_base
+  }
+
   if $install_from_source {
     if ! $source_strip_first_dir {
       $source_strip = true
@@ -48,8 +66,8 @@ define tomcat::instance (
     }
 
     tomcat::instance::source { $name:
-      catalina_home          => $catalina_home,
-      catalina_base          => $catalina_base,
+      catalina_home          => $_catalina_home,
+      catalina_base          => $_catalina_base,
       source_url             => $source_url,
       source_strip_first_dir => $source_strip,
       require                => File[$catalina_base],
@@ -60,8 +78,8 @@ define tomcat::instance (
     }
   }
 
-  if $catalina_base != $catalina_home {
-    file { $catalina_base:
+  if $install_from_source and $_catalina_base != $_catalina_home {
+    file { $_catalina_base:
       ensure => directory,
       owner  => $::tomcat::user,
       group  => $::tomcat::group,

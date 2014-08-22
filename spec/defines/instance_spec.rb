@@ -64,6 +64,22 @@ describe 'tomcat::instance', :type => :define do
     )
     }
   end
+  context "install from package, set $catalina_base" do
+    let :facts do default_facts end
+    let :params do
+      {
+        :install_from_source => false,
+        :package_name        => 'tomcat',
+        :catalina_home       => '/opt/apache-tomcat',
+        :catalina_base       => '/opt/apache-tomcat/foo',
+      }
+    end
+
+    # This is supposed to generate a warning, but checking for that isn't
+    # currently supported in puppet-rspec, so just make sure it compiles
+    it { is_expected.to compile }
+    it { is_expected.to_not contain_file('/opt/apache-tomcat/foo') }
+  end
   describe "test install failures" do
     let :facts do default_facts end
     context "no source specified" do
