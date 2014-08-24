@@ -156,7 +156,7 @@ The `war_source` can be a local file, puppet:/// file, http, or ftp.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/server.xml.
 * `tomcat::instance`: Installs a Tomcat instance.
 * `tomcat::service`: Provides Tomcat service management.
-* `tomcat::setenv::entry`: Adds an entry to the setenv.sh script.
+* `tomcat::setenv::entry`: Adds an entry to the configuration file (ie. setenv.sh, /etc/sysconfig/tomcat, ...).
 * `tomcat::war`:  Manages the deployment of WAR files.
 
 ####Private Defined Types
@@ -462,9 +462,13 @@ Specifies the value of the parameter you're setting.
 
 Determines whether the fragment should be present or absent.
 
+#####`$config_file`
+
+Path to the configuration file to edit.
+
 #####`$base_path` 
 
-Sets the path to create the setenv.sh script under. Should be either '$catalina_base/bin' or '$catalina_home/bin'.
+Sets the path to create the setenv.sh script under. Should be either '$catalina_base/bin' or '$catalina_home/bin'. **Deprecated** This parameter is being deperecated, please use `$config_file`.
 
 #####`$parameter` 
 
