@@ -12,6 +12,10 @@
 #   Valid values are 'present', 'absent', 'true', and 'false'. Defaults to
 #   'present'.
 # _ Optionally specify a $war_name. Defaults to $name.
+# - $war_purge is a boolean specifying whether or not to purge the exploded WAR
+#   directory. Defaults to true. Only applicable when $war_ensure is 'absent'
+#   or 'false'. Note: if tomcat is running and autodeploy is on, setting
+#   $war_purge to false won't stop tomcat from auto-undeploying exploded WARs.
 # - $war_source is the source to deploy the WAR from. Currently supports
 #   http(s)://, puppet://, and ftp:// paths. $war_source must be specified
 #   unless $war_ensure is set to 'false' or 'absent'.
@@ -21,9 +25,11 @@ define tomcat::war(
   $deployment_path = undef,
   $war_ensure      = 'present',
   $war_name        = undef,
+  $war_purge       = true,
   $war_source      = undef,
 ) {
   validate_re($war_ensure, '^(present|absent|true|false)$')
+  validate_bool($war_purge)
 
   if $app_base and $deployment_path {
     fail('Only one of $app_base and $deployment_path can be specified.')
@@ -52,6 +58,15 @@ define tomcat::war(
     file { "${_deployment_path}/${_war_name}":
       ensure => absent,
       force  => false,
+    }
+    if $war_purge {
+      $war_dir_name = regsubst($_war_name, '\.war$', '')
+      if $war_dir_name != '' {
+        file { "${_deployment_path}/${war_dir_name}":
+          ensure => absent,
+          force  => true
+        }
+      }
     }
   } else {
     if ! $war_source {

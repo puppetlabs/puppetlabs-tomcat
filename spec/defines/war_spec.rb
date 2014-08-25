@@ -35,6 +35,11 @@ describe 'tomcat::war', :type => :define do
       'force'  => 'false',
     )
     }
+    it { is_expected.to contain_file('/opt/apache-tomcat/webapps/sample').with(
+      'ensure' => 'absent',
+      'force'  => 'true',
+    )
+    }
   end
   context 'set everything' do
     let :params do
@@ -65,6 +70,24 @@ describe 'tomcat::war', :type => :define do
     )
     }
   end
+  context 'war_purge is false' do
+    let :params do
+      {
+        :war_ensure => 'absent',
+        :war_purge  => false,
+      }
+    end
+    it { is_expected.to contain_file('/opt/apache-tomcat/webapps/sample.war').with(
+      'ensure' => 'absent',
+      'force'  => 'false',
+    )
+    }
+    it { is_expected.to_not contain_file('/opt/apache-tomcat/webapps/sample').with(
+      'ensure' => 'absent',
+      'force'  => 'true',
+    )
+    }
+  end
   describe 'failing tests' do
     context 'bad war name' do
       let :params do
@@ -90,6 +113,19 @@ describe 'tomcat::war', :type => :define do
         expect {
           is_expected.to compile
         }.to raise_error(Puppet::Error, /does not match/)
+      end
+    end
+    context 'bad purge' do
+      let :params do
+        {
+          :war_ensure => 'absent',
+          :war_purge  => 'foo',
+        }
+      end
+      it do
+        expect {
+          is_expected.to compile
+        }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end
     context 'invalid source' do
