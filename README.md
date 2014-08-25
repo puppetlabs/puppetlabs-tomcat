@@ -496,6 +496,10 @@ Specifies whether to add or remove the WAR. Valid values are 'present', 'absent'
 
 Specifies the name of the WAR. Defaults to '[name]' passed in the define. This parameter is optional.
 
+#####`$war_purge`
+
+Specifies whether to purge the exploded WAR directory.  Boolean defaulting to true. This parameter is only applicable when `$war_ensure` is 'absent' or 'false'. Setting this parameter to false will not prevent Tomcat from removing the exploded WAR directory if Tomcat is running and autoDeploy is set to true.
+
 #####`$war_source` 
 
 Specifies the source to deploy the WAR from. Currently supports http(s)://, puppet://, and ftp:// paths. `$war_source` must be specified unless `$war_ensure` is set to 'false' or 'absent'.
