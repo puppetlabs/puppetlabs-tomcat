@@ -57,6 +57,18 @@ describe 'tomcat::service', :type => :define do
     )
     }
   end
+  context 'using init with $catalina_base' do
+    let :params do
+      {
+        :use_init      => true,
+        :service_name  => 'tomcat',
+        :catalina_base => '/opt/apache-tomcat/foo',
+      }
+    end
+    # This should throw a warning, but that isn't supported by puppet-rspec
+    # so let's just make sure it compiles
+    it { is_expected.to compile }
+  end
   context 'set start/stop with init' do
     let :params do
       {
