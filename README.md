@@ -464,13 +464,13 @@ Determines whether the fragment should be present or absent.
 
 #####`$config_file`
 
-Path to the configuration file to edit.
+Path to the configuration file to edit. Defaults to '$::tomcat::catalina_home/bin/setenv.sh'.
 
 #####`$base_path` 
 
 Sets the path to create the setenv.sh script under. Should be either '$catalina_base/bin' or '$catalina_home/bin'. **Deprecated** This parameter is being deperecated, please use `$config_file`.
 
-#####`$parameter` 
+#####`$param`
 
 Specifies the parameter you're setting. Defaults to '[name]' passed in the define.
 
