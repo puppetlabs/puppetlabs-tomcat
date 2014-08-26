@@ -14,7 +14,7 @@
     * [Classes](#classes)
     * [Defined Types](#defined-types)
     * [Parameters](#parameters)
-        - [tomcat](#tomcat)
+        - [tomcat](#tomcat-1)
         - [tomcat::config::server](#tomcatconfigserver)
         - [tomcat::config::server::connector](#tomcatconfigserverconnector)
         - [tomcat::config::server::engine](#tomcatconfigserverengine)
@@ -124,6 +124,8 @@ tomcat::service { 'tomcat6':
 
 ###I want to deploy WAR files.
 
+The name of the WAR must end with '.war'. 
+
 ```puppet
 tomcat::war { 'sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat8',
@@ -131,6 +133,39 @@ tomcat::war { 'sample.war':
       }
 ```
 The `war_source` can be a local file, puppet:/// file, http, or ftp.
+
+###I want to change my congfiguration
+
+Tomcat will not restart if its configuration changes unless you provide a `notify`.
+
+For instance, to remove a connector, you would start with a manifest like this:
+
+```puppet
+tomcat::config::server::connector { 'tomcat8-jsvc':
+        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        port                  => '80',
+        protocol              => 'HTTP/1.1',
+        additional_attributes => {
+          'redirectPort' => '443'
+        },
+        connector_ensure => 'present'
+}
+```
+
+Then you would set `connector_ensure` to 'absent', and provide `notify` for the service.   
+
+```puppet 
+tomcat::config::server::connector { 'tomcat8-jsvc':
+        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        port                  => '80',
+        protocol              => 'HTTP/1.1',
+        additional_attributes => {
+          'redirectPort' => '443'
+        },
+        connector_ensure => 'present'
+        notify => Tomcat::Service['jsvc-default'],
+}
+```
 
 ##Reference
 
@@ -433,7 +468,7 @@ Specifies the path Java is installed under. Only applies if `$use_jsvc = 'true'`
 
 #####`$service_ensure` 
 
-Determines whether the Tomcat service is on or off. (To determine whether the service is present/absent, see [tomcat::config::server::service](#tomcatconfigserverservice).)
+Determines whether the Tomcat service is on or off. Valid values are 'running', 'stopped', 'true', and 'false'. (To determine whether the service is present/absent, see [tomcat::config::server::service](#tomcatconfigserverservice).)
 
 #####`$use_init`
 
@@ -498,7 +533,7 @@ Specifies whether to add or remove the WAR. Valid values are 'present', 'absent'
 
 #####`$war_name`
 
-Specifies the name of the WAR. Defaults to '[name]' passed in the define. This parameter is optional.
+Specifies the name of the WAR. Must end in '.war'. Defaults to '[name]' passed in the define. This parameter is optional.
 
 #####`$war_purge`
 
