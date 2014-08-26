@@ -59,4 +59,18 @@ describe 'tomcat::setenv::entry', :type => :define do
     })
     }
   end
+  context 'specific config_file' do
+    let :params do
+      {
+        'value'       => '/bin/true',
+        'config_file' => '/etc/sysconfig/tomcat',
+      }
+    end
+
+    it { is_expected.to contain_concat('/etc/sysconfig/tomcat') }
+    it { is_expected.to contain_concat__fragment('setenv-FOO').with({
+      'target' => '/etc/sysconfig/tomcat',
+    })
+    }
+  end
 end
