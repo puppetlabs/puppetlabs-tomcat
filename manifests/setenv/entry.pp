@@ -6,7 +6,7 @@
 # - $value is the value of the parameter you're setting
 # - $ensure whether the fragment should be present or absent.
 # - $config_file is the path to the config file to edit
-# - $parameter is the parameter you're setting. Defaults to $name.
+# - $param is the parameter you're setting. Defaults to $name.
 # - $quote_char is the optional character to quote the value with.
 # - (Deprecated) $base_path is the path to create the setenv.sh script under. Should be
 #   either $catalina_base/bin or $catalina_home/bin.
