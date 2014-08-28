@@ -42,6 +42,14 @@ Tomcat is a Java web service provider. The Puppet Labs module gives you a way to
 
 **NOTE: You must have Java installed in order to use this module. The version of Java needed will depend on the version of Tomcat you are installing. Older versions of Tomcat require >=java6, while the latest version of Tomcat needs >=java7.**
 
+###Stdlib
+
+This module requires puppetlabs-stdlib >= 4.0. On Puppet Enterprise, this upgrade must be completed manually before this module can be installed. To update stdlib, run:
+
+```
+puppet module upgrade puppetlabs-stdlib
+```
+
 ###Beginning with tomcat
 
 The simplest way to get Tomcat up and running with the tomcat module is to install the Tomcat package from EPEL,
@@ -546,6 +554,14 @@ Specifies the source to deploy the WAR from. Currently supports http(s)://, pupp
 ##Limitations
 
 This module only supports Tomcat installations on \*nix systems.  The `tomcat::config::server*` defines require augeas >= 1.0.0.
+
+###Stdlib
+
+This module requires puppetlabs-stdlib >= 4.0. On Puppet Enterprise, this upgrade must be completed manually before this module can be installed. To update stdlib, run:
+
+```
+puppet module upgrade puppetlabs-stdlib
+```
 
 ###Multiple Instances
 
