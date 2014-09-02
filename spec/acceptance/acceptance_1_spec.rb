@@ -68,7 +68,7 @@ describe 'Acceptance case one', :unless => stop_test do
         additional_attributes => {
           'redirectPort' => '443'
         },
-        notify => Tomcat::Service['jsvc-default'],
+        notify                => Tomcat::Service['jsvc-default'],
       }->
       tomcat::config::server::connector { 'tomcat8-ajp':
         catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
@@ -81,7 +81,7 @@ describe 'Acceptance case one', :unless => stop_test do
       }->
       tomcat::war { 'war_one.war':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        war_source => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source    => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
       }->
       tomcat::setenv::entry { 'JAVA_HOME':
         base_path => '/opt/apache-tomcat/tomcat8-jsvc/bin',
@@ -89,7 +89,7 @@ describe 'Acceptance case one', :unless => stop_test do
       }->
       tomcat::service { 'jsvc-default':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        #java_home     => $java_home,
+        java_home     => $java_home,
         use_jsvc      => true,
       }
       EOS
@@ -109,8 +109,8 @@ describe 'Acceptance case one', :unless => stop_test do
       class{ 'tomcat':}
       tomcat::service{ 'jsvc-default':
         service_ensure => stopped,
-        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        use_jsvc      => true,
+        catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+        use_jsvc       => true,
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -125,10 +125,18 @@ describe 'Acceptance case one', :unless => stop_test do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
       class{ 'tomcat':}
+
+      $java_home = $::osfamily ? {
+        'RedHat' => '/etc/alternatives/java_sdk',
+        'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
+        default  => undef
+      }
+
       tomcat::service{ 'jsvc-default':
-        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+        catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
         service_ensure => true,
-        use_jsvc      => true,
+        use_jsvc       => true,
+        java_home      => $java_home,
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -155,7 +163,7 @@ describe 'Acceptance case one', :unless => stop_test do
       shell('sleep 15')
     end
     it 'Should not have deployed the war' do
-      shell('curl --retry 10 --retry-delay 3 localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
+      shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/The requested resource is not available/)
       end
     end
@@ -171,6 +179,13 @@ describe 'Acceptance case one', :unless => stop_test do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
       class{ 'tomcat':}
+
+      $java_home = $::osfamily ? {
+        'RedHat' => '/etc/alternatives/java_sdk',
+        'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
+        default  => undef
+      }
+
       tomcat::config::server::connector { 'tomcat8-jsvc':
         catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
         port                  => '80',
@@ -183,7 +198,7 @@ describe 'Acceptance case one', :unless => stop_test do
       }
       tomcat::service { 'jsvc-default':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        #java_home     => $java_home,
+        java_home     => $java_home,
         use_jsvc      => true,
       }
       EOS
