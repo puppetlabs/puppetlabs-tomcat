@@ -85,8 +85,8 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
         service_ensure => 'running',
       }
       EOS
-      shell('sleep 15')
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
+      shell('sleep 15')
     end
     it 'Should be serving a page on port 8180' do
       shell('curl localhost:8180') do |r|
@@ -105,8 +105,8 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
         war_ensure => 'false',
       }
       EOS
-      shell('sleep 15')
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
+      shell('sleep 15')
     end
     it 'Should not have deployed the war' do
       shell('curl localhost:8180/tomcat7-sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
@@ -256,9 +256,11 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
     end
     it 'should have changed the conf.xml file' do
       #validation
-      v = '<Host name="hulk-smash" appBase="/opt/apache-tomcat/tomcat7/webapps" astrological_sign="scorpio" favorite-beer="PBR"></Host>'
+      matches = ['<Host name="hulk-smash".*appBase="/opt/apache-tomcat/tomcat7/webapps".*></Host>','<Host name="hulk-smash".*astrological_sign="scorpio".*></Host>','<Host name="hulk-smash".*favorite-beer="PBR".*></Host>']
       shell('cat /opt/apache-tomcat/tomcat7/conf/server.xml', :acceptable_exit_codes => 0) do |r|
-        r.stdout.should match(/#{v}/)
+        matches.each do |m|
+          r.stdout.should match(/#{m}/)
+        end
       end
     end
     it 'Should apply the manifest to remove a engine attribute without error' do
