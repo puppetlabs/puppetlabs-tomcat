@@ -29,7 +29,7 @@ describe 'Acceptance case one', :unless => stop_test do
       }
 
       tomcat::instance { 'tomcat_one':
-        source_url    => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.9/bin/apache-tomcat-8.0.9.tar.gz',
+        source_url    => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.11/bin/apache-tomcat-8.0.11.tar.gz',
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
       }->
       staging::extract { 'commons-daemon-native.tar.gz':
