@@ -35,14 +35,15 @@ define tomcat::setenv::entry (
 
   if ! defined(Concat[$_config_file]) {
     concat { $_config_file:
-      owner => $::tomcat::user,
-      group => $::tomcat::group,
+      owner          => $::tomcat::user,
+      group          => $::tomcat::group,
+      ensure_newline => true,
     }
   }
 
   concat::fragment { "setenv-${name}":
     ensure  => $ensure,
     target  => $_config_file,
-    content => inline_template('<%= @param %>=<%= @_quote_char %><%= @value %><%= @_quote_char %>'),
+    content => inline_template('<%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %>'),
   }
 }

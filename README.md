@@ -499,7 +499,7 @@ Sets the stop command to use for the service.
 
 #####`$value` 
 
-Specifies the value of the parameter you're setting.
+Specifies the value of the parameter you're setting.  If array is passed, values are separated with a single space. 
 
 #####`$ensure` 
 
