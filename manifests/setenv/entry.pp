@@ -43,6 +43,6 @@ define tomcat::setenv::entry (
   concat::fragment { "setenv-${name}":
     ensure  => $ensure,
     target  => $_config_file,
-    content => inline_template('<%= @param %>=<%= @_quote_char %><%= @value %><%= @_quote_char %>'),
+    content => inline_template('export <%= @param %>=<%= @_quote_char %><%= @value %><%= @_quote_char %>'),
   }
 }
