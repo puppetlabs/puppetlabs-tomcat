@@ -73,4 +73,21 @@ describe 'tomcat::setenv::entry', :type => :define do
     })
     }
   end
+  context 'array' do
+    let :params do
+      {
+        'param'      => 'BAR',
+        'value'      => ['/bin/true', '/bin/false'],
+        'quote_char' => '"',
+        'base_path'  => '/opt/apache-tomcat/foo/bin'
+      }
+    end
+
+    it { is_expected.to contain_concat('/opt/apache-tomcat/foo/bin/setenv.sh') }
+    it { is_expected.to contain_concat__fragment('setenv-FOO').with_content(/BAR="\/bin\/true \/bin\/false"/).with({
+      'ensure' => 'present',
+      'target' => '/opt/apache-tomcat/foo/bin/setenv.sh',
+    })
+    }
+  end
 end
