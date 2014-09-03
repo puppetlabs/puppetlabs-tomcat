@@ -2,6 +2,16 @@ require 'spec_helper_acceptance'
 
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
+tcat_version = String.new
+shell('curl http://tomcat.apache.org/download-60.cgi?Preferred=http%3A%2F%2Fmirror.symnds.com%2Fsoftware%2FApache%2F', :acceptable_exit_codes => 0) do |r|
+  /apache-tomcat-(.{4,7}).tar.gz/.match(r.stdout).to_a.uniq.each do |m|
+    if m.length < 7
+      tcat_version = m
+      break
+    end
+  end
+end
+
 describe 'Two different instances of Tomcat 6 in the same manifest', :unless => stop_test do
 
   context 'Initial install Tomcat and verification' do
@@ -10,7 +20,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       class { 'tomcat':}
       class { 'java':}
       tomcat::instance { 'tomcat6':
-        source_url => 'http://mirror.symnds.com/software/Apache/tomcat/tomcat-6/v6.0.41/bin/apache-tomcat-6.0.41.tar.gz',
+        source_url => 'http://mirror.symnds.com/software/Apache/tomcat/tomcat-6/v#{tcat_version}/bin/apache-tomcat-#{tcat_version}.tar.gz',
         catalina_base => '/opt/apache-tomcat/tomcat6',
       }->
       tomcat::config::server { 'tomcat6':
@@ -43,7 +53,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       }
 
       tomcat::instance { 'tomcat6039':
-        source_url => 'http://mirror.symnds.com/software/Apache/tomcat/tomcat-6/v6.0.39/bin/apache-tomcat-6.0.39.tar.gz',
+        source_url => 'http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.39/bin/apache-tomcat-6.0.39.tar.gz',
         catalina_base => '/opt/apache-tomcat/tomcat6039',
       }->
       tomcat::config::server { 'tomcat6039':
