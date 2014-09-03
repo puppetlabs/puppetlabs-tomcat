@@ -2,6 +2,16 @@ require 'spec_helper_acceptance'
 
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
+tcat_version = String.new
+shell('curl http://tomcat.apache.org/download-70.cgi?Preferred=http%3A%2F%2Fwww.dsgnwrld.com%2Fam%2F', :acceptable_exit_codes => 0) do |r|
+  /apache-tomcat-(.{4,7}).tar.gz/.match(r.stdout).to_a.uniq.each do |m|
+    if m.length < 7
+      tcat_version = m
+      break
+    end
+  end
+end
+
 describe 'Tomcat Install source -defaults', :unless => stop_test do
 
   shell('curl -o /tmp/sample.war https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war', :acceptable_exit_codes => 0)
@@ -12,7 +22,7 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
       class { 'tomcat':}
       class { 'java':}
       tomcat::instance { 'tomcat7':
-        source_url => 'http://www.dsgnwrld.com/am/tomcat/tomcat-7/v7.0.55/bin/apache-tomcat-7.0.55.tar.gz',
+        source_url => 'http://www.dsgnwrld.com/am/tomcat/tomcat-7/v#{tcat_version}/bin/apache-tomcat-#{tcat_version}.tar.gz',
         catalina_base => '/opt/apache-tomcat/tomcat7',
       }->
       tomcat::config::server { 'tomcat7':
