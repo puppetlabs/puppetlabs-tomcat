@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-tomcat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "puppetlabs",
   "summary": "Puppet module for managing Apache Tomcat.",
   "license": "Apache 2.0",
