@@ -1,3 +1,12 @@
+##2014-09-04 - Supported Release 1.0.1
+###Summary
+
+This is a bugfix release.
+
+###Bugfixes
+- Fix typo in tomcat::instance
+- Update acceptance tests for new tomcat releases
+
 ##2014-08-27 - Supported Release 1.0.0
 ###Summary
 
