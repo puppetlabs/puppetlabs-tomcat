@@ -70,7 +70,7 @@ define tomcat::instance (
       catalina_base          => $_catalina_base,
       source_url             => $source_url,
       source_strip_first_dir => $source_strip,
-      require                => File[$catalina_base],
+      require                => File[$_catalina_base],
     }
   } else {
     tomcat::instance::package { $package_name:
