@@ -28,7 +28,7 @@ define tomcat::config::context (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
-  $_watched_resource = 'set Context/WatchedResource/#text WEB-ING/web.xml'
+  $_watched_resource = 'set Context/WatchedResource/#text "WEB-ING/web.xml"'
 
   $changes = delete_undef_values([$_watched_resource])
 
