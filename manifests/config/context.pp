@@ -28,33 +28,10 @@ define tomcat::config::context (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
-#  validate_re($class_name_ensure, '^(present|absent|true|false)$')
-#  validate_re($address_ensure, '^(present|absent|true|false)$')
-#
-#  if $class_name_ensure =~ /^(absent|false)$/ {
-#    $_class_name = 'rm Server/#attribute/className'
-#  } elsif $class_name {
-#    $_class_name = "set Server/#attribute/className ${class_name}"
-#  }
-#  if $address_ensure =~ /^(absent|false)$/ {
-#    $_address = 'rm Server/#attribute/address'
-#  } elsif $address {
-#    $_address = "set Server/#attribute/address ${address}"
-#  }
-#
-#  if $port {
-#    $_port = "set Server/#attribute/port ${port}"
-#  }
-#
-#  if $shutdown {
-#    $_shutdown = "set Server/#attribute/shutdown ${shutdown}"
-#  }
-#
-#  $changes = delete_undef_values([$_class_name, $_address, $_port, $_shutdown])
+  $_context          = 'set Context'
+  $_watched_resource = 'set Context/WatchedResource/#text WEB-ING/web.xml'
 
-  $_context = 'set Context'
-
-  $changes = delete_undef_values([$_context])
+  $changes = delete_undef_values([$_context, $_watched_resource])
 
   if ! empty($changes) {
     augeas { "context-${catalina_base}":
