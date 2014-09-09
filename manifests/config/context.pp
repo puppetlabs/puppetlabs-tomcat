@@ -28,10 +28,9 @@ define tomcat::config::context (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
-  $_context          = 'set Context'
   $_watched_resource = 'set Context/WatchedResource/#text WEB-ING/web.xml'
 
-  $changes = delete_undef_values([$_context, $_watched_resource])
+  $changes = delete_undef_values([$_watched_resource])
 
   if ! empty($changes) {
     augeas { "context-${catalina_base}":
