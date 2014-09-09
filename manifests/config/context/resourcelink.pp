@@ -1,61 +1,74 @@
-# Definition tomcat::config::context::resourcelink
+# Definition: tomcat::config::server::resourcelink
 #
-# Configure a ResourceLink element in $CATALINA_BASE/conf/context.xml
+# Configure a ResourceLink element in the designated xml config.
 #
 # Parameters:
+# - $ensure specifies whether you are trying to add or remove the
+#   ResourceLink element. Valid values are 'true', 'false', 'present', and
+#   'absent'. Defaults to 'present'.
 # - $catalina_base is the root of the Tomcat installation
-# - $resourceLink_ensure specifies whether you are trying to add or remove the resourceLink
-#   element. Valid values are 'true', 'false', 'present', or 'absent'. Defaults
-#   to 'present'.
-# - An optional hash of $additional_attributes to add to the Context. Should be of
-#   the format 'attribute' => 'value'.
-# - An optional array of $attributes_to_remove from the Context.
-#
+# - $catalina_base is the base directory for the Tomcat installation.
+# - $resourcelink_name The name of the resource link to be created, relative
+#   to the java:comp/env context. Defaults to $name
+# - $resourcelink_global The name of the linked global resource in the global JNDI context. Optional, defaults to undef
+# - $resourcelink_type The fully qualified Java class name expected by the web
+#   application when it performs a lookup for this resource link. Optional,
+#   defaults to undef
+# - $context_xml is the xml configuration file for the ResourceLink configuration. Default: $catalina_base/conf/context.xml
 define tomcat::config::context::resourcelink (
-  $catalina_base         = $::tomcat::catalina_home,
-  $context_ensure        = 'present',
-  $additional_attributes = {},
-  $attributes_to_remove  = [],
-  $context_config         = undef,
+  $ensure              = 'present',
+  $catalina_base       = $::tomcat::catalina_home,
+  $resourcelink_name   = undef,
+  $resourcelink_global = undef,
+  $resourcelink_type   = undef,
+  $context_xml         = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Context configurations require Augeas >= 1.0.0')
   }
 
-  validate_re($context_ensure, '^(present|absent|true|false)$')
-  validate_hash($additional_attributes)
-  validate_array($attributes_to_remove)
+  validate_re($ensure, '^(present|absent|true|false)$')
 
-  if $context_config {
-    $_context_config = $server_config
+  if $resourcelink_name {
+    $_resourcelink_name = $resourcelink_name
   } else {
-    $_context_config = "${catalina_base}/conf/context.xml"
+    $_resourcelink_name = $name
   }
 
-  $path = "Context/ResourceLink[#attribute/name='${name}']"
-  if $context_ensure =~ /^(absent|false)$/ {
-    $augeaschanges = "rm ${path}"
+  if $context_xml {
+    $_context_xml = $context_xml
   } else {
-    $context = "set ${path}/#attribute/name ${name}"
-
-    if ! empty($additional_attributes) {
-      $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${path}/#attribute/"), "'")
-    } else {
-      $_additional_attributes = undef
-    }
-
-    if ! empty(any2array($attributes_to_remove)) {
-      $_attributes_to_remove = prefix(any2array($attributes_to_remove), "rm ${path}/#attribute/")
-    } else {
-      $_attributes_to_remove = undef
-    }
-
-    $augeaschanges = delete_undef_values(flatten([$context, $_additional_attributes, $_attributes_to_remove]))
+    $_context_xml = "${catalina_base}/conf/context.xml"
   }
 
-  augeas { "${catalina_base}-${_parent_service}-${_parent_engine}-${parent_host}-context-${name}":
+  $base_path = "Context/ResourceLink[#attribute/name='${_resourcelink_name}']"
+
+  if $ensure =~ /^(absent|false)$/ {
+    $augeaschanges = "rm ${base_path}"
+  } else {
+    $set_name = "set ${base_path}/#attribute/name ${_resourcelink_name}"
+
+    if $resourcelink_global {
+      $set_global = "set ${base_path}/#attribute/global ${resourcelink_global}"
+    } else {
+      $set_global = undef
+    }
+    if $resourcelink_type {
+      $set_type = "set ${base_path}/#attribute/type ${resourcelink_type}"
+    } else {
+      $set_type = undef
+    }
+
+    $augeaschanges = delete_undef_values(flatten([
+      $set_name,
+      $set_global,
+      $set_type,
+    ]))
+  }
+
+  augeas { "${catalina_base}-context-resourcelink-${name}":
     lens    => 'Xml.lns',
-    incl    => $_context_config,
+    incl    => $_context_xml,
     changes => $augeaschanges,
   }
 }
