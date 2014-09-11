@@ -66,15 +66,15 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_range": ">= 4.0.0"
+      "version_requirement": ">= 4.0.0"
     },
     {
       "name": "puppetlabs-concat",
-      "version_range": ">= 1.0.4"
+      "version_requirement": ">= 1.0.4"
     },
     {
       "name": "nanliu-staging",
-      "version_range": ">= 0.4.1"
+      "version_requirement": ">= 0.4.1"
     }
   ]
 }
