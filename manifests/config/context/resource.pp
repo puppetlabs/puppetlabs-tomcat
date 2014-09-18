@@ -59,7 +59,7 @@ define tomcat::config::context::resource (
                                     $_factory ])
   }
 
-  augeas { "context-${catalina_base}-resource-${_connection_name}":
+  augeas { "context-${catalina_base}-resource-${name}":
     lens    => 'Xml.lns',
     incl    => "${catalina_base}/conf/context.xml",
     changes => $changes,
