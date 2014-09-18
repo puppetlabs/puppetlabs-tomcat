@@ -31,17 +31,17 @@ describe 'tomcat::config::server::connector', :type => :define do
         ],
       }
     end
-    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-AJP/1.3').with(
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/protocol=\'AJP/1.3\']/#attribute/protocol AJP/1.3',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/protocol=\'AJP/1.3\']/#attribute/port 8180',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/protocol=\'AJP/1.3\']/#attribute/redirectPort 8543',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/protocol=\'AJP/1.3\']/#attribute/connectionTimeout 20000',
-        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/protocol=\'AJP/1.3\']/#attribute/foo',
-        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/protocol=\'AJP/1.3\']/#attribute/bar',
-        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/protocol=\'AJP/1.3\']/#attribute/baz',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/port 8180',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/protocol AJP/1.3',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/redirectPort 8543',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/connectionTimeout 20000',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/foo',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/bar',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
       ],
     )
     }
@@ -51,9 +51,26 @@ describe 'tomcat::config::server::connector', :type => :define do
       {
         :catalina_base    => '/opt/apache-tomcat/test',
         :connector_ensure => 'absent',
+        :port             => '8180',
       }
     end
-    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-HTTP/1.1').with(
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-8180').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'rm Server/Service[#attribute/name=\'Catalina\']/Connector[#attribute/port=\'8180\']',
+      ],
+    )
+    }
+  end
+  context 'remove connector no port' do
+    let :params do
+      {
+        :catalina_base    => '/opt/apache-tomcat/test',
+        :connector_ensure => 'absent',
+      }
+    end
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-').with(
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
@@ -62,11 +79,27 @@ describe 'tomcat::config::server::connector', :type => :define do
     )
     }
   end
+  context 'two connectors with same protocol' do
+    let :pre_condition do
+      'class { "tomcat": }
+      tomcat::config::server::connector { "temp":
+        protocol => "HTTP/1.1",
+        port     => "443",
+      }
+      '
+    end
+    let :params do
+      {
+        :port => '8180',
+      }
+    end
+    it { is_expected.to compile }
+  end
   describe 'failing tests' do
     context 'bad connector_ensure' do
       let :params do
         {
-          :connector_ensure => 'foo'
+          :connector_ensure => 'foo',
         }
       end
       it do
@@ -78,7 +111,7 @@ describe 'tomcat::config::server::connector', :type => :define do
     context 'bad additional_attributes' do
       let :params do
         {
-          :additional_attributes => 'foo'
+          :additional_attributes => 'foo',
         }
       end
       it do
@@ -96,7 +129,7 @@ describe 'tomcat::config::server::connector', :type => :define do
       it do
         expect {
           is_expected.to compile
-        }.to raise_error(Puppet::Error, /\$port must be specified/)
+        }.to raise_error(Puppet::Error)
       end
     end
     context 'old augeas' do
