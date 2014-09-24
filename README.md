@@ -142,7 +142,7 @@ tomcat::war { 'sample.war':
 ```
 The `war_source` can be a local file, puppet:/// file, http, or ftp.
 
-###I want to change my congfiguration
+###I want to change my configuration
 
 Tomcat will not restart if its configuration changes unless you provide a `notify`.
 
