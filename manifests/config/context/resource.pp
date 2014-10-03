@@ -16,6 +16,7 @@
 #   be of the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Connector.
 define tomcat::config::context::resource (
+  $resource_name,
   $auth,
   $type,
   $driverClassName,
@@ -40,7 +41,7 @@ define tomcat::config::context::resource (
   if $resource_ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
   } else {
-    $_name            = "set ${base_path}/#attribute/name ${name}"
+    $_resource_name   = "set ${base_path}/#attribute/name ${resource_name}"
     $_auth            = "set ${base_path}/#attribute/auth ${auth}"
     $_type            = "set ${base_path}/#attribute/type ${type}"
     $_driverClassName =
@@ -53,7 +54,7 @@ define tomcat::config::context::resource (
     $_url             = "set ${base_path}/#attribute/url ${url}"
     $_factory         = "set ${base_path}/#attribute/factory ${factory}"
 
-    $changes = delete_undef_values([$_name, $_auth, $_type,
+    $changes = delete_undef_values([$_resource_name, $_auth, $_type,
                                     $_driverClassName, $_username, $_password,
                                     $_maxActive, $_maxIdle, $_maxWait, $_url,
                                     $_factory ])
