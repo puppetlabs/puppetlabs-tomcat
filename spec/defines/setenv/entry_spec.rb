@@ -8,6 +8,7 @@ describe 'tomcat::setenv::entry', :type => :define do
     {
       :osfamily       => 'Debian',
       :concat_basedir => '/tmp',
+      :id             => 'root',
     }
   end
   let :title do

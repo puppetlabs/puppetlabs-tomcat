@@ -10,7 +10,8 @@ describe 'tomcat::instance::package', :type => :define do
   context 'private class fails' do
     let :facts do
       {
-        :osfamily => 'Debian'
+        :osfamily           => 'Debian',
+        :caller_module_name => 'Test'
       }
     end
     it do
