@@ -64,21 +64,32 @@ define tomcat::config::server::engine (
     $_background_processor_delay = "rm ${base_path}/#attribute/backgroundProcessorDelay"
   } elsif $background_processor_delay {
     $_background_processor_delay = "set ${base_path}/#attribute/backgroundProcessorDelay ${background_processor_delay}"
+  } else {
+    $_background_processor_delay = undef
   }
+
   if $class_name_ensure =~ /^(absent|false)$/ {
     $_class_name = "rm ${base_path}/#attribute/className"
   } elsif $class_name {
     $_class_name = "set ${base_path}/#attribute/className ${class_name}"
+  } else {
+    $_class_name = undef
   }
+
   if $jvm_route_ensure =~ /^(absent|false)$/ {
     $_jvm_route = "rm ${base_path}/#attribute/jvmRoute"
   } elsif $jvm_route {
     $_jvm_route = "set ${base_path}/#attribute/jvmRoute ${jvm_route}"
+  } else {
+    $_jvm_route = undef
   }
+
   if $start_stop_threads_ensure =~ /^(absent|false)$/ {
     $_start_stop_threads = "rm ${base_path}/#attribute/startStopThreads"
   } elsif $start_stop_threads {
     $_start_stop_threads = "set ${base_path}/#attribute/startStopThreads ${start_stop_threads}"
+  } else {
+    $_start_stop_threads = undef
   }
 
   $changes = delete_undef_values([$_name_change, $_default_host, $_background_processor_delay, $_class_name, $_jvm_route, $_start_stop_threads])

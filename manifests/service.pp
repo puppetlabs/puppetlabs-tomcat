@@ -69,6 +69,8 @@ define tomcat::service (
   if $use_jsvc {
     if $java_home {
       $_jsvc_home = "-home ${java_home} "
+    } else {
+      $_jsvc_home = undef
     }
     $_service_name = "tomcat-${name}"
     $_hasstatus    = false

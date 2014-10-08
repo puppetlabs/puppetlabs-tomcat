@@ -6,7 +6,8 @@ describe 'tomcat::instance', :type => :define do
   end
   let :default_facts do
     {
-      :osfamily => 'Debian'
+      :osfamily         => 'Debian',
+      :staging_http_get => 'curl'
     }
   end
   let :title do

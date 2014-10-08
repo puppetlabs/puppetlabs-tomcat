@@ -35,19 +35,28 @@ define tomcat::config::server (
     $_class_name = 'rm Server/#attribute/className'
   } elsif $class_name {
     $_class_name = "set Server/#attribute/className ${class_name}"
+  } else {
+    $_class_name = undef
   }
+
   if $address_ensure =~ /^(absent|false)$/ {
     $_address = 'rm Server/#attribute/address'
   } elsif $address {
     $_address = "set Server/#attribute/address ${address}"
+  } else {
+    $_address = undef
   }
 
   if $port {
     $_port = "set Server/#attribute/port ${port}"
+  } else {
+    $_port = undef
   }
 
   if $shutdown {
     $_shutdown = "set Server/#attribute/shutdown ${shutdown}"
+  } else {
+    $_shutdown = undef
   }
 
   $changes = delete_undef_values([$_class_name, $_address, $_port, $_shutdown])
