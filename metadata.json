@@ -67,7 +67,7 @@
     }
   ],
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":"4.x"},
+    {"name":"puppetlabs-stdlib","version_requirement":">= 4.2.0"},
     {"name":"puppetlabs-concat","version_requirement":">= 1.0.4"},
     {"name":"nanliu-staging","version_requirement":">= 0.4.1"}
   ]

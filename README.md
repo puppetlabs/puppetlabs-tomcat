@@ -557,7 +557,7 @@ This module only supports Tomcat installations on \*nix systems.  The `tomcat::c
 
 ###Stdlib
 
-This module requires puppetlabs-stdlib >= 4.0. On Puppet Enterprise, this upgrade must be completed manually before this module can be installed. To update stdlib, run:
+This module requires puppetlabs-stdlib >= 4.2.0. On Puppet Enterprise, this upgrade must be completed manually before this module can be installed. To update stdlib, run:
 
 ```
 puppet module upgrade puppetlabs-stdlib
