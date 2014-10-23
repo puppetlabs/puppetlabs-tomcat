@@ -3,7 +3,7 @@ require 'spec_helper_acceptance'
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
 tcat_version = String.new
-shell('curl http://tomcat.apache.org/download-60.cgi?Preferred=http%3A%2F%2Fmirror.symnds.com%2Fsoftware%2FApache%2F', :acceptable_exit_codes => 0) do |r|
+shell('curl -k http://tomcat.apache.org/download-60.cgi?Preferred=http%3A%2F%2Fmirror.symnds.com%2Fsoftware%2FApache%2F', :acceptable_exit_codes => 0) do |r|
   /apache-tomcat-(.{4,7}).tar.gz/.match(r.stdout).to_a.uniq.each do |m|
     if m.length < 7
       tcat_version = m
