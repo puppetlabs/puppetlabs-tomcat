@@ -25,6 +25,20 @@ describe 'tomcat', :type => :class do
     }
   end
 
+  context "not installing from source" do
+    let :facts do
+      {
+        :osfamily => 'Debian'
+      }
+    end
+    let :params do
+      {
+        :install_from_source => false,
+      }
+    end
+    it { is_expected.not_to contain_file("/opt/apache-tomcat") }
+  end
+
   context "not managing user/group" do
     let :facts do
       {

@@ -20,7 +20,7 @@
 define tomcat::instance (
   $catalina_home          = undef,
   $catalina_base          = undef,
-  $install_from_source    = true,
+  $install_from_source    = $::tomcat::install_from_source,
   $source_url             = undef,
   $source_strip_first_dir = undef,
   $package_ensure         = undef,

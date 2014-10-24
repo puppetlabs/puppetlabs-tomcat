@@ -20,12 +20,14 @@
 #   Boolean specifying whether or not to manage the group. Defaults to true.
 #
 class tomcat (
-  $catalina_home = $::tomcat::params::catalina_home,
-  $user          = $::tomcat::params::user,
-  $group         = $::tomcat::params::group,
-  $manage_user   = true,
-  $manage_group  = true,
+  $catalina_home       = $::tomcat::params::catalina_home,
+  $user                = $::tomcat::params::user,
+  $group               = $::tomcat::params::group,
+  $install_from_source = true,
+  $manage_user         = true,
+  $manage_group        = true,
 ) inherits ::tomcat::params {
+  validate_bool($install_from_source)
   validate_bool($manage_user)
   validate_bool($manage_group)
 
@@ -36,10 +38,12 @@ class tomcat (
     default: { }
   }
 
-  file { $catalina_home:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
+  if $install_from_source {
+    file { $catalina_home:
+      ensure => directory,
+      owner  => $user,
+      group  => $group,
+    }
   }
 
   if $manage_user {
