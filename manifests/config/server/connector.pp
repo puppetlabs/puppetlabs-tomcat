@@ -37,28 +37,38 @@ define tomcat::config::server::connector (
     $_protocol = $name
   }
 
-  $base_path = "Server/Service[#attribute/name='${parent_service}']/Connector[#attribute/protocol='${_protocol}']"
+  $path = "Server/Service[#attribute/name='${parent_service}']"
 
   if $connector_ensure =~ /^(absent|false)$/ {
+    if ! $port {
+      $base_path = "${path}/Connector[#attribute/protocol='${_protocol}']"
+    } else {
+      $base_path = "${path}/Connector[#attribute/port='${port}']"
+    }
     $changes = "rm ${base_path}"
   } else {
     if ! $port {
-      fail('$port must be specified if you aren\'t removing the connector')
+      fail('$port must be specified unless $connector_ensure is set to \'absent\' or \'false\'')
     }
 
-    $_protocol_change = "set ${base_path}/#attribute/protocol ${_protocol}"
+    $base_path = "${path}/Connector[#attribute/port='${port}']"
     $_port = "set ${base_path}/#attribute/port ${port}"
+    $_protocol_change = "set ${base_path}/#attribute/protocol ${_protocol}"
     if ! empty($additional_attributes) {
       $_additional_attributes = prefix(join_keys_to_values($additional_attributes, ' '), "set ${base_path}/#attribute/")
+    } else {
+      $_additional_attributes = undef
     }
     if ! empty(any2array($attributes_to_remove)) {
       $_attributes_to_remove = prefix(any2array($attributes_to_remove), "rm ${base_path}/#attribute/")
+    } else {
+      $_attributes_to_remove = undef
     }
 
-    $changes = delete_undef_values(flatten([$_protocol_change, $_port, $_additional_attributes, $_attributes_to_remove]))
+    $changes = delete_undef_values(flatten([$_port, $_protocol_change, $_additional_attributes, $_attributes_to_remove]))
   }
 
-  augeas { "server-${catalina_base}-${parent_service}-connector-${_protocol}":
+  augeas { "server-${catalina_base}-${parent_service}-connector-${port}":
     lens    => 'Xml.lns',
     incl    => "${catalina_base}/conf/server.xml",
     changes => $changes,

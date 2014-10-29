@@ -3,7 +3,7 @@ require 'spec_helper_acceptance'
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
 tcat_version = String.new
-shell('curl http://tomcat.apache.org/download-70.cgi?Preferred=http%3A%2F%2Fwww.dsgnwrld.com%2Fam%2F', :acceptable_exit_codes => 0) do |r|
+shell('curl -k http://tomcat.apache.org/download-70.cgi?Preferred=http%3A%2F%2Fwww.dsgnwrld.com%2Fam%2F', :acceptable_exit_codes => 0) do |r|
   /apache-tomcat-(.{4,7}).tar.gz/.match(r.stdout).to_a.uniq.each do |m|
     if m.length < 7
       tcat_version = m
@@ -14,7 +14,7 @@ end
 
 describe 'Tomcat Install source -defaults', :unless => stop_test do
 
-  shell('curl -o /tmp/sample.war https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war', :acceptable_exit_codes => 0)
+  shell('curl -k -o /tmp/sample.war https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war', :acceptable_exit_codes => 0)
 
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do

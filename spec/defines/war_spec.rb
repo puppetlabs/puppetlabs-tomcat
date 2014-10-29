@@ -6,7 +6,8 @@ describe 'tomcat::war', :type => :define do
   end
   let :facts do
     {
-      :osfamily => 'Debian'
+      :osfamily         => 'Debian',
+      :staging_http_get => 'curl',
     }
   end
   let :title do

@@ -10,7 +10,8 @@ describe 'tomcat::instance::source', :type => :define do
   context 'private class fails' do
     let :facts do
       {
-        :osfamily => 'Debian'
+        :osfamily           => 'Debian',
+        :caller_module_name => 'Test'
       }
     end
     let :params do

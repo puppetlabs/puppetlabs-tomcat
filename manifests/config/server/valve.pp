@@ -50,9 +50,13 @@ define tomcat::config::server::valve (
     $_class_name_change = "set ${base_path}/#attribute/className ${_class_name}"
     if ! empty($additional_attributes) {
       $_additional_attributes = prefix(join_keys_to_values($additional_attributes, ' '), "set ${base_path}/#attribute/")
+    } else {
+      $_additional_attributes = undef
     }
     if ! empty(any2array($attributes_to_remove)) {
       $_attributes_to_remove = prefix(any2array($attributes_to_remove), "rm ${base_path}/#attribute/")
+    } else {
+      $_attributes_to_remove = undef
     }
 
     $changes = delete_undef_values(flatten([$_class_name_change, $_additional_attributes, $_attributes_to_remove]))

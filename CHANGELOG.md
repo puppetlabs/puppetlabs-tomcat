@@ -1,3 +1,19 @@
+##2014-10-28 - Supported Release 1.1.0
+###Summary
+
+This release includes documentation and test updates, strict variable support, metadata bugs, and added support for multiple connectors with the same protocol.
+
+###Features
+- Strict variable support
+- Support multiple connectors with the same protocol
+- Update tests to not break when tomcat releases happen
+- Update README based on QA feedback
+
+###Bugfixes
+- Update stdlib requirement to 4.2.0
+- Fix illegal version range in metadata.json
+- Fix typo in README
+
 ##2014-09-04 - Supported Release 1.0.1
 ###Summary
 
