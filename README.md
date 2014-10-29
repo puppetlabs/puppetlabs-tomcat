@@ -25,8 +25,8 @@
         - [tomcat::service](#tomcatservice)
         - [tomcat::setenv::entry](#tomcatsetenventry)
         - [tomcat::war](#tomcatwar)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+6. [Limitations - OS compatibility, etc.](#limitations)
+7. [Development - Guide for contributing to the module](#development)
     * [Contributing](#contributing)
     * [Tests](#running-tests)
 
@@ -55,10 +55,11 @@ puppet module upgrade puppetlabs-stdlib
 The simplest way to get Tomcat up and running with the tomcat module is to install the Tomcat package from EPEL,
 
 ```puppet
-class { 'tomcat': }
+class { 'tomcat':
+  install_from_source => false,
+}
 class { 'epel': }->
 tomcat::instance{ 'default':
-  install_from_source => false,
   package_name        => 'tomcat',
 }->
 ```
@@ -160,7 +161,7 @@ tomcat::config::server::connector { 'tomcat8-jsvc':
 }
 ```
 
-Then you would set `connector_ensure` to 'absent', and provide `notify` for the service.   
+Then you would set `connector_ensure` to 'absent', and provide `notify` for the service. 
 
 ```puppet 
 tomcat::config::server::connector { 'tomcat8-jsvc':
@@ -222,6 +223,10 @@ Sets the user to run Tomcat as.
 #####`$group`
 
 Sets the group to run Tomcat as.
+
+#####`$install_from_source` 
+
+Specifies whether or not to install from source. A Boolean that defaults to 'true'.
 
 #####`$manage_user`
 
@@ -437,7 +442,7 @@ Specifies the base directory for the Tomcat installation. Only affects the insta
 
 #####`$install_from_source` 
 
-Specifies whether or not to install from source. A Boolean that defaults to 'true'.
+Specifies whether or not to install from source.
 
 #####`$source_url` 
 
