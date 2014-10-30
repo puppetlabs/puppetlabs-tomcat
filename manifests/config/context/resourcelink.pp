@@ -35,9 +35,9 @@ define tomcat::config::context::resourcelink (
   } else {
     $_resource_link_name = "set ${base_path}/#attribute/name ${resource_name}"
     $_global             = "set ${base_path}/#attribute/global ${global}"
-    $_type            = "set ${base_path}/#attribute/type ${type}"
+    $_type               = "set ${base_path}/#attribute/type ${type}"
 
-    $changes = delete_undef_values([$_resource_link_name, $_type, $global ])
+    $changes = delete_undef_values([$_resource_link_name, $_type, $_global ])
   }
 
   augeas { "context-${catalina_base}-resourcelink-${name}":
