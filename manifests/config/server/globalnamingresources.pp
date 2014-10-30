@@ -46,7 +46,6 @@ define tomcat::config::server::globalnamingresources (
     $_resource_name   = "set ${base_path}/#attribute/name ${resource_name}"
     $_auth            = "set ${base_path}/#attribute/auth ${auth}"
     $_type            = "set ${base_path}/#attribute/type ${type}"
-    $_url             = "set ${base_path}/#attribute/url ${url}"
     $_factory         = "set ${base_path}/#attribute/factory ${factory}"
 
     if $description {
