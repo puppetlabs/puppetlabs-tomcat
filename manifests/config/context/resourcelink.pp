@@ -33,9 +33,9 @@ define tomcat::config::context::resourcelink (
   if $resource_ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
   } else {
-    $_resource_link_name = "set ${base_path}/#attribute/name ${resource_name}"
+    $_resource_link_name = "set ${base_path}/#attribute/name   ${resource_name}"
     $_global             = "set ${base_path}/#attribute/global ${global}"
-    $_type               = "set ${base_path}/#attribute/type ${type}"
+    $_type               = "set ${base_path}/#attribute/type   ${type}"
 
     $changes = delete_undef_values([$_resource_link_name, $_type, $_global ])
   }
