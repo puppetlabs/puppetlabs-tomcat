@@ -1,6 +1,6 @@
-# Definition: tomcat::config::server::connector
+# Definition: tomcat::config::server::globalnamingresources
 #
-# Configure Connector elements in $CATALINA_BASE/conf/server.xml
+# Configure Resource elements in $CATALINA_BASE/conf/server.xml
 #
 # Parameters:
 # - $catalina_base is the base directory for the Tomcat installation.
@@ -19,14 +19,16 @@ define tomcat::config::server::globalnamingresources (
   $resource_name,
   $auth,
   $type,
-  $driverClassName,
-  $username,
-  $password,
-  $maxActive,
-  $maxIdle,
-  $maxWait,
-  $url,
   $factory,
+  $description     = undef,
+  $driverClassName = undef,
+  $maxActive       = undef,
+  $maxIdle         = undef,
+  $maxWait         = undef,
+  $username        = undef,
+  $url             = undef,
+  $password        = undef,
+  $pathname        = undef,
   $catalina_base   = $::tomcat::catalina_home,
   $resource_ensure = 'present',
 ) {
@@ -44,20 +46,76 @@ define tomcat::config::server::globalnamingresources (
     $_resource_name   = "set ${base_path}/#attribute/name ${resource_name}"
     $_auth            = "set ${base_path}/#attribute/auth ${auth}"
     $_type            = "set ${base_path}/#attribute/type ${type}"
-    $_driverClassName =
-      "set ${base_path}/#attribute/driverClassName ${driverClassName}"
-    $_username        = "set ${base_path}/#attribute/username ${username}"
-    $_password        = "set ${base_path}/#attribute/password ${password}"
-    $_maxActive       = "set ${base_path}/#attribute/maxActive ${maxActive}"
-    $_maxIdle         = "set ${base_path}/#attribute/maxIdle ${maxIdle}"
-    $_maxWait         = "set ${base_path}/#attribute/maxWait ${maxWait}"
     $_url             = "set ${base_path}/#attribute/url ${url}"
     $_factory         = "set ${base_path}/#attribute/factory ${factory}"
+
+    if $description {
+      $_description = "set ${base_path}/#attribute/description ${description}"
+    }
+    else {
+      $_description = undef
+    }
+
+    if $url {
+      $_url = "set ${base_path}/#attribute/url ${url}"
+    }
+    else {
+      $_url = undef
+    }
+
+    if $maxActive {
+      $_maxActive = "set ${base_path}/#attribute/maxActive ${maxActive}"
+    }
+    else {
+      $_maxActive = undef
+    }
+
+    if $maxIdle {
+      $_maxIdle = "set ${base_path}/#attribute/maxIdle ${maxIdle}"
+    }
+    else {
+      $_maxIdle = undef
+    }
+
+    if $maxWait {
+      $_maxWait = "set ${base_path}/#attribute/maxWait ${maxWait}"
+    }
+    else {
+      $_maxWait = undef
+    }
+
+    if $username {
+      $_username = "set ${base_path}/#attribute/username ${username}"
+    }
+    else {
+      $_username = undef
+    }
+
+    if $password {
+      $_password = "set ${base_path}/#attribute/password ${password}"
+    }
+    else {
+      $_password = undef
+    }
+
+    if $pathname {
+      $_pathname = "set ${base_path}/#attribute/pathname ${pathname}"
+    }
+    else {
+      $_pathname = undef
+    }
+
+    if $driverClassName {
+      $_driverClassName = "set ${base_path}/#attribute/driverClassName ${driverClassName}"
+    }
+    else {
+      $_driverClassName = undef
+    }
 
     $changes = delete_undef_values([$_resource_name, $_auth, $_type,
                                     $_driverClassName, $_username, $_password,
                                     $_maxActive, $_maxIdle, $_maxWait, $_url,
-                                    $_factory ])
+                                    $_factory, $_pathname, $_description ])
   }
 
   augeas { "server-${catalina_base}-globaalnamingresources-resource-${name}":
