@@ -46,6 +46,42 @@ describe 'tomcat::config::server::connector', :type => :define do
     )
     }
   end
+  context 'set all the things with purge_connectors' do
+    let :params do
+      {
+        :port                  => '8180',
+        :catalina_base         => '/opt/apache-tomcat/test',
+        :protocol              => 'AJP/1.3',
+        :purge_connectors      => true,
+        :parent_service        => 'Catalina2',
+        :additional_attributes => {
+          'redirectPort'      => '8543',
+          'connectionTimeout' => '20000',
+        },
+        :attributes_to_remove  => [
+          'foo',
+          'bar',
+          'baz'
+        ],
+      }
+    end
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180'
+).with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'rm Server//Connector[#attribute/protocol=\'AJP/1.3\']',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/port 8180',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/protocol AJP/1.3',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/redirectPort 8543',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/connectionTimeout 20000',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/foo',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/bar',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
+      ],
+    )
+    }
+  end
   context 'remove connector' do
     let :params do
       {
@@ -78,6 +114,20 @@ describe 'tomcat::config::server::connector', :type => :define do
       ],
     )
     }
+  end
+  context 'remove connector with purge_connectors' do
+    let :params do
+      {
+        :catalina_base    => 'opt/apache-tomcat/test',
+        :connector_ensure => 'absent',
+        :purge_connectors => true,
+      }
+    end
+    it do
+      expect {
+        should compile
+      }.to raise_error(Puppet::Error, /\$connector_ensure must be set to 'true' or 'present' to use \$purge_connectors/)
+    end
   end
   context 'two connectors with same protocol' do
     let :pre_condition do

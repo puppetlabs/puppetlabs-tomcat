@@ -228,6 +228,14 @@ Sets the group to run Tomcat as.
 
 Specifies whether or not to install from source. A Boolean that defaults to 'true'.
 
+#####`$purge_connectors`
+
+Specifies whether or not to purge existing Connector elements from server.xml. 
+
+For example, if you specify an HTTP connector element using ```tomcat::instance::connector``` and ```purge_connectors``` is set to ```true``` then existing HTTP connectors will be removed and only the HTTP connector you have specified will remain once the module has been applied.
+
+This is useful if you want to change the ports of existing connectors instead of adding additional connectors. Boolean that defaults to 'false'.
+
 #####`$manage_user`
 
 Specifies whether or not to manage the user. Boolean that defaults to 'true'.
