@@ -38,7 +38,7 @@ define tomcat::config::server::globalnamingresources (
 
   validate_re($resource_ensure, '^(present|absent|true|false)$')
 
-  $base_path = 'Server/GlobalNamingResources/Resource'
+  $base_path = "Server/GlobalNamingResources/Resource[#attribute/port='${resource_name}']"
 
   if $resource_ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
@@ -111,10 +111,11 @@ define tomcat::config::server::globalnamingresources (
       $_driverClassName = undef
     }
 
-    $changes = delete_undef_values([$_resource_name, $_auth, $_type,
-                                    $_driverClassName, $_username, $_password,
-                                    $_maxActive, $_maxIdle, $_maxWait, $_url,
-                                    $_factory, $_pathname, $_description ])
+    $changes = delete_undef_values(flatten([$_resource_name, $_auth, $_type,
+                                            $_driverClassName, $_username,
+                                            $_password, $_maxActive, $_maxIdle,
+                                            $_maxWait, $_url, $_factory,
+                                            $_pathname, $_description ]))
   }
 
   augeas { "server-${catalina_base}-globaalnamingresources-resource-${name}":
