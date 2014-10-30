@@ -49,7 +49,7 @@ define tomcat::config::server::globalnamingresources (
     $_factory         = "set ${base_path}/#attribute/factory ${factory}"
 
     if $description {
-      $_description = "set ${base_path}/#attribute/description ${description}"
+      $_description = "set ${base_path}/#attribute/description '${description}'"
     }
     else {
       $_description = undef
