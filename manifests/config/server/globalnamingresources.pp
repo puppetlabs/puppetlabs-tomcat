@@ -38,7 +38,7 @@ define tomcat::config::server::globalnamingresources (
 
   validate_re($resource_ensure, '^(present|absent|true|false)$')
 
-  $base_path = "Server/GlobalNamingResources/Resource[#attribute/port='${resource_name}']"
+  $base_path = "Server/GlobalNamingResources/Resource[#attribute/name='${resource_name}']"
 
   if $resource_ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
