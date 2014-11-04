@@ -19,6 +19,7 @@
         - [tomcat::config::server::connector](#tomcatconfigserverconnector)
         - [tomcat::config::server::engine](#tomcatconfigserverengine)
         - [tomcat::config::server::host](#tomcatconfigserverhost)
+        - [tomcat::config::server::listener](#tomcatconfigserverlistener)
         - [tomcat::config::server::service](#tomcatconfigserverservice)
         - [tomcat::config::server::valve](#tomcatconfigservervalve)
         - [tomcat::instance](#tomcatinstance)
@@ -196,6 +197,7 @@ tomcat::config::server::connector { 'tomcat8-jsvc':
 * `tomcat::config::server::connector`: Configures [Connector](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::engine`: Configures [Engine](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Introduction) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::host`: Configures [Host](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html) elements in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::listener`: Configures [Listener](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::service`: Configures a [Service](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html) element nested in the Server element in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/server.xml.
 * `tomcat::instance`: Installs a Tomcat instance.
@@ -381,6 +383,28 @@ be a hash of the format 'attribute' => 'value'. This parameter is optional
 
 Specifies any attributes to remove from the Host. Should
 be an array of the format 'attribute' => 'value'. This parameter is optional.
+
+####tomcat::config::server::listener
+
+#####`$catalina_base`
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$listener_ensure`
+
+Specifies whether to add or remove Listener XML element in configuration file. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$class_name`
+
+Specifies the Java class name of the implementation to use, and maps to the className XML attribute of a Listener Element. This parameter is required.
+
+#####`$additional_attributes`
+
+Specifies any additional attributes to add to the Listener. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`$attributes_to_remove`
+
+Specifies any attributes to remove from the Listener. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
 ####tomcat::config::server::service
 
