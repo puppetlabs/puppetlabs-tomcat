@@ -396,7 +396,11 @@ Specifies whether to add or remove Listener XML element in configuration file. V
 
 #####`$class_name`
 
-Specifies the Java class name of the implementation to use, and maps to the className XML attribute of a Listener Element. This parameter is required.
+Specifies the Java class name of the implementation to use, and maps to the className XML attribute of a Listener Element. Defaults to '[name]' passed in the define.
+
+#####`$parent_server_port`
+
+Specifies is the Server element this Listener should be nested beneath. If not specified, the Listener will be nested under the Server Element.
 
 #####`$additional_attributes`
 
