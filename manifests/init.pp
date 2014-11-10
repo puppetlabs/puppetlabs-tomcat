@@ -24,10 +24,12 @@ class tomcat (
   $user                = $::tomcat::params::user,
   $group               = $::tomcat::params::group,
   $install_from_source = true,
+  $purge_connectors    = false,
   $manage_user         = true,
   $manage_group        = true,
 ) inherits ::tomcat::params {
   validate_bool($install_from_source)
+  validate_bool($purge_connectors)
   validate_bool($manage_user)
   validate_bool($manage_group)
 
