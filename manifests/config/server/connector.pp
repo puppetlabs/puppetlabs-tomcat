@@ -43,6 +43,8 @@ define tomcat::config::server::connector (
 
   if $purge_connectors {
     $_purge_connectors = "rm Server//Connector[#attribute/protocol='${_protocol}']"
+  } else {
+    $_purge_connectors = undef
   }
 
   if $purge_connectors and ($connector_ensure =~ /^(absent|false)$/) {

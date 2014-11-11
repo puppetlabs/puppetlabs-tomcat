@@ -1,3 +1,16 @@
+##2014-11-11 - Supported Release 1.2.0
+###Summary
+
+This is primarily a feature release, with a couple of bugfixes for tests and metadata.
+
+####Features
+- Add `install_from_source` parameter to class `tomcat`
+- Add `purge_connectors` parameter to class `tomcat` and define `tomcat::server::connector`
+
+####Bugfixes
+- Fix dependencies to remove missing dependency warnings with the PMT
+- Use `curl -k` in the tests
+
 ##2014-10-28 - Supported Release 1.1.0
 ###Summary
 

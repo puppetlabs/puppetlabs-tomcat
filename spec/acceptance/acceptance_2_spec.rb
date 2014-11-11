@@ -17,6 +17,9 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
+      Staging::File {
+        curl_option => '-k',
+      }
       class { 'tomcat':}
       class { 'java':}
       tomcat::instance { 'tomcat6':
@@ -139,6 +142,9 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
   context 'Start Tomcat without war' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
+      Staging::File {
+        curl_option => '-k',
+      }
       class{ 'tomcat':}
       tomcat::war { 'tomcat6039-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6039',
@@ -179,6 +185,9 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
   context 'deploy the war' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
+      Staging::File {
+        curl_option => '-k',
+      }
       class{ 'tomcat':}
       tomcat::war { 'tomcat6-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6',
