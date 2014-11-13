@@ -23,6 +23,7 @@ define tomcat::config::server::connector (
   $parent_service        = 'Catalina',
   $additional_attributes = {},
   $attributes_to_remove  = [],
+  $purge_connectors      = $::tomcat::purge_connectors,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -30,6 +31,7 @@ define tomcat::config::server::connector (
 
   validate_re($connector_ensure, '^(present|absent|true|false)$')
   validate_hash($additional_attributes)
+  validate_bool($purge_connectors)
 
   if $protocol {
     $_protocol = $protocol
@@ -38,6 +40,16 @@ define tomcat::config::server::connector (
   }
 
   $path = "Server/Service[#attribute/name='${parent_service}']"
+
+  if $purge_connectors {
+    $_purge_connectors = "rm Server//Connector[#attribute/protocol='${_protocol}']"
+  } else {
+    $_purge_connectors = undef
+  }
+
+  if $purge_connectors and ($connector_ensure =~ /^(absent|false)$/) {
+    fail('$connector_ensure must be set to \'true\' or \'present\' to use $purge_connectors')
+  }
 
   if $connector_ensure =~ /^(absent|false)$/ {
     if ! $port {
@@ -65,7 +77,7 @@ define tomcat::config::server::connector (
       $_attributes_to_remove = undef
     }
 
-    $changes = delete_undef_values(flatten([$_port, $_protocol_change, $_additional_attributes, $_attributes_to_remove]))
+    $changes = delete_undef_values(flatten([ $_purge_connectors, $_port, $_protocol_change, $_additional_attributes, $_attributes_to_remove ]))
   }
 
   augeas { "server-${catalina_base}-${parent_service}-connector-${port}":
