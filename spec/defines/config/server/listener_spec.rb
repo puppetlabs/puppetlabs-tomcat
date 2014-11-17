@@ -19,7 +19,6 @@ describe 'tomcat::config::server::listener', :type => :define do
          :catalina_base         => '/opt/apache-tomcat/test',
          :class_name            => 'org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
          :listener_ensure       => 'present',
-         :parent_server_port    => '8005',
          :additional_attributes => {
            'rmiRegistryPortPlatform' => '10001',
            'rmiServerPortPlatform'   => '10002',
@@ -31,16 +30,16 @@ describe 'tomcat::config::server::listener', :type => :define do
          ],
       }
     end
-    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-listener-JmxRemoteLifecycleListener').with(
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test----listener-JmxRemoteLifecycleListener').with(
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        'set Server[#attribute/port=\'8005\']/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/className org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
-        'set Server[#attribute/port=\'8005\']/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiRegistryPortPlatform 10001',
-        'set Server[#attribute/port=\'8005\']/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiServerPortPlatform 10002',
-        'rm Server[#attribute/port=\'8005\']/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/foo',
-        'rm Server[#attribute/port=\'8005\']/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/bar',
-        'rm Server[#attribute/port=\'8005\']/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/baz',
+        'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/className org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
+        'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiRegistryPortPlatform 10001',
+        'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiServerPortPlatform 10002',
+        'rm Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/foo',
+        'rm Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/bar',
+        'rm Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/baz',
       ]
     )
     }
@@ -55,11 +54,105 @@ describe 'tomcat::config::server::listener', :type => :define do
         :listener_ensure       => 'present',
       }
     end
-    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-listener-org.apache.catalina.core.AprLifecycleListener').with(
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test----listener-org.apache.catalina.core.AprLifecycleListener').with(
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
         'set Server/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener',
+      ]
+    )
+    }
+  end
+  context '$parent_engine, no $parent_service' do
+    let :params do
+      {
+        :catalina_base         => '/opt/apache-tomcat/test',
+        :listener_ensure       => 'present',
+        :parent_engine         => 'default',
+        :class_name            => 'org.apache.catalina.core.AprLifecycleListener',
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-default--listener-JmxRemoteLifecycleListener').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'default\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener',
+      ]
+    )
+    }
+  end
+  context '$parent_engine' do
+    let :params do
+      {
+        :catalina_base         => '/opt/apache-tomcat/test',
+        :listener_ensure       => 'present',
+        :parent_engine         => 'default',
+        :parent_service        => 'Catalina2',
+        :class_name            => 'org.apache.catalina.core.AprLifecycleListener',
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-default--listener-JmxRemoteLifecycleListener').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine[#attribute/name=\'default\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener',
+      ]
+    )
+    }
+  end
+  context '$parent_host, no $parent_engine or $parent_service' do
+    let :params do
+      {
+        :catalina_base         => '/opt/apache-tomcat/test',
+        :listener_ensure       => 'present',
+        :parent_host           => 'localhost',
+        :class_name            => 'org.apache.catalina.core.AprLifecycleListener',
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina--localhost-listener-JmxRemoteLifecycleListener').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener',
+      ]
+    )
+    }
+  end
+  context '$parent_host, no $parent_engine' do
+    let :params do
+      {
+        :catalina_base         => '/opt/apache-tomcat/test',
+        :listener_ensure       => 'present',
+        :parent_host           => 'localhost',
+        :parent_service        => 'Catalina2',
+        :class_name            => 'org.apache.catalina.core.AprLifecycleListener',
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2--localhost-listener-JmxRemoteLifecycleListener').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener',
+      ]
+    )
+    }
+  end
+  context '$parent_host' do
+    let :params do
+      {
+        :catalina_base         => '/opt/apache-tomcat/test',
+        :listener_ensure       => 'present',
+        :parent_engine         => 'default',
+        :parent_host           => 'localhost',
+        :parent_service        => 'Catalina2',
+        :class_name            => 'org.apache.catalina.core.AprLifecycleListener',
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-default-localhost-listener-JmxRemoteLifecycleListener').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine[#attribute/name=\'default\']/Host[#attribute/name=\'localhost\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener',
       ]
     )
     }
@@ -72,7 +165,7 @@ describe 'tomcat::config::server::listener', :type => :define do
         :listener_ensure => 'absent',
       }
     end 
-    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-listener-JmxRemoteLifecycleListener').with(
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test----listener-JmxRemoteLifecycleListener').with(
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
@@ -92,18 +185,6 @@ describe 'tomcat::config::server::listener', :type => :define do
         expect {
           is_expected.to compile
         }. to raise_error(Puppet::Error, /does not match/)
-      end
-    end
-    context 'Bad parent_server_port' do
-      let :params do
-        {
-          :parent_server_port => 'foo',
-        }
-      end
-      it do
-        expect {
-          is_expected.to compile
-        }. to raise_error(Puppet::Error, /is not an Integer/)
       end
     end
     context 'Bad additional_attributes' do

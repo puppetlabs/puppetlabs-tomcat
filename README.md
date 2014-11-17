@@ -398,9 +398,17 @@ Specifies whether to add or remove Listener XML element in configuration file. V
 
 Specifies the Java class name of the implementation to use, and maps to the className XML attribute of a Listener Element. Defaults to '[name]' passed in the define.
 
-#####`$parent_server_port`
+#####`$parent_service`
 
-Specifies is the Server element this Listener should be nested beneath. If not specified, the Listener will be nested under the Server Element.
+Specifies the Service element this Listener should be nested beneath. Only valid if `$parent_engine` or `$parent_host` is specified. Defaults to 'Catalina' if `$parent_host` or `$parent_engine` is specified.
+
+#####`$parent_engine`
+
+Specifies which Engine element this Listener should be nested beneath. Needs to be the `name` attribute for the Engine.
+
+#####`$parent_host`
+
+Specifies which Host element this Listener should be nested beneath. Needs to be the `name` attribute for the Host.
 
 #####`$additional_attributes`
 

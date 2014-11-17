@@ -10,7 +10,7 @@ tomcat::instance { 'mycat':
 tomcat::config::server::listener { 'mycat-jmx':
   catalina_base         => '/opt/apache-tomcat/mycat',
   listener_ensure       => present,
-  class_name             => 'org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
+  class_name            => 'org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
   additional_attributes => {
     'rmiRegistryPortPlatform' => '10001',
     'rmiServerPortPlatform'   => '10002',
