@@ -9,70 +9,81 @@
 #   'absent'. Defaults to 'present'.
 # - $class_name is the Java class name of the implementation to use.
 #   Defaults to $name.
-# - Optional $parent_server_port is the port of the Server element this
-#   Listener should be nested beneath.
+# - $parent_service is the Service element this Listener should be nested 
+#   beneath. Only valid if $parent_host or $parent_engine is specified. Defaults
+#   to 'Catalina' if $parent_host or $parent_engine was specified.
+# - $parent_engine is the `name` attribute to the Engine element this Listener
+#   should be nested beneath.
+# - $parent_host is the `name` attribute to the Engine element this Listener
+#   should be nested beneath.
 # - An optional hash of $additional_attributes to add to the Listener. Should
 #   be of the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Listener.
-# 
-
 define tomcat::config::server::listener (
   $catalina_base         = $::tomcat::catalina_home,
   $listener_ensure       = 'present',
   $class_name            = undef,
-  $parent_server_port    = undef,
+  $parent_service        = undef,
+  $parent_engine         = undef,
+  $parent_host           = undef,
   $additional_attributes = {},
   $attributes_to_remove  = [],
 ) {
-  
-  # Dependencies:
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
   
-  # Parameters Validation:
   validate_re($listener_ensure, '^(present|absent|true|false)$')
   validate_hash($additional_attributes)
   validate_array($attributes_to_remove)
-  if $parent_server_port and ! is_integer($parent_server_port) {
-    fail('Parameter $parent_server_port is not an Integer')
-  }
   
-  # Default Parameters:
+  if $parent_service and ! ($parent_host or $parent_engine) {
+    warning('listener elements cannot be nested directly under service elements, ignoring $parent_service')
+  }
+
+  if ! $parent_service and ($parent_engine or $parent_host) {
+    $_parent_service = 'Catalina'
+  } else {
+    $_parent_service = $parent_service
+  }
+
   if $class_name {
     $_class_name = $class_name
   } else {
     $_class_name = $name
   }
   
-  if $parent_server_port {
-    $path = "Server[#attribute/port='${parent_server_port}']/Listener[#attribute/className='${_class_name}']"
+  if $parent_engine and ! $parent_host {
+    $path = "Server/Service[#attribute/name='${_parent_service}']/Engine[#attribute/name='${parent_engine}']/Listener[#attribute/className='${_class_name}']"
+  } elsif $parent_engine and $parent_host {
+    $path = "Server/Service[#attribute/name='${_parent_service}']/Engine[#attribute/name='${parent_engine}']/Host[#attribute/name='${parent_host}']/Listener[#attribute/className='${_class_name}']"
+  } elsif $parent_host {
+    $path = "Server/Service[#attribute/name='${_parent_service}']/Engine/Host[#attribute/name='${parent_host}']/Listener[#attribute/className='${_class_name}']"
   } else {
     $path = "Server/Listener[#attribute/className='${_class_name}']"
   }
   
   if $listener_ensure =~ /^(absent|false)$/ {
-    # Remove the Listener - changes for augeas:
     $augeaschanges = "rm ${path}"
-  } elsif $listener_ensure =~ /^(present|true)$/ {
+  } else {
     $listener = "set ${path}/#attribute/className ${_class_name}"
-    # Add additional_attributes when needed:  
+
     if ! empty($additional_attributes) {
       $_additional_attributes = prefix(join_keys_to_values($additional_attributes, ' '), "set ${path}/#attribute/")
     } else {
       $_additional_attributes = undef
     }
-    # Remove attributes when needed:
+
     if ! empty(any2array($attributes_to_remove)) {
       $_attributes_to_remove = prefix(any2array($attributes_to_remove), "rm ${path}/#attribute/")
     } else {
       $_attributes_to_remove = undef
     }
-    # Changes for augeas:
+
     $augeaschanges = delete_undef_values(flatten([$listener, $_additional_attributes, $_attributes_to_remove]))
   }
-  
-  augeas { "server-${catalina_base}-listener-${name}":
+
+  augeas { "${catalina_base}-${_parent_service}-${parent_engine}-${parent_host}-listener-${name}":
     lens    => 'Xml.lns',
     incl    => "${catalina_base}/conf/server.xml",
     changes => $augeaschanges,
