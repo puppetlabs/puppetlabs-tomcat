@@ -69,7 +69,7 @@ define tomcat::config::server::listener (
     $listener = "set ${path}/#attribute/className ${_class_name}"
 
     if ! empty($additional_attributes) {
-      $_additional_attributes = prefix(join_keys_to_values($additional_attributes, ' '), "set ${path}/#attribute/")
+      $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${path}/#attribute/"), "'")
     } else {
       $_additional_attributes = undef
     }

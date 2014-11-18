@@ -23,6 +23,7 @@ describe 'tomcat::config::server::connector', :type => :define do
         :additional_attributes => {
           'redirectPort'      => '8543',
           'connectionTimeout' => '20000',
+          'spaces'            => 'foo bar',
         },
         :attributes_to_remove  => [
           'foo',
@@ -37,8 +38,9 @@ describe 'tomcat::config::server::connector', :type => :define do
       'changes' => [
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/port 8180',
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/protocol AJP/1.3',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/redirectPort 8543',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/connectionTimeout 20000',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/redirectPort \'8543\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/connectionTimeout \'20000\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/spaces \'foo bar\'',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/foo',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/bar',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
@@ -73,8 +75,8 @@ describe 'tomcat::config::server::connector', :type => :define do
         'rm Server//Connector[#attribute/protocol=\'AJP/1.3\']',
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/port 8180',
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/protocol AJP/1.3',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/redirectPort 8543',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/connectionTimeout 20000',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/redirectPort \'8543\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/connectionTimeout \'20000\'',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/foo',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/bar',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',

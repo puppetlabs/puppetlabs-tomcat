@@ -67,7 +67,7 @@ define tomcat::config::server::connector (
     $_port = "set ${base_path}/#attribute/port ${port}"
     $_protocol_change = "set ${base_path}/#attribute/protocol ${_protocol}"
     if ! empty($additional_attributes) {
-      $_additional_attributes = prefix(join_keys_to_values($additional_attributes, ' '), "set ${base_path}/#attribute/")
+      $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${base_path}/#attribute/"), "'")
     } else {
       $_additional_attributes = undef
     }
