@@ -40,6 +40,7 @@ describe 'tomcat::config::server::host', :type => :define do
         :additional_attributes => {
           'autoDeploy' => 'false',
           'unpackWARs' => 'false',
+          'spaces'     => 'foo bar',
         },
         :attributes_to_remove => [
           'foo',
@@ -54,8 +55,9 @@ describe 'tomcat::config::server::host', :type => :define do
       'changes' => [
         'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/name test.example.com',
         'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/appBase webapps2',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/autoDeploy false',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/unpackWARs false',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/autoDeploy \'false\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/unpackWARs \'false\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/spaces \'foo bar\'',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/foo',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/bar',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/baz',

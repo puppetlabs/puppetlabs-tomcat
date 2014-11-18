@@ -22,6 +22,7 @@ describe 'tomcat::config::server::listener', :type => :define do
          :additional_attributes => {
            'rmiRegistryPortPlatform' => '10001',
            'rmiServerPortPlatform'   => '10002',
+           'spaces'                  => 'foo bar',
          },
          :attributes_to_remove  => [
            'foo',
@@ -35,8 +36,9 @@ describe 'tomcat::config::server::listener', :type => :define do
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
         'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/className org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
-        'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiRegistryPortPlatform 10001',
-        'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiServerPortPlatform 10002',
+        'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiRegistryPortPlatform \'10001\'',
+        'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiServerPortPlatform \'10002\'',
+        'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/spaces \'foo bar\'',
         'rm Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/foo',
         'rm Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/bar',
         'rm Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/baz',
