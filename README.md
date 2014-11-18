@@ -493,8 +493,10 @@ Determines whether the Tomcat service is on or off. Valid values are 'running', 
 
 #####`$use_init`
 
-Specifies whether or not to use the package-provided init script for service management. A Boolean that  defaults to 'false'. If both `$use_jsvc` and `$use_init` are false,
-`$CATALINA_BASE/bin/catalina.sh start` and `$CATALINA_BASE/bin/catalina.sh stop` are used for service management.
+Specifies whether or not to use the package-provided init script for service management. A Boolean that defaults to 'false'. Note that the
+tomcat module does not supply an init script, so setting `$use_init` to true will simply set up the service with an existing init script.
+If both `$use_jsvc` and `$use_init` are false, `$CATALINA_BASE/bin/catalina.sh start` and `$CATALINA_BASE/bin/catalina.sh stop` are used
+for service management.
 
 #####`$service_name` 
 
