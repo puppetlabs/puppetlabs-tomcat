@@ -2,16 +2,6 @@ require 'spec_helper_acceptance'
 
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
-tcat_version = String.new
-shell('curl -k http://tomcat.apache.org/download-60.cgi?Preferred=http%3A%2F%2Fmirror.symnds.com%2Fsoftware%2FApache%2F', :acceptable_exit_codes => 0) do |r|
-  /apache-tomcat-(.{4,7}).tar.gz/.match(r.stdout).to_a.uniq.each do |m|
-    if m.length < 7
-      tcat_version = m
-      break
-    end
-  end
-end
-
 describe 'Two different instances of Tomcat 6 in the same manifest', :unless => stop_test do
 
   context 'Initial install Tomcat and verification' do
@@ -23,7 +13,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       class { 'tomcat':}
       class { 'java':}
       tomcat::instance { 'tomcat6':
-        source_url => 'http://mirror.symnds.com/software/Apache/tomcat/tomcat-6/v#{tcat_version}/bin/apache-tomcat-#{tcat_version}.tar.gz',
+        source_url => '#{TOMCAT6_RECENT_SOURCE}',
         catalina_base => '/opt/apache-tomcat/tomcat6',
       }->
       tomcat::config::server { 'tomcat6':
@@ -48,7 +38,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       }->
       tomcat::war { 'tomcat6-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6',
-        war_source    => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6-sample.war',
       }->
       tomcat::service { 'tomcat6':
@@ -56,7 +46,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       }
 
       tomcat::instance { 'tomcat6039':
-        source_url => 'http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.39/bin/apache-tomcat-6.0.39.tar.gz',
+        source_url => '#{TOMCAT_LEGACY_SOURCE}',
         catalina_base => '/opt/apache-tomcat/tomcat6039',
       }->
       tomcat::config::server { 'tomcat6039':
@@ -81,7 +71,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       }->
       tomcat::war { 'tomcat6039-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6039',
-        war_source    => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6039-sample.war',
       }->
       tomcat::service { 'tomcat6039':
@@ -148,7 +138,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       class{ 'tomcat':}
       tomcat::war { 'tomcat6039-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6039',
-        war_source    => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6039-sample.war',
         war_ensure    => 'absent',
       }->
@@ -158,7 +148,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       }
       tomcat::war { 'tomcat6-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6',
-        war_source    => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6-sample.war',
         war_ensure    => 'false',
       }->
@@ -191,13 +181,13 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       class{ 'tomcat':}
       tomcat::war { 'tomcat6-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6',
-        war_source    => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6-sample.war',
         war_ensure    => 'present',
       }
       tomcat::war { 'tomcat6039-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6039',
-        war_source    => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6039-sample.war',
         war_ensure    => 'true',
       }
