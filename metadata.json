@@ -2,7 +2,7 @@
   "name": "puppetlabs-tomcat",
   "version": "1.2.0",
   "author": "puppetlabs",
-  "summary": "Puppet module for managing Apache Tomcat.",
+  "summary": "Installs, deploys, and configures Apache Tomcat web services.",
   "license": "Apache 2.0",
   "source": "http://github.com/puppetlabs/puppetlabs-tomcat",
   "project_page": "https://github.com/puppetlabs/puppetlabs-tomcat",
