@@ -13,16 +13,6 @@ confine_array = [
 stop_test = false
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || confine_array.any?
 
-tcat_version = String.new
-shell('curl -k http://tomcat.apache.org/download-80.cgi?Preferred=http%3A%2F%2Fmirror.nexcess.net%2Fapache%2F', :acceptable_exit_codes => 0) do |r|
-  /apache-tomcat-(.{4,7}).tar.gz/.match(r.stdout).to_a.uniq.each do |m|
-    if m.length < 7
-      tcat_version = m
-      break
-    end
-  end
-end
-
 describe 'Acceptance case one', :unless => stop_test do
 
   context 'Initial install Tomcat and verification' do
@@ -39,7 +29,7 @@ describe 'Acceptance case one', :unless => stop_test do
       }
 
       tomcat::instance { 'tomcat_one':
-        source_url    => "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v#{tcat_version}/bin/apache-tomcat-#{tcat_version}.tar.gz",
+        source_url    => '#{TOMCAT8_RECENT_SOURCE}',
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
       }->
       staging::extract { 'commons-daemon-native.tar.gz':
@@ -91,7 +81,7 @@ describe 'Acceptance case one', :unless => stop_test do
       }->
       tomcat::war { 'war_one.war':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        war_source    => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source    => '#{SAMPLE_WAR}',
       }->
       tomcat::setenv::entry { 'JAVA_HOME':
         base_path => '/opt/apache-tomcat/tomcat8-jsvc/bin',
@@ -165,7 +155,7 @@ describe 'Acceptance case one', :unless => stop_test do
       class{ 'tomcat':}
       tomcat::war { 'war_one.war':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        war_source => 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war',
+        war_source => '#{SAMPLE_WAR}',
         war_ensure => 'false',
       }
       EOS
