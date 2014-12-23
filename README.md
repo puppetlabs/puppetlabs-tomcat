@@ -19,6 +19,7 @@
         - [tomcat::config::server::connector](#tomcatconfigserverconnector)
         - [tomcat::config::server::engine](#tomcatconfigserverengine)
         - [tomcat::config::server::host](#tomcatconfigserverhost)
+        - [tomcat::config::server::listener](#tomcatconfigserverlistener)
         - [tomcat::config::server::service](#tomcatconfigserverservice)
         - [tomcat::config::server::valve](#tomcatconfigservervalve)
         - [tomcat::instance](#tomcatinstance)
@@ -196,6 +197,7 @@ tomcat::config::server::connector { 'tomcat8-jsvc':
 * `tomcat::config::server::connector`: Configures [Connector](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::engine`: Configures [Engine](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Introduction) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::host`: Configures [Host](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html) elements in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::listener`: Configures [Listener](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::service`: Configures a [Service](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html) element nested in the Server element in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/server.xml.
 * `tomcat::instance`: Installs a Tomcat instance.
@@ -390,6 +392,40 @@ be a hash of the format 'attribute' => 'value'. This parameter is optional
 Specifies any attributes to remove from the Host. Should
 be an array of the format 'attribute' => 'value'. This parameter is optional.
 
+####tomcat::config::server::listener
+
+#####`$catalina_base`
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$listener_ensure`
+
+Specifies whether to add or remove Listener XML element in configuration file. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$class_name`
+
+Specifies the Java class name of the implementation to use, and maps to the className XML attribute of a Listener Element. Defaults to '[name]' passed in the define.
+
+#####`$parent_service`
+
+Specifies the Service element this Listener should be nested beneath. Only valid if `$parent_engine` or `$parent_host` is specified. Defaults to 'Catalina' if `$parent_host` or `$parent_engine` is specified.
+
+#####`$parent_engine`
+
+Specifies which Engine element this Listener should be nested beneath. Needs to be the `name` attribute for the Engine.
+
+#####`$parent_host`
+
+Specifies which Host element this Listener should be nested beneath. Needs to be the `name` attribute for the Host.
+
+#####`$additional_attributes`
+
+Specifies any additional attributes to add to the Listener. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`$attributes_to_remove`
+
+Specifies any attributes to remove from the Listener. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
 ####tomcat::config::server::service
 
 #####`$catalina_base` 
@@ -493,8 +529,10 @@ Determines whether the Tomcat service is on or off. Valid values are 'running', 
 
 #####`$use_init`
 
-Specifies whether or not to use the package-provided init script for service management. A Boolean that  defaults to 'false'. If both `$use_jsvc` and `$use_init` are false,
-`$CATALINA_BASE/bin/catalina.sh start` and `$CATALINA_BASE/bin/catalina.sh stop` are used for service management.
+Specifies whether or not to use the package-provided init script for service management. A Boolean that defaults to 'false'. Note that the
+tomcat module does not supply an init script, so setting `$use_init` to true will simply set up the service with an existing init script.
+If both `$use_jsvc` and `$use_init` are false, `$CATALINA_BASE/bin/catalina.sh start` and `$CATALINA_BASE/bin/catalina.sh stop` are used
+for service management.
 
 #####`$service_name` 
 

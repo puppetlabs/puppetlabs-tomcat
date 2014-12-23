@@ -50,7 +50,7 @@ define tomcat::config::server::host (
     $_app_base = "set ${base_path}/#attribute/appBase ${app_base}"
 
     if ! empty($additional_attributes) {
-      $_additional_attributes = prefix(join_keys_to_values($additional_attributes, ' '), "set ${base_path}/#attribute/")
+      $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${base_path}/#attribute/"), "'")
     } else {
       $_additional_attributes = undef
     }

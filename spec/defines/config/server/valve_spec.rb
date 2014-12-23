@@ -31,6 +31,7 @@ describe 'tomcat::config::server::valve', :type => :define do
         :additional_attributes => {
           'suffix'    => '.txt',
           'directory' => 'logs',
+          'spaces'    => 'foo bar',
         },
         :attributes_to_remove  => ['foo', 'bar']
       }
@@ -40,8 +41,9 @@ describe 'tomcat::config::server::valve', :type => :define do
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
         'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/className foo',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/suffix .txt',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/directory logs',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/suffix \'.txt\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/directory \'logs\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/spaces \'foo bar\'',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/foo',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/bar',
       ]
