@@ -17,6 +17,7 @@
         - [tomcat](#tomcat-1)
         - [tomcat::config::server](#tomcatconfigserver)
         - [tomcat::config::server::connector](#tomcatconfigserverconnector)
+        - [tomcat::config::server::context](#tomcatconfigservercontext)
         - [tomcat::config::server::engine](#tomcatconfigserverengine)
         - [tomcat::config::server::host](#tomcatconfigserverhost)
         - [tomcat::config::server::listener](#tomcatconfigserverlistener)
@@ -195,6 +196,7 @@ tomcat::config::server::connector { 'tomcat8-jsvc':
 
 * `tomcat::config::server`: Configures attributes for the [Server](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html) element in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::connector`: Configures [Connector](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) elements in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::context`: Configures [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::engine`: Configures [Engine](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Introduction) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::host`: Configures [Host](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::listener`: Configures [Listener](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html) elements in $CATALINA_BASE/conf/server.xml.
@@ -308,6 +310,38 @@ be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
 Specifies any attributes to remove from the Connector. Should
 be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+####tomcat::config::server::context
+
+#####`$catalina_base`
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$context_ensure`
+
+Specifies whether to add or remove Context XML element in configuration file. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$doc_base`
+Specifies the Document Base or Context Root ([docBase] (http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Common_Attributes)) attribute for a web application.
+
+#####`$parent_service`
+
+Specifies the Service XML element this Context should be nested beneath. Defaults to 'Catalina'.
+
+#####`$parent_engine`
+
+Specifies which Engine element this Context should be nested beneath. Needs to be the `name` attribute for the Engine. Only valid if `$parent_host` is specified. 
+
+#####`$parent_host`
+Specifies the virtual host ([Host](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes) XML element) the Context should be nested beneath. Needs to be the `name` attribute for the Host. 
+
+#####`$additional_attributes` 
+
+Specifies any additional attributes to add to the Context. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`$attributes_to_remove`
+
+Specifies any attributes to remove from the Context. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
 ####tomcat::config::server::engine
 
