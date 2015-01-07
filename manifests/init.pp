@@ -16,6 +16,12 @@
 # [*manage_user*]
 #   Boolean specifying whether or not to manage the user. Defaults to true.
 #
+# [*purge_connectors*]
+#   Boolean specifying whether to purge all Connector elements from server.xml. Defaults to false.
+#
+# [*purge_realms*]
+#   Boolean specifying whether to purge all Realm elements from server.xml. Defaults to false.
+#
 # [*manage_group*]
 #   Boolean specifying whether or not to manage the group. Defaults to true.
 #
@@ -25,11 +31,13 @@ class tomcat (
   $group               = $::tomcat::params::group,
   $install_from_source = true,
   $purge_connectors    = false,
+  $purge_realms        = false,
   $manage_user         = true,
   $manage_group        = true,
 ) inherits ::tomcat::params {
   validate_bool($install_from_source)
   validate_bool($purge_connectors)
+  validate_bool($purge_realms)
   validate_bool($manage_user)
   validate_bool($manage_group)
 
