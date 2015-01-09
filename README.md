@@ -690,6 +690,10 @@ Specifies the parameter you're setting. Defaults to '[name]' passed in the defin
 
 Specifies the character with which to quote the value. This parameter is optional.
 
+#####`$order`
+
+Specifies the order to the parameter in the file ( Defaults to 10). This parameter is optional.
+
 ####tomcat::war
 
 #####`$catalina_base`
