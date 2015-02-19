@@ -23,6 +23,7 @@
         - [tomcat::config::server::listener](#tomcatconfigserverlistener)
         - [tomcat::config::server::realm](#tomcatconfigserverrealm)
         - [tomcat::config::server::service](#tomcatconfigserverservice)
+        - [tomcat::config::server::tomcat_users](#tomcatconfigservertomcat_users)
         - [tomcat::config::server::valve](#tomcatconfigservervalve)
         - [tomcat::instance](#tomcatinstance)
         - [tomcat::service](#tomcatservice)
@@ -203,6 +204,7 @@ tomcat::config::server::connector { 'tomcat8-jsvc':
 * `tomcat::config::server::listener`: Configures [Listener](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::realm`: Configures [Realm](http://tomcat.apache.org/tomcat-8.0-doc/config/realm.html) elements in $CATALINA_BASE/conf/server.xml.
 * `tomcat::config::server::service`: Configures a [Service](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html) element nested in the Server element in $CATALINA_BASE/conf/server.xml.
+* `tomcat::config::server::tomcat_users`: Configures user and role elements for [UserDatabaseRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#UserDatabaseRealm) or [MemoryRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#MemoryRealm) in $CATALINA_BASE/conf/tomcat-users.xml or any other specified file.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/server.xml.
 * `tomcat::instance`: Installs a Tomcat instance.
 * `tomcat::service`: Provides Tomcat service management.
@@ -525,6 +527,40 @@ Specifies whether to set or remove the [className](http://tomcat.apache.org/tomc
 #####`$service_ensure`
 
 Specifies whether to add or remove the [Service](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) element. Valid values are 'true', 'false', 'present', or 'absent'. Defaults to 'present'.
+
+####tomcat::config::server::tomcat_users
+
+#####`$catalina_base`
+
+Specifies the base directory for the Tomcat installation.
+
+#####`$element`
+
+Specifies the element type. Valid values are 'user' or 'role. Defaults to 'user'.
+
+#####`$element_name`
+
+Depending on the element it sets 'username' or 'rolename' to identify the $element. Defaults to $name.
+
+#####`$ensure`
+
+Specifies whether to add or remove the XML element in configuration file. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'.
+
+#####`$file`
+
+Specifies the path to the file to manage. Must be fully qualified. Defaults to $CATALINA_BASE/conf/tomcat-users.xml.
+
+#####`$manage_file`
+
+Set $manage_file to true for managing the file. It sets file permission, owner, group and create a basic tomcat-users XML if file does not exist yet.
+
+#####`$password`
+
+Specifies the 'password' for 'user' elements.
+
+#####`$roles`
+
+Specifies the 'roles' for 'user' elements.
 
 ####tomcat::config::server::valve
 
