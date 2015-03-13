@@ -8,6 +8,7 @@
 # - $config_file is the path to the config file to edit
 # - $param is the parameter you're setting. Defaults to $name.
 # - $quote_char is the optional character to quote the value with.
+# - $order is the optional order to the param in the file. Defaults to 10
 # - (Deprecated) $base_path is the path to create the setenv.sh script under. Should be
 #   either $catalina_base/bin or $catalina_home/bin.
 define tomcat::setenv::entry (
@@ -18,6 +19,7 @@ define tomcat::setenv::entry (
   $quote_char  = undef,
   # Deprecated
   $base_path   = '',
+  $order       = 10,
 ) {
 
   if $base_path {
@@ -45,5 +47,6 @@ define tomcat::setenv::entry (
     ensure  => $ensure,
     target  => $_config_file,
     content => inline_template('export <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %>'),
+    order   => $order,
   }
 }
