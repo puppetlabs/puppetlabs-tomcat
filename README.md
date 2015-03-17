@@ -645,6 +645,10 @@ Specifies the path Java is installed under. Only applies if `$use_jsvc = 'true'`
 
 Determines whether the Tomcat service is on or off. Valid values are 'running', 'stopped', 'true', and 'false'. (To determine whether the service is present/absent, see [tomcat::config::server::service](#tomcatconfigserverservice).)
 
+#####`$service_enable`
+
+Specifies whether to enable the Tomcat service at boot. Valid options are `true` or `false`. To use `$service_enable`, `use_init` must be set to `true`. If `$service_enable` is unset, `$use_init` is set to `true`, and `$service_ensure` is set to `running` or `true`, then `$service_enable` will be set to `true`.
+
 #####`$use_init`
 
 Specifies whether or not to use the package-provided init script for service management. A Boolean that defaults to 'false'. Note that the

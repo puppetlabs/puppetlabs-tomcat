@@ -6,7 +6,7 @@ describe 'tomcat::service', :type => :define do
   end
   let :facts do
     {
-      :osfamily => 'Debian'
+      :osfamily => 'Debian',
     }
   end
   let :title do
@@ -15,7 +15,7 @@ describe 'tomcat::service', :type => :define do
   context 'using jsvc' do
     let :params do
       {
-        :use_jsvc => true
+        :use_jsvc => true,
       }
     end
     it { is_expected.to contain_service('tomcat-default').with(
@@ -38,7 +38,7 @@ describe 'tomcat::service', :type => :define do
       'hasrestart' => false,
       'ensure'     => 'running',
       'start'      => '/bin/true',
-      'stop'      => '/bin/true',
+      'stop'       => '/bin/true',
     )
     }
   end
@@ -83,7 +83,7 @@ describe 'tomcat::service', :type => :define do
       'hasrestart' => true,
       'ensure'     => 'running',
       'start'      => '/bin/true',
-      'stop'      => '/bin/true',
+      'stop'       => '/bin/true',
     )
     }
   end
@@ -112,6 +112,62 @@ describe 'tomcat::service', :type => :define do
       'stop'       => '/bin/true',
     )
     }
+  end
+
+  context "service_enable, set from user" do
+    let :params do
+      {
+        :use_init       => true,
+        :service_name   => 'tomcat',
+        :service_enable => true,
+      }
+    end
+    it { is_expected.to contain_service('tomcat').with(
+      'enable' => true,
+    )
+    }
+  end
+  context "service_enable, set true from defaults" do
+    let :params do
+      {
+        :use_init       => true,
+        :service_name   => 'tomcat',
+        :service_ensure => 'running',
+      }
+    end
+    it { is_expected.to contain_service('tomcat').with(
+      'hasstatus'  => true,
+      'hasrestart' => true,
+      'ensure'     => 'running',
+      'enable'     => true,
+    )
+    }
+  end
+  context "service_enable, set undef from defaults" do
+    let :params do
+      {
+        :use_init       => false,
+        :service_ensure => 'running',
+      }
+    end
+    it { is_expected.to contain_service('tomcat-default').with(
+      'hasstatus'  => false,
+      'hasrestart' => false,
+      'ensure'     => 'running',
+      'enable'     => nil,
+    )
+    }
+  end
+  context "service_enable, error thrown if use_init is false" do
+    let :params do
+      {
+        :use_init => false,
+        :service_enable => true,
+      }
+    end
+    # This should throw a warning, but that isn't supported by puppet-rspec
+    # so let's just make sure it compiles
+    it { is_expected.to compile }
   end
   describe 'failing tests' do
     context "bad use_jsvc" do
@@ -154,8 +210,8 @@ describe 'tomcat::service', :type => :define do
     context "init without servicename" do
       let :params do
         {
-          :use_jsvc     => false,
-          :use_init     => true,
+          :use_jsvc => false,
+          :use_init => true,
         }
       end
       it do
@@ -176,8 +232,8 @@ describe 'tomcat::service', :type => :define do
     context "java_home with start_command" do
       let :params do
         {
-          :java_home => 'foo',
-          :start_command => '/bin/true'
+          :java_home     => 'foo',
+          :start_command => '/bin/true',
         }
       end
 
