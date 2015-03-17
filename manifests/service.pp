@@ -12,6 +12,10 @@
 # - If using jsvc, optionally set java_home.  Has no affect unless
 #   $use_jsvc = true.
 # - $service_ensure is passed on to the service resource.
+# - $service_enable specifies whether the tomcat service should be enabled on
+#   on boot. Valid options are 'true' or 'false'. Defaults to 'undef', will be
+#   programmatically set to 'true' if $use_init is true AND
+#   $service_ensure == 'running'
 # - Whether or not to $use_init for service management. Boolean defaulting to
 #   false. If both $use_jsvc and $use_init are false,
 #   $CATALINA_BASE/bin/catalina.sh start and $CATALIN/A_BASE/bin/catalina.sh
@@ -25,6 +29,7 @@ define tomcat::service (
   $use_jsvc       = false,
   $java_home      = undef,
   $service_ensure = running,
+  $service_enable = undef,
   $use_init       = false,
   $service_name   = undef,
   $start_command  = undef,
@@ -40,6 +45,10 @@ define tomcat::service (
 
   if $use_init and ! $service_name {
     fail('$service_name must be specified when $use_init is set to true')
+  }
+
+  if $service_enable != undef and ! $use_init {
+    warning('$use_init must be set to true when $service_enable is set')
   }
 
   if $use_init and ($catalina_home or $catalina_base) {
@@ -123,8 +132,24 @@ define tomcat::service (
     $_provider     = 'base'
   }
 
+  if $use_init {
+    if $service_enable != undef {
+      validate_bool($service_enable)
+      $_service_enable = $service_enable
+    } else {
+      $_service_enable = $service_ensure ? {
+        'running' => true,
+        true      => true,
+        default   => undef,
+      }
+    }
+  } else {
+    $_service_enable = undef
+  }
+
   service { $_service_name:
     ensure     => $service_ensure,
+    enable     => $_service_enable,
     hasstatus  => $_hasstatus,
     hasrestart => $_hasrestart,
     start      => $_start,
