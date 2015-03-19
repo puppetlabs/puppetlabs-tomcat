@@ -99,7 +99,7 @@ describe 'tomcat::war', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -112,7 +112,7 @@ describe 'tomcat::war', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -125,7 +125,7 @@ describe 'tomcat::war', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end
@@ -137,14 +137,14 @@ describe 'tomcat::war', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /not recognize source/)
       end
     end
     context 'no source' do
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /\$war_source must be specified/)
       end
     end
@@ -158,7 +158,7 @@ describe 'tomcat::war', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /Only one of \$app_base and \$deployment_path can be specified/)
       end
     end

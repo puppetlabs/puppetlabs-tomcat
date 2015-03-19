@@ -178,7 +178,7 @@ describe 'tomcat::service', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /not a boolean/)
       end
     end
@@ -190,7 +190,7 @@ describe 'tomcat::service', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /not a boolean/)
       end
     end
@@ -203,7 +203,7 @@ describe 'tomcat::service', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /Only one of \$use_jsvc and \$use_init/)
       end
     end
@@ -216,7 +216,7 @@ describe 'tomcat::service', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /\$service_name must be specified/)
       end
     end

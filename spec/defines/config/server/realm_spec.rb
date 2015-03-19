@@ -237,7 +237,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }. to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -249,7 +249,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }. to raise_error(Puppet::Error, /is not a Hash/)
       end
     end
@@ -261,7 +261,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }. to raise_error(Puppet::Error, /is not an Array/)
       end
     end
@@ -273,7 +273,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }. to raise_error(Puppet::Error, /is not a boolean/)
       end
     end
@@ -286,7 +286,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }. to raise_error(Puppet::Error, /\$realm_ensure must be set to 'true' or 'present' to use \$purge_realms/)
       end
     end
@@ -299,7 +299,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }. to raise_error(Puppet::Error, /\$realm_ensure must be set to 'true' or 'present' to use \$purge_realms/)
       end
     end
@@ -312,7 +312,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /configurations require Augeas >= 1.0.0/)
       end
     end

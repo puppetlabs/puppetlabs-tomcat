@@ -90,7 +90,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -103,7 +103,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -116,7 +116,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -129,7 +129,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -147,7 +147,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /configurations require Augeas/)
       end
     end
