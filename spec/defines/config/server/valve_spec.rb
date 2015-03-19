@@ -17,7 +17,7 @@ describe 'tomcat::config::server::valve', :type => :define do
     it { is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.AccessLog').with(
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/conf/server.xml',
-      'changes' => 'set Server/Service[#attribute/name=\'Catalina\']/Engine/Valve[#attribute/className=\'org.apache.catalina.AccessLog\']/#attribute/className org.apache.catalina.AccessLog',
+      'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/Engine/Valve[#attribute/className=\'org.apache.catalina.AccessLog\']/#attribute/className org.apache.catalina.AccessLog'],
     )
     }
   end
