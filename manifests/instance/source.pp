@@ -38,7 +38,7 @@ define tomcat::instance::source (
     source  => "${::staging::path}/tomcat/${filename}",
     target  => $catalina_base,
     require => Staging::File[$filename],
-    unless  => "test \"\$(ls -A ${catalina_base})\"",
+    onlyif  => "test -z \"`ls -A ${catalina_base}`\"",
     user    => $::tomcat::user,
     group   => $::tomcat::group,
     strip   => $_strip,
