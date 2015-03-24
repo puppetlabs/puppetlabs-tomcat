@@ -127,7 +127,7 @@ describe 'tomcat::config::server::connector', :type => :define do
     end
     it do
       expect {
-        should compile
+        catalogue
       }.to raise_error(Puppet::Error, /\$connector_ensure must be set to 'true' or 'present' to use \$purge_connectors/)
     end
   end
@@ -156,7 +156,7 @@ describe 'tomcat::config::server::connector', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -168,7 +168,7 @@ describe 'tomcat::config::server::connector', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /is not a Hash/)
       end
     end
@@ -180,7 +180,7 @@ describe 'tomcat::config::server::connector', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error)
       end
     end
@@ -193,7 +193,7 @@ describe 'tomcat::config::server::connector', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /configurations require Augeas/)
       end
     end

@@ -23,7 +23,7 @@ describe 'tomcat::instance::source', :type => :define do
     end
     it do
       expect {
-        is_expected.to compile
+        catalogue
       }.to raise_error(Puppet::Error, /Use of private class/)
     end
   end

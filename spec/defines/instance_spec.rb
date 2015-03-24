@@ -87,7 +87,7 @@ describe 'tomcat::instance', :type => :define do
     context "no source specified" do
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /\$source_url must be specified/)
       end
     end
@@ -99,7 +99,7 @@ describe 'tomcat::instance', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /\$package_name must be specified/)
       end
     end
@@ -111,7 +111,7 @@ describe 'tomcat::instance', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end
@@ -123,7 +123,7 @@ describe 'tomcat::instance', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end

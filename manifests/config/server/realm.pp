@@ -45,7 +45,7 @@ define tomcat::config::server::realm (
   }
 
   if $purge_realms {
-    $_purge_realms = "rm Server//Realm"
+    $_purge_realms = 'rm Server//Realm'
   } else {
     $_purge_realms = undef
   }
@@ -56,7 +56,7 @@ define tomcat::config::server::realm (
   if $parent_host {
     $host_path = "${engine_path}/Host[#attribute/name='${parent_host}']"
   } else {
-    $host_path = "${engine_path}"
+    $host_path = $engine_path
   }
 
   # The Realm could also be nested under another Realm element if the parent realm is a CombinedRealm.

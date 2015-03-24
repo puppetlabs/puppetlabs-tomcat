@@ -17,7 +17,7 @@ describe 'tomcat::config::server::valve', :type => :define do
     it { is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.AccessLog').with(
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/conf/server.xml',
-      'changes' => 'set Server/Service[#attribute/name=\'Catalina\']/Engine/Valve[#attribute/className=\'org.apache.catalina.AccessLog\']/#attribute/className org.apache.catalina.AccessLog',
+      'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/Engine/Valve[#attribute/className=\'org.apache.catalina.AccessLog\']/#attribute/className org.apache.catalina.AccessLog'],
     )
     }
   end
@@ -72,7 +72,7 @@ describe 'tomcat::config::server::valve', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -84,7 +84,7 @@ describe 'tomcat::config::server::valve', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /not a Hash/)
       end
     end
@@ -97,7 +97,7 @@ describe 'tomcat::config::server::valve', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /configurations require Augeas/)
       end
     end

@@ -151,7 +151,7 @@ describe 'tomcat::config::server::context', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -163,7 +163,7 @@ describe 'tomcat::config::server::context', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }. to raise_error(Puppet::Error, /is not a Hash/)
       end
     end
@@ -175,7 +175,7 @@ describe 'tomcat::config::server::context', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }. to raise_error(Puppet::Error, /is not an Array/)
       end
     end
@@ -188,7 +188,7 @@ describe 'tomcat::config::server::context', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /configurations require Augeas/)
       end
     end

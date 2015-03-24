@@ -84,7 +84,7 @@ describe 'tomcat::config::server::host', :type => :define do
     context 'no app_base' do
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /\$app_base must be specified/)
       end
     end
@@ -96,7 +96,7 @@ describe 'tomcat::config::server::host', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /is not a Hash/)
       end
     end
@@ -108,7 +108,7 @@ describe 'tomcat::config::server::host', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /does not match/)
       end
     end
@@ -121,7 +121,7 @@ describe 'tomcat::config::server::host', :type => :define do
       end
       it do
         expect {
-          is_expected.to compile
+          catalogue
         }.to raise_error(Puppet::Error, /configurations require Augeas/)
       end
     end
