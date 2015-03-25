@@ -22,6 +22,7 @@ define tomcat::config::server (
   $address_ensure          = 'present',
   $port                    = undef,
   $shutdown                = undef,
+  $server_config           = undef,
 ) {
 
   if versioncmp($::augeasversion, '1.0.0') < 0 {
@@ -61,10 +62,15 @@ define tomcat::config::server (
 
   $changes = delete_undef_values([$_class_name, $_address, $_port, $_shutdown])
 
+  $_server_config_location = $server_config ?  {
+    undef   => "${catalina_base}/conf/server.xml",
+    default => $server_config
+  }
+
   if ! empty($changes) {
     augeas { "server-${catalina_base}":
       lens    => 'Xml.lns',
-      incl    => "${catalina_base}/conf/server.xml",
+      incl    => $_server_config_location,
       changes => $changes,
     }
   }
