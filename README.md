@@ -290,6 +290,10 @@ Sets the port to wait for shutdown commands on.
 
 Specifies the command that must be sent to `$port`.
 
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
+
 ####tomcat::config::server::connector
 
 #####`$catalina_base`
