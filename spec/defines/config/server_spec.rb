@@ -6,7 +6,7 @@ describe 'tomcat::config::server', :type => :define do
   end
   let :facts do
     {
-      :osfamily => 'Debian',
+      :osfamily      => 'Debian',
       :augeasversion => '1.0.0'
     }
   end
@@ -24,8 +24,8 @@ describe 'tomcat::config::server', :type => :define do
       }
     end
     it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
-      'lens' => 'Xml.lns',
-      'incl' => '/opt/apache-tomcat/test/conf/server.xml',
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
         'set Server/#attribute/className foo',
         'set Server/#attribute/address localhost',
@@ -33,6 +33,26 @@ describe 'tomcat::config::server', :type => :define do
         'set Server/#attribute/shutdown SHUTDOWN',
       ]
     )
+    }
+  end
+  context 'custom server_config location' do
+    let(:params){ {
+      :catalina_base => '/opt/apache-tomcat/test',
+      :class_name    => 'foo',
+      :address       => 'localhost',
+      :port          => '8005',
+      :shutdown      => 'SHUTDOWN',
+      :server_config => '/opt/apache-tomcat/server.xml'
+    }}
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
+       'lens'    => 'Xml.lns',
+       'incl'    => '/opt/apache-tomcat/server.xml',
+       'changes' => [
+          'set Server/#attribute/className foo',
+          'set Server/#attribute/address localhost',
+          'set Server/#attribute/port 8005',
+          'set Server/#attribute/shutdown SHUTDOWN',
+       ])
     }
   end
   context 'remove optional attributes' do
@@ -44,8 +64,8 @@ describe 'tomcat::config::server', :type => :define do
       }
     end
     it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
-      'lens' => 'Xml.lns',
-      'incl' => '/opt/apache-tomcat/test/conf/server.xml',
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
         'rm Server/#attribute/className',
         'rm Server/#attribute/address',
@@ -56,7 +76,7 @@ describe 'tomcat::config::server', :type => :define do
   context 'no changes' do
     let :params do
       {
-        :catalina_base     => '/opt/apache-tomcat/test',
+        :catalina_base => '/opt/apache-tomcat/test',
       }
     end
     it { is_expected.to_not contain_augeas('server-/opt/apache-tomcat/test') }
