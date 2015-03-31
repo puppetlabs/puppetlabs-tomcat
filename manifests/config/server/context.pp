@@ -28,6 +28,7 @@ define tomcat::config::server::context (
   $parent_host           = undef,
   $additional_attributes = {},
   $attributes_to_remove  = [],
+  $server_config         = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -57,6 +58,12 @@ define tomcat::config::server::context (
     $_parent_engine = $parent_engine
   } else {
     $_parent_engine = undef
+  }
+
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
   }
 
   if $parent_host and ! $_parent_engine {
@@ -89,7 +96,7 @@ define tomcat::config::server::context (
 
   augeas { "${catalina_base}-${_parent_service}-${_parent_engine}-${parent_host}-context-${name}":
     lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/server.xml",
+    incl    => $_server_config,
     changes => $augeaschanges,
   }
 }

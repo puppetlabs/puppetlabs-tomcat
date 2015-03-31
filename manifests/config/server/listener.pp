@@ -28,6 +28,7 @@ define tomcat::config::server::listener (
   $parent_host           = undef,
   $additional_attributes = {},
   $attributes_to_remove  = [],
+  $server_config         = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -62,7 +63,13 @@ define tomcat::config::server::listener (
   } else {
     $path = "Server/Listener[#attribute/className='${_class_name}']"
   }
-  
+
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
+  }
+
   if $listener_ensure =~ /^(absent|false)$/ {
     $augeaschanges = "rm ${path}"
   } else {
@@ -85,7 +92,7 @@ define tomcat::config::server::listener (
 
   augeas { "${catalina_base}-${_parent_service}-${parent_engine}-${parent_host}-listener-${name}":
     lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/server.xml",
+    incl    => $_server_config,
     changes => $augeaschanges,
   }
 }

@@ -24,6 +24,7 @@ define tomcat::config::server::connector (
   $additional_attributes = {},
   $attributes_to_remove  = [],
   $purge_connectors      = $::tomcat::purge_connectors,
+  $server_config         = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -49,6 +50,12 @@ define tomcat::config::server::connector (
 
   if $purge_connectors and ($connector_ensure =~ /^(absent|false)$/) {
     fail('$connector_ensure must be set to \'true\' or \'present\' to use $purge_connectors')
+  }
+
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
   }
 
   if $connector_ensure =~ /^(absent|false)$/ {
@@ -82,7 +89,7 @@ define tomcat::config::server::connector (
 
   augeas { "server-${catalina_base}-${parent_service}-connector-${port}":
     lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/server.xml",
+    incl    => $_server_config,
     changes => $changes,
   }
 }

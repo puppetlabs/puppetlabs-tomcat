@@ -39,6 +39,7 @@ define tomcat::config::server::engine (
   $parent_service                    = 'Catalina',
   $start_stop_threads                = undef,
   $start_stop_threads_ensure         = 'present',
+  $server_config                     = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -92,11 +93,17 @@ define tomcat::config::server::engine (
     $_start_stop_threads = undef
   }
 
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
+  }
+
   $changes = delete_undef_values([$_name_change, $_default_host, $_background_processor_delay, $_class_name, $_jvm_route, $_start_stop_threads])
 
   augeas { "${catalina_base}-${parent_service}-engine":
     lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/server.xml",
+    incl    => $_server_config,
     changes => $changes,
   }
 }

@@ -28,6 +28,7 @@ describe 'tomcat::config::server::valve', :type => :define do
         :class_name            => 'foo',
         :parent_host           => 'localhost',
         :parent_service        => 'Catalina2',
+        :server_config         => '/opt/apache-tomcat/server.xml',
         :additional_attributes => {
           'suffix'    => '.txt',
           'directory' => 'logs',
@@ -38,7 +39,7 @@ describe 'tomcat::config::server::valve', :type => :define do
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-foo').with(
       'lens'    => 'Xml.lns',
-      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
         'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/className foo',
         'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/suffix \'.txt\'',

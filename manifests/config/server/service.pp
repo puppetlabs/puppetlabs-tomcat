@@ -17,6 +17,7 @@ define tomcat::config::server::service (
   $class_name        = undef,
   $class_name_ensure = 'present',
   $service_ensure    = 'present',
+  $server_config     = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -24,6 +25,12 @@ define tomcat::config::server::service (
 
   validate_re($service_ensure, '^(present|absent|true|false)$')
   validate_re($class_name_ensure, '^(present|absent|true|false)$')
+
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
+  }
 
   if $service_ensure =~ /^(absent|false)$/ {
     $changes = "rm Server/Service[#attribute/name='${name}']"
@@ -40,7 +47,7 @@ define tomcat::config::server::service (
   if ! empty($changes) {
     augeas { "server-${catalina_base}-service-${name}":
       lens    => 'Xml.lns',
-      incl    => "${catalina_base}/conf/server.xml",
+      incl    => $_server_config,
       changes => $changes,
     }
   }

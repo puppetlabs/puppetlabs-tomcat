@@ -19,6 +19,7 @@ describe 'tomcat::config::server::realm', :type => :define do
          :class_name            => 'org.apache.catalina.realm.JNDIRealm',
          :catalina_base         => '/opt/apache-tomcat/test',
          :realm_ensure          => 'present',
+         :server_config         => '/opt/apache-tomcat/server.xml',
          :additional_attributes => {
           'connectionURL' => 'ldap://localhost',
           'roleName'      => 'cn',
@@ -34,7 +35,7 @@ describe 'tomcat::config::server::realm', :type => :define do
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
       'lens'    => 'Xml.lns',
-      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm/#attribute/className org.apache.catalina.realm.JNDIRealm",
         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/connectionURL 'ldap://localhost'",

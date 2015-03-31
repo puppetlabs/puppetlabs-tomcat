@@ -23,6 +23,7 @@ define tomcat::config::server::host (
   $parent_service        = 'Catalina',
   $additional_attributes = {},
   $attributes_to_remove  = [],
+  $server_config         = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -38,6 +39,12 @@ define tomcat::config::server::host (
   }
 
   $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Host[#attribute/name='${_host_name}']"
+
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
+  }
 
   if $host_ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
@@ -66,7 +73,7 @@ define tomcat::config::server::host (
 
   augeas { "${catalina_base}-${parent_service}-host-${_host_name}":
     lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/server.xml",
+    incl    => $_server_config,
     changes => $changes,
   }
 }

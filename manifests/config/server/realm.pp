@@ -30,6 +30,7 @@ define tomcat::config::server::realm (
   $additional_attributes = {},
   $attributes_to_remove  = [],
   $purge_realms          = $::tomcat::purge_realms,
+  $server_config         = undef,
 ) {
 
   if versioncmp($::augeasversion, '1.0.0') < 0 {
@@ -67,6 +68,12 @@ define tomcat::config::server::realm (
     $path = "${host_path}/Realm"
   }
 
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
+  }
+
   if $realm_ensure =~ /^(absent|false)$/ {
     $changes = "rm ${path}[#attribute/className='${class_name}']"
   }
@@ -90,7 +97,7 @@ define tomcat::config::server::realm (
 
   augeas { "${catalina_base}-${parent_service}-${parent_engine}-${parent_host}-${parent_realm}-realm-${class_name}":
     lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/server.xml",
+    incl    => $_server_config,
     changes => $changes,
   }
 
