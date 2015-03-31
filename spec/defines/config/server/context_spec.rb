@@ -22,6 +22,7 @@ describe 'tomcat::config::server::context', :type => :define do
         :parent_service        => 'Catalina',
         :parent_engine         => 'Catalina',
         :parent_host           => 'localhost',
+        :server_config         => '/opt/apache-tomcat/server.xml',
         :additional_attributes => {
           'path' => '/myapp',
         },
@@ -32,7 +33,7 @@ describe 'tomcat::config::server::context', :type => :define do
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
       'lens'    => 'Xml.lns',
-      'incl'    => '/opt/apache-tomcat/exampleapp/conf/server.xml',
+      'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
         'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war',
         'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/path \'/myapp\'',

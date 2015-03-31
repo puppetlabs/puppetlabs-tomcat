@@ -19,6 +19,7 @@ describe 'tomcat::config::server::listener', :type => :define do
          :catalina_base         => '/opt/apache-tomcat/test',
          :class_name            => 'org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
          :listener_ensure       => 'present',
+         :server_config         => '/opt/apache-tomcat/server.xml',
          :additional_attributes => {
            'rmiRegistryPortPlatform' => '10001',
            'rmiServerPortPlatform'   => '10002',
@@ -33,7 +34,7 @@ describe 'tomcat::config::server::listener', :type => :define do
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat/test----listener-JmxRemoteLifecycleListener').with(
       'lens'    => 'Xml.lns',
-      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
         'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/className org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
         'set Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']/#attribute/rmiRegistryPortPlatform \'10001\'',

@@ -327,6 +327,10 @@ be a hash of the format 'attribute' => 'value'. This parameter is optional.
 Specifies any attributes to remove from the Connector. Should
 be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
+
 ####tomcat::config::server::context
 
 #####`$catalina_base`
@@ -358,6 +362,10 @@ Specifies any additional attributes to add to the Context. Should be a hash of t
 #####`$attributes_to_remove`
 
 Specifies any attributes to remove from the Context. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
 
 ####tomcat::config::server::engine
 
@@ -409,6 +417,10 @@ Sets the number of threads the Engine will use to start child Host elements in p
 
 Specifies whether to add or remove the [startStopThreads](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) XML attribute. Valid values are 'true', 'false', 'present' and 'absent'. Defaults to 'present'.
 
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
+
 ####tomcat::config::server::host
 
 #####`$app_base`
@@ -441,6 +453,10 @@ be a hash of the format 'attribute' => 'value'. This parameter is optional
 
 Specifies any attributes to remove from the Host. Should
 be an array of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
 
 ####tomcat::config::server::listener
 
@@ -475,6 +491,10 @@ Specifies any additional attributes to add to the Listener. Should be a hash of 
 #####`$attributes_to_remove`
 
 Specifies any attributes to remove from the Listener. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
 
 ####tomcat::config::server::realm
 
@@ -514,6 +534,10 @@ Specifies any additional attributes to add to the Realm element. Should be a has
 
 Specifies attributes to remove from the Realm element. Should be an array of attribute names. This parameter is optional.
 
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
+
 ####tomcat::config::server::service
 
 #####`$catalina_base`
@@ -531,6 +555,10 @@ Specifies whether to set or remove the [className](http://tomcat.apache.org/tomc
 #####`$service_ensure`
 
 Specifies whether to add or remove the [Service](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) element. Valid values are 'true', 'false', 'present', or 'absent'. Defaults to 'present'.
+
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
 
 ####tomcat::config::server::tomcat_users
 
@@ -595,6 +623,10 @@ Specifies any additional attributes to add to the Valve. Should be a hash of the
 #####`$attributes_to_remove`
 
 Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#####`server_config`
+
+Specifies where the server.xml should be, defaults to "${catalina_base}/config/server.xml"
 
 ####tomcat::instance
 

@@ -32,19 +32,20 @@ describe 'tomcat::config::server::engine', :type => :define do
   context 'set all the things' do
     let :params do
       {
-        :default_host => 'localhost',
-        :catalina_base => '/opt/apache-tomcat/test',
+        :default_host               => 'localhost',
+        :catalina_base              => '/opt/apache-tomcat/test',
         :background_processor_delay => '10',
-        :class_name => 'foo',
-        :engine_name => 'Catalina2',
-        :jvm_route => 'bar',
-        :parent_service => 'Catalina2',
-        :start_stop_threads => '200',
+        :class_name                 => 'foo',
+        :engine_name                => 'Catalina2',
+        :jvm_route                  => 'bar',
+        :parent_service             => 'Catalina2',
+        :start_stop_threads         => '200',
+        :server_config              => '/opt/apache-tomcat/server.xml',
       }
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-engine').with(
       'lens'    => 'Xml.lns',
-      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
         'set Server/Service[#attribute/name=\'Catalina2\']/Engine/#attribute/name Catalina2',
         'set Server/Service[#attribute/name=\'Catalina2\']/Engine/#attribute/defaultHost localhost',

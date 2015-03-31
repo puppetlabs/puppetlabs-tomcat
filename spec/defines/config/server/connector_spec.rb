@@ -20,6 +20,7 @@ describe 'tomcat::config::server::connector', :type => :define do
         :catalina_base         => '/opt/apache-tomcat/test',
         :protocol              => 'AJP/1.3',
         :parent_service        => 'Catalina2',
+        :server_config         => '/opt/apache-tomcat/server.xml',
         :additional_attributes => {
           'redirectPort'      => '8543',
           'connectionTimeout' => '20000',
@@ -34,7 +35,7 @@ describe 'tomcat::config::server::connector', :type => :define do
     end
     it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
       'lens'    => 'Xml.lns',
-      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/port 8180',
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/protocol AJP/1.3',

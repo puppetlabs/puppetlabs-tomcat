@@ -24,6 +24,7 @@ define tomcat::config::server::valve (
   $valve_ensure          = 'present',
   $additional_attributes = {},
   $attributes_to_remove  = [],
+  $server_config         = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -42,6 +43,12 @@ define tomcat::config::server::valve (
     $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Host[#attribute/name='${parent_host}']/Valve[#attribute/className='${_class_name}']"
   } else {
     $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Valve[#attribute/className='${_class_name}']"
+  }
+
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
   }
 
   if $valve_ensure =~ /^(absent|false)$/ {
@@ -64,7 +71,7 @@ define tomcat::config::server::valve (
 
   augeas { "${catalina_base}-${parent_service}-${parent_host}-valve-${_class_name}":
     lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/server.xml",
+    incl    => $_server_config,
     changes => $changes,
   }
 }

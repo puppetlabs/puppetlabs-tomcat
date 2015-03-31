@@ -60,17 +60,18 @@ define tomcat::config::server (
     $_shutdown = undef
   }
 
-  $changes = delete_undef_values([$_class_name, $_address, $_port, $_shutdown])
-
-  $_server_config_location = $server_config ?  {
-    undef   => "${catalina_base}/conf/server.xml",
-    default => $server_config
+  if $server_config {
+    $_server_config = $server_config
+  } else {
+    $_server_config = "${catalina_base}/conf/server.xml"
   }
+
+  $changes = delete_undef_values([$_class_name, $_address, $_port, $_shutdown])
 
   if ! empty($changes) {
     augeas { "server-${catalina_base}":
       lens    => 'Xml.lns',
-      incl    => $_server_config_location,
+      incl    => $_server_config,
       changes => $changes,
     }
   }
