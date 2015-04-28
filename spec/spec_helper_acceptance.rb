@@ -27,7 +27,7 @@ else # We're outside the CI system and use default locations
   TOMCAT6_RECENT_VERSION = ENV['TOMCAT6_RECENT_VERSION'] || latest6
   TOMCAT6_RECENT_SOURCE = "http://mirror.symnds.com/software/Apache/tomcat/tomcat-6/v#{TOMCAT6_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT6_RECENT_VERSION}.tar.gz"
   TOMCAT7_RECENT_VERSION = ENV['TOMCAT7_RECENT_VERSION'] || latest7
-  TOMCAT7_RECENT_SOURCE = "http://www.dsgnwrld.com/am/tomcat/tomcat-7/v#{TOMCAT7_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT7_RECENT_VERSION}.tar.gz"
+  TOMCAT7_RECENT_SOURCE = "http://mirror.symnds.com/software/Apache/tomcat/tomcat-7/v#{TOMCAT7_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT7_RECENT_VERSION}.tar.gz"
   TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
   TOMCAT8_RECENT_SOURCE = "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v#{TOMCAT8_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT8_RECENT_VERSION}.tar.gz"
   TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '6.0.39'
