@@ -42,10 +42,14 @@ class tomcat (
   validate_bool($manage_group)
 
   case $::osfamily {
-    'windows','Solaris','Darwin': {
+    'windows','Darwin': {
       fail("Unsupported osfamily: ${::osfamily}")
     }
     default: { }
+  }
+
+  if $::osfamily == 'Solaris' and $install_from_source == false {
+      fail("Solaris only supports source install, package install not tested")
   }
 
   if $install_from_source {
