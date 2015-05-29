@@ -1,3 +1,25 @@
+##2015-05-29 - Supported Release 1.3.0
+###Summary
+
+This is a feature release, with a couple of bugfixes and readme changes.
+
+####Features
+- Update additional_attributes to support values with spaces
+- Documentation changes
+- Add a manifest for Context Containers in Tomcat configuration
+- Manage User and Roles in Realms
+- New manifests for context.xml configuration
+- Added manifest for managing Realm elements in server.xml
+- Ordering of setenv entries
+- Adds parameter for enabling Tomcat service on boot
+- Add ability to specify server_config location
+- Allow configuration of location of server.xml
+
+####Bugfixes
+- Make sure setenv entries have export
+- Test improvements
+- version pinning for acceptance tests
+
 ##2014-11-11 - Supported Release 1.2.0
 ###Summary
 
