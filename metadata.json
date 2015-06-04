@@ -7,6 +7,11 @@
   "source": "http://github.com/puppetlabs/puppetlabs-tomcat",
   "project_page": "https://github.com/puppetlabs/puppetlabs-tomcat",
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.2.0 < 5.0.0"},
+    {"name":"puppetlabs/concat","version_requirement":">= 1.0.4 < 2.0.0"},
+    {"name":"nanliu/staging","version_requirement":">= 0.4.1 < 2.0.0"}
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -65,10 +70,5 @@
       "name": "puppet",
       "version_requirement": "3.x"
     }
-  ],
-  "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 4.2.0 < 5.0.0"},
-    {"name":"puppetlabs/concat","version_requirement":">= 1.0.4 < 2.0.0"},
-    {"name":"nanliu/staging","version_requirement":">= 0.4.1 < 2.0.0"}
   ]
 }
