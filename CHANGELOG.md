@@ -1,4 +1,4 @@
-##2015-05-29 - Supported Release 1.3.0
+##2015-06-09 - Supported Release 1.3.0
 ###Summary
 
 This is a feature release, with a couple of bugfixes and readme changes.
