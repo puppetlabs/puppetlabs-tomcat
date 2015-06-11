@@ -1,6 +1,8 @@
 require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
+require 'beaker/puppet_install_helper'
 
+run_puppet_install_helper
 
 if ENV['BUILD_ID'] # We're in our CI system and use internal resources
   ARTIFACT_HOST = ENV['TOMCAT_ARTIFACT_HOST'] || 'http://int-resources.corp.puppetlabs.net/QA_resources/tomcat'
@@ -35,21 +37,6 @@ else # We're outside the CI system and use default locations
   SAMPLE_WAR = 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war'
 end
 
-
-unless ENV['RS_PROVISION'] == 'no'
-  # This will install the latest available package on el and deb based
-  # systems fail on windows and osx, and install via gem on other *nixes
-  foss_opts = {
-    :default_action => 'gem_install',
-    :version        => (ENV['PUPPET_VERSION'] || '3.8.1'),
-  }
-
-  if default.is_pe?; then install_pe; else install_puppet( foss_opts ); end
-
-  hosts.each do |host|
-      on host, "mkdir -p #{host['distmoduledir']}"
-  end
-end
 
 UNSUPPORTED_PLATFORMS = ['windows','Solaris','Darwin']
 
