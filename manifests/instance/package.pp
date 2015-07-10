@@ -5,6 +5,7 @@
 # Parameters:
 # - $package_ensure is the ensure passed to the package resource.
 # - The $package_name you want to install.
+# - $install_options to pass extra options to the package resource.
 define tomcat::instance::package (
   $package_ensure  = 'installed',
   $package_name    = undef,
