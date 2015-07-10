@@ -76,8 +76,8 @@ define tomcat::instance (
     }
   } else {
     tomcat::instance::package { $package_name:
-      package_ensure   => $package_ensure,
-      install_options  => $install_options, 
+      package_ensure  => $package_ensure,
+      install_options => $install_options,
     }
   }
 
