@@ -1,3 +1,7 @@
+## 2015-07-16 - Supported Release 1.3.1
+### Summary
+This release fixes metadata because it supports puppet 4.
+
 ##2015-06-09 - Supported Release 1.3.0
 ###Summary
 
