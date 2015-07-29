@@ -143,6 +143,16 @@ define tomcat::service (
         default   => undef,
       }
     }
+
+    file { '/etc/init.d/tomcat-general':
+      ensure    => file,
+      source    => "puppet:///files/${::osfamily}/init-script"
+    } ->
+    file { "/etc/init.d/$_service_name":
+      ensure    => link,
+      target    => '/etc/init.d/tomcat-general',
+    }
+
   } else {
     $_service_enable = undef
   }

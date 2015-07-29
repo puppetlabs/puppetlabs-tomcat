@@ -1,0 +1,116 @@
+#!/bin/bash
+#
+# Init file for tomcat
+#
+# chkconfig: 2345 87 13
+# description: general init-script for tomcat.
+# processname: tomcat-general
+# pidfile: /var/run/tomcat/$INSTANCE/tomcat.pid
+# config: /etc/sysconfig/tomcat-$INSTANCE.conf
+
+# SCRIPTNAME=$(basename $0 .sh)
+INSTANCE=$(basename $(basename) | sed 's/.*-//g')
+
+if [ "${INSTANCE}" = "general" ]
+then
+  echo "  you can't run the general init-script!"
+  echo "  use the link on it"
+  exit 2
+fi
+
+INSTANCE_CONFIG="/etc/sysconfig/tomcat-${INSTANCE}.conf"
+
+#test -r ${INSTANCE_CONFIG} || {
+#  echo "${INSTANCE_CONFIG} not existing";
+#  if [ "$1" = "stop" ]
+#  then
+#    exit 0
+#  else
+#    exit 6
+#  fi
+#}
+
+# ------------------------------------------------------------
+
+#. ${INSTANCE_CONFIG}
+#export CATALINA_HOME CATALINA_OUT CATALINA_PID CATALINA_TMPDIR CATALINA_BASE JAVA_HOME JAVA_OPTS
+#test -x ${CATALINA_HOME} || {
+#  echo "TOMCAT providing CATALINA_HOME not installed at ${CATALINA_HOME}";
+#  if [ "$1" = "stop" ]
+#  then
+#    exit 0
+#  else
+#    exit 5
+#  fi
+#}
+
+
+RETVAL=0
+
+printStatus() {
+  echo -ne "\t\t\t [ "
+  if test $1 == 0
+  then
+    echo -ne "\e[0;92mOK"
+  else
+    echo -ne "\e[0;31mERROR"
+  fi
+  tput sgr0
+  echo " ]"
+}
+
+start() {
+  echo -ne "Starting tomcat-${INSTANCE} as ${TOMCAT_USER}"
+  su ${TOMCAT_USER} -c '${CATALINA_HOME}/bin/catalina.sh start' &>/dev/null
+  RETVAL=$?
+  printStatus $RETVAL
+  [ $RETVAL = 0 ] && touch /var/lock/subsys/tomcat-${INSTANCE}
+}
+
+stop() {
+  echo -ne "Stopping tomcat-${INSTANCE} as ${TOMCAT_USER}"
+  su ${TOMCAT_USER} -c '${CATALINA_HOME}/bin/catalina.sh stop -force' &>/dev/null
+  RETVAL=$?
+  printStatus $RETVAL
+  [ $RETVAL = 0 ] && rm -f /var/lock/subsys/tomcat-${INSTANCE}
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  restart)
+    stop
+    sleep 10s
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    if test -f "$CATALINA_PID"
+    then
+      if ps -f --pid $(cat $CATALINA_PID) | grep org.apache.catalina.startup.Bootstrap | grep -v -q grep
+      then
+        echo "Tomcat tomcat-${INSTANCE} is running with pid: $(cat $CATALINA_PID)"
+#      printStatus
+        exit 0
+      else
+        echo "Tomcat tomcat-${INSTANCE} pid file exist but no process with id $(cat $CATALINA_PID) is running"
+        exit 4
+      fi
+    else
+      echo "Tomcat tomcat-${INSTANCE} is stopped, no PID file found at $CATALINA_PID"
+      exit 3
+    fi
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+    ;;
+esac
+
+exit $RETVAL
+
+# EOF
+
