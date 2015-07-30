@@ -9,7 +9,7 @@
 # config: /etc/sysconfig/tomcat-$INSTANCE.conf
 
 # SCRIPTNAME=$(basename $0 .sh)
-INSTANCE=$(basename $(basename) | sed 's/.*-//g')
+INSTANCE=$(basename ${0} | sed 's/.*-//g')
 
 if [ "${INSTANCE}" = "general" ]
 then
@@ -18,32 +18,52 @@ then
   exit 2
 fi
 
-INSTANCE_CONFIG="/etc/sysconfig/tomcat-${INSTANCE}.conf"
+# ----------------------------------------------------------------
 
-#test -r ${INSTANCE_CONFIG} || {
-#  echo "${INSTANCE_CONFIG} not existing";
-#  if [ "$1" = "stop" ]
-#  then
-#    exit 0
-#  else
-#    exit 6
-#  fi
-#}
+INSTANCE_CONFIG=
 
-# ------------------------------------------------------------
+# check for RedHat (sysconfig), Debian (default) or gentoo (conf) config-files
+for d in sysconfig default conf
+do
+  if [ -f "/etc/${d}/tomcat-${INSTANCE}" ]
+  then
+    INSTANCE_CONFIG="/etc/${d}/tomcat-${INSTANCE}"
+    break
+  else
+    INSTANCE_CONFIG=
+  fi
+done
 
-#. ${INSTANCE_CONFIG}
-#export CATALINA_HOME CATALINA_OUT CATALINA_PID CATALINA_TMPDIR CATALINA_BASE JAVA_HOME JAVA_OPTS
-#test -x ${CATALINA_HOME} || {
-#  echo "TOMCAT providing CATALINA_HOME not installed at ${CATALINA_HOME}";
-#  if [ "$1" = "stop" ]
-#  then
-#    exit 0
-#  else
-#    exit 5
-#  fi
-#}
+test -r ${INSTANCE_CONFIG} || {
+  echo "${INSTANCE_CONFIG} not existing";
+  if [ "$1" = "stop" ]
+  then
+    exit 0
+  else
+    exit 6
+  fi
+}
 
+# ----------------------------------------------------------------
+
+. ${INSTANCE_CONFIG}
+
+[ -x ${CATALINA_HOME} ] || {
+  echo "TOMCAT providing CATALINA_HOME not installed at ${CATALINA_HOME}";
+  if [ "$1" = "stop" ]
+  then
+    exit 0
+  else
+    exit 5
+  fi
+}
+
+if [ -f ${CATALINA_HOME}/bin/setenv.sh ]
+then
+  . ${CATALINA_HOME}/bin/setenv.sh
+fi
+
+# ----------------------------------------------------------------
 
 RETVAL=0
 
@@ -59,20 +79,35 @@ printStatus() {
   echo " ]"
 }
 
+
 start() {
   echo -ne "Starting tomcat-${INSTANCE} as ${TOMCAT_USER}"
-  su ${TOMCAT_USER} -c '${CATALINA_HOME}/bin/catalina.sh start' &>/dev/null
+
+  touch ${CATALINA_PID}
+  chown ${TOMCAT_USER}:${TOMCAT_USER} ${CATALINA_PID}
+
+  su ${TOMCAT_USER} -c "${CATALINA_HOME}/bin/catalina.sh start" &>/dev/null
   RETVAL=$?
   printStatus $RETVAL
-  [ $RETVAL = 0 ] && touch /var/lock/subsys/tomcat-${INSTANCE}
+  [ $RETVAL = 0 ] && {
+    touch /var/lock/subsys/tomcat-${INSTANCE}
+  } || {
+
+    rm -f ${CATALINA_PID} 2> /dev/null
+  }
+
 }
 
 stop() {
   echo -ne "Stopping tomcat-${INSTANCE} as ${TOMCAT_USER}"
-  su ${TOMCAT_USER} -c '${CATALINA_HOME}/bin/catalina.sh stop -force' &>/dev/null
+
+  su ${TOMCAT_USER} -c "${CATALINA_HOME}/bin/catalina.sh stop -force" &>/dev/null
   RETVAL=$?
   printStatus $RETVAL
-  [ $RETVAL = 0 ] && rm -f /var/lock/subsys/tomcat-${INSTANCE}
+  [ $RETVAL = 0 ] && {
+    rm -f /var/lock/subsys/tomcat-${INSTANCE}
+    rm -f ${CATALINA_PID} 2> /dev/null
+  }
 }
 
 case "$1" in
@@ -93,7 +128,6 @@ case "$1" in
       if ps -f --pid $(cat $CATALINA_PID) | grep org.apache.catalina.startup.Bootstrap | grep -v -q grep
       then
         echo "Tomcat tomcat-${INSTANCE} is running with pid: $(cat $CATALINA_PID)"
-#      printStatus
         exit 0
       else
         echo "Tomcat tomcat-${INSTANCE} pid file exist but no process with id $(cat $CATALINA_PID) is running"
