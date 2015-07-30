@@ -35,7 +35,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
       'changes' => [
-        'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/username foo',
+        'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/username \'foo\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/password \'bar\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'foo_role,bar_role\'',
       ],
@@ -68,7 +68,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
       'changes' => [
-        'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/username foo',
+        'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/username \'foo\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/password \'very-secret-password\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'foobar\'',
       ],
@@ -94,7 +94,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/users.xml',
       'changes' => [
-        'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/username foo',
+        'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/username \'foo\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/password \'bar\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'role\'',
       ],
@@ -147,7 +147,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
       'changes' => [
-        'set tomcat-users/role[#attribute/rolename=\'foobar\']/#attribute/rolename foobar',
+        'set tomcat-users/role[#attribute/rolename=\'foobar\']/#attribute/rolename \'foobar\'',
       ],
       'require' => 'File[/opt/apache-tomcat/test/conf/tomcat-users.xml]',
     )
@@ -168,7 +168,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
       'changes' => [
-        'set tomcat-users/role[#attribute/rolename=\'noname\']/#attribute/rolename noname',
+        'set tomcat-users/role[#attribute/rolename=\'noname\']/#attribute/rolename \'noname\'',
       ],
       'require' => 'File[/opt/apache-tomcat/test/conf/tomcat-users.xml]',
     )

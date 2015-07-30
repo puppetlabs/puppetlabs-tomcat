@@ -42,7 +42,7 @@ define tomcat::config::server::tomcat_users (
   if $element == 'role' and ( $password or ! empty($roles) ) {
     warning('$password and $roles are useless when $element is set to \'role\'')
   }
-  
+
   if $element == 'user' {
     $element_identifier = 'username'
   } else {
@@ -54,13 +54,13 @@ define tomcat::config::server::tomcat_users (
   } else {
     $_element_name = $name
   }
-  
+
   if $file {
     $_file = $file
   } else {
     $_file = "${catalina_base}/conf/tomcat-users.xml"
   }
-  
+
   if $manage_file {
     ensure_resource('file', $_file, {
       ensure  => file,
@@ -78,7 +78,7 @@ define tomcat::config::server::tomcat_users (
   if $ensure =~ /^(absent|false)$/ {
     $remove_entry = "rm ${path}"
   } else {
-    $add_entry = "set ${path}/#attribute/${element_identifier} ${_element_name}"
+    $add_entry = "set ${path}/#attribute/${element_identifier} '${_element_name}'"
     if $element == 'user' {
       $add_password = "set ${path}/#attribute/password '${password}'"
       $add_roles = join(["set ${path}/#attribute/roles '",join($roles, ','),"'"])
