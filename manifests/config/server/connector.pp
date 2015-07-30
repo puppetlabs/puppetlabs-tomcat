@@ -33,7 +33,8 @@ define tomcat::config::server::connector (
   validate_re($connector_ensure, '^(present|absent|true|false)$')
   validate_hash($additional_attributes)
   validate_bool($purge_connectors)
-
+  validate_re($catalina_base, '^.*[^/]$', '$catalina_base must not end in a /!')
+  
   if $protocol {
     $_protocol = $protocol
   } else {
