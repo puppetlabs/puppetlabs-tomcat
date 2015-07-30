@@ -156,32 +156,10 @@ define tomcat::service (
       }
     }
 
-    ini_setting { "sysconfig ${_service_name} TOMCAT_USER":
-      ensure            => present,
-      path              => $_config_file,
-      section           => '',
-      key_val_separator => '=',
-      setting           => 'TOMCAT_USER',
-      value             => "${::tomcat::user}",
-      notify            => Service[$_service_name]
-    } ->
-    ini_setting { "sysconfig ${_service_name} CATALINA_HOME":
-      ensure            => present,
-      path              => $_config_file,
-      section           => '',
-      key_val_separator => '=',
-      setting           => 'CATALINA_HOME',
-      value             => "${_catalina_base}",
-      notify            => Service[$_service_name]
-    } ->
-    file { '/etc/init.d/tomcat-general':
+    file { "/etc/init.d/$_service_name":
       ensure    => file,
       mode      => '0755',
-      source    => "puppet:///modules/tomcat/init-script"
-    } ->
-    file { "/etc/init.d/$_service_name":
-      ensure    => link,
-      target    => '/etc/init.d/tomcat-general',
+      content   => template( 'tomcat/init-script.erb' ),
     }
 
   } else {

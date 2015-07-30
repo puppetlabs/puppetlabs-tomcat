@@ -8,45 +8,13 @@
 # pidfile: /var/run/tomcat/$INSTANCE/tomcat.pid
 # config: /etc/sysconfig/tomcat-$INSTANCE.conf
 
-# SCRIPTNAME=$(basename $0 .sh)
-INSTANCE=$(basename ${0} | sed 's/.*-//g')
 
-if [ "${INSTANCE}" = "general" ]
-then
-  echo "  you can't run the general init-script!"
-  echo "  use the link on it"
-  exit 2
-fi
+# minimal config vars ...
+INSTANCE="<%= scope.lookupvar('title') %>"
+CATALINA_HOME="<%= scope.lookupvar('_catalina_base') %>"
+TOMCAT_USER="<%= scope.lookupvar('::tomcat::user') %>"
 
 # ----------------------------------------------------------------
-
-INSTANCE_CONFIG=
-
-# check for RedHat (sysconfig), Debian (default) or gentoo (conf) config-files
-for d in sysconfig default conf
-do
-  if [ -f "/etc/${d}/tomcat-${INSTANCE}" ]
-  then
-    INSTANCE_CONFIG="/etc/${d}/tomcat-${INSTANCE}"
-    break
-  else
-    INSTANCE_CONFIG=
-  fi
-done
-
-test -r ${INSTANCE_CONFIG} || {
-  echo "${INSTANCE_CONFIG} not existing";
-  if [ "$1" = "stop" ]
-  then
-    exit 0
-  else
-    exit 6
-  fi
-}
-
-# ----------------------------------------------------------------
-
-. ${INSTANCE_CONFIG}
 
 [ -x ${CATALINA_HOME} ] || {
   echo "TOMCAT providing CATALINA_HOME not installed at ${CATALINA_HOME}";
