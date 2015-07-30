@@ -13,6 +13,7 @@
     * [I want to deploy WAR files.](#i-want-to-deploy-war-files)
     * [I want to change my configuration](#i-want-to-change-my-configuration)
     * [I want to manage a Connector or Realm that already exists](#i-want-to-manage-a-connector-or-realm-that-already-exists)
+    * [example to use hiera](#example-to-use-hiera)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Classes](#classes)
     * [Defines](#defines)
@@ -192,6 +193,64 @@ tomcat::config::server::realm { 'org.apache.catalina.realm.LockOutRealm':
 ~~~
 
 Puppet removes any existing Connectors or Realms and leaves only the ones you've specified.
+
+###example to use hiera
+
+We also can use hiera
+
+~~~
+# default definitions of path
+tomcat::catalina_base: '/opt/apache-tomcat/tomcat8'
+tomcat::setenv: "%{hiera('tomcat::catalina_base')}/bin/setenv.sh"
+tomcat::logdir: "/var/log/apache-tomcat/jolokia"
+
+# install tomcat with special user
+tomcat::user: webapp
+tomcat::group: webapp
+tomcat::manage_user: false
+tomcat::manage_group: false
+
+# create an instance (here for jolokia)
+tomcat::instance:
+  'jolokia':
+    catalina_base: "%{hiera('tomcat::catalina_base')}"
+    source_url: 'http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.24/bin/apache-tomcat-8.0.24.tar.gz'
+
+# use (our new) init-script to start the instance
+tomcat::service:
+  'jolokia':
+    use_init: true
+    service_name: 'tomcat-jolokia'
+    catalina_base: "%{hiera('tomcat::catalina_base')}"
+
+# create the service for our instance
+tomcat::config::server:
+  'jolokia':
+    catalina_base: "%{hiera('tomcat::catalina_base')}"
+    address: '127.0.0.1'
+
+# create setenv parameter 
+tomcat::setenv::entry:
+  'CATALINA_OPTS':
+    config_file: "%{hiera('tomcat::setenv')}"
+    quote_char: '"'
+    value: "-Xms32m -Xmx32m -Xss256k -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSClassUnloadingEnabled -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:%{hiera('tomcat::logdir')}/gc.out'
+  'CATALINA_OUT':
+    config_file: "%{hiera('tomcat::setenv')}"
+    quote_char: '"'
+    value: "%{hiera('tomcat::logdir')}/catalina.out"
+  'CATALINA_PID':
+    config_file: "%{hiera('tomcat::setenv')}"
+    quote_char: '"'
+    value: '/var/run/tomcat-jolokia.pid'    
+
+# and at last ... deploy an war file
+tomcat::war:
+  'jolokia.war':
+    catalina_base: "%{hiera('tomcat::catalina_base')}"
+    war_source: '/opt/install/jolokia-1.3.0/agents/jolokia.war'
+~~~
+
 
 ##Reference
 
