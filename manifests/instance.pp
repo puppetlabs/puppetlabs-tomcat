@@ -17,6 +17,7 @@
 #   to in the package resource.
 # - $package_name is the name of the package you want to install. Required if
 #   $install_from_source is false.
+# - $install_options to pass extra options to the package resource.
 define tomcat::instance (
   $catalina_home          = undef,
   $catalina_base          = undef,
@@ -25,6 +26,7 @@ define tomcat::instance (
   $source_strip_first_dir = undef,
   $package_ensure         = undef,
   $package_name           = undef,
+  $install_options        = undef,
 ) {
 
   if $install_from_source {
@@ -74,7 +76,8 @@ define tomcat::instance (
     }
   } else {
     tomcat::instance::package { $package_name:
-      package_ensure => $package_ensure,
+      package_ensure  => $package_ensure,
+      install_options => $install_options,
     }
   }
 
