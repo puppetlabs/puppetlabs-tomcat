@@ -257,7 +257,9 @@ Determines whether to create the specified user, if it doesn't exist. Uses Puppe
 
 #####`purge_connectors`
 
-Specifies whether to purge any unmanaged Connector elements from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.
+Specifies whether to purge any unmanaged Connector elements that match
+defined protocol but have a different port
+from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.
 
 #####`purge_realms`
 

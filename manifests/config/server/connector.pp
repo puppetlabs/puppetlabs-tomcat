@@ -34,7 +34,7 @@ define tomcat::config::server::connector (
   validate_hash($additional_attributes)
   validate_bool($purge_connectors)
   validate_re($catalina_base, '^.*[^/]$', '$catalina_base must not end in a /!')
-  
+
   if $protocol {
     $_protocol = $protocol
   } else {
@@ -44,7 +44,7 @@ define tomcat::config::server::connector (
   $path = "Server/Service[#attribute/name='${parent_service}']"
 
   if $purge_connectors {
-    $_purge_connectors = "rm Server//Connector[#attribute/protocol='${_protocol}']"
+    $_purge_connectors = "rm Server//Connector[#attribute/protocol='${_protocol}'][#attribute/port!='${port}']"
   } else {
     $_purge_connectors = undef
   }

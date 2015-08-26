@@ -73,7 +73,7 @@ describe 'tomcat::config::server::connector', :type => :define do
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        'rm Server//Connector[#attribute/protocol=\'AJP/1.3\']',
+        'rm Server//Connector[#attribute/protocol=\'AJP/1.3\'][#attribute/port!=\'8180\']',
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/port 8180',
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/protocol AJP/1.3',
         'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/redirectPort \'8543\'',
