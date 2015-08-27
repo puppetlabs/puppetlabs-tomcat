@@ -65,6 +65,21 @@ describe 'tomcat::instance', :type => :define do
       'ensure' => 'installed',
     )
     }
+    context "with additional package_options set" do
+      let :params do
+        {
+          :install_from_source => false,
+          :package_name        => 'tomcat',
+          :package_options     => [ '/S' ],
+        }
+      end
+      it {
+        is_expected.to contain_package('tomcat').with(
+          'ensure'          => 'installed',
+          'install_options' => [ '/S' ],
+        )
+      }
+    end
   end
   context "install from package, set $catalina_base" do
     let :facts do default_facts end

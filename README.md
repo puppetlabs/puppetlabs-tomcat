@@ -657,6 +657,10 @@ Determines whether the specified package should be installed. Only valid if `ins
 
 *Required if `install_from_source` is set to 'false'.* Specifies the package to install. Valid options: a string containing a valid package name.
 
+#####`package_options`
+
+*Unused if `install_from_source` is set to 'true'.* Specify additional options to use on the generated package resource. See the documentation of the [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package-attribute-install_options) for possible values.
+
 #####`source_strip_first_dir`
 
 Specifies whether to strip the topmost directory of the tarball when unpacking it. Only valid if `install_from_source` is set to 'true'. Valid options: 'true' and 'false'. Default: 'true'.
