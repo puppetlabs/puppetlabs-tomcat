@@ -333,6 +333,10 @@ Specifies which Service element the Connector should nest under. Valid options: 
 
 Specifies a protocol to use for handling incoming traffic. Maps to the [protocol XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes). Valid options: a string. Default: $name.
 
+#####`purge_connectors`
+
+Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.
+
 #####`server_config`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path. Default: '${catalina_base}/config/server.xml'.
