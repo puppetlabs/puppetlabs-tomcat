@@ -29,6 +29,7 @@ define tomcat::instance (
   $package_options        = undef,
   $user                   = $::tomcat::user,
   $group                  = $::tomcat::group,
+  $version                = undef,
 ) {
 
   if $install_from_source {
@@ -45,6 +46,23 @@ define tomcat::instance (
   if ! $install_from_source and ! $package_name {
     fail('If not installing from source $package_name must be specified')
   }
+
+  if $version {
+    $_version = $version
+  } else {
+    if $install_from_source {
+      if $source_url =~ /([\d+\.\d+\.\d+]).tar.gz/ {
+        $_version = $1
+      } else {
+        fail('version must either be specified or obtainable from source_url')
+      }
+    } else {
+      if $package_name =~ /(\d+\.\d+\.\d+)$/ {
+        $_version = $1
+      } else {
+        fail('version must either be specified or obtainable from package_name')
+      }
+    }
 
   if ! $install_from_source and ($catalina_home or $catalina_base) {
     warning('Setting $catalina_home or $catalina_base when not installing from source doesn\'t affect the installation.')
@@ -104,5 +122,11 @@ define tomcat::instance (
       group   => $group,
       mode    => '2770'
     }
+    if versioncmp( $_version, '8.0') > 0 {
+      $tomcat_conf_copy_from_home = [ 'catalina.policy', 'context.xml', 'logging.properties', 'server.xml', 'tomcat-users.xml', 'tomcat-users.xsd', 'web.xml', ]
+    } else {
+      $tomcat_conf_copy_from_home = [ 'catalina.policy', 'context.xml', 'logging.properties', 'server.xml', 'tomcat-users.xml', 'web.xml', ]
+    }
+    tomcat::instance::conf_copy_from_home{ $tomcat_conf_copy_from_home: }
   }
 }
