@@ -36,9 +36,9 @@ define tomcat::instance::source (
 
   staging::extract { "${name}-${filename}":
     source  => "${::staging::path}/tomcat/${filename}",
-    target  => $catalina_base,
+    target  => $catalina_home,
     require => Staging::File[$filename],
-    unless  => "test \"\$(ls -A ${catalina_base})\"",
+    unless  => "test \"\$(ls -A ${catalina_home})\"",
     user    => $::tomcat::user,
     group   => $::tomcat::group,
     strip   => $_strip,
