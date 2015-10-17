@@ -63,6 +63,7 @@ define tomcat::instance (
         fail('version must either be specified or obtainable from package_name')
       }
     }
+  }
 
   if ! $install_from_source and ($catalina_home or $catalina_base) {
     warning('Setting $catalina_home or $catalina_base when not installing from source doesn\'t affect the installation.')
