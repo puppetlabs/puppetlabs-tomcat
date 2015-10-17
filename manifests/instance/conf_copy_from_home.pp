@@ -3,7 +3,7 @@
 # Private define to copy a conf file from catalina_home to catalina_base
 #
 define tomcat::instance::conf_copy_from_home (
-  $catalina_base = $tomcat::instance::catalina_base,
+  $catalina_base = $::tomcat::instance::catalina_base,
   $catalina_home = $::tomcat::instance::catalina_home,
   $replace       = false,
   $user          = $::tomcat::user,
