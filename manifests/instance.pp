@@ -115,7 +115,7 @@ define tomcat::instance (
       owner  => $user,
       group  => $group,
     }
-    $dirlist = [ "${_catalina_base}/conf", "${_catalina_base}/lib", "${_catalina_base}/logs", "${_catalina_base}/temp", "${_catalina_base}/webapps", "${_catalina_base}/work", ]
+    $dirlist = [ "${_catalina_base}/bin", "${_catalina_base}/conf", "${_catalina_base}/lib", "${_catalina_base}/logs", "${_catalina_base}/temp", "${_catalina_base}/webapps", "${_catalina_base}/work", ]
     file{ $dirlist:
       ensure  => directory,
       require => File[$_catalina_base],
