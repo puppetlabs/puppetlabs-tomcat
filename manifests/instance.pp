@@ -27,6 +27,8 @@ define tomcat::instance (
   $package_ensure         = undef,
   $package_name           = undef,
   $package_options        = undef,
+  $user                   = $::tomcat::user,
+  $group                  = $::tomcat::group,
 ) {
 
   if $install_from_source {
@@ -52,6 +54,13 @@ define tomcat::instance (
     $_catalina_home = $::tomcat::catalina_home
   } else {
     $_catalina_home = $catalina_home
+  }
+  if $install_from_source {
+    file { $_catalina_home:
+      ensure => directory,
+      owner  => $user,
+      group  => $group,
+    }
   }
 
   if ! $catalina_base {
@@ -84,8 +93,8 @@ define tomcat::instance (
   if $install_from_source and $_catalina_base != $_catalina_home {
     file { $_catalina_base:
       ensure => directory,
-      owner  => $::tomcat::user,
-      group  => $::tomcat::group,
+      owner  => $user,
+      group  => $group,
     }
   }
 }
