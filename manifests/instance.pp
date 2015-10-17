@@ -128,6 +128,9 @@ define tomcat::instance (
     } else {
       $tomcat_conf_copy_from_home = [ 'catalina.policy', 'context.xml', 'logging.properties', 'server.xml', 'tomcat-users.xml', 'web.xml', ]
     }
-    tomcat::instance::conf_copy_from_home{ $tomcat_conf_copy_from_home: }
+    tomcat::instance::conf_copy_from_home{ $tomcat_conf_copy_from_home:
+      catalina_home => $_catalina_home,
+      catalina_base => $_catalina_base,
+    }
   }
 }
