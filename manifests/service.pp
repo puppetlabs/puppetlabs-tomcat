@@ -86,7 +86,7 @@ define tomcat::service (
     $_hasrestart   = false
     if $start_command {
       $_start = $start_command
-    } elsif $_catalina_base = $_catalina_home {
+    } elsif $_catalina_base == $_catalina_home {
       $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
                  \$CATALINA_BASE/bin/jsvc \
                    ${_jsvc_home}-user ${::tomcat::user} \
@@ -98,7 +98,7 @@ define tomcat::service (
                    -Dcatalina.base=\$CATALINA_BASE \
                    -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
                    -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
-                   org.apache.catalina.startup.Bootstrap",
+                   org.apache.catalina.startup.Bootstrap"
     } else {
       $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
                  \$CATALINA_BASE/bin/jsvc \
@@ -111,7 +111,7 @@ define tomcat::service (
                    -Dcatalina.base=\$CATALINA_BASE \
                    -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
                    -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
-                   org.apache.catalina.startup.Bootstrap",
+                   org.apache.catalina.startup.Bootstrap"
     }
     
     $_stop         = $stop_command ? {
