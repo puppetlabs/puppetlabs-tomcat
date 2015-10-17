@@ -84,8 +84,10 @@ define tomcat::service (
     $_service_name = "tomcat-${name}"
     $_hasstatus    = false
     $_hasrestart   = false
-    $_start        = $start_command ? {
-      undef   => "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
+    if $start_command {
+      $_start = $start_command
+    } elsif $_catalina_base = $_catalina_home {
+      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
                  \$CATALINA_BASE/bin/jsvc \
                    ${_jsvc_home}-user ${::tomcat::user} \
                    -classpath \$CATALINA_BASE/bin/bootstrap.jar:\$CATALINA_BASE/bin/tomcat-juli.jar \
@@ -97,8 +99,54 @@ define tomcat::service (
                    -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
                    -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
                    org.apache.catalina.startup.Bootstrap",
-      default => $start_command,
+    } else {
+      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
+                 \$CATALINA_BASE/bin/jsvc \
+                   ${_jsvc_home}-user ${::tomcat::user} \
+                   -classpath \$CATALINA_HOME/bin/bootstrap.jar:\$CATALINA_HOME/bin/tomcat-juli.jar \
+                   -outfile \$CATALINA_BASE/logs/catalina.out \
+                   -errfile \$CATALINA_BASE/logs/catalina.err \
+                   -pidfile \$CATALINA_BASE/logs/jsvc.pid \
+                   -Dcatalina.home=\$CATALINA_HOME \
+                   -Dcatalina.base=\$CATALINA_BASE \
+                   -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+                   -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
+                   org.apache.catalina.startup.Bootstrap",
     }
+    
+    $_stop         = $stop_command ? {
+      undef   => "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
+                 \$CATALINA_BASE/bin/jsvc \
+                   -pidfile \$CATALINA_BASE/logs/jsvc.pid \
+                   -stop org.apache.catalina.startup.Bootstrap",
+      default => $stop_command,
+    }
+    $_status       = "ps p `cat ${_catalina_base}/logs/jsvc.pid` > /dev/null"
+    $_provider     = 'base'
+  } elsif $use_init {
+    $_service_name = $service_name
+    $_hasstatus    = true
+    $_hasrestart   = true
+    $_start        = $start_command
+    $_stop         = $stop_command
+    $_status       = undef
+    $_provider     = undef
+  } else {
+    $_service_name = "tomcat-${name}"
+    $_hasstatus    = false
+    $_hasrestart   = false
+    $_start        = $start_command ? {
+      undef   => "su -s /bin/bash -c '${_catalina_base}/bin/catalina.sh start' ${::tomcat::user}",
+      default => $start_command
+    }
+    $_stop         = $stop_command ? {
+      undef   => "su -s /bin/bash -c '${_catalina_base}/bin/catalina.sh stop' ${::tomcat::user}",
+      default => $stop_command
+    }
+    $_status       = "ps aux | grep 'catalina.base=${_catalina_base} ' | grep -v grep"
+    $_provider     = 'base'
+  }
+    
     $_stop         = $stop_command ? {
       undef   => "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
                  \$CATALINA_BASE/bin/jsvc \
