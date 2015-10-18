@@ -39,13 +39,6 @@ CATALINA_BASE=<%= _catalina_base %>
 CATALINA_HOME=<%= _catalina_home %>
 JAVA_HOME=<%= java_home %>
 TOMCAT_USER=<%= user %>
-echo CATALINA_BASE $CATALINA_BASE
-echo CATALINA_HOME $CATALINA_HOME
-echo TOMCAT_USER $TOMCAT_USER
-
-echo CATALINA_LOCAL $CATALINA_LOCAL
-echo CATALINA_OPTS $CATALINA_OPTS
-echo JAVA_OPTS $JAVA_OPTS
 
 # Use the maximum available, or set MAX_FD != -1 to use that
 test ".$MAX_FD" = . && MAX_FD="maximum"
@@ -68,6 +61,15 @@ if [ -r "$CATALINA_BASE/bin/setenv.sh" ]; then
 elif [ -r "$CATALINA_HOME/bin/setenv.sh" ]; then
   . "$CATALINA_HOME/bin/setenv.sh"
 fi
+
+## user set values are set now
+echo CATALINA_BASE $CATALINA_BASE
+echo CATALINA_HOME $CATALINA_HOME
+echo TOMCAT_USER $TOMCAT_USER
+
+echo CATALINA_LOCAL $CATALINA_LOCAL
+echo CATALINA_OPTS $CATALINA_OPTS
+echo JAVA_OPTS $JAVA_OPTS
 
 # Add on extra jar files to CLASSPATH
 test ".$CLASSPATH" != . && CLASSPATH="${CLASSPATH}:"
