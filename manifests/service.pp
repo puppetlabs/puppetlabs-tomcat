@@ -91,7 +91,7 @@ define tomcat::service (
     $_provider     = undef
     file { "/etc/init.d/tomcat-${name}":
       mode    => '0755',
-      content => template('tomcat/jsvc-init'),
+      content => template('tomcat/jsvc-init.erb'),
     }
   } elsif $use_jsvc {
     $_service_name = "tomcat-${name}"
