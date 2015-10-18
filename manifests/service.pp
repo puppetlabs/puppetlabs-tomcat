@@ -76,12 +76,6 @@ define tomcat::service (
     $_catalina_base = $catalina_base
   }
 
-  if $java_home {
-    $_jsvc_home = "-home ${java_home} "
-  } else {
-    $_jsvc_home = undef
-  }
-
   if $use_jsvc and $use_init {
     $_service_name = "tomcat-${name}"
     $_hasstatus    = true
@@ -95,6 +89,11 @@ define tomcat::service (
       content => template('tomcat/jsvc-init.erb'),
     }
   } elsif $use_jsvc {
+    if $java_home {
+      $_jsvc_home = "-home ${java_home} "
+    } else {
+      $_jsvc_home = undef
+    }
     $_service_name = "tomcat-${name}"
     $_hasstatus    = false
     $_hasrestart   = false
