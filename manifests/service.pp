@@ -39,10 +39,6 @@ define tomcat::service (
   validate_bool($use_jsvc)
   validate_bool($use_init)
 
-  if $use_jsvc and $use_init {
-    fail('Only one of $use_jsvc and $use_init can be set to true')
-  }
-
   if $use_init and ! $service_name {
     fail('$service_name must be specified when $use_init is set to true')
   }
@@ -75,21 +71,33 @@ define tomcat::service (
     $_catalina_base = $catalina_base
   }
 
-  if $use_jsvc {
-    if $java_home {
-      $_jsvc_home = "-home ${java_home} "
-    } else {
-      $_jsvc_home = undef
+  if $java_home {
+    $_jsvc_home = "-home ${java_home} "
+  } else {
+    $_jsvc_home = undef
+  }
+  if $use_jsvc and $use_init {
+    $_service_name = "tomcat-${name}"
+    $_hasstatus    = true
+    $_hasrestart   = true
+    $_start        = "service tomcat-${name} start"
+    $_stop         = "service tomcat-${name} stop"
+    $_status       = "service tomcat-${name} status"
+    $_provider     = undef
+    file { "/etc/init.d/tomcat-${name}":
+      mode    => '0755',
+      content => template('tomcat/jsvc-init'),
     }
+  } elsif $use_jsvc {
     $_service_name = "tomcat-${name}"
     $_hasstatus    = false
     $_hasrestart   = false
     if $start_command {
       $_start = $start_command
     } elsif $_catalina_base == $_catalina_home {
-      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
-                 \$CATALINA_BASE/bin/jsvc \
-                   ${_jsvc_home}-user ${::tomcat::user} \
+      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base}; \
+                 $CATALINA_BASE/bin/jsvc \
+                   ${_jsvc_home} -user ${::tomcat::user} \
                    -classpath \$CATALINA_BASE/bin/bootstrap.jar:\$CATALINA_BASE/bin/tomcat-juli.jar \
                    -outfile \$CATALINA_BASE/logs/catalina.out \
                    -errfile \$CATALINA_BASE/logs/catalina.err \
@@ -100,9 +108,9 @@ define tomcat::service (
                    -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
                    org.apache.catalina.startup.Bootstrap"
     } else {
-      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
-                 \$CATALINA_BASE/bin/jsvc \
-                   ${_jsvc_home}-user ${::tomcat::user} \
+      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base}; \
+                 $CATALINA_BASE/bin/jsvc \
+                   ${_jsvc_home} -user ${::tomcat::user} \
                    -classpath \$CATALINA_HOME/bin/bootstrap.jar:\$CATALINA_HOME/bin/tomcat-juli.jar \
                    -outfile \$CATALINA_BASE/logs/catalina.out \
                    -errfile \$CATALINA_BASE/logs/catalina.err \
