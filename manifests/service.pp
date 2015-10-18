@@ -20,7 +20,7 @@
 #   false. If both $use_jsvc and $use_init are false,
 #   $CATALINA_BASE/bin/catalina.sh start and $CATALIN/A_BASE/bin/catalina.sh
 #   stop are used for service management.
-# - The $service_name to use when $use_init is true.
+# - The $service_name to use when $use_init is true and $use_jsvc is false.
 # - The $start_command to use for the service
 # - The $stop_command to use for the service
 define tomcat::service (
@@ -39,16 +39,20 @@ define tomcat::service (
   validate_bool($use_jsvc)
   validate_bool($use_init)
 
-  if $use_init and ! $service_name {
-    fail('$service_name must be specified when $use_init is set to true')
+  if $use_init and !$use_jsvc and ! $service_name {
+    fail('$service_name must be specified when $use_init = true and $use_jsvc = false')
+  }
+
+  if $use_init and $use_jsvc and $service_name {
+    warning('$service_name will be ignored $use_init = true and $use_jsvc = true')
   }
 
   if $service_enable != undef and ! $use_init {
-    warning('$use_init must be set to true when $service_enable is set')
+    warning('$use_init must be set to true when $service_enable = true')
   }
 
-  if $use_init and ($catalina_home or $catalina_base) {
-    warning('$catalina_home and $catalina_base have no affect when $use_init = true')
+  if $use_init and !use_jsvc and ($catalina_home or $catalina_base) {
+    warning('$catalina_home and $catalina_base have no affect when $use_init = true and $use_jsvc = false')
   }
 
   if $java_home and ! $use_jsvc {
