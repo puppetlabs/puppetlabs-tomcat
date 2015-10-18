@@ -34,6 +34,7 @@ define tomcat::service (
   $service_name   = undef,
   $start_command  = undef,
   $stop_command   = undef,
+  $user           = $::tomcat::user,
 ) {
 
   validate_bool($use_jsvc)
