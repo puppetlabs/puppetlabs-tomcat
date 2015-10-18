@@ -76,6 +76,7 @@ define tomcat::service (
   } else {
     $_jsvc_home = undef
   }
+
   if $use_jsvc and $use_init {
     $_service_name = "tomcat-${name}"
     $_hasstatus    = true
@@ -107,20 +108,6 @@ define tomcat::service (
                    -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
                    -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
                    org.apache.catalina.startup.Bootstrap"
-    } else {
-      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base}; \
-                 $CATALINA_BASE/bin/jsvc \
-                   ${_jsvc_home} -user ${::tomcat::user} \
-                   -classpath \$CATALINA_HOME/bin/bootstrap.jar:\$CATALINA_HOME/bin/tomcat-juli.jar \
-                   -outfile \$CATALINA_BASE/logs/catalina.out \
-                   -errfile \$CATALINA_BASE/logs/catalina.err \
-                   -pidfile \$CATALINA_BASE/logs/jsvc.pid \
-                   -Dcatalina.home=\$CATALINA_HOME \
-                   -Dcatalina.base=\$CATALINA_BASE \
-                   -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
-                   -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
-                   org.apache.catalina.startup.Bootstrap"
-    }
     
     $_stop         = $stop_command ? {
       undef   => "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
