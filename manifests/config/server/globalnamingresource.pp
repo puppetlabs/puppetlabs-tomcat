@@ -36,7 +36,9 @@ define tomcat::config::server::globalnamingresource (
     $changes = "rm ${base_path}"
   } else {
     if ! empty($additional_attributes) {
+      notify { "additional_attributes ${additional_attributes}": }
       $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${base_path}/#attribute/"), "'")
+      notify { "_additional_attributes ${_additional_attributes}": }
     } else {
       $_additional_attributes = undef
     }
