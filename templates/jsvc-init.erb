@@ -69,7 +69,10 @@ echo TOMCAT_USER $TOMCAT_USER
 
 echo CATALINA_LOCAL $CATALINA_LOCAL
 echo CATALINA_OPTS $CATALINA_OPTS
-echo JAVA_OPTS $JAVA_OPTS
+echo -n CATALINA_OPTS
+echo " $CATALINA_OPTS" | sed -e 's/ -/\n    -/g' | sort
+echo -n JAVA_OPTS
+echo " $JAVA_OPTS" | sed -e 's/ -/\n    -/g' | sort
 
 # Add on extra jar files to CLASSPATH
 test ".$CLASSPATH" != . && CLASSPATH="${CLASSPATH}:"
