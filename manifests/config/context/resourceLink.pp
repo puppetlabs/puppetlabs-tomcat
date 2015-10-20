@@ -11,7 +11,7 @@
 #   the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Context.
 #
-define tomcat::config::server::context (
+define tomcat::config::context::resourceLink (
   $catalina_base         = $::tomcat::catalina_home,
   $context_ensure        = 'present',
   $additional_attributes = {},
