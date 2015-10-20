@@ -32,6 +32,7 @@ define tomcat::config::context::resourcelink (
     $_context_config = "${catalina_base}/conf/context.xml"
   }
 
+  $path = "Context/ResourceLink[#attribute/name='${name}']"
   if $context_ensure =~ /^(absent|false)$/ {
     $augeaschanges = "rm ${path}"
   } else {
