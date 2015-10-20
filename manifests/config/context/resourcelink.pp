@@ -1,4 +1,4 @@
-# Definition tomcat::config::context::resourceLink
+# Definition tomcat::config::context::resourcelink
 #
 # Configure a ResourceLink element in $CATALINA_BASE/conf/context.xml
 #
@@ -11,7 +11,7 @@
 #   the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Context.
 #
-define tomcat::config::context::resourceLink (
+define tomcat::config::context::resourcelink (
   $catalina_base         = $::tomcat::catalina_home,
   $context_ensure        = 'present',
   $additional_attributes = {},
