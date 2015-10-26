@@ -123,10 +123,15 @@ define tomcat::instance (
       group   => $group,
       mode    => '2770'
     }
-    $tomcat_conf_copy_from_home = [ 'catalina.policy', 'catalina.properties', 'context.xml', 'logging.properties', 'server.xml', 'web.xml', ]
+    $tomcat_conf_copy_from_home = [ 'catalina.policy', 'context.xml', 'logging.properties', 'server.xml', 'web.xml', ]
     tomcat::instance::conf_copy_from_home{ $tomcat_conf_copy_from_home:
       catalina_home => $_catalina_home,
       catalina_base => $_catalina_base,
+    }
+    ## setup the base catalina.properties file
+    tomcat::config::properties { "${catalina_base} catalina.properties":
+      catalina_base => $catalina_base,
+      catalina_home => $catalina_home,
     }
   }
 }
