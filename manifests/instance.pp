@@ -129,9 +129,9 @@ define tomcat::instance (
       catalina_base => $_catalina_base,
     }
     ## setup the base catalina.properties file
-    tomcat::config::properties { "${catalina_base} catalina.properties":
-      catalina_base => $catalina_base,
-      catalina_home => $catalina_home,
+    tomcat::config::properties { "${_catalina_base} catalina.properties":
+      catalina_base => $_catalina_base,
+      catalina_home => $_catalina_home,
     }
   }
 }
