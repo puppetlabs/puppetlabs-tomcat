@@ -17,8 +17,8 @@
 
 # Make sure only root is running this script
 if [ "$(id -u)" != "0" ]; then
-   echo "This script must be run as root" 1>&2
-   exit 1
+  echo "This script must be run as root" 1>&2
+  exit 1
 fi
 
 ARG0="$0"
@@ -27,12 +27,12 @@ PROGRAM="`basename $ARG0`"
 cygwin=false;
 darwin=false;
 case "`uname`" in
-    CYGWIN*)
-        cygwin=true
-        ;;
-    Darwin*)
-        darwin=true
-        ;;
+  CYGWIN*)
+    cygwin=true
+  ;;
+  Darwin*)
+    darwin=true
+  ;;
 esac
 
 CATALINA_BASE=<%= _catalina_base %>
@@ -65,14 +65,12 @@ fi
 ## user set values are set now
 echo CATALINA_BASE $CATALINA_BASE
 echo CATALINA_HOME $CATALINA_HOME
-echo TOMCAT_USER $TOMCAT_USER
-
 echo CATALINA_LOCAL $CATALINA_LOCAL
-echo CATALINA_OPTS $CATALINA_OPTS
 echo -n CATALINA_OPTS
 echo " $CATALINA_OPTS" | sed -e 's/ -/\n    -/g' | sort
 echo -n JAVA_OPTS
 echo " $JAVA_OPTS" | sed -e 's/ -/\n    -/g' | sort
+echo TOMCAT_USER $TOMCAT_USER
 
 # Add on extra jar files to CLASSPATH
 test ".$CLASSPATH" != . && CLASSPATH="${CLASSPATH}:"
@@ -106,78 +104,85 @@ test ".$CATALINA_PID" = . && CATALINA_PID="$CATALINA_BASE/logs/catalina-daemon.p
 
 # Increase the maximum file descriptors if we can
 if [ "$cygwin" = "false" ]; then
-    MAX_FD_LIMIT=`ulimit -H -n`
-    if [ "$?" -eq 0 ]; then
-        # Darwin does not allow RLIMIT_INFINITY on file soft limit
-        if [ "$darwin" = "true" -a "$MAX_FD_LIMIT" = "unlimited" ]; then
-            MAX_FD_LIMIT=`/usr/sbin/sysctl -n kern.maxfilesperproc`
-        fi
-        test ".$MAX_FD" = ".maximum" && MAX_FD="$MAX_FD_LIMIT"
-        ulimit -n $MAX_FD
-        if [ "$?" -ne 0 ]; then
-            echo "$PROGRAM: Could not set maximum file descriptor limit: $MAX_FD"
-        fi
-    else
-        echo "$PROGRAM: Could not query system maximum file descriptor limit: $MAX_FD_LIMIT"
+  MAX_FD_LIMIT=`ulimit -H -n`
+  if [ "$?" -eq 0 ]; then
+    # Darwin does not allow RLIMIT_INFINITY on file soft limit
+    if [ "$darwin" = "true" -a "$MAX_FD_LIMIT" = "unlimited" ]; then
+      MAX_FD_LIMIT=`/usr/sbin/sysctl -n kern.maxfilesperproc`
     fi
+    test ".$MAX_FD" = ".maximum" && MAX_FD="$MAX_FD_LIMIT"
+    ulimit -n $MAX_FD
+    if [ "$?" -ne 0 ]; then
+      echo "$PROGRAM: Could not set maximum file descriptor limit: $MAX_FD"
+    fi
+  else
+    echo "$PROGRAM: Could not query system maximum file descriptor limit: $MAX_FD_LIMIT"
+  fi
 fi
 
 JSVC_OPTS="$JSVC_OPTS -umask 0027"
 
 do_start()
 {
-       "$JSVC" $JSVC_OPTS \
-           -java-home "$JAVA_HOME" \
-           -user "$TOMCAT_USER" \
-           -pidfile "$CATALINA_PID" \
-           -wait 10 \
-           -outfile "SYSLOG" \
-           -errfile "SYSLOG" \
-           -classpath "$CLASSPATH" \
-           "$LOGGING_CONFIG" $JAVA_OPTS $CATALINA_OPTS \
-           -Dcatalina.base="$CATALINA_BASE" \
-           -Dcatalina.home="$CATALINA_HOME" \
-           -Djava.io.tmpdir="$CATALINA_TMP" \
-           $CATALINA_MAIN
-       #exit $?
+  "$JSVC" $JSVC_OPTS \
+    -java-home "$JAVA_HOME" \
+    -user "$TOMCAT_USER" \
+    -pidfile "$CATALINA_PID" \
+    -wait 10 \
+    -outfile "SYSLOG" \
+    -errfile "SYSLOG" \
+    -classpath "$CLASSPATH" \
+    "$LOGGING_CONFIG" $JAVA_OPTS $CATALINA_OPTS \
+    -Dcatalina.base="$CATALINA_BASE" \
+    -Dcatalina.home="$CATALINA_HOME" \
+    -Djava.io.tmpdir="$CATALINA_TMP" \
+    $CATALINA_MAIN
+  #exit $?
+}
+
+do_status()
+{
+  [ ! -f "$CATALINA_PID" ] && exit 3
+  [ "$(pgrep --list-name --pidfile "$CATALINA_PID")" != "$(cat $CATALINA_PID) jsvc" ] && exit 1
+  exit 0
 }
 
 do_stop()
 {
-       "$JSVC" $JSVC_OPTS \
-           -stop \
-           -pidfile "$CATALINA_PID" \
-           -classpath "$CLASSPATH" \
-           -Dcatalina.base="$CATALINA_BASE" \
-           -Dcatalina.home="$CATALINA_HOME" \
-           -Djava.io.tmpdir="$CATALINA_TMP" \
-           $CATALINA_MAIN
-       #exit $?
+  "$JSVC" $JSVC_OPTS \
+    -stop \
+    -pidfile "$CATALINA_PID" \
+    -classpath "$CLASSPATH" \
+    -Dcatalina.base="$CATALINA_BASE" \
+    -Dcatalina.home="$CATALINA_HOME" \
+    -Djava.io.tmpdir="$CATALINA_TMP" \
+    $CATALINA_MAIN
+  #exit $?
 }
 
 do_version()
 {
-       "$JSVC" \
-           -java-home "$JAVA_HOME" \
-           -pidfile "$CATALINA_PID" \
-           -classpath "$CLASSPATH" \
-           -outfile "SYSLOG" \
-           -errfile "SYSLOG" \
-           -version \
-           -check \
-           $CATALINA_MAIN
-      if [ "$?" = 0 ]; then
-           "$JAVA_BIN" \
-           -classpath "$CATALINA_HOME/lib/catalina.jar" \
-           org.apache.catalina.util.ServerInfo
-      fi
-      exit $?
+  "$JSVC" \
+     -java-home "$JAVA_HOME" \
+     -pidfile "$CATALINA_PID" \
+     -classpath "$CLASSPATH" \
+     -outfile "SYSLOG" \
+     -errfile "SYSLOG" \
+     -version \
+     -check \
+     $CATALINA_MAIN
+  if [ "$?" = 0 ]; then
+    "$JAVA_BIN" \
+      -classpath "$CATALINA_HOME/lib/catalina.jar" \
+      org.apache.catalina.util.ServerInfo
+  fi
+  exit $?
 }
 
 # ----- Execute The Requested Command -----------------------------------------
 case "$1" in
-    run     )
-      shift
+  run )
+    shift
       "$JSVC" $* \
       $JSVC_OPTS \
       -java-home "$JAVA_HOME" \
@@ -193,31 +198,35 @@ case "$1" in
       -Dcatalina.home="$CATALINA_HOME" \
       -Djava.io.tmpdir="$CATALINA_TMP" \
       $CATALINA_MAIN
-      exit $?
+    exit $?
     ;;
-    start   )
-	do_start
-    ;;
-    stop    )
-	do_stop
-    ;;
-    restart   )
-	do_stop
-	do_start
-    ;;
-    version  )
-	do_version
-    ;;
-    *       )
-      echo "Unknown command: '$1'"
-      echo "Usage: $PROGRAM ( commands ... )"
-      echo "commands:"
-      echo "  run               Start Catalina without detaching from console"
-      echo "  start             Start Catalina"
-      echo "  restart           Restart Catalina"
-      echo "  stop              Stop Catalina"
-      echo "  version           What version of commons daemon and Tomcat"
-      echo "                    are you running?"
-      exit 1
-    ;;
+  start )
+    do_start
+  ;;
+  stop )
+    do_stop
+  ;;
+  status )
+    do_status
+  ;;
+  restart )
+    do_stop
+    do_start
+  ;;
+  version )
+    do_version
+  ;;
+  * )
+    echo "Unknown command: '$1'"
+    echo "Usage: $PROGRAM ( commands ... )"
+    echo "commands:"
+    echo "  restart           Restart Catalina"
+    echo "  run               Start Catalina without detaching from console"
+    echo "  start             Start Catalina"
+    echo "  status            Report if JSVC is running"
+    echo "  stop              Stop Catalina"
+    echo "  version           What version of commons daemon and Tomcat"
+    echo "                    are you running?"
+    exit 1
+  ;;
 esac
