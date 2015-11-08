@@ -27,6 +27,9 @@ define tomcat::instance (
   $package_ensure         = undef,
   $package_name           = undef,
   $package_options        = undef,
+  $user                   = $::tomcat::user,
+  $group                  = $::tomcat::group,
+  $version                = undef,
 ) {
 
   if $install_from_source {
@@ -44,6 +47,24 @@ define tomcat::instance (
     fail('If not installing from source $package_name must be specified')
   }
 
+  if $version {
+    $_version = $version
+  } else {
+    if $install_from_source {
+      if $source_url =~ /([\d+\.\d+\.\d+]).tar.gz/ {
+        $_version = $1
+      } else {
+        fail('version must either be specified or obtainable from source_url')
+      }
+    } else {
+      if $package_name =~ /(\d+\.\d+\.\d+)$/ {
+        $_version = $1
+      } else {
+        fail('version must either be specified or obtainable from package_name')
+      }
+    }
+  }
+
   if ! $install_from_source and ($catalina_home or $catalina_base) {
     warning('Setting $catalina_home or $catalina_base when not installing from source doesn\'t affect the installation.')
   }
@@ -52,6 +73,13 @@ define tomcat::instance (
     $_catalina_home = $::tomcat::catalina_home
   } else {
     $_catalina_home = $catalina_home
+  }
+  if $install_from_source {
+    file { $_catalina_home:
+      ensure => directory,
+      owner  => $user,
+      group  => $group,
+    }
   }
 
   if ! $catalina_base {
@@ -84,8 +112,26 @@ define tomcat::instance (
   if $install_from_source and $_catalina_base != $_catalina_home {
     file { $_catalina_base:
       ensure => directory,
-      owner  => $::tomcat::user,
-      group  => $::tomcat::group,
+      owner  => $user,
+      group  => $group,
+    }
+    $dirlist = [ "${_catalina_base}/bin", "${_catalina_base}/conf", "${_catalina_base}/lib", "${_catalina_base}/logs", "${_catalina_base}/temp", "${_catalina_base}/webapps", "${_catalina_base}/work", ]
+    file{ $dirlist:
+      ensure  => directory,
+      require => File[$_catalina_base],
+      owner   => $user,
+      group   => $group,
+      mode    => '2770'
+    }
+    $tomcat_conf_copy_from_home = [ 'catalina.policy', 'context.xml', 'logging.properties', 'server.xml', 'web.xml', ]
+    tomcat::instance::conf_copy_from_home{ $tomcat_conf_copy_from_home:
+      catalina_home => $_catalina_home,
+      catalina_base => $_catalina_base,
+    }
+    ## setup the base catalina.properties file
+    tomcat::config::properties { "${_catalina_base} catalina.properties":
+      catalina_base => $_catalina_base,
+      catalina_home => $_catalina_home,
     }
   }
 }

@@ -48,14 +48,6 @@ class tomcat (
     default: { }
   }
 
-  if $install_from_source {
-    file { $catalina_home:
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-    }
-  }
-
   if $manage_user {
     user { $user:
       ensure => present,
