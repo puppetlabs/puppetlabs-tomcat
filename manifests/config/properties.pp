@@ -7,7 +7,11 @@ define tomcat::config::properties (
   $srcfile = 'conf/catalina.properties',
 ) {
   concat { "${catalina_base}/${file}":
-    ensure => present,
+    ensure         => present,
+    ensure_newline => true,
+    owner          => $::tomcat::user,
+    group          => $::tomcat::group,
+    mode           => '0640',
   }
   concat::fragment { "${catalina_base} properties base file from catalina_home ${$catalina_home}/${srcfile}":
     target => "${catalina_base}/${file}",
