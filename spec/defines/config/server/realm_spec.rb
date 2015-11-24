@@ -70,7 +70,11 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        "rm Server//Realm",
+        "rm //Realm//Realm",
+        "rm //Context//Realm",
+        "rm //Host//Realm",
+        "rm //Engine//Realm",
+        "rm //Server//Realm",
         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm/#attribute/className org.apache.catalina.realm.JNDIRealm",
         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/connectionURL 'ldap://localhost'",
         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/roleName 'cn'",
