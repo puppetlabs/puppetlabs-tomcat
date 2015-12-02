@@ -46,7 +46,15 @@ define tomcat::config::server::realm (
   }
 
   if $purge_realms {
-    $_purge_realms = 'rm Server//Realm'
+    # Perform deletions in reverse depth order as workaround for
+    # https://github.com/hercules-team/augeas/issues/319
+    $_purge_realms = [
+      'rm //Realm//Realm',
+      'rm //Context//Realm',
+      'rm //Host//Realm',
+      'rm //Engine//Realm',
+      'rm //Server//Realm',
+    ]
   } else {
     $_purge_realms = undef
   }
