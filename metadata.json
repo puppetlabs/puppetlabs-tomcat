@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-tomcat",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "author": "puppetlabs",
   "summary": "Installs, deploys, and configures Apache Tomcat web services.",
   "license": "Apache 2.0",
@@ -64,7 +64,7 @@
   "requirements": [
     {
       "name": "pe",
-      "version_requirement": ">= 3.3.0 < 2015.3.0"
+      "version_requirement": ">= 3.3.0 < 2015.4.0"
     },
     {
       "name": "puppet",
