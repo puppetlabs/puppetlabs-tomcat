@@ -87,7 +87,7 @@ define tomcat::config::server::realm (
   }
   else {
 
-    $_class_name = "set ${path}/#attribute/className ${class_name}"
+    $_class_name = "set ${path}[#attribute/className='${class_name}']/#attribute/className ${class_name}"
 
     if ! empty($additional_attributes) {
       $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${path}[#attribute/className='${class_name}']/#attribute/"), "'")
