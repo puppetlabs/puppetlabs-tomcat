@@ -257,13 +257,11 @@ Determines whether to create the specified user, if it doesn't exist. Uses Puppe
 
 #####`purge_connectors`
 
-Specifies whether to purge any unmanaged Connector elements that match
-defined protocol but have a different port
-from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.
+Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.
 
 #####`purge_realms`
 
-Specifies whether to purge any unmanaged Realm elements from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.  If two Realms are defined for a specific server config only use purge_realms for the first realm and ensure the realms enforce a strict order between each other.
+Specifies whether to purge any unmanaged realm elements from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.  If two realms are defined for a specific server config only use purge_realms for the first realm and ensure the realms enforce a strict order between each other.
 
 #####`user`
 

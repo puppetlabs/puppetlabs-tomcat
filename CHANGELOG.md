@@ -1,3 +1,17 @@
+## Supported Release 1.4.1
+###Summary
+
+Small release for bug with multiple Realms in the same parent path.
+
+#### Features
+- Improved documentation for purging connectors.
+- Improved documentation for purging realms.
+- Added package_options to tomcat::instance
+
+#### Bugfixes
+- Fixed bug where multiple Realms in the same parent would corrupt data.
+- Added work-around for Augeas bug when purging Realms.
+
 ## Supported Release 1.3.3
 ###Summary
 
