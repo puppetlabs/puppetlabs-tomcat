@@ -17,9 +17,10 @@ define tomcat::setenv::entry (
   $config_file = "${::tomcat::catalina_home}/bin/setenv.sh",
   $param       = $name,
   $quote_char  = undef,
+  $order       = 10,
+  $addto       = undef,
   # Deprecated
   $base_path   = undef,
-  $order       = 10,
 ) {
 
   if $base_path {
@@ -42,11 +43,15 @@ define tomcat::setenv::entry (
       ensure_newline => true,
     }
   }
-
+  if $addto {
+    $_content = inline_template('export <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %> ; export <%= @addto %>="$<%= @addto %> $<%= @param %>"')
+  } else {
+    $_content = inline_template('export <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %>')
+  }
   concat::fragment { "setenv-${name}":
     ensure  => $ensure,
     target  => $_config_file,
-    content => inline_template('export <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %>'),
+    content => $_content,
     order   => $order,
   }
 }
