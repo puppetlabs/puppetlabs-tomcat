@@ -15,6 +15,11 @@
 # - An optional hash of $additional_attributes to add to the Host. Should be of
 #   the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Host.
+# - $aliases is an optional array of aliases for the Host.  If omitted, the
+#   set of Alias elements within the Host element will not be altered.
+#   Otherwise, the set of Alias elements will be set to exactly match the
+#   contents of this array.  An empty array can be used to ensure that there
+#   are no Alias elements within the Host element.
 define tomcat::config::server::host (
   $app_base              = undef,
   $catalina_base         = $::tomcat::catalina_home,
@@ -24,6 +29,7 @@ define tomcat::config::server::host (
   $additional_attributes = {},
   $attributes_to_remove  = [],
   $server_config         = undef,
+  $aliases               = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -68,7 +74,16 @@ define tomcat::config::server::host (
       $_attributes_to_remove = undef
     }
 
-    $changes = delete_undef_values(flatten([$_host_name_change, $_app_base, $_additional_attributes, $_attributes_to_remove]))
+    if $aliases {
+      validate_array($aliases)
+      $_clear_aliases = "rm ${base_path}/Alias"
+      $_add_aliases = suffix(prefix($aliases, "set ${base_path}/Alias[last()+1]/#text '"), "'")
+    } else {
+      $_clear_aliases = undef
+      $_add_aliases = undef
+    }
+
+    $changes = delete_undef_values(flatten([$_host_name_change, $_app_base, $_additional_attributes, $_attributes_to_remove, $_clear_aliases, $_add_aliases]))
   }
 
   augeas { "${catalina_base}-${parent_service}-host-${_host_name}":
