@@ -437,6 +437,10 @@ Specifies whether the [startStopThreads XML attribute](http://tomcat.apache.org/
 
 Specifies any further attributes to add to the Host. Valid options: a hash of '< attribute >' => '< value >' pairs. Default: {}.
 
+#####`aliases`
+
+Optional array that specifies the list of [Host Name Aliases](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Host_Name_Aliases) for this particular Host.  If omitted, any currently-defined Aliases will not be altered.  If present, the list Aliases  will be set to exactly match the contents of this array.  Thus, for example, an empty array can be used to explicity force there to be no Aliases for the Host.
+
 #####`app_base`
 
 *Required unless [`host_ensure`](#host_ensure) is set to 'false' or 'absent'.* Specifies the Application Base directory for the virtual host. Maps to the [appBase XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes). Valid options: a string.

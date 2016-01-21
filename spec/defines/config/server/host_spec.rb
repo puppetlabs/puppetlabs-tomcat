@@ -48,6 +48,11 @@ describe 'tomcat::config::server::host', :type => :define do
           'bar',
           'baz',
         ],
+        :aliases              => [
+          'able',
+          'baker',
+          'charlie',
+        ],
       }
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-host-test.example.com').with(
@@ -62,6 +67,28 @@ describe 'tomcat::config::server::host', :type => :define do
         'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/foo',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/bar',
         'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/#attribute/baz',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/Alias',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/Alias[last()+1]/#text \'able\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/Alias[last()+1]/#text \'baker\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/Alias[last()+1]/#text \'charlie\'',
+      ]
+    )
+    }
+  end
+  context 'empty array of aliases removes old aliases and does not add any' do
+    let :params do
+      {
+        :app_base => 'webapps',
+        :aliases  => [],
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-host-localhost').with(
+      'lens' => 'Xml.lns',
+      'incl' => '/opt/apache-tomcat/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/#attribute/name localhost',
+        'set Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/#attribute/appBase webapps',
+        'rm Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/Alias',
       ]
     )
     }
@@ -111,6 +138,19 @@ describe 'tomcat::config::server::host', :type => :define do
         expect {
           catalogue
         }.to raise_error(Puppet::Error, /does not match/)
+      end
+    end
+    context 'invalid aliases' do
+      let :params do
+        {
+          :app_base => 'webapps',
+          :aliases => 'not_an_array',
+        }
+      end
+      it do
+        expect {
+          catalogue
+        }.to raise_error(Puppet::Error, /is not an Array/)
       end
     end
     context 'old augeas' do
