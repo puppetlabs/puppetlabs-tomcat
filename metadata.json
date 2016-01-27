@@ -3,7 +3,7 @@
   "version": "1.4.1",
   "author": "puppetlabs",
   "summary": "Installs, deploys, and configures Apache Tomcat web services.",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "http://github.com/puppetlabs/puppetlabs-tomcat",
   "project_page": "https://github.com/puppetlabs/puppetlabs-tomcat",
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
