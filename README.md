@@ -175,7 +175,7 @@ tomcat::config::server::connector { 'tomcat8-jsvc':
   additional_attributes => {
     'redirectPort' => '443'
   },
-  connector_ensure => 'present'
+  connector_ensure => 'absent'
   notify => Tomcat::Service['jsvc-default'],
 }
 ~~~
