@@ -17,10 +17,10 @@ describe 'tomcat::config::context::resourcelink', :type => :define do
     let :params do
       {
         :catalina_base         => '/opt/apache-tomcat/test',
-        :global                => 'simpleValue',
-        :resource_type         => 'java',
+        :resourcelink_type     => 'java',
         :additional_attributes => {
-          'factory'            => 'javax.naming.spi.ObjectFactory',
+          'factory' => 'javax.naming.spi.ObjectFactory',
+          'global'  => 'simpleValue',
         },
         :attributes_to_remove  => [
           'foobar',
@@ -33,8 +33,8 @@ describe 'tomcat::config::context::resourcelink', :type => :define do
       'changes' => [
         'set Context/ResourceLink[#attribute/name=\'linkToGlobalResource\']/#attribute/name linkToGlobalResource',
         'set Context/ResourceLink[#attribute/name=\'linkToGlobalResource\']/#attribute/type java',
-        'set Context/ResourceLink[#attribute/name=\'linkToGlobalResource\']/#attribute/global simpleValue',
         'set Context/ResourceLink[#attribute/name=\'linkToGlobalResource\']/#attribute/factory \'javax.naming.spi.ObjectFactory\'',
+        'set Context/ResourceLink[#attribute/name=\'linkToGlobalResource\']/#attribute/global \'simpleValue\'',
         'rm Context/ResourceLink[#attribute/name=\'linkToGlobalResource\']/#attribute/foobar',
         ]
       )

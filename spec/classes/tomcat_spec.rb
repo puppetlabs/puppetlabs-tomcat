@@ -8,12 +8,6 @@ describe 'tomcat', :type => :class do
       }
     end
     it { is_expected.to contain_class("tomcat::params") }
-    it { is_expected.to contain_file("/opt/apache-tomcat").with(
-      'ensure' => 'directory',
-      'owner'  => 'tomcat',
-      'group'  => 'tomcat',
-      )
-    }
     it { is_expected.to contain_user("tomcat").with(
       'ensure' => 'present',
       'gid'    => 'tomcat',

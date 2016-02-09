@@ -4,7 +4,6 @@
 #
 # Parameters:
 # - $catalina_home is the root of the Tomcat installation.
-# - $catalina_base is the base directory for the Tomcat installation.
 # - The $source_url to install from.
 # - $source_strip_first_dir is a boolean specifying whether or not to strip
 #   the first directory when unpacking the source tarball. Defaults to true
@@ -12,7 +11,6 @@
 #   > 0.4.0
 define tomcat::instance::source (
   $catalina_home,
-  $catalina_base,
   $source_url,
   $source_strip_first_dir = undef,
 ) {

@@ -43,6 +43,7 @@ define tomcat::setenv::entry (
       ensure_newline => true,
     }
   }
+
   if $addto {
     $_content = inline_template('export <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %> ; export <%= @addto %>="$<%= @addto %> $<%= @param %>"')
   } else {

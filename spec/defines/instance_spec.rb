@@ -21,6 +21,12 @@ describe 'tomcat::instance', :type => :define do
         :source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
       }
     end
+    it { is_expected.to contain_file("/opt/apache-tomcat").with(
+      'ensure' => 'directory',
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
+      )
+    }
     it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
     it { is_expected.to contain_staging__extract('default-apache-tomcat-8.0.8.tar.gz').with(
       'target' => '/opt/apache-tomcat',
@@ -40,7 +46,7 @@ describe 'tomcat::instance', :type => :define do
     end
     it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
     it { is_expected.to contain_staging__extract('default-apache-tomcat-8.0.8.tar.gz').with(
-      'target' => '/opt/apache-tomcat/test-tomcat',
+      'target' => '/opt/apache-tomcat',
       'user'   => 'tomcat',
       'group'  => 'tomcat',
       'strip'  => 1,
@@ -50,6 +56,23 @@ describe 'tomcat::instance', :type => :define do
       'ensure' => 'directory',
       'owner'  => 'tomcat',
       'group'  => 'tomcat',
+    )
+    }
+    it { is_expected.to contain_file('/opt/apache-tomcat/test-tomcat/conf/server.xml').with(
+      'ensure' => 'file',
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
+      'source' => '/opt/apache-tomcat/conf/server.xml',
+    )
+    }
+    it { is_expected.to contain_concat('/opt/apache-tomcat/test-tomcat/conf/catalina.properties').with(
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
+    )
+    }
+    it { is_expected.to contain_concat__fragment('/opt/apache-tomcat/test-tomcat properties base file from catalina_home /opt/apache-tomcat/conf/catalina.properties').with(
+      'target' => '/opt/apache-tomcat/test-tomcat/conf/catalina.properties',
+      'source' => '/opt/apache-tomcat/conf/catalina.properties',
     )
     }
   end

@@ -12,7 +12,7 @@
 # - An optional array of $attributes_to_remove from the Resource.
 define tomcat::config::server::globalnamingresource (
   $catalina_base         = $::tomcat::catalina_home,
-  $resource_ensure      = 'present',
+  $ensure                = 'present',
   $additional_attributes = {},
   $attributes_to_remove  = [],
   $server_config         = undef,
@@ -21,9 +21,11 @@ define tomcat::config::server::globalnamingresource (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
-  validate_re($resource_ensure, '^(present|absent|true|false)$')
+  validate_re($ensure, '^(present|absent|true|false)$')
   validate_hash($additional_attributes)
   validate_re($catalina_base, '^.*[^/]$', '$catalina_base must not end in a /!')
+
+  $base_path = "Server/GlobalNamingResources/Resource[#attribute/name='${name}']"
 
   if $server_config {
     $_server_config = $server_config
@@ -31,22 +33,24 @@ define tomcat::config::server::globalnamingresource (
     $_server_config = "${catalina_base}/conf/server.xml"
   }
 
-  $base_path = "Server/GlobalNamingResources/Resource[#attribute/name='${name}']"
-  if $resource_ensure =~ /^(absent|false)$/ {
+  if $ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
   } else {
     if ! empty($additional_attributes) {
-      $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${base_path}/#attribute/"), "'")
+      $set_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${base_path}/#attribute/"), "'")
     } else {
-      $_additional_attributes = undef
+      $set_additional_attributes = undef
     }
     if ! empty(any2array($attributes_to_remove)) {
-      $_attributes_to_remove = prefix(any2array($attributes_to_remove), "rm ${base_path}/#attribute/")
+      $rm_attributes_to_remove = prefix(any2array($attributes_to_remove), "rm ${base_path}/#attribute/")
     } else {
-      $_attributes_to_remove = undef
+      $rm_attributes_to_remove = undef
     }
 
-    $changes = delete_undef_values(flatten([ $_additional_attributes, $_attributes_to_remove ]))
+    $changes = delete_undef_values(flatten([
+      $set_additional_attributes,
+      $rm_attributes_to_remove,
+    ]))
   }
 
   augeas { "server-${catalina_base}-globalresource-${name}":
