@@ -69,6 +69,23 @@ describe 'tomcat::service', :type => :define do
     # so let's just make sure it compiles
     it { is_expected.to compile }
   end
+  context "both jsvc and init with $catalina_base" do
+    let :params do
+      {
+        :use_jsvc      => true,
+        :use_init      => true,
+        :catalina_base => '/opt/apache-tomcat/foo',
+      }
+    end
+    it { is_expected.to contain_service('tomcat-default').with(
+      'hasstatus'  => true,
+      'hasrestart' => true,
+      'ensure'     => 'running',
+      'start'      => 'service tomcat-default start',
+      'stop'       => 'service tomcat-default stop',
+    )
+    }
+  end
   context 'set start/stop with init' do
     let :params do
       {
@@ -194,17 +211,17 @@ describe 'tomcat::service', :type => :define do
         }.to raise_error(Puppet::Error, /not a boolean/)
       end
     end
-    context "both jsvc and init" do
+    context "jsvc and custom base without init" do
       let :params do
         {
-          :use_jsvc => true,
-          :use_init => true,
+          :catalina_base => '/opt/apache-tomcat/test-tomcat',
+          :use_jsvc      => true,
         }
       end
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /Only one of \$use_jsvc and \$use_init/)
+        }.to raise_error(Puppet::Error, /I don't have a default start command/)
       end
     end
     context "init without servicename" do

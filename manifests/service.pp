@@ -18,11 +18,12 @@
 #   $service_ensure == 'running'
 # - Whether or not to $use_init for service management. Boolean defaulting to
 #   false. If both $use_jsvc and $use_init are false,
-#   $CATALINA_BASE/bin/catalina.sh start and $CATALIN/A_BASE/bin/catalina.sh
+#   $CATALINA_BASE/bin/catalina.sh start and $CATALINA_BASE/bin/catalina.sh
 #   stop are used for service management.
-# - The $service_name to use when $use_init is true.
+# - The $service_name to use when $use_init is true and $use_jsvc is false.
 # - The $start_command to use for the service
 # - The $stop_command to use for the service
+# - $user is the user of the jsvc process.
 define tomcat::service (
   $catalina_home  = undef,
   $catalina_base  = undef,
@@ -34,25 +35,26 @@ define tomcat::service (
   $service_name   = undef,
   $start_command  = undef,
   $stop_command   = undef,
+  $user           = $::tomcat::user,
 ) {
 
   validate_bool($use_jsvc)
   validate_bool($use_init)
 
-  if $use_jsvc and $use_init {
-    fail('Only one of $use_jsvc and $use_init can be set to true')
+  if $use_init and ! $service_name and ! $use_jsvc {
+    fail('$service_name must be specified with use_init => true and use_jsvc => false')
   }
 
-  if $use_init and ! $service_name {
-    fail('$service_name must be specified when $use_init is set to true')
+  if $use_init and $use_jsvc and $service_name {
+    warning('$service_name will be ignored with use_init => true and use_jsvc => true')
   }
 
   if $service_enable != undef and ! $use_init {
-    warning('$use_init must be set to true when $service_enable is set')
+    warning('$use_init must be set to true when $service_enable = true')
   }
 
-  if $use_init and ($catalina_home or $catalina_base) {
-    warning('$catalina_home and $catalina_base have no affect when $use_init = true')
+  if $use_init and !$use_jsvc and ($catalina_home or $catalina_base) {
+    warning('$catalina_home and $catalina_base have no affect when use_init => true and use_jsvc => false')
   }
 
   if $java_home and ! $use_jsvc {
@@ -70,12 +72,29 @@ define tomcat::service (
   }
 
   if ! $catalina_base {
-    $_catalina_base = $::tomcat::catalina_home
+    $_catalina_base = $_catalina_home
   } else {
     $_catalina_base = $catalina_base
   }
 
-  if $use_jsvc {
+  if $use_jsvc and $use_init {
+    $_service_name = "tomcat-${name}"
+    $_hasstatus    = true
+    $_hasrestart   = true
+    $_start        = "service tomcat-${name} start"
+    $_stop         = "service tomcat-${name} stop"
+    $_status       = "service tomcat-${name} status"
+    $_provider     = undef
+    # Template uses:
+    # - $_catalina_home
+    # - $_catalina_base
+    # - $java_home
+    # - $user
+    file { "/etc/init.d/tomcat-${name}":
+      mode    => '0755',
+      content => template('tomcat/jsvc-init.erb'),
+    }
+  } elsif $use_jsvc {
     if $java_home {
       $_jsvc_home = "-home ${java_home} "
     } else {
@@ -84,8 +103,10 @@ define tomcat::service (
     $_service_name = "tomcat-${name}"
     $_hasstatus    = false
     $_hasrestart   = false
-    $_start        = $start_command ? {
-      undef   => "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
+    if $start_command {
+      $_start = $start_command
+    } elsif $_catalina_base == $_catalina_home {
+      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base}; \
                  \$CATALINA_BASE/bin/jsvc \
                    ${_jsvc_home}-user ${::tomcat::user} \
                    -classpath \$CATALINA_BASE/bin/bootstrap.jar:\$CATALINA_BASE/bin/tomcat-juli.jar \
@@ -96,15 +117,19 @@ define tomcat::service (
                    -Dcatalina.base=\$CATALINA_BASE \
                    -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
                    -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
-                   org.apache.catalina.startup.Bootstrap",
-      default => $start_command,
+                   org.apache.catalina.startup.Bootstrap"
+    } else {
+      fail('I don\'t have a default start command to run an instance of tomcat outside of catalina_home with use_jsvc => true and use_init => false. Try something else.')
     }
-    $_stop         = $stop_command ? {
-      undef   => "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
+    if $stop_command {
+      $_stop = $stop_command
+    } elsif $_catalina_base == $_catalina_home {
+      $_stop = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
                  \$CATALINA_BASE/bin/jsvc \
                    -pidfile \$CATALINA_BASE/logs/jsvc.pid \
-                   -stop org.apache.catalina.startup.Bootstrap",
-      default => $stop_command,
+                   -stop org.apache.catalina.startup.Bootstrap"
+    } else {
+      fail('I don\'t have a default stop command to stop an instance of tomcat outside of catalina_home with use_jsvc => true and use_init => false. Try something else.')
     }
     $_status       = "ps p `cat ${_catalina_base}/logs/jsvc.pid` > /dev/null"
     $_provider     = 'base'

@@ -5,13 +5,13 @@
 # === Parameters
 #
 # [*catalina_home*]
-#   The base directory for the Tomcat installation.
+#   The base directory for the Tomcat installation. Default: /opt/apache-tomcat
 #
 # [*user*]
-#   The user to run Tomcat as.
+#   The user to run Tomcat as. Default: tomcat
 #
 # [*group*]
-#   The group to run Tomcat as.
+#   The group to run Tomcat as. Default: tomcat
 #
 # [*manage_user*]
 #   Boolean specifying whether or not to manage the user. Defaults to true.
@@ -46,14 +46,6 @@ class tomcat (
       fail("Unsupported osfamily: ${::osfamily}")
     }
     default: { }
-  }
-
-  if $install_from_source {
-    file { $catalina_home:
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-    }
   }
 
   if $manage_user {

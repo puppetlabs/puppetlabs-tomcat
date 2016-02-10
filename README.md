@@ -18,16 +18,21 @@
     * [Defines](#defines)
     * [Parameters](#parameters)
         * [tomcat](#tomcat-1)
+        * [tomcat::config::properties::property](#tomcatconfigpropertiesproperty)
         * [tomcat::config::server](#tomcatconfigserver)
         * [tomcat::config::server::connector](#tomcatconfigserverconnector)
         * [tomcat::config::server::context](#tomcatconfigservercontext)
         * [tomcat::config::server::engine](#tomcatconfigserverengine)
+        * [tomcat::config::server::globalnamingresource](#tomcatconfigserverglobalnamingresource)
         * [tomcat::config::server::host](#tomcatconfigserverhost)
         * [tomcat::config::server::listener](#tomcatconfigserverlistener)
         * [tomcat::config::server::realm](#tomcatconfigserverrealm)
         * [tomcat::config::server::service](#tomcatconfigserverservice)
         * [tomcat::config::server::tomcat_users](#tomcatconfigservertomcat_users)
         * [tomcat::config::server::valve](#tomcatconfigservervalve)
+        * [tomcat::config::context](#tomcatconfigcontext)
+        * [tomcat::config::context::resource](#tomcatconfigcontextresource)
+        * [tomcat::config::context::resourcelink](#tomcatconfigcontextresourcelink)
         * [tomcat::instance](#tomcatinstance)
         * [tomcat::service](#tomcatservice)
         * [tomcat::setenv::entry](#tomcatsetenventry)
@@ -209,16 +214,21 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 
 ####Public Defines
 
+* `tomcat::config::properties::property`: Adds a property to catalina.properties file
 * `tomcat::config::server`: Configures attributes for the [Server element](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html) in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::connector`: Configures [Connector elements](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::context`: Configures [Context elements](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::engine`: Configures [Engine elements](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Introduction) in `$CATALINA_BASE/conf/server.xml`.
+* `tomcat::config::server::globalnamingresource`: Configures [Global Resource elements](http://tomcat.apache.org/tomcat-8.0-doc/config/globalresources.html)
 * `tomcat::config::server::host`: Configures [Host elements](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html) in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::listener`: Configures [Listener elements](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html) in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::realm`: Configures [Realm elements](http://tomcat.apache.org/tomcat-8.0-doc/config/realm.html) in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::service`: Configures a [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html) element nested in the `Server` element in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::tomcat_users`: Configures user and role elements for [UserDatabaseRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#UserDatabaseRealm) or [MemoryRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#MemoryRealm) in `$CATALINA_BASE/conf/tomcat-users.xml` or any other specified file.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in `$CATALINA_BASE/conf/server.xml`.
+* `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::instance`: Installs a Tomcat instance.
 * `tomcat::service`: Provides Tomcat service management.
 * `tomcat::setenv::entry`: Adds an entry to a Tomcat configuration file (e.g., `setenv.sh` or `/etc/sysconfig/tomcat`).
@@ -228,6 +238,8 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 
 * `tomcat::instance::package`: Installs Tomcat from a package.
 * `tomcat::instance::source`: Installs Tomcat from source.
+* `tomcat::instance::copy_from_home`: Copies required files from installation to instance
+* `tomcat::config::properties`: Creates instance catalina.properties
 
 ###Parameters
 
@@ -266,6 +278,20 @@ Specifies whether to purge any unmanaged realm elements from the configuration f
 #####`user`
 
 Specifies a user to run Tomcat as. Valid options: a string containing a valid username. Default: 'tomcat'.
+
+#### tomcat::config::properties::property
+
+##### `property`
+
+The name of the property. Default: `$name`
+
+##### `catalina_base`
+
+The catalina base of the catalina.properties file. The resource will manage the values in `${catalina_base}/conf/catalina.properties` . Required.
+
+##### `value`
+
+The value of the property. Required.
 
 ####tomcat::config::server
 
@@ -430,6 +456,30 @@ Sets how many threads the Engine should use to start child Host elements in para
 #####`start_stop_threads_ensure`
 
 Specifies whether the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file. Valid options: 'true', 'false', 'present', and 'absent'. Default: 'present'.
+
+#### tomcat::config::server::globalnamingresource
+
+Configure GlobalNamingResources Resource elements in $CATALINA\_BASE/conf/server.xml
+
+##### `ensure`
+
+Determines whether the specified XML element should exist in the configuration file. Valid options: 'true', 'false', 'present', and 'absent'. Default: 'present'.
+
+##### `catalina_base`
+
+Specifies the base directory of the Tomcat instance. Valid options: a string containing an absolute path. Default: `$::tomcat::catalina_home`
+
+##### `additional_attributes`
+
+Specifies any further attributes to add to the Host. Valid options: a hash of '< attribute >' => '< value >' pairs. Default: {}.
+
+##### `attributes_to_remove`
+
+Specifies any attributes to remove from the Host. Valid options: an array of `'< attribute >' => '< value >'` pairs. Default: [].
+
+##### `server_config`
+
+Specifies a server.xml file to manage. Valid options: a string containing an absolute path. Default: `${catalina_base}/config/server.xml`
 
 ####tomcat::config::server::host
 
@@ -643,6 +693,64 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 
 Specifies whether the Valve should exist in the configuration file. Maps to the  [Valve XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Introduction). Valid options: 'true', 'false', 'present', and 'absent'. Default: 'present'.
 
+#### tomcat::config::context
+
+##### `catalina_base`
+
+Specifies the root of the Tomcat installation.
+
+#### tomcat::config::context::resource
+
+##### `ensure`
+
+specifies whether you are trying to add or remove the Resource element. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'
+
+##### `resource_name`
+
+The name of the Resource to be created, relative to the java:comp/env context. Default: `$name`
+
+##### `resource_type`
+
+The fully qualified Java class name expected by the web application when it performs a lookup for this resource. Required to create the resource.
+
+##### `catalina_base`
+
+Specifies the root of the Tomcat installation. Default: `$tomcat::catalina_home`
+
+##### `additional_attributes`
+
+Specifies any additional attributes to add to the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+##### `attributes_to_remove`
+
+Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#### tomcat::config::context::resourcelink
+
+##### `ensure`
+
+specifies whether you are trying to add or remove the ResourceLink element. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'
+
+##### `catalina_base`
+
+Specifies the root of the Tomcat installation. Default: `$tomcat::catalina_home`
+
+##### `resourcelink_name`
+
+The name of the ResourceLink to be created, relative to the java:comp/env context. Default: `$name`
+
+##### `resourcelink_type`
+
+The fully qualified Java class name expected by the web application when it performs a lookup for this resource link.
+
+##### `additional_attributes`
+
+Specifies any additional attributes to add to the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+##### `attributes_to_remove`
+
+Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
 ####tomcat::instance
 
 #####`catalina_base`
@@ -676,6 +784,14 @@ Specifies whether to strip the topmost directory of the tarball when unpacking i
 #####`source_url`
 
 *Required if `install_from_source` is set to 'true'.* Specifies the source URL to install from. Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
+
+##### `user`
+
+The owner of the tomcat home and base. Default: `$tomcat::user`
+
+##### `group`
+
+The group of the tomcat home and base. Default: `$tomcat::user`
 
 ####tomcat::service
 
@@ -729,6 +845,10 @@ Specifies whether to use Jsvc for service management. If both `use_jsvc` and `us
 
 Valid options: 'true' and 'false'. Default: 'false'.
 
+##### `user`
+
+The user of the jsvc process when `use_init => true`
+
 ####tomcat::setenv::entry
 
 #####`base_path`
@@ -746,6 +866,10 @@ Determines whether the fragment should exist in the configuration file. Valid op
 #####`order`
 
 Determines the ordering of your parameters in the configuration file (parameters with lower `order` values appear first.) Valid options: an integer or a string containing an integer. Default: '10'.
+
+###### `addto`
+
+Defines an additional environment variable that will be added to the beginning of the `param`
 
 #####`param`
 
