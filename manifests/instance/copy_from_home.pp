@@ -4,10 +4,15 @@
 #
 define tomcat::instance::copy_from_home (
   $catalina_home,
-  $user          = $::tomcat::user,
-  $group         = $::tomcat::group,
+  $user,
+  $group,
 ) {
+  tag(sha1($catalina_home))
   $filename = basename($name)
+
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
 
   file { $name:
     ensure  => file,

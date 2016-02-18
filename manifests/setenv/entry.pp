@@ -13,21 +13,32 @@
 #   either $catalina_base/bin or $catalina_home/bin.
 define tomcat::setenv::entry (
   $value,
-  $ensure      = 'present',
-  $config_file = "${::tomcat::catalina_home}/bin/setenv.sh",
-  $param       = $name,
-  $quote_char  = undef,
-  $order       = 10,
-  $addto       = undef,
+  $ensure        = 'present',
+  $catalina_home = undef,
+  $config_file   = undef,
+  $param         = $name,
+  $quote_char    = undef,
+  $order         = 10,
+  $addto         = undef,
   # Deprecated
-  $base_path   = undef,
+  $base_path     = undef,
 ) {
+  include tomcat
+  $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
+  $home_sha = sha1($_catalina_home)
+  tag($home_sha)
+
+  Tomcat::Install <| tag == $home_sha |>
+  -> Tomcat::Setenv::Entry[$name]
 
   if $base_path {
-    warning('The $base_path parameter is deprecated; please use $config_file instead')
+    warning('The $base_path parameter is deprecated; please use catalina_home or config_file instead')
     $_config_file = "${base_path}/setenv.sh"
   } else {
-    $_config_file = $config_file
+    $_config_file = $config_file ? {
+      undef   => "${_catalina_home}/bin/setenv.sh",
+      default => $config_file,
+    }
   }
 
   if ! $quote_char {

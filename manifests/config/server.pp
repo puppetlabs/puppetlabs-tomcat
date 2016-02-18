@@ -15,7 +15,7 @@
 # - The $port to wait for shutdown commands on.
 # - The $shutdown command that must be sent to $port.
 define tomcat::config::server (
-  $catalina_base           = $::tomcat::catalina_home,
+  $catalina_base           = undef,
   $class_name              = undef,
   $class_name_ensure       = 'present',
   $address                 = undef,
@@ -24,6 +24,9 @@ define tomcat::config::server (
   $shutdown                = undef,
   $server_config           = undef,
 ) {
+  include tomcat
+  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  tag(sha1($_catalina_base))
 
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -63,13 +66,13 @@ define tomcat::config::server (
   if $server_config {
     $_server_config = $server_config
   } else {
-    $_server_config = "${catalina_base}/conf/server.xml"
+    $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
   $changes = delete_undef_values([$_class_name, $_address, $_port, $_shutdown])
 
   if ! empty($changes) {
-    augeas { "server-${catalina_base}":
+    augeas { "server-${_catalina_base}":
       lens    => 'Xml.lns',
       incl    => $_server_config,
       changes => $changes,

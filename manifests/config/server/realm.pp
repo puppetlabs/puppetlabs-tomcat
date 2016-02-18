@@ -20,7 +20,7 @@
 #   be of the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Realm.
 define tomcat::config::server::realm (
-  $catalina_base         = $::tomcat::catalina_home,
+  $catalina_base         = undef,
   $class_name            = $name,
   $realm_ensure          = 'present',
   $parent_service        = 'Catalina',
@@ -29,9 +29,13 @@ define tomcat::config::server::realm (
   $parent_realm          = undef,
   $additional_attributes = {},
   $attributes_to_remove  = [],
-  $purge_realms          = $::tomcat::purge_realms,
+  $purge_realms          = undef,
   $server_config         = undef,
 ) {
+  include tomcat
+  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  tag(sha1($_catalina_base))
+  $_purge_realms = pick($purge_realms, $::tomcat::purge_realms)
 
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -39,16 +43,16 @@ define tomcat::config::server::realm (
   validate_re($realm_ensure, '^(present|absent|true|false)$')
   validate_hash($additional_attributes)
   validate_array($attributes_to_remove)
-  validate_bool($purge_realms)
+  validate_bool($_purge_realms)
 
-  if $purge_realms and ($realm_ensure =~ /^(absent|false)$/) {
+  if $_purge_realms and ($realm_ensure =~ /^(absent|false)$/) {
     fail('$realm_ensure must be set to \'true\' or \'present\' to use $purge_realms')
   }
 
-  if $purge_realms {
+  if $_purge_realms {
     # Perform deletions in reverse depth order as workaround for
     # https://github.com/hercules-team/augeas/issues/319
-    $_purge_realms = [
+    $__purge_realms = [
       'rm //Realm//Realm',
       'rm //Context//Realm',
       'rm //Host//Realm',
@@ -56,7 +60,7 @@ define tomcat::config::server::realm (
       'rm //Server//Realm',
     ]
   } else {
-    $_purge_realms = undef
+    $__purge_realms = undef
   }
 
   $engine_path = "Server/Service[#attribute/name='${parent_service}']/Engine[#attribute/name='${parent_engine}']"
@@ -79,7 +83,7 @@ define tomcat::config::server::realm (
   if $server_config {
     $_server_config = $server_config
   } else {
-    $_server_config = "${catalina_base}/conf/server.xml"
+    $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
   if $realm_ensure =~ /^(absent|false)$/ {
@@ -100,10 +104,10 @@ define tomcat::config::server::realm (
       $_attributes_to_remove = undef
     }
 
-    $changes = delete_undef_values(flatten([ $_purge_realms, $_class_name, $_additional_attributes, $_attributes_to_remove ]))
+    $changes = delete_undef_values(flatten([ $__purge_realms, $_class_name, $_additional_attributes, $_attributes_to_remove ]))
   }
 
-  augeas { "${catalina_base}-${parent_service}-${parent_engine}-${parent_host}-${parent_realm}-realm-${class_name}":
+  augeas { "${_catalina_base}-${parent_service}-${parent_engine}-${parent_host}-${parent_realm}-realm-${class_name}":
     lens    => 'Xml.lns',
     incl    => $_server_config,
     changes => $changes,

@@ -8,8 +8,11 @@
 
 
 define tomcat::config::context (
-  $catalina_base = $::tomcat::catalina_home,
+  $catalina_base = undef,
 ) {
+  include tomcat
+  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  tag(sha1($_catalina_base))
 
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -20,9 +23,9 @@ define tomcat::config::context (
   $changes = delete_undef_values([$_watched_resource])
 
   if ! empty($changes) {
-    augeas { "context-${catalina_base}":
+    augeas { "context-${_catalina_base}":
       lens    => 'Xml.lns',
-      incl    => "${catalina_base}/conf/context.xml",
+      incl    => "${_catalina_base}/conf/context.xml",
       changes => $changes,
     }
   }

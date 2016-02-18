@@ -20,7 +20,7 @@
 # - An optional array of $attributes_to_remove from the Context.
 #
 define tomcat::config::server::context (
-  $catalina_base         = $::tomcat::catalina_home,
+  $catalina_base         = undef,
   $context_ensure        = 'present',
   $doc_base              = undef,
   $parent_service        = undef,
@@ -30,6 +30,10 @@ define tomcat::config::server::context (
   $attributes_to_remove  = [],
   $server_config         = undef,
 ) {
+  include tomcat
+  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  tag(sha1($_catalina_base))
+
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
@@ -63,7 +67,7 @@ define tomcat::config::server::context (
   if $server_config {
     $_server_config = $server_config
   } else {
-    $_server_config = "${catalina_base}/conf/server.xml"
+    $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
   if $parent_host and ! $_parent_engine {
@@ -94,7 +98,7 @@ define tomcat::config::server::context (
     $augeaschanges = delete_undef_values(flatten([$context, $_additional_attributes, $_attributes_to_remove]))
   }
 
-  augeas { "${catalina_base}-${_parent_service}-${_parent_engine}-${parent_host}-context-${name}":
+  augeas { "${_catalina_base}-${_parent_service}-${_parent_engine}-${parent_host}-context-${name}":
     lens    => 'Xml.lns',
     incl    => $_server_config,
     changes => $augeaschanges,

@@ -3,6 +3,11 @@ require 'spec_helper_acceptance'
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
 describe 'Two different instances of Tomcat 6 in the same manifest', :unless => stop_test do
+  after :all do
+    shell('pkill -f tomcat', :acceptable_exit_codes => [0,1])
+    shell('rm -rf /opt/tomcat*', :acceptable_exit_codes => [0,1])
+    shell('rm -rf /opt/apache-tomcat*', :acceptable_exit_codes => [0,1])
+  end
 
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do

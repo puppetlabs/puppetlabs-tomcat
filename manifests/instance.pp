@@ -25,68 +25,97 @@
 define tomcat::instance (
   $catalina_home          = undef,
   $catalina_base          = undef,
-  $install_from_source    = $::tomcat::install_from_source,
+  $user                   = undef,
+  $group                  = undef,
+  $manage_user            = undef,
+  $manage_group           = undef,
+  $manage_service         = undef,
+  $java_home              = undef,
+  $use_jsvc               = undef,
+  $use_init               = undef,
+
+  #used for single installs
+  $install_from_source    = undef,
   $source_url             = undef,
   $source_strip_first_dir = undef,
   $package_ensure         = undef,
   $package_name           = undef,
   $package_options        = undef,
-  $user                   = $::tomcat::user,
-  $group                  = $::tomcat::group,
 ) {
+  include tomcat
+  $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
+  $_catalina_base = pick($catalina_base, $_catalina_home) #default to home
+  tag(sha1($_catalina_home))
+  tag(sha1($_catalina_base))
+  $_user = pick($user, $::tomcat::user)
+  $_group = pick($group, $::tomcat::group)
+  $_manage_user = pick($manage_user, $::tomcat::manage_user)
+  $_manage_group = pick($manage_group, $::tomcat::manage_group)
 
-  if $install_from_source {
-    validate_bool($install_from_source)
-  }
-  if $source_strip_first_dir {
-    validate_bool($source_strip_first_dir)
-  }
-
-  if $install_from_source and ! $source_url {
-    fail('If installing from source $source_url must be specified')
-  }
-
-  if ! $install_from_source and ! $package_name {
-    fail('If not installing from source $package_name must be specified')
-  }
-
-  if ! $install_from_source and ($catalina_home or $catalina_base) {
-    warning('Setting $catalina_home or $catalina_base when not installing from source doesn\'t affect the installation.')
-  }
-
-  if ! $catalina_home {
-    $_catalina_home = $::tomcat::catalina_home
+  if $source_url and $install_from_source == undef {
+    # XXX Backwards compatibility mode enabled; install_from_source used to default
+    # to true.
+    $_install_from_source = true
   } else {
-    $_catalina_home = $catalina_home
+    # XXX If install_from_source is undef, then we're in multi-instance mode. If
+    # it's true or false, then we're in backwards-compatible mode.
+    $_install_from_source = $install_from_source
   }
 
-  if ! $catalina_base {
-    $_catalina_base = $::tomcat::catalina_home
-  } else {
-    $_catalina_base = $catalina_base
+  tomcat::instance::dependencies { $name:
+    catalina_home => $_catalina_home,
+    catalina_base => $_catalina_base,
   }
 
-  if $install_from_source {
-    file { $_catalina_base:
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-      mode   => '0750',
+  if $_install_from_source != undef {
+    # XXX This file resource is for backwards compatibility. Previously the base
+    # class created this directory for source installs, even though it may never
+    # be used. Users may have created source installs under this directory, so
+    # it must exist. tomcat::install::source will take care of creating base.
+    if $_catalina_base != $_catalina_home {
+      ensure_resource('file',$_catalina_home, {
+        ensure => directory,
+        owner  => $_user,
+        group  => $_group,
+      })
     }
-    if ! $source_strip_first_dir {
-      $source_strip = true
-    } else {
-      $source_strip = $source_strip_first_dir
-    }
-
-    tomcat::instance::source { $name:
-      catalina_home          => $_catalina_home,
+    # XXX This is for backwards compatibility. Declare a tomcat install, but install
+    # the software into the base instead of the home.
+    tomcat::install { $name:
+      catalina_home          => $_catalina_base,
+      install_from_source    => $_install_from_source,
       source_url             => $source_url,
-      source_strip_first_dir => $source_strip,
-      require                => File[$_catalina_base],
+      source_strip_first_dir => $source_strip_first_dir,
+      user                   => $_user,
+      group                  => $_group,
+      manage_user            => $_manage_user,
+      manage_group           => $_manage_group,
+      package_ensure         => $package_ensure,
+      package_name           => $package_name,
+      package_options        => $package_options,
     }
+    # XXX The user always has to declare the service
+    $_manage_service = false
+  } else {
     if $_catalina_home != $_catalina_base {
+      if $_manage_user {
+        ensure_resource('user', $_user, {
+          ensure => present,
+          gid    => $_group,
+        })
+      }
+      if $_manage_group {
+        ensure_resource('group', $_group, {
+          ensure => present,
+        })
+      }
+
       # Configure additional instances in custom catalina_base
+      file { $_catalina_base:
+        ensure => directory,
+        owner  => $_user,
+        group  => $_group,
+      }
       $dir_list = [
         "${_catalina_base}/bin",
         "${_catalina_base}/conf",
@@ -98,35 +127,39 @@ define tomcat::instance (
       ]
       file { $dir_list:
         ensure => directory,
-        owner  => $user,
-        group  => $group,
+        owner  => $_user,
+        group  => $_group,
         mode   => '2770',
       }
-      $copy_from_home_list = [
+      $copy_to_base_list = [
         "${_catalina_base}/conf/catalina.policy",
         "${_catalina_base}/conf/context.xml",
         "${_catalina_base}/conf/logging.properties",
         "${_catalina_base}/conf/server.xml",
         "${_catalina_base}/conf/web.xml",
       ]
-      tomcat::instance::copy_from_home { $copy_from_home_list:
+      tomcat::instance::copy_from_home { $copy_to_base_list:
         catalina_home => $_catalina_home,
-        user          => $user,
-        group         => $group,
-        require       => Tomcat::Instance::Source[$name],
+        user          => $_user,
+        group         => $_group,
       }
       tomcat::config::properties { "${_catalina_base} catalina.properties":
-        catalina_base => $_catalina_base,
         catalina_home => $_catalina_home,
-        user          => $user,
-        group         => $group,
-        require       => Tomcat::Instance::Source[$name],
+        catalina_base => $_catalina_base,
+        user          => $_user,
+        group         => $_group,
       }
+      $_manage_service = pick($manage_service, true)
     }
-  } else {
-    tomcat::instance::package { $package_name:
-      package_ensure  => $package_ensure,
-      package_options => $package_options,
+  }
+  if $_manage_service {
+    tomcat::service { $name:
+      catalina_home => $_catalina_home,
+      catalina_base => $_catalina_base,
+      java_home     => $java_home,
+      use_jsvc      => $use_jsvc,
+      use_init      => $use_init,
+      user          => $_user,
     }
   }
 }

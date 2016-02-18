@@ -28,7 +28,7 @@
 #   and 'absent'. Defaults to 'present'.
 define tomcat::config::server::engine (
   $default_host,
-  $catalina_base                     = $::tomcat::catalina_home,
+  $catalina_base                     = undef,
   $background_processor_delay        = undef,
   $background_processor_delay_ensure = 'present',
   $class_name                        = undef,
@@ -41,6 +41,10 @@ define tomcat::config::server::engine (
   $start_stop_threads_ensure         = 'present',
   $server_config                     = undef,
 ) {
+  include tomcat
+  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  tag(sha1($_catalina_base))
+
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
@@ -96,12 +100,12 @@ define tomcat::config::server::engine (
   if $server_config {
     $_server_config = $server_config
   } else {
-    $_server_config = "${catalina_base}/conf/server.xml"
+    $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
   $changes = delete_undef_values([$_name_change, $_default_host, $_background_processor_delay, $_class_name, $_jvm_route, $_start_stop_threads])
 
-  augeas { "${catalina_base}-${parent_service}-engine":
+  augeas { "${_catalina_base}-${parent_service}-engine":
     lens    => 'Xml.lns',
     incl    => $_server_config,
     changes => $changes,

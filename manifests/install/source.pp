@@ -1,4 +1,4 @@
-# Definition: tomcat::instance::source
+# Definition: tomcat::install::source
 #
 # Private define to install Tomcat from source.
 #
@@ -9,11 +9,16 @@
 #   the first directory when unpacking the source tarball. Defaults to true
 #   when installing from source on non-Solaris systems. Requires nanliu/staging
 #   > 0.4.0
-define tomcat::instance::source (
+define tomcat::install::source (
   $catalina_home,
   $source_url,
-  $source_strip_first_dir = undef,
+  $source_strip_first_dir,
+  $user,
+  $group,
+  $manage_user,
+  $manage_group,
 ) {
+  tag(sha1($catalina_home))
   include staging
 
   if $caller_module_name != $module_name {
@@ -26,11 +31,26 @@ define tomcat::instance::source (
 
   $filename = regsubst($source_url, '.*/(.*)', '\1')
 
-  if ! defined(Staging::File[$filename]) {
-    staging::file { $filename:
-      source => $source_url,
-    }
+  if $manage_user {
+    ensure_resource('user', $user, {
+      ensure => present,
+      gid    => $group,
+    })
   }
+  if $manage_group {
+    ensure_resource('group', $group, {
+      ensure => present,
+    })
+  }
+  file { $catalina_home:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+  }
+
+  ensure_resource('staging::file',$filename, {
+    source => $source_url,
+  })
 
   staging::extract { "${name}-${filename}":
     source  => "${::staging::path}/tomcat/${filename}",
