@@ -108,7 +108,7 @@ define tomcat::service (
     } elsif $_catalina_base == $_catalina_home {
       $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base}; \
                  \$CATALINA_BASE/bin/jsvc \
-                   ${_jsvc_home}-user ${::tomcat::user} \
+                   ${_jsvc_home}-user ${user} \
                    -classpath \$CATALINA_BASE/bin/bootstrap.jar:\$CATALINA_BASE/bin/tomcat-juli.jar \
                    -outfile \$CATALINA_BASE/logs/catalina.out \
                    -errfile \$CATALINA_BASE/logs/catalina.err \
@@ -146,11 +146,11 @@ define tomcat::service (
     $_hasstatus    = false
     $_hasrestart   = false
     $_start        = $start_command ? {
-      undef   => "su -s /bin/bash -c '${_catalina_base}/bin/catalina.sh start' ${::tomcat::user}",
+      undef   => "su -s /bin/bash -c '${_catalina_base}/bin/catalina.sh start' ${user}",
       default => $start_command
     }
     $_stop         = $stop_command ? {
-      undef   => "su -s /bin/bash -c '${_catalina_base}/bin/catalina.sh stop' ${::tomcat::user}",
+      undef   => "su -s /bin/bash -c '${_catalina_base}/bin/catalina.sh stop' ${user}",
       default => $stop_command
     }
     $_status       = "ps aux | grep 'catalina.base=${_catalina_base} ' | grep -v grep"

@@ -83,6 +83,8 @@ define tomcat::instance (
       catalina_home          => $_catalina_home,
       source_url             => $source_url,
       source_strip_first_dir => $source_strip,
+      user                   => $user,
+      group                  => $group,
       require                => File[$_catalina_base],
     }
     if $_catalina_home != $_catalina_base {
