@@ -3,8 +3,15 @@ require 'spec_helper_acceptance'
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
 describe 'Tomcat Install source -defaults', :unless => stop_test do
+  after :all do
+    shell('pkill -f tomcat', :acceptable_exit_codes => [0,1])
+    shell('rm -rf /opt/tomcat*', :acceptable_exit_codes => [0,1])
+    shell('rm -rf /opt/apache-tomcat*', :acceptable_exit_codes => [0,1])
+  end
 
-  shell("curl -k -o /tmp/sample.war '#{SAMPLE_WAR}'", :acceptable_exit_codes => 0)
+  before :all do
+    shell("curl -k -o /tmp/sample.war '#{SAMPLE_WAR}'", :acceptable_exit_codes => 0)
+  end
 
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do

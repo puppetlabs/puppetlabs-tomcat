@@ -6,8 +6,9 @@ define tomcat::config::properties (
   $user,
   $group,
 ) {
+  tag(sha1($catalina_base))
+  tag(sha1($catalina_home))
   concat { "${catalina_base}/conf/catalina.properties":
-    ensure         => present,
     ensure_newline => true,
     owner          => $user,
     group          => $group,

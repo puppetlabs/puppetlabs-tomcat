@@ -47,17 +47,4 @@ class tomcat (
     }
     default: { }
   }
-
-  if $manage_user {
-    user { $user:
-      ensure => present,
-      gid    => $group
-    }
-  }
-
-  if $manage_group {
-    group { $group:
-      ensure => present,
-    }
-  }
 }

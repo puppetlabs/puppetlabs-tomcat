@@ -20,7 +20,7 @@
 #   http(s)://, puppet://, and ftp:// paths. $war_source must be specified
 #   unless $war_ensure is set to 'false' or 'absent'.
 define tomcat::war(
-  $catalina_base   = $::tomcat::catalina_home,
+  $catalina_base   = undef,
   $app_base        = undef,
   $deployment_path = undef,
   $war_ensure      = 'present',
@@ -28,6 +28,9 @@ define tomcat::war(
   $war_purge       = true,
   $war_source      = undef,
 ) {
+  include tomcat
+  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  tag(sha1($_catalina_base))
   validate_re($war_ensure, '^(present|absent|true|false)$')
   validate_bool($war_purge)
 
@@ -51,7 +54,7 @@ define tomcat::war(
     } else {
       $_app_base = 'webapps'
     }
-    $_deployment_path = "${catalina_base}/${_app_base}"
+    $_deployment_path = "${_catalina_base}/${_app_base}"
   }
 
   if $war_ensure =~ /^(absent|false)$/ {
@@ -64,7 +67,7 @@ define tomcat::war(
       if $war_dir_name != '' {
         file { "${_deployment_path}/${war_dir_name}":
           ensure => absent,
-          force  => true
+          force  => true,
         }
       }
     }

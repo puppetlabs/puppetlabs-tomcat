@@ -38,7 +38,7 @@ esac
 CATALINA_BASE=<%= @_catalina_base %>
 CATALINA_HOME=<%= @_catalina_home %>
 JAVA_HOME=<%= @java_home %>
-TOMCAT_USER=<%= @user %>
+TOMCAT_USER=<%= @_user %>
 
 # Use the maximum available, or set MAX_FD != -1 to use that
 test ".$MAX_FD" = . && MAX_FD="maximum"
@@ -49,7 +49,13 @@ test ".$TOMCAT_USER" = . && TOMCAT_USER=tomcat
 JAVA_BIN="$JAVA_HOME/bin/java"
 
 test ".$CATALINA_MAIN" = . && CATALINA_MAIN=org.apache.catalina.startup.Bootstrap
-test ".$JSVC" = . && JSVC="$CATALINA_BASE/bin/jsvc"
+if [ -z "$JSVC" ]; then
+  JSVC="$CATALINA_BASE/bin/jsvc"
+  if [ ! -x "$JSVC" ]; then
+    JSVC="$CATALINA_HOME/bin/jsvc"
+  fi
+fi
+
 ## would be good to test the jsvc is from a valid common-daemon and for the correct java but how to do that
 
 # Ensure that any user defined CLASSPATH variables are not used on startup,

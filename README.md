@@ -99,7 +99,7 @@ tomcat::service { 'default': }
 
 ###I want to run multiple copies of Tomcat on a single node
 
-~~~
+```puppet
 class { 'tomcat': }
 class { 'java': }
 
@@ -137,7 +137,8 @@ tomcat::config::server::connector { 'tomcat6-ajp':
 }->
 tomcat::service { 'tomcat6':
   catalina_base => '/opt/apache-tomcat/tomcat6'
-~~~
+}
+```
 
 ###I want to deploy WAR files
 
@@ -489,7 +490,7 @@ Specifies any further attributes to add to the Host. Valid options: a hash of '<
 
 #####`aliases`
 
-Optional array that specifies the list of [Host Name Aliases](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Host_Name_Aliases) for this particular Host.  If omitted, any currently-defined Aliases will not be altered.  If present, the list Aliases  will be set to exactly match the contents of this array.  Thus, for example, an empty array can be used to explicity force there to be no Aliases for the Host.
+Optional array that specifies the list of [Host Name Aliases](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Host_Name_Aliases) for this particular Host.  If omitted, any currently-defined Aliases will not be altered.  If present, the list Aliases  will be set to exactly match the contents of this array.  Thus, for example, an empty array can be used to explicitly force there to be no Aliases for the Host.
 
 #####`app_base`
 

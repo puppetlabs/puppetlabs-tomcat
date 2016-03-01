@@ -109,8 +109,8 @@ describe 'tomcat::service', :type => :define do
       'hasstatus'  => false,
       'hasrestart' => false,
       'ensure'     => 'running',
-      'start'      => "su -s /bin/bash -c '/opt/apache-tomcat/bin/catalina.sh start' tomcat",
-      'stop'       => "su -s /bin/bash -c '/opt/apache-tomcat/bin/catalina.sh stop' tomcat",
+      'start'      => "su -s /bin/bash -c 'CATALINA_HOME=/opt/apache-tomcat CATALINA_BASE=/opt/apache-tomcat /opt/apache-tomcat/bin/catalina.sh start' tomcat",
+      'stop'       => "su -s /bin/bash -c 'CATALINA_HOME=/opt/apache-tomcat CATALINA_BASE=/opt/apache-tomcat /opt/apache-tomcat/bin/catalina.sh stop' tomcat",
     )
     }
   end
@@ -209,32 +209,6 @@ describe 'tomcat::service', :type => :define do
         expect {
           catalogue
         }.to raise_error(Puppet::Error, /not a boolean/)
-      end
-    end
-    context "jsvc and custom base without init" do
-      let :params do
-        {
-          :catalina_base => '/opt/apache-tomcat/test-tomcat',
-          :use_jsvc      => true,
-        }
-      end
-      it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /I don't have a default start command/)
-      end
-    end
-    context "init without servicename" do
-      let :params do
-        {
-          :use_jsvc => false,
-          :use_init => true,
-        }
-      end
-      it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /\$service_name must be specified/)
       end
     end
     context "java_home without use_jsvc warning" do

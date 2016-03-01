@@ -22,7 +22,7 @@
 #   are no Alias elements within the Host element.
 define tomcat::config::server::host (
   $app_base              = undef,
-  $catalina_base         = $::tomcat::catalina_home,
+  $catalina_base         = undef,
   $host_ensure           = 'present',
   $host_name             = undef,
   $parent_service        = 'Catalina',
@@ -31,6 +31,10 @@ define tomcat::config::server::host (
   $server_config         = undef,
   $aliases               = undef,
 ) {
+  include tomcat
+  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  tag(sha1($_catalina_base))
+
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
@@ -49,7 +53,7 @@ define tomcat::config::server::host (
   if $server_config {
     $_server_config = $server_config
   } else {
-    $_server_config = "${catalina_base}/conf/server.xml"
+    $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
   if $host_ensure =~ /^(absent|false)$/ {
@@ -86,7 +90,7 @@ define tomcat::config::server::host (
     $changes = delete_undef_values(flatten([$_host_name_change, $_app_base, $_additional_attributes, $_attributes_to_remove, $_clear_aliases, $_add_aliases]))
   }
 
-  augeas { "${catalina_base}-${parent_service}-host-${_host_name}":
+  augeas { "${_catalina_base}-${parent_service}-host-${_host_name}":
     lens    => 'Xml.lns',
     incl    => $_server_config,
     changes => $changes,

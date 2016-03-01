@@ -8,15 +8,6 @@ describe 'tomcat', :type => :class do
       }
     end
     it { is_expected.to contain_class("tomcat::params") }
-    it { is_expected.to contain_user("tomcat").with(
-      'ensure' => 'present',
-      'gid'    => 'tomcat',
-      )
-    }
-    it { is_expected.to contain_group("tomcat").with(
-      'ensure' => 'present'
-      )
-    }
   end
 
   context "not installing from source" do

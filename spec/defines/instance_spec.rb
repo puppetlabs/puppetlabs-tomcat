@@ -21,6 +21,13 @@ describe 'tomcat::instance', :type => :define do
         :source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
       }
     end
+    it { is_expected.to contain_user("tomcat").with(
+      'ensure' => 'present',
+      'gid'    => 'tomcat',
+    ) }
+    it { is_expected.to contain_group("tomcat").with(
+      'ensure' => 'present'
+    ) }
     it { is_expected.to contain_file("/opt/apache-tomcat").with(
       'ensure' => 'directory',
       'owner'  => 'tomcat',
@@ -46,7 +53,7 @@ describe 'tomcat::instance', :type => :define do
     end
     it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
     it { is_expected.to contain_staging__extract('default-apache-tomcat-8.0.8.tar.gz').with(
-      'target' => '/opt/apache-tomcat',
+      'target' => '/opt/apache-tomcat/test-tomcat',
       'user'   => 'tomcat',
       'group'  => 'tomcat',
       'strip'  => 1,
@@ -58,23 +65,6 @@ describe 'tomcat::instance', :type => :define do
       'group'  => 'tomcat',
     )
     }
-    it { is_expected.to contain_file('/opt/apache-tomcat/test-tomcat/conf/server.xml').with(
-      'ensure' => 'file',
-      'owner'  => 'tomcat',
-      'group'  => 'tomcat',
-      'source' => '/opt/apache-tomcat/conf/server.xml',
-    )
-    }
-    it { is_expected.to contain_concat('/opt/apache-tomcat/test-tomcat/conf/catalina.properties').with(
-      'owner'  => 'tomcat',
-      'group'  => 'tomcat',
-    )
-    }
-    it { is_expected.to contain_concat__fragment('/opt/apache-tomcat/test-tomcat properties base file from catalina_home /opt/apache-tomcat/conf/catalina.properties').with(
-      'target' => '/opt/apache-tomcat/test-tomcat/conf/catalina.properties',
-      'source' => '/opt/apache-tomcat/conf/catalina.properties',
-    )
-    }
   end
   context "install from package" do
     let :facts do default_facts end
@@ -84,10 +74,7 @@ describe 'tomcat::instance', :type => :define do
         :package_name        => 'tomcat',
       }
     end
-    it { is_expected.to contain_package('tomcat').with(
-      'ensure' => 'installed',
-    )
-    }
+    it { is_expected.to contain_package('tomcat') }
     context "with additional package_options set" do
       let :params do
         {
@@ -98,7 +85,6 @@ describe 'tomcat::instance', :type => :define do
       end
       it {
         is_expected.to contain_package('tomcat').with(
-          'ensure'          => 'installed',
           'install_options' => [ '/S' ],
         )
       }
@@ -119,51 +105,5 @@ describe 'tomcat::instance', :type => :define do
     # currently supported in puppet-rspec, so just make sure it compiles
     it { is_expected.to compile }
     it { is_expected.to_not contain_file('/opt/apache-tomcat/foo') }
-  end
-  describe "test install failures" do
-    let :facts do default_facts end
-    context "no source specified" do
-      it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /\$source_url must be specified/)
-      end
-    end
-    context "no package specified" do
-      let :params do
-        {
-          :install_from_source => false
-        }
-      end
-      it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /\$package_name must be specified/)
-      end
-    end
-    context "bad install_from_source" do
-      let :params do
-        {
-          :install_from_source => 'foo'
-        }
-      end
-      it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /is not a boolean/)
-      end
-    end
-    context "bad source_strip_first_dir" do
-      let :params do
-        {
-          :source_strip_first_dir => 'foo'
-        }
-      end
-      it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /is not a boolean/)
-      end
-    end
   end
 end
