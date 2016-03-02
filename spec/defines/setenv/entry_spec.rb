@@ -97,7 +97,7 @@ describe 'tomcat::setenv::entry', :type => :define do
       {
         'param' => 'BAR',
         'value' => '/bin/true',
-        'order' => 10,
+        'order' => '10',
       }
     end
 
@@ -105,7 +105,7 @@ describe 'tomcat::setenv::entry', :type => :define do
     it { is_expected.to contain_concat__fragment('setenv-FOO').with_content(/export BAR=\/bin\/true/).with({
       'ensure' => 'present',
       'target' => '/opt/apache-tomcat/bin/setenv.sh',
-      'order'  => 10,
+      'order'  => '10',
     })
     }
   end

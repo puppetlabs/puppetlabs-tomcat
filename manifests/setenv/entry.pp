@@ -18,7 +18,7 @@ define tomcat::setenv::entry (
   $config_file   = undef,
   $param         = $name,
   $quote_char    = undef,
-  $order         = 10,
+  $order         = '10',
   $addto         = undef,
   # Deprecated
   $base_path     = undef,
