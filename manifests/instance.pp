@@ -116,6 +116,8 @@ define tomcat::instance (
         owner  => $_user,
         group  => $_group,
       }
+      # Ensure install finishes before creating instances from it.
+      Tomcat::Install <| tag == sha1($_catalina_home) |> -> File[$_catalina_base]
       $dir_list = [
         "${_catalina_base}/bin",
         "${_catalina_base}/conf",
