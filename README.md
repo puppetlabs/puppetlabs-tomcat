@@ -33,6 +33,7 @@
         * [tomcat::config::context](#tomcatconfigcontext)
         * [tomcat::config::context::resource](#tomcatconfigcontextresource)
         * [tomcat::config::context::resourcelink](#tomcatconfigcontextresourcelink)
+        * [tomcat::install](#tomcatinstall)
         * [tomcat::instance](#tomcatinstance)
         * [tomcat::service](#tomcatservice)
         * [tomcat::setenv::entry](#tomcatsetenventry)
@@ -58,144 +59,118 @@ The tomcat module requires [puppetlabs-stdlib](https://forge.puppetlabs.com/pupp
 puppet module upgrade puppetlabs-stdlib
 ~~~
 
-###Beginning with tomcat
+### Beginning with tomcat
 
-The simplest way to get Tomcat up and running with the tomcat module is to install the Tomcat package from EPEL...
-
-~~~
-class { 'tomcat':
-  install_from_source => false,
-}
-class { 'epel': }->
-tomcat::instance{ 'default':
-  package_name => 'tomcat',
-}->
-~~~
-
-...and then start the service:
-
-~~~
-tomcat::service { 'default':
-  use_jsvc     => false,
-  use_init     => true,
-  service_name => 'tomcat',
-}
-~~~
-
-##Usage
-
-###I want to install Tomcat from a specific source
-
-To download Tomcat from a specific source and then start the service:
-
-~~~
-class { 'tomcat': }
-class { 'java': }
-tomcat::instance { 'test':
-  source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
-}->
-tomcat::service { 'default': }
-~~~
-
-###I want to run multiple copies of Tomcat on a single node
+The simplest way to get Tomcat up and running with the tomcat module is to install the Tomcat source and start the service:
 
 ```puppet
-class { 'tomcat': }
+tomcat::install { '/opt/tomcat':
+  source_url => 'http://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.tar.gz',
+}
+tomcat::instance { 'default':
+  catalina_home => '/opt/tomcat',
+}
+```
+
+## Usage
+### I want to run multiple instances of multiple versions tomcat
+
+```puppet
 class { 'java': }
 
-tomcat::instance { 'tomcat8':
-  catalina_base => '/opt/apache-tomcat/tomcat8',
-  source_url    => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
-}->
-tomcat::service { 'default':
-  catalina_base => '/opt/apache-tomcat/tomcat8',
+tomcat::install { '/opt/tomcat8':
+  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.tar.gz'
+}
+tomcat::instance { 'tomcat8-first':
+  catalina_home => '/opt/tomcat8',
+  catalina_base => '/opt/tomcat8/first',
+}
+tomcat::instance { 'tomcat8-second':
+  catalina_home => '/opt/tomcat8',
+  catalina_base => '/opt/tomcat8/second',
+}
+# Change the default port of the second instance server and HTTP connector
+tomcat::config::server { 'tomcat8-second':
+  catalina_base => '/opt/tomcat8/second',
+  port          => '8006',
+}
+tomcat::config::server::connector { 'tomcat8-second-http':
+  catalina_base         => '/opt/tomcat8/second',
+  port                  => '8081',
+  protocol              => 'HTTP/1.1',
+  additional_attributes => {
+    'redirectPort' => '8443'
+  },
 }
 
+tomcat::install { '/opt/tomcat6':
+  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.45/bin/apache-tomcat-6.0.45.tar.gz',
+}
 tomcat::instance { 'tomcat6':
-  source_url    => 'http://apache.mirror.quintex.com/tomcat/tomcat-6/v6.0.41/bin/apache-tomcat-6.0.41.tar.gz',
-  catalina_base => '/opt/apache-tomcat/tomcat6',
-}->
+  catalina_home => '/opt/tomcat6',
+}
+# Change tomcat 6's server and HTTP/AJP connectors
 tomcat::config::server { 'tomcat6':
-  catalina_base => '/opt/apache-tomcat/tomcat6',
+  catalina_base => '/opt/tomcat6',
   port          => '8105',
-}->
+}
 tomcat::config::server::connector { 'tomcat6-http':
-  catalina_base         => '/opt/apache-tomcat/tomcat6',
+  catalina_base         => '/opt/tomcat6',
   port                  => '8180',
   protocol              => 'HTTP/1.1',
   additional_attributes => {
     'redirectPort' => '8543'
   },
-}->
+}
 tomcat::config::server::connector { 'tomcat6-ajp':
-  catalina_base         => '/opt/apache-tomcat/tomcat6',
+  catalina_base         => '/opt/tomcat6',
   port                  => '8109',
   protocol              => 'AJP/1.3',
   additional_attributes => {
     'redirectPort' => '8543'
   },
-}->
-tomcat::service { 'tomcat6':
-  catalina_base => '/opt/apache-tomcat/tomcat6'
 }
 ```
 
-###I want to deploy WAR files
+### I want to deploy WAR files
 
-~~~
+Add the following to any existing installation with your own war source:
+```puppet
 tomcat::war { 'sample.war':
-  catalina_base => '/opt/apache-tomcat/tomcat8',
-  war_source => '/opt/apache-tomcat/tomcat8/webapps/docs/appdev/sample/sample.war',
+  catalina_base => '/opt/tomcat8/first',
+  war_source    => '/opt/tomcat8/webapps/docs/appdev/sample/sample.war',
 }
-~~~
+```
 
 The name of the WAR file must end with '.war'.
 
 The `war_source` can be a local path or a `puppet:///`, `http://`, or `ftp://` URL.
 
-###I want to change my configuration
+### I want to remove some configuration
 
-Tomcat does not restart after you update its configuration, unless you supply a [`notify` metaparameter](https://docs.puppetlabs.com/learning/ordering.html#notify-and-subscribe).
+Different configuration defines will allow an ensure parameter to be passed, though the name may vary based on the define.
 
-To remove a connector, for instance, start with a manifest like this:
+To remove a connector, for instance, the following configuration ensure that it is absent:
 
-~~~
+```puppet
 tomcat::config::server::connector { 'tomcat8-jsvc':
-  catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
-  port                  => '80',
-  protocol              => 'HTTP/1.1',
-  additional_attributes => {
-    'redirectPort' => '443'
-  },
-  connector_ensure => 'present'
+  connector_ensure => 'absent',
+  catalina_base    => '/opt/tomcat8/first',
+  port             => '8080',
+  protocol         => 'HTTP/1.1',
 }
-~~~
+```
 
-Then set `connector_ensure` to 'absent' and set `notify` to the service resource:
-
-~~~
-tomcat::config::server::connector { 'tomcat8-jsvc':
-  catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
-  port                  => '80',
-  protocol              => 'HTTP/1.1',
-  additional_attributes => {
-    'redirectPort' => '443'
-  },
-  connector_ensure => 'absent'
-  notify => Tomcat::Service['jsvc-default'],
-}
-~~~
-
-###I want to manage a Connector or Realm that already exists
+### I want to manage a Connector or Realm that already exists
 
 Describe the Realm or HTTP Connector element using `tomcat::config::server::realm` or `tomcat::config::server::connector`, and set `purge_realms` or `purge_connectors` to 'true'.
 
-~~~
+```puppet
 tomcat::config::server::realm { 'org.apache.catalina.realm.LockOutRealm':
   realm_ensure => 'present',
   purge_realms => true,
 }
-~~~
+```
 
 Puppet removes any existing Connectors or Realms and leaves only the ones you've specified.
 
@@ -205,7 +180,7 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 
 ####Public Classes
 
-* `tomcat`: Main class. Manages the installation and configuration of Tomcat.
+* `tomcat`: Main class. Manages some of the defaults for installing and configuring Tomcat.
 
 ####Private Classes
 
@@ -230,16 +205,18 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::instance`: Installs a Tomcat instance.
+* `tomcat::install`: Installs a Tomcat instance.
+* `tomcat::instance`: Configures a Tomcat instance.
 * `tomcat::service`: Provides Tomcat service management.
 * `tomcat::setenv::entry`: Adds an entry to a Tomcat configuration file (e.g., `setenv.sh` or `/etc/sysconfig/tomcat`).
 * `tomcat::war`:  Manages the deployment of WAR files.
 
 ####Private Defines
 
-* `tomcat::instance::package`: Installs Tomcat from a package.
-* `tomcat::instance::source`: Installs Tomcat from source.
+* `tomcat::install::package`: Installs Tomcat from a package.
+* `tomcat::install::source`: Installs Tomcat from source.
 * `tomcat::instance::copy_from_home`: Copies required files from installation to instance
+* `tomcat::instance::dependencies`: Declares puppet dependency chain for an instance.
 * `tomcat::config::properties`: Creates instance catalina.properties
 
 ###Parameters
@@ -247,40 +224,42 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 All parameters are optional except where otherwise noted.
 
 ####tomcat
+The base class sets defaults used by other defined types, such as `tomcat::install` and `tomcat::instance`, such as a default `catalina_home`.
 
 #####`catalina_home`
 
-Specifies the root directory of the Tomcat installation. Valid options: a string containing an absolute path. Default: '/opt/apache-tomcat'.
+Specifies the default root directory of the Tomcat installation. Valid options: a string containing an absolute path. Default: '/opt/apache-tomcat'.
 
 #####`group`
 
-Specifies a group to run Tomcat as. Valid options: a string containing a valid group name. Default: 'tomcat'.
+Specifies a default group to run Tomcat as. Valid options: a string containing a valid group name. Default: 'tomcat'.
 
 #####`install_from_source`
 
-Specifies whether to install Tomcat from source. Valid options: 'true' and 'false'. Default: 'true'.
+Specifies whether to default to installing Tomcat from source. Valid options: 'true' and 'false'. Default: 'true'.
 
 #####`manage_group`
 
-Determines whether to create the specified group, if it doesn't exist. Uses Puppet's native [`group` resource type](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters. Valid options: 'true' and 'false'. Default: 'true'.
+Determines whether defines should default to creating the specified group, if it doesn't exist. Uses Puppet's native [`group` resource type](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters. Valid options: 'true' and 'false'. Default: 'true'.
 
 #####`manage_user`
 
-Determines whether to create the specified user, if it doesn't exist. Uses Puppet's native [`user` resource type](https://docs.puppetlabs.com/references/latest/type.html#user) with default parameters. Valid options: 'true' and 'false'. Default: 'true'.
+Determines whether defines should default to creating the specified user, if it doesn't exist. Uses Puppet's native [`user` resource type](https://docs.puppetlabs.com/references/latest/type.html#user) with default parameters. Valid options: 'true' and 'false'. Default: 'true'.
 
 #####`purge_connectors`
 
-Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.
+Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file by default. Valid options: 'true' and 'false'. Default: 'false'.
 
 #####`purge_realms`
 
-Specifies whether to purge any unmanaged realm elements from the configuration file. Valid options: 'true' and 'false'. Default: 'false'.  If two realms are defined for a specific server config only use purge_realms for the first realm and ensure the realms enforce a strict order between each other.
+Specifies whether to purge any unmanaged realm elements from the configuration file by default. Valid options: 'true' and 'false'. Default: 'false'.  If two realms are defined for a specific server config only use purge\_realms for the first realm and ensure the realms enforce a strict order between each other.
 
 #####`user`
 
-Specifies a user to run Tomcat as. Valid options: a string containing a valid username. Default: 'tomcat'.
+Specifies a default user to run Tomcat as. Valid options: a string containing a valid username. Default: 'tomcat'.
 
 #### tomcat::config::properties::property
+Specifies an additional entry for the catalina.properties file a given catalina base.
 
 ##### `property`
 
@@ -291,7 +270,6 @@ The name of the property. Default: `$name`
 The catalina base of the catalina.properties file. The resource will manage the values in `${catalina_base}/conf/catalina.properties` . Required.
 
 ##### `value`
-
 The value of the property. Required.
 
 ####tomcat::config::server
@@ -695,12 +673,14 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 Specifies whether the Valve should exist in the configuration file. Maps to the  [Valve XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Introduction). Valid options: 'true', 'false', 'present', and 'absent'. Default: 'present'.
 
 #### tomcat::config::context
+Specifies a configuration Context element in `${catalina_base}/conf/context.xml` for other `tomcat::config::context::*` defines.
 
 ##### `catalina_base`
 
 Specifies the root of the Tomcat installation.
 
 #### tomcat::config::context::resource
+Specifies Resource elements in `${catalina_base}/conf/context.xml`
 
 ##### `ensure`
 
@@ -727,6 +707,7 @@ Specifies any additional attributes to add to the Valve. Should be a hash of the
 Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
 #### tomcat::config::context::resourcelink
+Specifies a ResourceLink element in the designated xml configuration.
 
 ##### `ensure`
 
@@ -752,49 +733,91 @@ Specifies any additional attributes to add to the Valve. Should be a hash of the
 
 Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
-####tomcat::instance
+#### tomcat::install
+Installs the software into the given directory from a source Apache Tomcat tarball. Alternatively, it may be used to install a tomcat package.
 
-#####`catalina_base`
+Tomcat instances may then be created from the install using `tomcat::instance` and pointing `tomcat::instance::catalina_home` to the directory managed by `tomcat::install`.
 
-Specifies the base directory of the Tomcat installation. Only affects the instance installation if `install_from_source` is set to 'true'. Valid options: a string containing an absolute path. Default: $::tomcat::catalina_home.
+##### `catalina_home`
+specifies the directory of the Tomcat installation from which the instance should be created. Valid options: a string containing an absolute path. Default: $::tomcat::catalina_home.
 
-#####`catalina_home`
+##### `install_from_source`
+Specifies whether to install from source or from a package. If set to `true` installation uses the `source_url`, `source_strip_first_dir`, `user`, `group`, `manage_user`, and `manage_group` parameters. If set to `false` installation uses the `package_ensure`, `package_name`, and `package_options` parameters.
 
-Specifies the root directory of the Tomcat installation. Only affects the instance installation if `install_from_source` is set to 'true'. Valid options: a string containing an absolute path. Default: $::tomcat::catalina_home.
+Valid options: `true` and `false`. Default: `true`.
 
-#####`install_from_source`
+##### `source_url`
+In single-instance mode: *Required if `install_from_source` is set to `true`.* Specifies the source URL to install from.
 
-Specifies whether to install from source. If set to 'false', installation is driven by the `package_ensure` and `package_name` parameters. Valid options: 'true' and 'false'. Default: 'true'.
+Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 
-#####`package_ensure`
-
-Determines whether the specified package should be installed. Only valid if `install_from_source` is set to 'false'. Maps to the `ensure` parameter of Puppet's native [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package). Valid options: 'true', 'false', 'present', and 'absent'. Default: 'present'.
-
-#####`package_name`
-
-*Required if `install_from_source` is set to 'false'.* Specifies the package to install. Valid options: a string containing a valid package name.
-
-#####`package_options`
-
-*Unused if `install_from_source` is set to 'true'.* Specify additional options to use on the generated package resource. See the documentation of the [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package-attribute-install_options) for possible values.
-
-#####`source_strip_first_dir`
-
-Specifies whether to strip the topmost directory of the tarball when unpacking it. Only valid if `install_from_source` is set to 'true'. Valid options: 'true' and 'false'. Default: 'true'.
-
-#####`source_url`
-
-*Required if `install_from_source` is set to 'true'.* Specifies the source URL to install from. Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
+##### `source_strip_first_dir`
+Specifies whether to strip the topmost directory of the tarball when unpacking it. Only valid if `install_from_source` is set to `true`. Valid options: `true` and `false`. Default: `true`.
 
 ##### `user`
-
-The owner of the tomcat home and base. Default: `$tomcat::user`
+Specifies the owner of the source installation directory. Default: `$::tomcat::user`
 
 ##### `group`
+Specifies the group of the source installation directory. Default: `$::tomcat::group`
 
-The group of the tomcat home and base. Default: `$tomcat::user`
+##### `manage_user`
+Specifies whether the user should be managed by this module or not. Default: `$::tomcat::manage_user`
 
-####tomcat::service
+##### `manage_group`
+Specifies whether the group should be managed by this module or not. Default: `$::tomcat::manage_group`
+
+##### `package_ensure`
+Determines whether the specified package should be installed. Only valid if `install_from_source` is set to `false`. Maps to the `ensure` parameter of Puppet's native [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package). Default: 'present'.
+
+##### `package_name`
+*Required if `install_from_source` is set to `false`.* Specifies the package to install. Valid options: a string containing a valid package name.
+
+##### `package_options`
+*Unused if `install_from_source` is set to `true`.* Specify additional options to use on the generated package resource. See the documentation of the [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package-attribute-install_options) for possible values.
+
+#### tomcat::instance
+Declares a tomcat instance.
+
+There are two different modes of use: a single tomcat installation and instance (called "single-instance" by this readme), or a single tomcat installation   with multiple instances, each with its own directory structure (called "multi-instance" by this readme).
+
+- single-instance: If a `tomcat::instance` is declared with `catalina_home` and `catalina_base` both pointing to the directory of a `tomcat::install` then it only configures a single instance.
+- multi-instance: If a `tomcat::instance` is declared with `catalina_home` pointing to the same directory as a `tomcat::install` and `catalina_base` pointing at a different directory then it is configured as an instance of the Apache Tomcat software. Multiple instances of a single install may be created using this method.
+
+##### `catalina_base`
+Specifies the `$CATALINA_BASE` of the Tomcat instance where logs, configuration files, and the 'webapps' directory are managed. For single-instance installs, this is the same as the `catalina_home` parameter
+
+Valid options: a string containing an absolute path. Default: `$catalina_home`
+
+##### `catalina_home`
+Specifies the directory where the Apache Tomcat software is installed by a `tomcat::install` resource.
+
+Valid options: a string containing an absolute path. Default: `$::tomcat::catalina_home`
+
+##### `user`
+Specifies the owner of the instance directories and files. Default: `$::tomcat::user`
+
+##### `group`
+Specifies the group of the instance directories and files. Default: `$::tomcat::group`
+
+##### `manage_user`
+Specifies whether the user should be managed by this module or not. Default: `$::tomcat::manage_user`
+
+##### `manage_group`
+Specifies whether the group should be managed by this module or not. Default: `$::tomcat::manage_group`
+
+##### `manage_service`
+Specifies whether a `tomcat::service` corresponding to this instance should be declared. Defaults to true for multi-instance installs and false for single-instance installs.
+
+##### `java_home`
+Specifies the java home to be used when declaring a `tomcat::service` instance. See [tomcat::service](#tomcatservice)
+
+##### `use_jsvc`
+Specifies whether jsvc should be used when declaring a `tomcat::service` instance. Note that this module will not compile and install jsvc for you. See [tomcat::service](#tomcatservice)
+
+##### `use_init`
+Specifies whether an init script should be managed when declaring a `tomcat::service` instance. See [tomcat::service](#tomcatservice)
+
+#### tomcat::service
 
 #####`catalina_base`
 
@@ -828,21 +851,21 @@ Designates a command to start the service. Valid options: a string. Default: det
 
 Designates a command to stop the service. Valid options: a string. Default: determined by the values of `use_init` and `use_jsvc`.
 
-#####`use_init`
+##### `use_init`
 
 Specifies whether to use a package-provided init script for service management. Note that the tomcat module does not supply an init script. If both `use_jsvc` and `use_init` are set to 'false', tomcat uses the following commands for service management:
 
- * `$CATALINA_BASE/bin/catalina.sh start`
- * `$CATALINA_BASE/bin/catalina.sh stop`
+ * `$CATALINA_HOME/bin/catalina.sh start`
+ * `$CATALINA_HOME/bin/catalina.sh stop`
 
 Valid options: 'true' and 'false'. Default: 'false'.
 
-#####`use_jsvc`
+##### `use_jsvc`
 
 Specifies whether to use Jsvc for service management. If both `use_jsvc` and `use_init` are set to 'false', tomcat uses the following commands for service management:
 
- * `$CATALINA_BASE/bin/catalina.sh start`
- * `$CATALINA_BASE/bin/catalina.sh stop`
+ * `$CATALINA_HOME/bin/catalina.sh start`
+ * `$CATALINA_HOME/bin/catalina.sh stop`
 
 Valid options: 'true' and 'false'. Default: 'false'.
 
