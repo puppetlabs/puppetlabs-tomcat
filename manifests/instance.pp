@@ -34,7 +34,7 @@ define tomcat::instance (
   $use_jsvc               = undef,
   $use_init               = undef,
 
-  #used for single installs
+  #used for single installs. Deprecated?
   $install_from_source    = undef,
   $source_url             = undef,
   $source_strip_first_dir = undef,
@@ -94,8 +94,7 @@ define tomcat::instance (
       package_name           => $package_name,
       package_options        => $package_options,
     }
-    # XXX The user always has to declare the service
-    $_manage_service = false
+    $_manage_service = pick($manage_service, false)
   } else {
     if $_catalina_home != $_catalina_base {
       if $_manage_user {
@@ -152,8 +151,8 @@ define tomcat::instance (
         user          => $_user,
         group         => $_group,
       }
-      $_manage_service = pick($manage_service, true)
     }
+    $_manage_service = pick($manage_service, true)
   }
   if $_manage_service {
     tomcat::service { $name:
