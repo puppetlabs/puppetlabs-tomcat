@@ -164,9 +164,18 @@ do_start()
 
 do_status()
 {
-  [ ! -f "$CATALINA_PID" ] && exit 3
-  [ "$(pgrep --list-name --pidfile "$CATALINA_PID")" != "$(cat $CATALINA_PID) jsvc" ] && exit 1
-  exit 0
+  if [ -f $CATALINA_PID ];then
+        ps -p `cat $CATALINA_PID` >/dev/null 2>&1
+        if [[ "$?" == "0" ]];then
+            echo "tomcat alive (pid `cat $CATALINA_PID`)..."
+            exit 0
+        else
+            echo "pidfile exists but tomcat dead"
+            exit 1
+        fi
+    fi
+    echo "tomcat is stopped"
+    exit 1
 }
 
 do_stop()
