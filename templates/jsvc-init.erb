@@ -15,6 +15,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#
+# tomcat      This shell script takes care of starting and stopping Tomcat
+#
+# chkconfig: - 80 20
+#
+
+### BEGIN INIT INFO
+# Provides: tomcat
+# Required-Start: $network $syslog
+# Required-Stop: $network $syslog
+# Default-Start:
+# Default-Stop:
+# Description: Release implementation for Servlet 3.0 and JSP 2.2
+# Short-Description: start and stop tomcat
+### END INIT INFO
+
 # Make sure only root is running this script
 if [ "$(id -u)" != "0" ]; then
   echo "This script must be run as root" 1>&2
@@ -148,9 +164,18 @@ do_start()
 
 do_status()
 {
-  [ ! -f "$CATALINA_PID" ] && exit 3
-  [ "$(pgrep --list-name --pidfile "$CATALINA_PID")" != "$(cat $CATALINA_PID) jsvc" ] && exit 1
-  exit 0
+  if [ -f $CATALINA_PID ];then
+        ps -p `cat $CATALINA_PID` >/dev/null 2>&1
+        if [[ "$?" == "0" ]];then
+            echo "tomcat alive (pid `cat $CATALINA_PID`)..."
+            exit 0
+        else
+            echo "pidfile exists but tomcat dead"
+            exit 1
+        fi
+    fi
+    echo "tomcat is stopped"
+    exit 1
 }
 
 do_stop()
