@@ -4,6 +4,8 @@
 # $CATALINA_BASE/conf/server.xml
 #
 # Parameters:
+# - $service_name is the name of the Service to be created.
+#   Defaults to `$name`.
 # - $catalina_base is the root of the Tomcat installation.
 # - $class_name is the optional className attribute
 # - $class_name_ensure specifies whether you are trying to set or remove the
@@ -13,6 +15,7 @@
 #   service element. Valid values are 'true', 'false', 'present', or 'absent'.
 #   Defaults to 'present'.
 define tomcat::config::server::service (
+  $service_name      = $name,
   $catalina_base     = undef,
   $class_name        = undef,
   $class_name_ensure = 'present',
@@ -27,6 +30,7 @@ define tomcat::config::server::service (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
+  validate_string($service_name)
   validate_re($service_ensure, '^(present|absent|true|false)$')
   validate_re($class_name_ensure, '^(present|absent|true|false)$')
 
@@ -37,21 +41,21 @@ define tomcat::config::server::service (
   }
 
   if $service_ensure =~ /^(absent|false)$/ {
-    $changes = "rm Server/Service[#attribute/name='${name}']"
+    $changes = "rm Server/Service[#attribute/name='${service_name}']"
   } else {
     if $class_name_ensure =~ /^(absent|false)$/ {
-      $_class_name = "rm Server/Service[#attribute/name='${name}']/#attribute/className"
+      $_class_name = "rm Server/Service[#attribute/name='${service_name}']/#attribute/className"
     } elsif $class_name {
-      $_class_name = "set Server/Service[#attribute/name='${name}']/#attribute/className ${class_name}"
+      $_class_name = "set Server/Service[#attribute/name='${service_name}']/#attribute/className ${class_name}"
     } else {
       $_class_name = undef
     }
-    $_service = "set Server/Service[#attribute/name='${name}']/#attribute/name ${name}"
+    $_service = "set Server/Service[#attribute/name='${service_name}']/#attribute/name ${service_name}"
     $changes = delete_undef_values([$_service, $_class_name])
   }
 
   if ! empty($changes) {
-    augeas { "server-${_catalina_base}-service-${name}":
+    augeas { "server-${_catalina_base}-service-${service_name}":
       lens    => 'Xml.lns',
       incl    => $_server_config,
       changes => $changes,

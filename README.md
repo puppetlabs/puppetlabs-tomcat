@@ -584,6 +584,10 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 
 ####tomcat::config::server::service
 
+#####`service_name`
+
+Specifies the name of the Service to be created. Tomcats default service name is `Catalina`. Defaults to `$name`.
+
 #####`catalina_base`
 
 Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path. Default: $::tomcat::catalina_home.
