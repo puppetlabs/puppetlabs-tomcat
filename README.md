@@ -586,7 +586,7 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 
 #####`service_name`
 
-Specifies the name of the Service to be created. Tomcats default service name is `Catalina`. Defaults to `$name`.
+Specifies the name of the Service to be created. Tomcats default service name is 'Catalina'. Defaults to '$name'.
 
 #####`catalina_base`
 
@@ -598,7 +598,7 @@ Specifies the Java class name of a server implementation to use. Maps to the [cl
 
 #####`class_name_ensure`
 
-Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes) should exist in the configuration file. Valid options: 'true', 'false', 'present', and 'absent'. Default: 'present'.
+Specifies whether the optional [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes) should exist in the configuration file. Valid options: 'true', 'false', 'present', and 'absent'. Default: 'absent'.
 
 #####`server_config`
 

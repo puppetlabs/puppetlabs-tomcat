@@ -10,7 +10,7 @@
 # - $class_name is the optional className attribute
 # - $class_name_ensure specifies whether you are trying to set or remove the
 #   className attribute. Valid values are 'true', 'false', 'present', or
-#   'absent'. Defaults to 'present'.
+#   'absent'. Defaults to 'absent'.
 # - $service_ensure specifies whether you are trying to add or remove the
 #   service element. Valid values are 'true', 'false', 'present', or 'absent'.
 #   Defaults to 'present'.
@@ -18,7 +18,7 @@ define tomcat::config::server::service (
   $service_name      = $name,
   $catalina_base     = undef,
   $class_name        = undef,
-  $class_name_ensure = 'present',
+  $class_name_ensure = 'absent',
   $service_ensure    = 'present',
   $server_config     = undef,
 ) {
@@ -43,12 +43,13 @@ define tomcat::config::server::service (
   if $service_ensure =~ /^(absent|false)$/ {
     $changes = "rm Server/Service[#attribute/name='${service_name}']"
   } else {
-    if $class_name_ensure =~ /^(absent|false)$/ {
-      $_class_name = "rm Server/Service[#attribute/name='${service_name}']/#attribute/className"
-    } elsif $class_name {
+    if $class_name_ensure =~ /^(present|true)$/ {
+      if empty($class_name) {
+        fail('$class_name must be specified when $class_name_ensure is set to true or present')
+      }
       $_class_name = "set Server/Service[#attribute/name='${service_name}']/#attribute/className ${class_name}"
     } else {
-      $_class_name = undef
+      $_class_name = "rm Server/Service[#attribute/name='${service_name}']/#attribute/className"
     }
     $_service = "set Server/Service[#attribute/name='${service_name}']/#attribute/name ${service_name}"
     $changes = delete_undef_values([$_service, $_class_name])

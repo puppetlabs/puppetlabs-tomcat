@@ -107,6 +107,7 @@ describe 'tomcat::config::server::service', :type => :define do
       'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
         'set Server/Service[#attribute/name=\'Catalina\']/#attribute/name Catalina',
+        'rm Server/Service[#attribute/name=\'Catalina\']/#attribute/className',
       ]
     ) }
   end
@@ -133,6 +134,18 @@ describe 'tomcat::config::server::service', :type => :define do
         expect {
           catalogue
         }.to raise_error(Puppet::Error, /does not match/)
+      end
+    end
+    context 'no class_name when class_name_ensure specified' do
+      let :params do
+        {
+          :class_name_ensure => 'present'
+        }
+      end
+      it do
+        expect {
+          catalogue
+        }.to raise_error(Puppet::Error, /must be specified/)
       end
     end
     context 'old augeas' do
