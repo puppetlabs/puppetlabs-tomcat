@@ -1,5 +1,51 @@
+## Supported Release 1.5.0
+### Summary
+General rewrite of the installation and instance management code, and better
+service management. Plus a handful of new configuration defined types and actual
+resource dependency ordering.
+
+The primary improvement is that you may now use `tomcat::install` for installing
+various versions of tomcat into various directories (`CATALINA_HOME`), then use
+`tomcat::instance` to create instances from those installs (`CATALINA_BASE`).
+Previously `tomcat::instance` treated both `CATALINA_HOME` and `CATALINA_BASE` as identical and thus only allowed a single tomcat instance per tomcat installation.
+
+Additionally, `tomcat::service` allows `use_init => true, use_jsvc => true` to
+create an init script for service management of source-based installs. And
+`tomcat::instance` can declare a `tomcat::service` resource for your instance to
+make life easier.
+
+#### Features
+- Added `tomcat::config::properties::property` define
+- Added `tomcat::config::server::globalnamingresource` define
+- Added `tomcat::config::context` define
+- Added `tomcat::config::context::resource` define
+- Added `tomcat::config::context::resourcelink` define
+- Added `tomcat::install` define
+- Added `tomcat::config::server::host::aliases` parameter
+- Added `tomcat::service::user` parameter
+- Added `tomcat::setenv::entry` parameters:
+  - `catalina_home`
+  - `addto`
+- Added `tomcat::instance` parameters for multi-instance management:
+  - `user`
+  - `group`
+  - `manage_user`
+  - `manage_group`
+  - `manage_service`
+  - `java_home`
+  - `use_jsvc`
+  - `use_init`
+- Added Debian 8 compatibility
+
+#### Bugfixes
+- Fixed conflating `CATALINA_BASE` with `CATALINA_HOME`
+- Made `tomcat::config::server::connector` protocol default to `$name`
+- Lots of additional validation
+- Added resource dependency declaration (so no more `<-` `->` needed)
+- Undeprecated `tomcat::setenv::entry::order` parameter
+
 ## Supported Release 1.4.1
-###Summary
+### Summary
 
 Small release for bug with multiple Realms in the same parent path.
 
