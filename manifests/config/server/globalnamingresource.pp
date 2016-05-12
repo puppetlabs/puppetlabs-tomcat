@@ -53,6 +53,13 @@ define tomcat::config::server::globalnamingresource (
     ]))
   }
 
+  augeas { "server-${catalina_base}-globalresource-${name}-definition":
+    lens    => 'Xml.lns',
+    incl    => $_server_config,
+    changes => "set ${base_path}/#attribute/name '${name}'",
+    before  => Augeas["server-${catalina_base}-globalresource-${name}"],
+  }
+
   augeas { "server-${catalina_base}-globalresource-${name}":
     lens    => 'Xml.lns',
     incl    => $_server_config,
