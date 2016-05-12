@@ -31,6 +31,7 @@
         * [tomcat::config::server::tomcat_users](#tomcatconfigservertomcat_users)
         * [tomcat::config::server::valve](#tomcatconfigservervalve)
         * [tomcat::config::context](#tomcatconfigcontext)
+        * [tomcat::config::context::environment](#tomcatconfigcontextenvironment)
         * [tomcat::config::context::resource](#tomcatconfigcontextresource)
         * [tomcat::config::context::resourcelink](#tomcatconfigcontextresourcelink)
         * [tomcat::install](#tomcatinstall)
@@ -204,6 +205,7 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::manager`: Configures a [Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::install`: Installs a Tomcat instance.
@@ -674,6 +676,7 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 Specifies whether the Valve should exist in the configuration file. Maps to the  [Valve XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Introduction). Valid options: 'true', 'false', 'present', and 'absent'. Default: 'present'.
 
 #### tomcat::config::context
+
 Specifies a configuration Context element in `${catalina_base}/conf/context.xml` for other `tomcat::config::context::*` defines.
 
 ##### `catalina_base`
@@ -703,6 +706,46 @@ Specifies any additional attributes to add to the Manager. Should be a hash of t
 
 Specifies any attributes to remove from the Manager. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
+#### tomcat::config::context::environment
+
+Specifies Environment elements in `${catalina_base}/conf/context.xml`
+
+##### `ensure`
+
+Specifies whether you are trying to add or remove the Environment element. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'
+
+##### `environment_name`
+
+The name of the Environment Entry to be created, relative to the java:comp/env context. Default: `$name`
+
+##### `type`
+
+The fully qualified Java class name expected by the web application for this environment entry. Required to create the environment entry.
+
+##### `value`
+
+The value that will be presented to the application when requested from the JNDI context. Required to create the environment entry.
+
+##### `description`
+
+The description is an an optional string for a human-readable description of this environment entry.
+
+##### `override`
+
+An optional string or boolean to specify if you do not want an <env-entry> for the same environment entry name to override the value specified here (set it to `false`).
+By default, overrides are allowed.
+
+##### `catalina_base`
+
+Specifies the root of the Tomcat installation. Default: `$tomcat::catalina_home`
+
+##### `additional_attributes`
+
+Specifies any additional attributes to add to the Environment. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+##### `attributes_to_remove`
+
+Specifies any attributes to remove from the Environment. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
 #### tomcat::config::context::resource
 Specifies Resource elements in `${catalina_base}/conf/context.xml`
