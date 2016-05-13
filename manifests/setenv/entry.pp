@@ -9,6 +9,8 @@
 # - $param is the parameter you're setting. Defaults to $name.
 # - $quote_char is the optional character to quote the value with.
 # - $order is the optional order to the param in the file. Defaults to 10
+# - $user is the owner of the tomcat home and base. Default: $tomcat::user
+# - $group is the group of the tomcat home and base. Default: $tomcat::group
 # - (Deprecated) $base_path is the path to create the setenv.sh script under. Should be
 #   either $catalina_base/bin or $catalina_home/bin.
 define tomcat::setenv::entry (
@@ -20,10 +22,14 @@ define tomcat::setenv::entry (
   $quote_char    = undef,
   $order         = '10',
   $addto         = undef,
+  $user          = undef,
+  $group        = undef,
   # Deprecated
   $base_path     = undef,
 ) {
   include tomcat
+  $_user = pick($user, $::tomcat::user)
+  $_group = pick($group, $::tomcat::group)
   $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
   $home_sha = sha1($_catalina_home)
   tag($home_sha)
@@ -49,8 +55,8 @@ define tomcat::setenv::entry (
 
   if ! defined(Concat[$_config_file]) {
     concat { $_config_file:
-      owner          => $::tomcat::user,
-      group          => $::tomcat::group,
+      owner          => $_user,
+      group          => $_group,
       ensure_newline => true,
     }
   }
