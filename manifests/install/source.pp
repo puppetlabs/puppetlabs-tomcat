@@ -21,6 +21,9 @@ define tomcat::install::source (
   tag(sha1($catalina_home))
   include staging
 
+  $_user = pick($user, $::tomcat::user)
+  $_group = pick($group, $::tomcat::group)
+
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
@@ -32,13 +35,13 @@ define tomcat::install::source (
   $filename = regsubst($source_url, '.*/(.*)', '\1')
 
   if $manage_user {
-    ensure_resource('user', $user, {
+    ensure_resource('user', $_user, {
       ensure => present,
       gid    => $group,
     })
   }
   if $manage_group {
-    ensure_resource('group', $group, {
+    ensure_resource('group', $_group, {
       ensure => present,
     })
   }
@@ -57,8 +60,8 @@ define tomcat::install::source (
     target  => $catalina_home,
     require => Staging::File[$filename],
     unless  => "test \"\$(ls -A ${catalina_home})\"",
-    user    => $::tomcat::user,
-    group   => $::tomcat::group,
+    user    => $_user,
+    group   => $_group,
     strip   => $_strip,
   }
 }
