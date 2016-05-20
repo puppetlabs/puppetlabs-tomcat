@@ -57,8 +57,8 @@ define tomcat::install::source (
     target  => $catalina_home,
     require => Staging::File[$filename],
     unless  => "test \"\$(ls -A ${catalina_home})\"",
-    user    => $::tomcat::user,
-    group   => $::tomcat::group,
+    user    => $user,
+    group   => $group,
     strip   => $_strip,
   }
 }
