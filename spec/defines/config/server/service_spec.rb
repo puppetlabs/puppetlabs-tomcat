@@ -21,16 +21,33 @@ describe 'tomcat::config::server::service', :type => :define do
         :class_name_ensure => 'true',
         :server_config     => '/opt/apache-tomcat/server.xml',
       }
-      it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
-        'changes' => [
-          'set Server/Service[#attribute/name=\'Catalina\']/#attribute/name Catalina',
-          'set Server/Service[#attribute/name=\'Catalina\']/#attribute/className foo',
-        ]
-      )
+    end
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina\']/#attribute/name Catalina',
+        'set Server/Service[#attribute/name=\'Catalina\']/#attribute/className foo',
+      ]
+    ) }
+  end
+  context 'set specific service_name' do
+    let :params do
+      {
+        :service_name      => 'Foobar',
+        :catalina_base     => '/opt/apache-tomcat/test',
+        :class_name_ensure => 'false',
+        :server_config     => '/opt/apache-tomcat/server.xml',
       }
     end
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Foobar').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Foobar\']/#attribute/name Foobar',
+        'rm Server/Service[#attribute/name=\'Foobar\']/#attribute/className',
+      ]
+    ) }
   end
   context 'remove classname' do
     let :params do
@@ -38,16 +55,15 @@ describe 'tomcat::config::server::service', :type => :define do
         :catalina_base     => '/opt/apache-tomcat/test',
         :class_name_ensure => 'false',
       }
-      it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
-        'changes' => [
-          'set Server/Service[#attribute/name=\'Catalina\']/#attribute/name Catalina',
-          'rm Server/Service[#attribute/name=\'Catalina\']/#attribute/className',
-        ]
-      )
-      }
     end
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina\']/#attribute/name Catalina',
+        'rm Server/Service[#attribute/name=\'Catalina\']/#attribute/className',
+      ]
+    ) }
   end
   context 'remove service' do
     let :params do
@@ -55,23 +71,45 @@ describe 'tomcat::config::server::service', :type => :define do
         :catalina_base  => '/opt/apache-tomcat/test',
         :service_ensure => 'false',
       }
-      it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
-        'changes' => [
-          'rm Server/Service[#attribute/name=\'Catalina\']',
-        ]
-      )
+    end
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'rm Server/Service[#attribute/name=\'Catalina\']',
+      ]
+    ) }
+  end
+  context 'remove service with specific service_name' do
+    let :params do
+      {
+        :service_name   => 'Foobar',
+        :catalina_base  => '/opt/apache-tomcat/test',
+        :service_ensure => 'false',
       }
     end
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Foobar').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'rm Server/Service[#attribute/name=\'Foobar\']',
+      ]
+    ) }
   end
   context 'no changes' do
     let :params do
       {
         :catalina_base  => '/opt/apache-tomcat/test',
       }
-      it { is_expected.to_not contain_augeas('server-/opt/apache-tomcat/test-service-Catalina') }
     end
+    it { is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
+      'lens'    => 'Xml.lns',
+      'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        'set Server/Service[#attribute/name=\'Catalina\']/#attribute/name Catalina',
+        'rm Server/Service[#attribute/name=\'Catalina\']/#attribute/className',
+      ]
+    ) }
   end
   describe 'failing tests' do
     context 'bad service_ensure' do
@@ -96,6 +134,18 @@ describe 'tomcat::config::server::service', :type => :define do
         expect {
           catalogue
         }.to raise_error(Puppet::Error, /does not match/)
+      end
+    end
+    context 'no class_name when class_name_ensure specified' do
+      let :params do
+        {
+          :class_name_ensure => 'present'
+        }
+      end
+      it do
+        expect {
+          catalogue
+        }.to raise_error(Puppet::Error, /must be specified/)
       end
     end
     context 'old augeas' do
