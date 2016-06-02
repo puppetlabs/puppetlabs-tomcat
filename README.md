@@ -204,6 +204,7 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::config::server::tomcat_users`: Configures user and role elements for [UserDatabaseRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#UserDatabaseRealm) or [MemoryRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#MemoryRealm) in `$CATALINA_BASE/conf/tomcat-users.xml` or any other specified file.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::manager`: Configures a [Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in $CATALINA_BASE/conf/context.xml.
@@ -681,6 +682,29 @@ Specifies a configuration Context element in `${catalina_base}/conf/context.xml`
 ##### `catalina_base`
 
 Specifies the root of the Tomcat installation.
+
+#### tomcat::config::context::manager
+Specifies a Manager element in the designated xml configuration.
+
+##### `ensure`
+
+specifies whether you are trying to add or remove the Manager element. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'
+
+##### `catalina_base`
+
+Specifies the root of the Tomcat installation. Default: `$tomcat::catalina_home`
+
+##### `manager_classname`
+
+The name of the Manager to be created. Default: `$name`
+
+##### `additional_attributes`
+
+Specifies any additional attributes to add to the Manager. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+##### `attributes_to_remove`
+
+Specifies any attributes to remove from the Manager. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
 
 #### tomcat::config::context::environment
 
