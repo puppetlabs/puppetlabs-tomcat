@@ -951,6 +951,10 @@ Specifies a character to include before and after the specified value. Valid opt
 
 *Required.* Provides the value(s) of the managed parameter. Valid options: a string or an array. If passing an array, separate values with a single space.
 
+#####`doexport`
+
+Specifies if you want to append export to the entry. Valid Options: true or false Default: (true).
+
 ####tomcat::war
 
 #####`app_base`
