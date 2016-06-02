@@ -9,6 +9,7 @@
 # - $param is the parameter you're setting. Defaults to $name.
 # - $quote_char is the optional character to quote the value with.
 # - $order is the optional order to the param in the file. Defaults to 10
+# - $doexport is the optional prefix befor the variable.
 # - (Deprecated) $base_path is the path to create the setenv.sh script under. Should be
 #   either $catalina_base/bin or $catalina_home/bin.
 define tomcat::setenv::entry (
@@ -20,6 +21,7 @@ define tomcat::setenv::entry (
   $quote_char    = undef,
   $order         = '10',
   $addto         = undef,
+  $doexport      = true,
   # Deprecated
   $base_path     = undef,
 ) {
@@ -54,11 +56,17 @@ define tomcat::setenv::entry (
       ensure_newline => true,
     }
   }
-
-  if $addto {
-    $_content = inline_template('export <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %> ; export <%= @addto %>="$<%= @addto %> $<%= @param %>"')
+  
+  if $doexport {
+    $_doexport = 'export'
   } else {
-    $_content = inline_template('export <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %>')
+    $_doexport = undef
+  }
+  
+  if $addto {
+    $_content = inline_template('<%= @_doexport %> <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %> ; <%= @_doexport %> <%= @addto %>="$<%= @addto %> $<%= @param %>"')
+  } else {
+    $_content = inline_template('<%= @_doexport %> <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %>')
   }
   concat::fragment { "setenv-${name}":
     ensure  => $ensure,
