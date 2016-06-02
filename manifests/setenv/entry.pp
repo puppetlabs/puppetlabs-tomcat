@@ -60,7 +60,7 @@ define tomcat::setenv::entry (
   if $doexport {
     $_doexport = 'export'
   } else {
-    $_doexport = undef
+    $_doexport = ''
   }
   
   if $addto {
