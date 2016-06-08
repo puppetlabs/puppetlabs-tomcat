@@ -28,6 +28,7 @@ describe 'tomcat::config::server::valve', :type => :define do
         :class_name            => 'foo',
         :parent_host           => 'localhost',
         :parent_service        => 'Catalina2',
+        :parent_context        => '/var/www/foo',
         :server_config         => '/opt/apache-tomcat/server.xml',
         :additional_attributes => {
           'suffix'    => '.txt',
@@ -41,12 +42,12 @@ describe 'tomcat::config::server::valve', :type => :define do
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
-        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/className foo',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/suffix \'.txt\'',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/directory \'logs\'',
-        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/spaces \'foo bar\'',
-        'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/foo',
-        'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Valve[#attribute/className=\'foo\']/#attribute/bar',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/className foo',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/suffix \'.txt\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/directory \'logs\'',
+        'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/spaces \'foo bar\'',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/foo',
+        'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/bar',
       ]
     )
     }

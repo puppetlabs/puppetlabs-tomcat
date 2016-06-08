@@ -8,6 +8,9 @@
 # - $parent_host is the Host element this Valve should be nested beneath. If not
 #   specified, the Valve will be nested beneath the Engine under
 #   $parent_service.
+# - $parent_context is the Context element this Valve should be nested beneath 
+#   under the host element. If not specified, the Valve will be nested beneath
+#   the parent host
 # - $parent_service is the Service element this Valve should be nested beneath.
 #   Defaults to 'Catalina'.
 # - $valve_ensure specifies whether you are trying to add or remove the Vavle
@@ -21,6 +24,7 @@ define tomcat::config::server::valve (
   $class_name            = undef,
   $parent_host           = undef,
   $parent_service        = 'Catalina',
+  $parent_context        = undef,
   $valve_ensure          = 'present',
   $additional_attributes = {},
   $attributes_to_remove  = [],
@@ -44,7 +48,11 @@ define tomcat::config::server::valve (
   }
 
   if $parent_host {
-    $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Host[#attribute/name='${parent_host}']/Valve[#attribute/className='${_class_name}']"
+    if $parent_context {
+      $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Host[#attribute/name='${parent_host}']/Context[#attribute/docBase='${parent_context}']/Valve[#attribute/className='${_class_name}']"
+    } else {
+      $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Host[#attribute/name='${parent_host}']/Valve[#attribute/className='${_class_name}']"
+    }
   } else {
     $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Valve[#attribute/className='${_class_name}']"
   }
