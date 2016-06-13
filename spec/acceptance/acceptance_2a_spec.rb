@@ -213,11 +213,3 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
   end
 
 end
-
-
-
-
-
-
-
-

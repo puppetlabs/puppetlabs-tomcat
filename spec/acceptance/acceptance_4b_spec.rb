@@ -13,7 +13,7 @@ confine_array = [
 stop_test = false
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || confine_array.any?
 
-describe 'Use two realms within a configuration', :unless => stop_test do
+describe 'Use two realms within a configuration', docker: true, :unless => stop_test do
   after :all do
     shell('pkill -f tomcat', :acceptable_exit_codes => [0,1])
     shell('rm -rf /opt/tomcat*', :acceptable_exit_codes => [0,1])

@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
 
-describe 'Two different installations with two instances each of Tomcat 6 in the same manifest', :unless => stop_test do
+describe 'Two different installations with two instances each of Tomcat 6 in the same manifest', docker: true, :unless => stop_test do
   after :all do
     shell('pkill -f tomcat', :acceptable_exit_codes => [0,1])
     shell('rm -rf /opt/tomcat*', :acceptable_exit_codes => [0,1])
