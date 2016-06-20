@@ -13,7 +13,6 @@
 #   either $catalina_base/bin or $catalina_home/bin.
 define tomcat::setenv::entry (
   $value,
-  $ensure        = 'present',
   $catalina_home = undef,
   $config_file   = undef,
   $param         = $name,
@@ -61,7 +60,6 @@ define tomcat::setenv::entry (
     $_content = inline_template('export <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %>')
   }
   concat::fragment { "setenv-${name}":
-    ensure  => $ensure,
     target  => $_config_file,
     content => $_content,
     order   => $order,
