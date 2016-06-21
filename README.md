@@ -66,7 +66,7 @@ The simplest way to get Tomcat up and running with the tomcat module is to insta
 
 ```puppet
 tomcat::install { '/opt/tomcat':
-  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.69/bin/apache-tomcat-7.0.69.tar.gz',
+  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.70/bin/apache-tomcat-7.0.70.tar.gz',
 }
 tomcat::instance { 'default':
   catalina_home => '/opt/tomcat',
@@ -80,7 +80,7 @@ tomcat::instance { 'default':
 class { 'java': }
 
 tomcat::install { '/opt/tomcat8':
-  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.33/bin/apache-tomcat-8.0.33.tar.gz'
+  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz'
 }
 tomcat::instance { 'tomcat8-first':
   catalina_home => '/opt/tomcat8',
