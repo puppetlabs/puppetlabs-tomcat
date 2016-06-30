@@ -77,7 +77,7 @@ define tomcat::config::server::context (
   } else {
     $path = "Server/Service[#attribute/name='${_parent_service}']/Engine/Host/Context[#attribute/docBase='${_doc_base}']"
   }
-  
+
   if $context_ensure =~ /^(absent|false)$/ {
     $augeaschanges = "rm ${path}"
   } else {

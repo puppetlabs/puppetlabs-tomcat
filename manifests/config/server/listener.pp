@@ -33,11 +33,11 @@ define tomcat::config::server::listener (
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
-  
+
   validate_re($listener_ensure, '^(present|absent|true|false)$')
   validate_hash($additional_attributes)
   validate_array($attributes_to_remove)
-  
+
   if $parent_service and ! ($parent_host or $parent_engine) {
     warning('listener elements cannot be nested directly under service elements, ignoring $parent_service')
   }
@@ -53,7 +53,7 @@ define tomcat::config::server::listener (
   } else {
     $_class_name = $name
   }
-  
+
   if $parent_engine and ! $parent_host {
     $path = "Server/Service[#attribute/name='${_parent_service}']/Engine[#attribute/name='${parent_engine}']/Listener[#attribute/className='${_class_name}']"
   } elsif $parent_engine and $parent_host {
