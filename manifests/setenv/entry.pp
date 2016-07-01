@@ -56,13 +56,13 @@ define tomcat::setenv::entry (
       ensure_newline => true,
     }
   }
-  
+
   if $doexport {
     $_doexport = 'export'
   } else {
     $_doexport = ''
   }
-  
+
   if $addto {
     $_content = inline_template('<%= @_doexport %> <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %> ; <%= @_doexport %> <%= @addto %>="$<%= @addto %> $<%= @param %>"')
   } else {
