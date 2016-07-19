@@ -639,7 +639,7 @@ Specifies a password for user elements. Valid options: a string. Default: undef.
 
 #####`roles`
 
-Specifies one or more roles. Only valid if `element` is set to 'role'. Valid options: an array of strings. Default: [].
+Specifies one or more roles. Only valid if `element` is set to 'role' or 'user'. Valid options: an array of strings. Default: [].
 
 ####tomcat::config::server::valve
 
