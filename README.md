@@ -629,9 +629,17 @@ Determines whether the specified XML element should exist in the configuration f
 
 Specifies the configuration file to manage. Valid options: a string containing a fully-qualified path. Default: '$CATALINA_BASE/conf/tomcat-users.xml'.
 
+#####`group`
+
+Specifies the group of the configuration file. Default: `$::tomcat::group`
+
 #####`manage_file`
 
 Specifies whether to create the specified configuration file if it doesn't exist. Uses Puppet's native [`file` resource type](https://docs.puppetlabs.com/references/latest/type.html#file) with default parameters. Valid options: 'true' and 'false'. Default: 'true'.
+
+#####`owner`
+
+Specifies the owner of the configuration file. Default: `$::tomcat::user`
 
 #####`password`
 
