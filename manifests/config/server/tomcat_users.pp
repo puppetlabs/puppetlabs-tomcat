@@ -16,6 +16,8 @@
 #   Defaults to $CATALINA_BASE/conf/tomcat-users.xml.
 # - Set $manage_file to true for managing the file. It sets file permission,
 #   owner, group and create a basic tomcat-users XML if file does not exist yet.
+# - $owner specifies the owner of the file if $manage_file is true. Default: $tomcat::user
+# - $group specifies the group of the file if $manage_file is true. Default: $tomcat::group
 # - $password specifies the password for a user ($element = 'user').
 # - $roles specifies the roles for a user ($element = 'user').
 #
@@ -26,6 +28,8 @@ define tomcat::config::server::tomcat_users (
   $ensure        = present,
   $file          = undef,
   $manage_file   = true,
+  $owner         = undef,
+  $group         = undef,
   $password      = undef,
   $roles         = [],
 ) {
@@ -33,6 +37,9 @@ define tomcat::config::server::tomcat_users (
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
+
+  $_owner = pick($owner, $::tomcat::user)
+  $_group = pick($group, $::tomcat::group)
 
   validate_re($element, '^(user|role)$')
   validate_re($ensure, '^(present|absent|true|false)$')
@@ -67,8 +74,8 @@ define tomcat::config::server::tomcat_users (
       path    => $_file,
       replace => false,
       content => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>',
-      owner   => $::tomcat::user,
-      group   => $::tomcat::group,
+      owner   => $_owner,
+      group   => $_group,
       mode    => '0640',
     })
   }
