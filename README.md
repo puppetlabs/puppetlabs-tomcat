@@ -675,6 +675,10 @@ Specifies which virtual host the Valve should nest under. Valid options: a strin
 
 Specifies which Service element the Valve should nest under. Valid options: a string containing the name of a Service element. Default: 'Catalina'.
 
+#####`parent_context`
+
+Specifies which Context element the Valve should nest under. Valid options: a string containing the name of a Context element (matching the docbase attribute). Default: If you don't specify a context, the Valve element nests under either the Parent Host if defined or the Engine of your specified parent Service.
+
 #####`server_config`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path. Default: '${catalina_base}/config/server.xml'.
