@@ -17,6 +17,7 @@ define tomcat::install::source (
   $group,
   $manage_user,
   $manage_group,
+  $manage_catalina_home,
 ) {
   tag(sha1($catalina_home))
   include staging
@@ -42,10 +43,13 @@ define tomcat::install::source (
       ensure => present,
     })
   }
-  file { $catalina_home:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
+
+  if $manage_catalina_home {
+    ensure_resource('file', $catalina_home, {
+      ensure => directory,
+      owner  => $user,
+      group  => $group,
+    })
   }
 
   ensure_resource('staging::file',$filename, {
@@ -56,7 +60,7 @@ define tomcat::install::source (
     source  => "${::staging::path}/tomcat/${filename}",
     target  => $catalina_home,
     require => Staging::File[$filename],
-    unless  => "test \"\$(ls -A ${catalina_home})\"",
+    unless  => "test -f ${catalina_home}/NOTICE",
     user    => $user,
     group   => $group,
     strip   => $_strip,

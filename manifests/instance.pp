@@ -30,6 +30,7 @@ define tomcat::instance (
   $manage_user            = undef,
   $manage_group           = undef,
   $manage_service         = undef,
+  $manage_catalina_home   = undef,
   $java_home              = undef,
   $use_jsvc               = undef,
   $use_init               = undef,
@@ -51,6 +52,7 @@ define tomcat::instance (
   $_group = pick($group, $::tomcat::group)
   $_manage_user = pick($manage_user, $::tomcat::manage_user)
   $_manage_group = pick($manage_group, $::tomcat::manage_group)
+  $_manage_catalina_home = pick($manage_catalina_home, $::tomcat::manage_catalina_home)
 
   if $source_url and $install_from_source == undef {
     # XXX Backwards compatibility mode enabled; install_from_source used to default
@@ -72,7 +74,7 @@ define tomcat::instance (
     # class created this directory for source installs, even though it may never
     # be used. Users may have created source installs under this directory, so
     # it must exist. tomcat::install::source will take care of creating base.
-    if $_catalina_base != $_catalina_home {
+    if $_catalina_base != $_catalina_home and ! $manage_catalina_home {
       ensure_resource('file',$_catalina_home, {
         ensure => directory,
         owner  => $_user,
@@ -90,6 +92,7 @@ define tomcat::instance (
       group                  => $_group,
       manage_user            => $_manage_user,
       manage_group           => $_manage_group,
+      manage_catalina_home   => $_manage_catalina_home,
       package_ensure         => $package_ensure,
       package_name           => $package_name,
       package_options        => $package_options,
