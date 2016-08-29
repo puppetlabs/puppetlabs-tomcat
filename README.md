@@ -249,6 +249,10 @@ Determines whether defines should default to creating the specified group, if it
 
 Determines whether defines should default to creating the specified user, if it doesn't exist. Uses Puppet's native [`user` resource type](https://docs.puppetlabs.com/references/latest/type.html#user) with default parameters. Valid options: 'true' and 'false'. Default: 'true'.
 
+#####`manage_catalina_home`
+
+Determines whether defines should default to creating the specified catalina_home directory, if it doesn't exist.  Valid options: 'true' and 'false'. Default: 'true'.  Note that catalina_home directory permissions must allow the tomcat user to read and write to the directory.
+
 #####`purge_connectors`
 
 Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file by default. Valid options: 'true' and 'false'. Default: 'false'.
@@ -822,7 +826,7 @@ Tomcat instances may then be created from the install using `tomcat::instance` a
 specifies the directory of the Tomcat installation from which the instance should be created. Valid options: a string containing an absolute path. Default: $::tomcat::catalina_home.
 
 ##### `install_from_source`
-Specifies whether to install from source or from a package. If set to `true` installation uses the `source_url`, `source_strip_first_dir`, `user`, `group`, `manage_user`, and `manage_group` parameters. If set to `false` installation uses the `package_ensure`, `package_name`, and `package_options` parameters.
+Specifies whether to install from source or from a package. If set to `true` installation uses the `source_url`, `source_strip_first_dir`, `user`, `group`, `manage_user`, `manage_group` and `manage_catalina_home` parameters. If set to `false` installation uses the `package_ensure`, `package_name`, and `package_options` parameters.
 
 Valid options: `true` and `false`. Default: `true`.
 
@@ -845,6 +849,9 @@ Specifies whether the user should be managed by this module or not. Default: `$:
 
 ##### `manage_group`
 Specifies whether the group should be managed by this module or not. Default: `$::tomcat::manage_group`
+
+##### `manage_catalina_home`
+Specifies whether the catalina_home directory should be managed by this module or not. Default: `$::tomcat::manage_catalina_home`
 
 ##### `package_ensure`
 Determines whether the specified package should be installed. Only valid if `install_from_source` is set to `false`. Maps to the `ensure` parameter of Puppet's native [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package). Default: 'present'.

@@ -10,6 +10,7 @@ define tomcat::install (
   $group                  = undef,
   $manage_user            = undef,
   $manage_group           = undef,
+  $manage_catalina_home   = undef,
 
   # package options
   $package_ensure         = undef,
@@ -22,6 +23,7 @@ define tomcat::install (
   $_group = pick($group, $::tomcat::group)
   $_manage_user = pick($manage_user, $::tomcat::manage_user)
   $_manage_group = pick($manage_group, $::tomcat::manage_group)
+  $_manage_catalina_home = pick($manage_catalina_home, $::tomcat::manage_catalina_home)
   validate_bool($_install_from_source, $source_strip_first_dir)
   tag(sha1($catalina_home))
 
@@ -34,6 +36,7 @@ define tomcat::install (
       group                  => $_group,
       manage_user            => $_manage_user,
       manage_group           => $_manage_group,
+      manage_catalina_home   => $_manage_catalina_home,
     }
   } else {
     tomcat::install::package { $package_name:

@@ -58,6 +58,20 @@ describe 'tomcat', :type => :class do
     end
   end
 
+  context "not managing catalina_home" do
+    let :facts do
+      {
+        :osfamily => 'Debian'
+      }
+    end
+    let :params do
+      {
+        :manage_catalina_home => false
+      }
+    end
+    it { is_expected.not_to contain_file("/usr/local/tomcat") }
+  end
+
   context "on windows" do
     let :facts do
       {
