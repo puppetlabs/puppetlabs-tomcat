@@ -42,6 +42,9 @@ UNSUPPORTED_PLATFORMS = ['windows','Solaris','Darwin']
 
 
 RSpec.configure do |c|
+  c.filter_run :focus => true
+  c.run_all_when_everything_filtered = true
+
   # Project root
   proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
@@ -58,6 +61,9 @@ RSpec.configure do |c|
       on host, puppet('module','install','puppetlabs-java'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-gcc'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppet-staging'), { :acceptable_exit_codes => [0,1] }
+      if fact('osfamily') == 'RedHat'
+        on host, 'yum install -y nss'
+      end
     end
   end
 end

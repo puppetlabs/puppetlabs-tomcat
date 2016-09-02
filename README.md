@@ -861,7 +861,7 @@ Declares a tomcat instance.
 There are two different modes of use: a single tomcat installation and instance (called "single-instance" by this readme), or a single tomcat installation   with multiple instances, each with its own directory structure (called "multi-instance" by this readme).
 
 - single-instance: If a `tomcat::instance` is declared with `catalina_home` and `catalina_base` both pointing to the directory of a `tomcat::install` then it only configures a single instance.
-- multi-instance: If a `tomcat::instance` is declared with `catalina_home` pointing to the same directory as a `tomcat::install` and `catalina_base` pointing at a different directory then it is configured as an instance of the Apache Tomcat software. Multiple instances of a single install may be created using this method.
+- multi-instance: If a `tomcat::instance` is declared with `catalina_home` pointing to the same directory as a `tomcat::install` and `catalina_base` pointing at a different directory then it is configured as an instance of the Apache Tomcat software. Multiple instances of a single install may be created using this method. A `tomcat::install` declaration should use a user and/or group such that `tomcat::instance` declarations can access the install.
 
 ##### `catalina_base`
 Specifies the `$CATALINA_BASE` of the Tomcat instance where logs, configuration files, and the 'webapps' directory are managed. For single-instance installs, this is the same as the `catalina_home` parameter
@@ -967,6 +967,9 @@ Specifies the configuration file to edit. Valid options: a string containing an 
 
 Determines whether the fragment should exist in the configuration file. Valid options: 'present', 'absent'. Default: 'present'.
 
+##### `group`
+Specifies the group of the config file. Default: `$::tomcat::group`
+
 #####`order`
 
 Determines the ordering of your parameters in the configuration file (parameters with lower `order` values appear first.) Valid options: an integer or a string containing an integer. Default: '10'.
@@ -982,6 +985,9 @@ Specifies a parameter to manage. Valid options: a string. Default: the '[name]' 
 #####`quote_char`
 
 Specifies a character to include before and after the specified value. Valid options: a string (usually a single or double quote). Default: (blank).
+
+##### `user`
+Specifies the owner of the config file. Default: `$::tomcat::user`
 
 #####`value`
 

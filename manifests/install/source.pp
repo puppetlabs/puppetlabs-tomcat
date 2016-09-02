@@ -15,8 +15,6 @@ define tomcat::install::source (
   $source_strip_first_dir,
   $user,
   $group,
-  $manage_user,
-  $manage_group,
 ) {
   tag(sha1($catalina_home))
   include staging
@@ -31,17 +29,6 @@ define tomcat::install::source (
 
   $filename = regsubst($source_url, '.*/(.*)', '\1')
 
-  if $manage_user {
-    ensure_resource('user', $user, {
-      ensure => present,
-      gid    => $group,
-    })
-  }
-  if $manage_group {
-    ensure_resource('group', $group, {
-      ensure => present,
-    })
-  }
   file { $catalina_home:
     ensure => directory,
     owner  => $user,

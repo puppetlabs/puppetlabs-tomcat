@@ -26,14 +26,23 @@ define tomcat::install (
   tag(sha1($catalina_home))
 
   if $_install_from_source {
+    if $_manage_user {
+      ensure_resource('user', $_user, {
+        ensure => present,
+        gid    => $_group,
+      })
+    }
+    if $_manage_group {
+      ensure_resource('group', $_group, {
+        ensure => present,
+      })
+    }
     tomcat::install::source { $name:
       catalina_home          => $catalina_home,
       source_url             => $source_url,
       source_strip_first_dir => $source_strip_first_dir,
       user                   => $_user,
       group                  => $_group,
-      manage_user            => $_manage_user,
-      manage_group           => $_manage_group,
     }
   } else {
     tomcat::install::package { $package_name:

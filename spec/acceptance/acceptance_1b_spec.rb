@@ -62,6 +62,8 @@ describe 'Acceptance case one', docker: true, :unless => stop_test do
 
       # The default
       tomcat::install { '/opt/apache-tomcat':
+        user       => 'tomcat8',
+        group      => 'tomcat8',
         source_url => '#{TOMCAT8_RECENT_SOURCE}',
       }
       -> class { 'jsvc': } ->
@@ -94,6 +96,8 @@ describe 'Acceptance case one', docker: true, :unless => stop_test do
         war_source    => '#{SAMPLE_WAR}',
       }
       tomcat::setenv::entry { 'JAVA_HOME':
+        user  => 'tomcat8',
+        group => 'tomcat8',
         value => $java_home,
       }
       EOS
