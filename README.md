@@ -967,6 +967,9 @@ Specifies the configuration file to edit. Valid options: a string containing an 
 
 Determines whether the fragment should exist in the configuration file. Valid options: 'present', 'absent'. Default: 'present'.
 
+##### `group`
+Specifies the group of the config file. Default: `$::tomcat::group`
+
 #####`order`
 
 Determines the ordering of your parameters in the configuration file (parameters with lower `order` values appear first.) Valid options: an integer or a string containing an integer. Default: '10'.
@@ -982,6 +985,9 @@ Specifies a parameter to manage. Valid options: a string. Default: the '[name]' 
 #####`quote_char`
 
 Specifies a character to include before and after the specified value. Valid options: a string (usually a single or double quote). Default: (blank).
+
+##### `user`
+Specifies the owner of the config file. Default: `$::tomcat::user`
 
 #####`value`
 

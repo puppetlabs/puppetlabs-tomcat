@@ -22,10 +22,14 @@ define tomcat::setenv::entry (
   $order         = '10',
   $addto         = undef,
   $doexport      = true,
+  $user          = undef,
+  $group         = undef,
   # Deprecated
   $base_path     = undef,
 ) {
   include tomcat
+  $_user = pick($user, $::tomcat::user)
+  $_group = pick($group, $::tomcat::group)
   $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
   $home_sha = sha1($_catalina_home)
   tag($home_sha)
@@ -51,8 +55,8 @@ define tomcat::setenv::entry (
 
   if ! defined(Concat[$_config_file]) {
     concat { $_config_file:
-      owner          => $::tomcat::user,
-      group          => $::tomcat::group,
+      owner          => $_user,
+      group          => $_group,
       ensure_newline => true,
     }
   }
