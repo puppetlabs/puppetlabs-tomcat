@@ -48,7 +48,7 @@ describe 'README examples', :unless => stop_test do
       class { 'java': }
 
       tomcat::install { '/opt/tomcat8':
-        source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz'
+        source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.37/bin/apache-tomcat-8.0.37.tar.gz'
       }
       tomcat::instance { 'tomcat8-first':
         catalina_home => '/opt/tomcat8',

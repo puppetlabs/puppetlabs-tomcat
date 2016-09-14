@@ -27,10 +27,14 @@ describe 'Acceptance case one', :unless => stop_test do
       class{'java':}
       class{'gcc':}
 
-      $java_home = $::osfamily ? {
-        'RedHat' => '/etc/alternatives/java_sdk',
-        'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
-        default  => undef
+      if $::operatingsystemmajrelease == '16.04' {
+        $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
+      } else {
+        $java_home = $::osfamily ? {
+          'RedHat' => '/etc/alternatives/java_sdk',
+          'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
+          default  => undef
+        }
       }
 
       tomcat::instance { 'tomcat_one':
@@ -131,10 +135,14 @@ describe 'Acceptance case one', :unless => stop_test do
       pp = <<-EOS
       class{ 'tomcat':}
 
-      $java_home = $::osfamily ? {
-        'RedHat' => '/etc/alternatives/java_sdk',
-        'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
-        default  => undef
+      if $::operatingsystemmajrelease == '16.04' {
+        $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
+      } else {
+        $java_home = $::osfamily ? {
+          'RedHat' => '/etc/alternatives/java_sdk',
+          'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
+          default  => undef
+        }
       }
 
       tomcat::service{ 'jsvc-default':
@@ -185,10 +193,14 @@ describe 'Acceptance case one', :unless => stop_test do
       pp = <<-EOS
       class{ 'tomcat':}
 
-      $java_home = $::osfamily ? {
-        'RedHat' => '/etc/alternatives/java_sdk',
-        'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
-        default  => undef
+      if $::operatingsystemmajrelease == '16.04' {
+        $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
+      } else {
+        $java_home = $::osfamily ? {
+          'RedHat' => '/etc/alternatives/java_sdk',
+          'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
+          default  => undef
+        }
       }
 
       tomcat::config::server::connector { 'tomcat8-jsvc':
