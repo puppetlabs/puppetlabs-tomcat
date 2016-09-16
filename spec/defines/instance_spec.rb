@@ -106,4 +106,73 @@ describe 'tomcat::instance', :type => :define do
     it { is_expected.to compile }
     it { is_expected.to_not contain_file('/opt/apache-tomcat/foo') }
   end
+  context "install from source, unmanaged home" do
+    let :pre_condition do
+      'tomcat::install { "tomcat6":
+        catalina_home => "/opt/apache-tomcat",
+        manage_home   => false,
+        source_url    => "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz",
+      }'
+    end
+    let :facts do default_facts end
+    let :params do
+      {
+        catalina_home: '/opt/apache-tomcat',
+        catalina_base: '/opt/apache-tomcat/foo',
+      }
+    end
+    it { is_expected.not_to contain_file('/opt/apache-tomcat') }
+    it { is_expected.to contain_file('/opt/apache-tomcat/foo') }
+  end
+  context "install from source, unmanaged base" do
+    let :pre_condition do
+      'tomcat::install { "tomcat6":
+        catalina_home => "/opt/apache-tomcat",
+        source_url    => "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz",
+      }'
+    end
+    let :facts do default_facts end
+    let :params do
+      {
+        catalina_home: '/opt/apache-tomcat',
+        catalina_base: '/opt/apache-tomcat/foo',
+        manage_base: false,
+      }
+    end
+    it { is_expected.to contain_file('/opt/apache-tomcat') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
+  end
+  context "install from source, unmanaged home and base" do
+    let :pre_condition do
+      'tomcat::install { "tomcat6":
+        catalina_home => "/opt/apache-tomcat",
+        manage_home   => false,
+        source_url    => "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz",
+      }'
+    end
+    let :facts do default_facts end
+    let :params do
+      {
+        catalina_home: '/opt/apache-tomcat',
+        catalina_base: '/opt/apache-tomcat/foo',
+        manage_base: false,
+      }
+    end
+    it { is_expected.not_to contain_file('/opt/apache-tomcat') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
+  end
+  context "legacy install from source, unmanaged home/base" do
+    let :pre_condition do
+      'class { "tomcat": }'
+    end
+    let :facts do default_facts end
+    let :params do
+      {
+        catalina_base: '/opt/apache-tomcat/foo',
+        manage_base: false,
+      }
+    end
+    it { is_expected.not_to contain_file('/opt/apache-tomcat') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
+  end
 end

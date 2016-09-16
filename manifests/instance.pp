@@ -30,6 +30,7 @@ define tomcat::instance (
   $manage_user            = undef,
   $manage_group           = undef,
   $manage_service         = undef,
+  $manage_base            = undef,
   $java_home              = undef,
   $use_jsvc               = undef,
   $use_init               = undef,
@@ -51,6 +52,7 @@ define tomcat::instance (
   $_group = pick($group, $::tomcat::group)
   $_manage_user = pick($manage_user, $::tomcat::manage_user)
   $_manage_group = pick($manage_group, $::tomcat::manage_group)
+  $_manage_base = pick($manage_base, $::tomcat::manage_base)
 
   if $source_url and $install_from_source == undef {
     # XXX Backwards compatibility mode enabled; install_from_source used to default
@@ -72,7 +74,7 @@ define tomcat::instance (
     # class created this directory for source installs, even though it may never
     # be used. Users may have created source installs under this directory, so
     # it must exist. tomcat::install::source will take care of creating base.
-    if $_catalina_base != $_catalina_home {
+    if $_catalina_base != $_catalina_home and $_manage_base {
       ensure_resource('file',$_catalina_home, {
         ensure => directory,
         owner  => $_user,
@@ -90,6 +92,7 @@ define tomcat::instance (
       group                  => $_group,
       manage_user            => $_manage_user,
       manage_group           => $_manage_group,
+      manage_home            => $_manage_base,
       package_ensure         => $package_ensure,
       package_name           => $package_name,
       package_options        => $package_options,
@@ -109,15 +112,14 @@ define tomcat::instance (
         })
       }
 
-      # Configure additional instances in custom catalina_base
-      file { $_catalina_base:
-        ensure => directory,
-        owner  => $_user,
-        group  => $_group,
+      if $_manage_base {
+        # Configure additional instances in custom catalina_base
+        file { $_catalina_base:
+          ensure => directory,
+          owner  => $_user,
+          group  => $_group,
+        }
       }
-      # Ensure install finishes before creating instances from it.
-      $home_sha = sha1($_catalina_home)
-      Tomcat::Install <| tag == $home_sha |> -> File[$_catalina_base]
       $dir_list = [
         "${_catalina_base}/bin",
         "${_catalina_base}/conf",
@@ -127,6 +129,9 @@ define tomcat::instance (
         "${_catalina_base}/webapps",
         "${_catalina_base}/work",
       ]
+      # Ensure install finishes before creating instances from it.
+      $home_sha = sha1($_catalina_home)
+      Tomcat::Install <| tag == $home_sha |> -> File[$dir_list]
       file { $dir_list:
         ensure => directory,
         owner  => $_user,

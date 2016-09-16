@@ -34,12 +34,16 @@ class tomcat (
   $purge_realms        = false,
   $manage_user         = true,
   $manage_group        = true,
+  $manage_home         = true,
+  $manage_base         = true,
 ) inherits ::tomcat::params {
   validate_bool($install_from_source)
   validate_bool($purge_connectors)
   validate_bool($purge_realms)
   validate_bool($manage_user)
   validate_bool($manage_group)
+  validate_bool($manage_home)
+  validate_bool($manage_base)
 
   case $::osfamily {
     'windows','Solaris','Darwin': {
