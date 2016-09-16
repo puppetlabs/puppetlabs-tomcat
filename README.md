@@ -249,6 +249,12 @@ Determines whether defines should default to creating the specified group, if it
 
 Determines whether defines should default to creating the specified user, if it doesn't exist. Uses Puppet's native [`user` resource type](https://docs.puppetlabs.com/references/latest/type.html#user) with default parameters. Valid options: 'true' and 'false'. Default: 'true'.
 
+##### `manage_base`
+Specifies the default value of `manage_base` for all `tomcat::install` instances. Default: `true`
+
+##### `manage_home`
+Specifies the default value of `manage_home` for all `tomcat::instance` instances. Default: `true`
+
 #####`purge_connectors`
 
 Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file by default. Valid options: 'true' and 'false'. Default: 'false'.
@@ -846,6 +852,9 @@ Specifies whether the user should be managed by this module or not. Default: `$:
 ##### `manage_group`
 Specifies whether the group should be managed by this module or not. Default: `$::tomcat::manage_group`
 
+##### `manage_home`
+Specifies whether the directory of catalina\_home should be managed by puppet. This may not be preferable in network filesystem environments. Default: `true`
+
 ##### `package_ensure`
 Determines whether the specified package should be installed. Only valid if `install_from_source` is set to `false`. Maps to the `ensure` parameter of Puppet's native [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package). Default: 'present'.
 
@@ -884,6 +893,9 @@ Specifies whether the user should be managed by this module or not. Default: `$:
 
 ##### `manage_group`
 Specifies whether the group should be managed by this module or not. Default: `$::tomcat::manage_group`
+
+##### `manage_base`
+Specifies whether the directory of catalina\_base should be managed by puppet. This may not be preferable in network filesystem environments. Default: `true`
 
 ##### `manage_service`
 Specifies whether a `tomcat::service` corresponding to this instance should be declared. Defaults to true for multi-instance installs and false for single-instance installs.
