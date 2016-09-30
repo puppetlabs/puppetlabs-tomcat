@@ -32,6 +32,7 @@
         * [tomcat::config::server::valve](#tomcatconfigservervalve)
         * [tomcat::config::context](#tomcatconfigcontext)
         * [tomcat::config::context::environment](#tomcatconfigcontextenvironment)
+        * [tomcat::config::context::manager](#tomcatconfigcontextmanager)
         * [tomcat::config::context::resource](#tomcatconfigcontextresource)
         * [tomcat::config::context::resourcelink](#tomcatconfigcontextresourcelink)
         * [tomcat::install](#tomcatinstall)

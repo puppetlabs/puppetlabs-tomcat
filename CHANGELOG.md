@@ -1,3 +1,24 @@
+## Supported Release 1.6.0
+### Summary
+This release adds two new defines for managing environment variables and manager elements, enhances multi-instance multi-user support, allows valves to be nested in contexts, fixes an issue with installing directly to NFS mounted directories, fixes installation on systems with a strict root umask,
+
+#### Features
+- Add `tomcat::config::context::environment` define
+- Add `tomcat::config::context::manager` define
+- Add `owner` and `group` to `tomcat::config::server::tomcat_users`
+- Add `parent_context` to `tomcat::config::server::valve`
+- Add `manage_home` and `manage_base` to `tomcat` class
+- Add `manage_home` to `tomcat::install`
+- Add `manage_base` to `tomcat::instance`
+- Add `doexport` (MODULES-3436), `user`, and `group` to `tomcat::setenv::entry`
+- Change from `nanliu/staging` to `puppet/staging`
+- Allow `role` to be set for user elements in `tomcat::config::server::tomcat_users`
+
+#### Bugfixes
+- Fix globalresource missing (MODULES-3353)
+- Fix strict vars for `tomcat::config::server::service` (MODULES-3742)
+- Work around duplicate user resources (PUP-5971)
+
 ## Supported Release 1.5.0
 ### Summary
 General rewrite of the installation and instance management code, and better
