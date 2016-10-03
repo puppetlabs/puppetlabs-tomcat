@@ -17,7 +17,7 @@
 define tomcat::config::server::globalnamingresource (
   $catalina_base         = $::tomcat::catalina_home,
   $resource_name         = undef,
-  $type                  = "Resource",
+  $type                  = 'Resource',
   $ensure                = 'present',
   $additional_attributes = {},
   $attributes_to_remove  = [],
@@ -37,7 +37,7 @@ define tomcat::config::server::globalnamingresource (
     $_resource_name = $name
   }
 
-  $base_path = "Server/GlobalNamingResources/$type[#attribute/name='$_resource_name']"
+  $base_path = "Server/GlobalNamingResources/${type}[#attribute/name='${_resource_name}']"
 
   if $server_config {
     $_server_config = $server_config
@@ -68,7 +68,7 @@ define tomcat::config::server::globalnamingresource (
   augeas { "server-${catalina_base}-globalresource-${name}-definition":
     lens    => 'Xml.lns',
     incl    => $_server_config,
-    changes => "set ${base_path}/#attribute/name '$_resource_name'",
+    changes => "set ${base_path}/#attribute/name '${_resource_name}'",
     before  => Augeas["server-${catalina_base}-globalresource-${name}"],
   }
 
