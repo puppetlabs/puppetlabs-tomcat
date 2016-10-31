@@ -9,6 +9,7 @@
 #   the first directory when unpacking the source tarball. Defaults to true
 #   when installing from source on non-Solaris systems. Requires puppet/staging
 #   > 0.4.0
+# - $environment is variables for settings such as http_proxy, https_proxy, or ftp_proxy
 define tomcat::install::source (
   $catalina_home,
   $manage_home,
@@ -16,6 +17,7 @@ define tomcat::install::source (
   $source_strip_first_dir,
   $user,
   $group,
+  $environment = undef,
 ) {
   tag(sha1($catalina_home))
   include ::staging
@@ -39,7 +41,8 @@ define tomcat::install::source (
   }
 
   ensure_resource('staging::file',$filename, {
-    'source' => $source_url,
+    'source'      => $source_url,
+    'environment' => $environment,
   })
 
   # FM-5578 workaround for strict umodes
@@ -53,12 +56,13 @@ define tomcat::install::source (
   })
 
   staging::extract { "${name}-${filename}":
-    source  => "${::staging::path}/tomcat/${filename}",
-    target  => $catalina_home,
-    require => Staging::File[$filename],
-    unless  => "test -f ${catalina_home}/NOTICE",
-    user    => $user,
-    group   => $group,
-    strip   => $_strip,
+    source      => "${::staging::path}/tomcat/${filename}",
+    target      => $catalina_home,
+    require     => Staging::File[$filename],
+    unless      => "test -f ${catalina_home}/NOTICE",
+    user        => $user,
+    group       => $group,
+    environment => $environment,
+    strip       => $_strip,
   }
 }

@@ -841,6 +841,11 @@ Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 ##### `source_strip_first_dir`
 Specifies whether to strip the topmost directory of the tarball when unpacking it. Only valid if `install_from_source` is set to `true`. Valid options: `true` and `false`. Default: `true`.
 
+##### `environment`
+Environment variables for settings such as http_proxy, https_proxy, or ftp_proxy. These are passed through to the staging
+module and then to the underlying exec(s), so it follows the same format of the exec type `environment`
+https://docs.puppet.com/puppet/latest/reference/type.html#exec-attribute-environment
+
 ##### `user`
 Specifies the owner of the source installation directory. Default: `$::tomcat::user`
 
