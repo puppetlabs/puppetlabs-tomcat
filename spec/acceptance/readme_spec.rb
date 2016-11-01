@@ -73,7 +73,7 @@ describe 'README examples', :unless => stop_test do
       }
 
       tomcat::install { '/opt/tomcat6':
-        source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.45/bin/apache-tomcat-6.0.45.tar.gz',
+        source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.47/bin/apache-tomcat-6.0.47.tar.gz',
       }
       tomcat::instance { 'tomcat6':
         catalina_home => '/opt/tomcat6',
