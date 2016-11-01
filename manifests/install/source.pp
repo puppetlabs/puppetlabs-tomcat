@@ -18,7 +18,7 @@ define tomcat::install::source (
   $group,
 ) {
   tag(sha1($catalina_home))
-  include staging
+  include ::staging
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
@@ -39,7 +39,17 @@ define tomcat::install::source (
   }
 
   ensure_resource('staging::file',$filename, {
-    source => $source_url,
+    'source' => $source_url,
+  })
+
+  # FM-5578 workaround for strict umodes
+  ensure_resource('file', "${::staging::path}/tomcat", {
+    'ensure' => 'directory',
+    'mode'   => '0755'
+  })
+  ensure_resource('file', "${::staging::path}/tomcat/${filename}", {
+    'mode'    => '0644',
+    'require' => "Exec[${::staging::path}/tomcat/${filename}]",
   })
 
   staging::extract { "${name}-${filename}":

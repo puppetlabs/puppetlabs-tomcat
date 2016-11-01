@@ -39,6 +39,7 @@ define tomcat::config::context::resource (
   if $ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
   } else {
+    # (MODULES-3353) does this need to be quoted?
     $set_name = "set ${base_path}/#attribute/name ${_resource_name}"
     if $resource_type {
       $set_type = "set ${base_path}/#attribute/type ${resource_type}"

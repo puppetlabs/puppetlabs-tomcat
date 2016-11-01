@@ -32,6 +32,7 @@
         * [tomcat::config::server::valve](#tomcatconfigservervalve)
         * [tomcat::config::context](#tomcatconfigcontext)
         * [tomcat::config::context::environment](#tomcatconfigcontextenvironment)
+        * [tomcat::config::context::manager](#tomcatconfigcontextmanager)
         * [tomcat::config::context::resource](#tomcatconfigcontextresource)
         * [tomcat::config::context::resourcelink](#tomcatconfigcontextresourcelink)
         * [tomcat::install](#tomcatinstall)
@@ -66,7 +67,7 @@ The simplest way to get Tomcat up and running with the tomcat module is to insta
 
 ```puppet
 tomcat::install { '/opt/tomcat':
-  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.70/bin/apache-tomcat-7.0.70.tar.gz',
+  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz',
 }
 tomcat::instance { 'default':
   catalina_home => '/opt/tomcat',

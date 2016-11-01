@@ -53,6 +53,9 @@ define tomcat::config::server::globalnamingresource (
     ]))
   }
 
+  # (MODULES-3353) This should use $set_name in $changes like
+  # t:config::context::resource and others instead of an additional augeas
+  # resource
   augeas { "server-${catalina_base}-globalresource-${name}-definition":
     lens    => 'Xml.lns',
     incl    => $_server_config,
