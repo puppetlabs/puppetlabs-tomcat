@@ -9,7 +9,7 @@
 # - $param is the parameter you're setting. Defaults to $name.
 # - $quote_char is the optional character to quote the value with.
 # - $order is the optional order to the param in the file. Defaults to 10
-# - $doexport is the optional prefix befor the variable.
+# - $doexport is the optional prefix before the variable.
 # - (Deprecated) $base_path is the path to create the setenv.sh script under. Should be
 #   either $catalina_base/bin or $catalina_home/bin.
 define tomcat::setenv::entry (
