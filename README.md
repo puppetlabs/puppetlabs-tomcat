@@ -81,7 +81,7 @@ tomcat::instance { 'default':
 class { 'java': }
 
 tomcat::install { '/opt/tomcat8':
-  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz'
+  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.38/bin/apache-tomcat-8.0.38.tar.gz'
 }
 tomcat::instance { 'tomcat8-first':
   catalina_home => '/opt/tomcat8',
@@ -106,7 +106,7 @@ tomcat::config::server::connector { 'tomcat8-second-http':
 }
 
 tomcat::install { '/opt/tomcat6':
-  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.45/bin/apache-tomcat-6.0.45.tar.gz',
+  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.47/bin/apache-tomcat-6.0.47.tar.gz',
 }
 tomcat::instance { 'tomcat6':
   catalina_home => '/opt/tomcat6',
