@@ -30,7 +30,7 @@ define tomcat::service (
   $use_jsvc       = false,
   $use_init       = false,
   $java_home      = undef,
-  $service_ensure = running,
+  $service_ensure = undef,
   $service_enable = undef,
   $service_name   = undef,
   $start_command  = undef,
