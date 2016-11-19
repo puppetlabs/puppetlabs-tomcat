@@ -25,7 +25,7 @@ describe 'README examples', :unless => stop_test do
       pp = <<-EOS
       class{'java':}
       tomcat::install { '/opt/tomcat':
-        source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz',
+        source_url => '#{TOMCAT7_RECENT_SOURCE}',
       }
       tomcat::instance { 'default':
         catalina_home => '/opt/tomcat',
@@ -48,7 +48,7 @@ describe 'README examples', :unless => stop_test do
       class { 'java': }
 
       tomcat::install { '/opt/tomcat8':
-        source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.38/bin/apache-tomcat-8.0.38.tar.gz'
+        source_url => '#{TOMCAT8_RECENT_SOURCE}'
       }
       tomcat::instance { 'tomcat8-first':
         catalina_home => '/opt/tomcat8',
@@ -73,7 +73,7 @@ describe 'README examples', :unless => stop_test do
       }
 
       tomcat::install { '/opt/tomcat6':
-        source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.47/bin/apache-tomcat-6.0.47.tar.gz',
+        source_url => '#{TOMCAT6_RECENT_SOURCE}',
       }
       tomcat::instance { 'tomcat6':
         catalina_home => '/opt/tomcat6',
