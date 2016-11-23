@@ -167,6 +167,7 @@ define tomcat::instance (
       use_jsvc      => $use_jsvc,
       use_init      => $use_init,
       user          => $_user,
+      service_name  => $name
     }
   }
 }
