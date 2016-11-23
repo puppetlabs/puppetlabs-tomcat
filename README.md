@@ -67,12 +67,14 @@ The simplest way to get Tomcat up and running with the tomcat module is to insta
 
 ```puppet
 tomcat::install { '/opt/tomcat':
-  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz',
+  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.x/bin/apache-tomcat-7.0.x.tar.gz',
 }
 tomcat::instance { 'default':
   catalina_home => '/opt/tomcat',
 }
 ```
+
+> Note: look up the correct version you want to install on the [version list](http://tomcat.apache.org/whichversion.html).
 
 ## Usage
 ### I want to run multiple instances of multiple versions tomcat
@@ -81,7 +83,7 @@ tomcat::instance { 'default':
 class { 'java': }
 
 tomcat::install { '/opt/tomcat8':
-  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz'
+  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.x/bin/apache-tomcat-8.0.x.tar.gz'
 }
 tomcat::instance { 'tomcat8-first':
   catalina_home => '/opt/tomcat8',
@@ -106,7 +108,7 @@ tomcat::config::server::connector { 'tomcat8-second-http':
 }
 
 tomcat::install { '/opt/tomcat6':
-  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.45/bin/apache-tomcat-6.0.45.tar.gz',
+  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.x/bin/apache-tomcat-6.0.x.tar.gz',
 }
 tomcat::instance { 'tomcat6':
   catalina_home => '/opt/tomcat6',
@@ -133,6 +135,8 @@ tomcat::config::server::connector { 'tomcat6-ajp':
   },
 }
 ```
+
+> Note: look up the correct version you want to install on the [version list](http://tomcat.apache.org/whichversion.html).
 
 ### I want to deploy WAR files
 
