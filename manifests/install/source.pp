@@ -42,16 +42,6 @@ define tomcat::install::source (
     'source' => $source_url,
   })
 
-  # FM-5578 workaround for strict umodes
-  ensure_resource('file', "${::staging::path}/tomcat", {
-    'ensure' => 'directory',
-    'mode'   => '0755'
-  })
-  ensure_resource('file', "${::staging::path}/tomcat/${filename}", {
-    'mode'    => '0644',
-    'require' => "Exec[${::staging::path}/tomcat/${filename}]",
-  })
-
   staging::extract { "${name}-${filename}":
     source  => "${::staging::path}/tomcat/${filename}",
     target  => $catalina_home,
