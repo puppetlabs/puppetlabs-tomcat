@@ -17,7 +17,7 @@ define tomcat::install (
   $package_name           = undef,
   $package_options        = undef,
 ) {
-  include tomcat
+  include ::tomcat
   $_install_from_source = pick($install_from_source, $::tomcat::install_from_source)
   $_user = pick($user, $::tomcat::user)
   $_group = pick($group, $::tomcat::group)
