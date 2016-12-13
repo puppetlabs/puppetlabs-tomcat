@@ -23,6 +23,8 @@ define tomcat::war(
   $catalina_base   = undef,
   $app_base        = undef,
   $deployment_path = undef,
+  $user            = undef,
+  $group           = undef,
   $war_ensure      = 'present',
   $war_name        = undef,
   $war_purge       = true,
@@ -31,6 +33,8 @@ define tomcat::war(
   include tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
   tag(sha1($_catalina_base))
+  $_user = pick($user, $::tomcat::user)
+  $_group = pick($group, $::tomcat::group)
   validate_re($war_ensure, '^(present|absent|true|false)$')
   validate_bool($war_purge)
 
@@ -78,6 +82,8 @@ define tomcat::war(
     staging::file { $name:
       source => $war_source,
       target => "${_deployment_path}/${_war_name}",
+      owner  => $_user,
+      group  => $_group,
     }
   }
 }
