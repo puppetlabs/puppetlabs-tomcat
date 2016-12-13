@@ -79,6 +79,7 @@ define tomcat::instance (
         ensure => directory,
         owner  => $_user,
         group  => $_group,
+        require  => Tomcat::Install[$name],
       })
     }
     # XXX This is for backwards compatibility. Declare a tomcat install, but install
