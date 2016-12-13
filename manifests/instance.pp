@@ -70,18 +70,6 @@ define tomcat::instance (
   }
 
   if $_install_from_source != undef {
-    # XXX This file resource is for backwards compatibility. Previously the base
-    # class created this directory for source installs, even though it may never
-    # be used. Users may have created source installs under this directory, so
-    # it must exist. tomcat::install::source will take care of creating base.
-    if $_catalina_base != $_catalina_home and $_manage_base {
-      ensure_resource('file',$_catalina_home, {
-        ensure => directory,
-        owner  => $_user,
-        group  => $_group,
-        require  => Tomcat::Install[$name],
-      })
-    }
     # XXX This is for backwards compatibility. Declare a tomcat install, but install
     # the software into the base instead of the home.
     tomcat::install { $name:
