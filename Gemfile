@@ -32,7 +32,7 @@ supports_windows = false
 
 group :development do
   gem 'puppet-lint',                        :require => false
-  gem 'metadata-json-lint',                 :require => false, :platforms => 'ruby'
+  gem 'metadata-json-lint', '0.0.11',       :require => false, :platforms => 'ruby'
   gem 'puppet_facts',                       :require => false
   gem 'puppet-blacksmith', '>= 3.4.0',      :require => false, :platforms => 'ruby'
   gem 'puppetlabs_spec_helper', '>= 1.2.1', :require => false
