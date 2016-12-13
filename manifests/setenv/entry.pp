@@ -57,6 +57,7 @@ define tomcat::setenv::entry (
     concat { $_config_file:
       owner          => $_user,
       group          => $_group,
+      mode           => '0755',
       ensure_newline => true,
     }
   }
