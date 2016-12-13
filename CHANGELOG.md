@@ -1,3 +1,13 @@
+## Supported Release 1.6.1
+### Summary
+This release removes an attempted bugfix made in 1.6.0 for working around strict
+umasks. The previous change caused duplicate resource declarations when
+downloading a tomcat tarball from `puppet://` or local paths. The umask bug
+remains (it is actually present in staging, not tomcat).
+
+#### Bugfixes
+- Fix duplicate resource declarations when using local source paths
+
 ## Supported Release 1.6.0
 ### Summary
 This release adds two new defines for managing environment variables and manager elements, enhances multi-instance multi-user support, allows valves to be nested in contexts, fixes an issue with installing directly to NFS mounted directories, fixes installation on systems with a strict root umask,
