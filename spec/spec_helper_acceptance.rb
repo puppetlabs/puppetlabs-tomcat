@@ -1,8 +1,12 @@
 require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'beaker/puppet_install_helper'
+require 'beaker/module_install_helper'
 
 run_puppet_install_helper
+install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ /pe/i
+install_module_on(hosts)
+install_module_dependencies_on(hosts)
 
 if ENV['BUILD_ID'] # We're in our CI system and use internal resources
   ARTIFACT_HOST = ENV['TOMCAT_ARTIFACT_HOST'] || 'http://int-resources.corp.puppetlabs.net/QA_resources/tomcat'
@@ -45,22 +49,14 @@ RSpec.configure do |c|
   c.filter_run :focus => true
   c.run_all_when_everything_filtered = true
 
-  # Project root
-  proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-
   # Readable test descriptions
   c.formatter = :documentation
 
   # Configure all nodes in nodeset
   c.before :suite do
-    # Install module and dependencies
-    puppet_module_install(:source => proj_root, :module_name => 'tomcat')
     hosts.each do |host|
-      on host, puppet('module','install','puppetlabs-stdlib','--force','--version','4.6.0'), { :acceptable_exit_codes => [0,1] }
-      on host, puppet('module','install','puppetlabs-concat'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-java'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-gcc'), { :acceptable_exit_codes => [0,1] }
-      on host, puppet('module','install','puppet-staging'), { :acceptable_exit_codes => [0,1] }
       if fact('osfamily') == 'RedHat'
         on host, 'yum install -y nss'
       end
