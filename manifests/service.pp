@@ -160,6 +160,25 @@ define tomcat::service (
         default   => undef,
       }
     }
+
+    case $::osfamily {
+      'RedHat': {
+        $_config_file = "/etc/sysconfig/${_service_name}"
+      }
+      'Debian': {
+        $_config_file = "/etc/default/${_service_name}"
+      }
+      default: {
+        fail('sorry, currently unsuported')
+      }
+    }
+
+    file { "/etc/init.d/$_service_name":
+      ensure    => file,
+      mode      => '0755',
+      content   => template( 'tomcat/init-script.erb' ),
+    }
+
   } else {
     $_service_enable = undef
   }
