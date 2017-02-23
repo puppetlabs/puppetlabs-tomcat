@@ -38,7 +38,7 @@ describe 'tomcat::config::server::valve', :type => :define do
         :attributes_to_remove  => ['foo', 'bar']
       }
     end
-    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-foo').with(
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-org.apache.catalina.AccessLog').with(
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
