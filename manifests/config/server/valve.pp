@@ -81,7 +81,7 @@ define tomcat::config::server::valve (
     $changes = delete_undef_values(flatten([$_class_name_change, $_additional_attributes, $_attributes_to_remove]))
   }
 
-  augeas { "${_catalina_base}-${parent_service}-${parent_host}-valve-${_class_name}":
+  augeas { "${_catalina_base}-${parent_service}-${parent_host}-valve-${name}":
     lens    => 'Xml.lns',
     incl    => $_server_config,
     changes => $changes,

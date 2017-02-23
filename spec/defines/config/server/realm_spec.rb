@@ -103,6 +103,43 @@ describe 'tomcat::config::server::realm', :type => :define do
     )
     }
   end
+  context 'Duplicate class_name' do
+    let :title do
+      'first'
+    end
+    let :pre_condition do
+      <<-END
+      tomcat::config::server::realm { 'second':
+        class_name    => 'org.apache.catalina.realm.JNDIRealm',
+        catalina_base => '/opt/apache-tomcat/test',
+        realm_ensure  => 'present',
+      }
+      END
+    end
+    let :params do
+      {
+        :class_name => 'org.apache.catalina.realm.JNDIRealm',
+        :catalina_base => '/opt/apache-tomcat/test',
+        :realm_ensure => 'present',
+      }
+    end
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-first').with(
+      'lens' => 'Xml.lns',
+      'incl' => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
+      ]
+    )
+    }
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-second').with(
+      'lens' => 'Xml.lns',
+      'incl' => '/opt/apache-tomcat/test/conf/server.xml',
+      'changes' => [
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
+      ]
+    )
+    }
+  end
   context '$realm_ensure absent' do
     let :title do
       'org.apache.catalina.realm.LockOutRealm'

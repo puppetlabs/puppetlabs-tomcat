@@ -107,7 +107,7 @@ define tomcat::config::server::realm (
     $changes = delete_undef_values(flatten([ $__purge_realms, $_class_name, $_additional_attributes, $_attributes_to_remove ]))
   }
 
-  augeas { "${_catalina_base}-${parent_service}-${parent_engine}-${parent_host}-${parent_realm}-realm-${class_name}":
+  augeas { "${_catalina_base}-${parent_service}-${parent_engine}-${parent_host}-${parent_realm}-realm-${name}":
     lens    => 'Xml.lns',
     incl    => $_server_config,
     changes => $changes,

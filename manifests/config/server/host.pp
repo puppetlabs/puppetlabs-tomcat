@@ -90,7 +90,7 @@ define tomcat::config::server::host (
     $changes = delete_undef_values(flatten([$_host_name_change, $_app_base, $_additional_attributes, $_attributes_to_remove, $_clear_aliases, $_add_aliases]))
   }
 
-  augeas { "${_catalina_base}-${parent_service}-host-${_host_name}":
+  augeas { "${_catalina_base}-${parent_service}-host-${name}":
     lens    => 'Xml.lns',
     incl    => $_server_config,
     changes => $changes,
