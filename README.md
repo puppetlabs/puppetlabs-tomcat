@@ -11,7 +11,7 @@
     * [I want to install Tomcat from a specific source.](#i-want-to-install-tomcat-from-a-specific-source)
     * [I want to run multiple copies of Tomcat on a single node.](#i-want-to-run-multiple-copies-of-tomcat-on-a-single-node)
     * [I want to deploy WAR files.](#i-want-to-deploy-war-files)
-    * [I want to change my configuration](#i-want-to-change-my-configuration)
+    * [I want to remove some configuration](#i-want-to-remove-some-configuration)
     * [I want to manage a Connector or Realm that already exists](#i-want-to-manage-a-connector-or-realm-that-already-exists)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Classes](#classes)
