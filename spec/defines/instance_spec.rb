@@ -161,6 +161,23 @@ describe 'tomcat::instance', :type => :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
   end
+  context "install from source, unmanaged catalina.properties" do
+    let :pre_condition do
+      'tomcat::install { "tomcat6":
+        catalina_home => "/opt/apache-tomcat",
+        source_url    => "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz",
+      }'
+    end
+    let :facts do default_facts end
+    let :params do
+      {
+        catalina_home: '/opt/apache-tomcat',
+        catalina_base: '/opt/apache-tomcat/foo',
+        manage_properties: false,
+      }
+    end
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/catalina.properties') }
+  end
   context "legacy install from source, unmanaged home/base" do
     let :pre_condition do
       'class { "tomcat": }'

@@ -31,6 +31,7 @@ define tomcat::instance (
   $manage_group           = undef,
   $manage_service         = undef,
   $manage_base            = undef,
+  $manage_properties      = undef,
   $java_home              = undef,
   $use_jsvc               = undef,
   $use_init               = undef,
@@ -53,6 +54,7 @@ define tomcat::instance (
   $_manage_user = pick($manage_user, $::tomcat::manage_user)
   $_manage_group = pick($manage_group, $::tomcat::manage_group)
   $_manage_base = pick($manage_base, $::tomcat::manage_base)
+  $_manage_properties = pick($manage_properties, $::tomcat::manage_properties)
 
   if $source_url and $install_from_source == undef {
     # XXX Backwards compatibility mode enabled; install_from_source used to default
@@ -150,11 +152,13 @@ define tomcat::instance (
         user          => $_user,
         group         => $_group,
       }
-      tomcat::config::properties { "${_catalina_base} catalina.properties":
-        catalina_home => $_catalina_home,
-        catalina_base => $_catalina_base,
-        user          => $_user,
-        group         => $_group,
+      if $_manage_properties {
+        tomcat::config::properties { "${_catalina_base} catalina.properties":
+          catalina_home => $_catalina_home,
+          catalina_base => $_catalina_base,
+          user          => $_user,
+          group         => $_group,
+        }
       }
     }
     $_manage_service = pick($manage_service, true)
