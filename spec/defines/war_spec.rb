@@ -22,6 +22,8 @@ describe 'tomcat::war', :type => :define do
     it { is_expected.to contain_staging__file('sample.war').with(
       'source' => '/tmp/sample.war',
       'target' => '/opt/apache-tomcat/webapps/sample.war',
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
     )
     }
   end
@@ -50,11 +52,15 @@ describe 'tomcat::war', :type => :define do
         :war_ensure    => 'true',
         :war_name      => 'sample2.war',
         :war_source    => '/tmp/sample.war',
+        :user          => 'tomcatuser',
+        :group         => 'tomcatuser',
       }
     end
     it { is_expected.to contain_staging__file('sample.war').with(
       'source' => '/tmp/sample.war',
       'target' => '/opt/apache-tomcat/test/webapps2/sample2.war',
+      'owner'  => 'tomcatuser',
+      'group'  => 'tomcatuser',
     )
     }
   end
@@ -68,6 +74,8 @@ describe 'tomcat::war', :type => :define do
     it { is_expected.to contain_staging__file('sample.war').with(
       'source' => '/tmp/sample.war',
       'target' => '/opt/apache-tomcat/webapps3/sample.war',
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
     )
     }
   end
