@@ -6,8 +6,8 @@ class { 'java': }
 tomcat::instance { 'mycat':
   catalina_base => '/opt/apache-tomcat/mycat',
   source_url    => 'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.53/bin/apache-tomcat-7.0.53.tar.gz',
-}->
-tomcat::config::server::context { 'mycat-test':
+}
+-> tomcat::config::server::context { 'mycat-test':
   catalina_base         => '/opt/apache-tomcat/mycat',
   context_ensure        => present,
   doc_base              => 'test.war',
