@@ -12,6 +12,32 @@ describe 'tomcat::service', :type => :define do
   let :title do
     'default'
   end
+  context 'explicit service ensure running' do
+    let :params do
+      {
+        :service_ensure => 'running',
+      }
+    end
+    it { is_expected.to contain_service('tomcat-default').with(
+      'hasstatus'  => false,
+      'hasrestart' => false,
+      'ensure'     => 'running',
+    )
+    }
+  end
+  context 'explicit service ensure stopped' do
+    let :params do
+      {
+        :service_ensure => 'stopped',
+      }
+    end
+    it { is_expected.to contain_service('tomcat-default').with(
+      'hasstatus'  => false,
+      'hasrestart' => false,
+      'ensure'     => 'stopped',
+    )
+    }
+  end
   context 'using jsvc' do
     let :params do
       {
@@ -21,7 +47,7 @@ describe 'tomcat::service', :type => :define do
     it { is_expected.to contain_service('tomcat-default').with(
       'hasstatus'  => false,
       'hasrestart' => false,
-      'ensure'     => 'running',
+      'ensure'     => nil,
     )
     }
   end
@@ -36,7 +62,7 @@ describe 'tomcat::service', :type => :define do
     it { is_expected.to contain_service('tomcat-default').with(
       'hasstatus'  => false,
       'hasrestart' => false,
-      'ensure'     => 'running',
+      'ensure'     => nil,
       'start'      => '/bin/true',
       'stop'       => '/bin/true',
     )
@@ -80,7 +106,7 @@ describe 'tomcat::service', :type => :define do
     it { is_expected.to contain_service('tomcat-default').with(
       'hasstatus'  => true,
       'hasrestart' => true,
-      'ensure'     => 'running',
+      'ensure'     => nil,
       'start'      => 'service tomcat-default start',
       'stop'       => 'service tomcat-default stop',
     )
@@ -98,7 +124,7 @@ describe 'tomcat::service', :type => :define do
     it { is_expected.to contain_service('tomcat').with(
       'hasstatus'  => true,
       'hasrestart' => true,
-      'ensure'     => 'running',
+      'ensure'     => nil,
       'start'      => '/bin/true',
       'stop'       => '/bin/true',
     )
@@ -108,7 +134,7 @@ describe 'tomcat::service', :type => :define do
     it { is_expected.to contain_service('tomcat-default').with(
       'hasstatus'  => false,
       'hasrestart' => false,
-      'ensure'     => 'running',
+      'ensure'     => nil,
       'start'      => "su -s /bin/bash -c 'CATALINA_HOME=/opt/apache-tomcat CATALINA_BASE=/opt/apache-tomcat /opt/apache-tomcat/bin/catalina.sh start' tomcat",
       'stop'       => "su -s /bin/bash -c 'CATALINA_HOME=/opt/apache-tomcat CATALINA_BASE=/opt/apache-tomcat /opt/apache-tomcat/bin/catalina.sh stop' tomcat",
     )
@@ -124,7 +150,7 @@ describe 'tomcat::service', :type => :define do
     it { is_expected.to contain_service('tomcat-default').with(
       'hasstatus'  => false,
       'hasrestart' => false,
-      'ensure'     => 'running',
+      'ensure'     => nil,
       'start'      => '/bin/true',
       'stop'       => '/bin/true',
     )

@@ -954,7 +954,7 @@ Specifies whether to enable the Tomcat service at boot. Only valid if `use_init`
 
 #####`service_ensure`
 
-Specifies whether the Tomcat service should be running. Maps to the `ensure` parameter of Puppet's native [`service` resource type](https://docs.puppetlabs.com/references/latest/type.html#service). Valid options: 'running', 'stopped', 'true', and 'false'. Default: 'present'.
+Specifies whether the Tomcat service should be running. Maps to the `ensure` parameter of Puppet's native [`service` resource type](https://docs.puppetlabs.com/references/latest/type.html#service). Valid options: 'running', 'stopped', 'true', and 'false'. Default: undef.
 
 #####`service_name`
 
