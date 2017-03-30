@@ -6,8 +6,8 @@ class { 'java': }
 tomcat::instance { 'mycat':
   catalina_base => '/opt/apache-tomcat/mycat',
   source_url    => 'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.53/bin/apache-tomcat-7.0.53.tar.gz',
-}->
-tomcat::config::server::tomcat_users {
+}
+-> tomcat::config::server::tomcat_users {
   'mycat-role-tester':
     ensure        => present,
     catalina_base => '/opt/apache-tomcat/mycat',

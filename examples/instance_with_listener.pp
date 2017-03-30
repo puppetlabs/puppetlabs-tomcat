@@ -6,8 +6,8 @@ class { 'java': }
 tomcat::instance { 'mycat':
   catalina_base => '/opt/apache-tomcat/mycat',
   source_url    => 'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.53/bin/apache-tomcat-7.0.53.tar.gz',
-}->
-tomcat::config::server::listener { 'mycat-jmx':
+}
+-> tomcat::config::server::listener { 'mycat-jmx':
   catalina_base         => '/opt/apache-tomcat/mycat',
   listener_ensure       => present,
   class_name            => 'org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
