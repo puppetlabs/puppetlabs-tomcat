@@ -277,17 +277,17 @@ Default value: `true`.
 ##### `manage_base`
 Specifies the default value of `manage_base` for all `tomcat::install` instances.
 
-Default value: `true`
+Default value: `true`.
 
 ##### `manage_home`
 Specifies the default value of `manage_home` for all `tomcat::instance` instances.
 
-Default value: `true`
+Default value: `true`.
 
 ##### `manage_properties`
 Specifies the default value of `manage_properties` for all `tomcat::instance` instances.
 
-Default value: `true`
+Default value: `true`.
 
 #####`purge_connectors`
 
@@ -303,7 +303,7 @@ Specifies whether to purge any unmanaged realm elements from the configuration f
 
 Valid options: `true` and `false`.
 
-Default value: `false`.  If two realms are defined for a specific server config only use purge_realms for the first realm and ensure the realms enforce a strict order between each other.
+Default value: `false`.  If two realms are defined for a specific server config only use `purge_realms` for the first realm and ensure the realms enforce a strict order between each other.
 
 #####`user`
 
@@ -314,13 +314,14 @@ Valid options: a string containing a valid username.
 Default value: `tomcat`.
 
 #### tomcat::config::properties::property
+
 Specifies an additional entry for the catalina.properties file a given catalina base.
 
 ##### `property`
 
 The name of the property.
 
-Default value: `$name`
+Default value: `$name`.
 
 ##### `catalina_base`
 
@@ -347,9 +348,9 @@ Default value: `undef`.
 
 Specifies whether the [address XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`catalina_base`
 
@@ -357,7 +358,7 @@ Specifies the base directory of the Tomcat installation to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$tomcat::catalina_home`.
+Default value: '$tomcat::catalina_home'.
 
 #####`class_name`
 
@@ -371,9 +372,9 @@ Default value: `undef`.
 
 Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`port`
 
@@ -389,11 +390,11 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 #####`shutdown`
 
-Designates a command that shuts down Tomcat when the command is received through the specified address and port. Maps to the [shutdown XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes)
+Designates a command that shuts down Tomcat when the command is received through the specified address and port. Maps to the [shutdown XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes).
 
 Valid options: a string.
 
@@ -423,15 +424,15 @@ Specifies the base directory of the Tomcat installation to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat/catalina_home`.
+Default value: '$::tomcat/catalina_home'.
 
 #####`connector_ensure`
 
 Specifies whether the [Connector XML element](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`parent_service`
 
@@ -439,11 +440,11 @@ Specifies which Service element the Connector should nest under.
 
 Valid options: a string containing the name attribute of the Service.
 
-Default value: `Catalina`.
+Default value: 'Catalina'.
 
 #####`port`
 
-*Required if `connector_ensure` is set to `true` or `present`.* Sets a TCP port on which to create a server socket. Maps to the [port XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes).
+*Required if `connector_ensure` is set to `true` or 'present'.* Sets a TCP port on which to create a server socket. Maps to the [port XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes).
 
 Valid options: a string.
 
@@ -469,7 +470,7 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 ####tomcat::config::server::context
 
@@ -495,15 +496,15 @@ Specifies the base directory of the Tomcat installation to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat/catalina_home`.
+Default value: '$::tomcat/catalina_home'.
 
 #####`context_ensure`
 
 Specifies whether the [Context XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`doc_base`
 
@@ -535,7 +536,7 @@ Specifies which Service XML element the Context should nest under.
 
 Valid options: a string containing the name attribute of the Service.
 
-Default value: `Catalina`.
+Default value: 'Catalina'.
 
 #####`server_config`
 
@@ -543,7 +544,7 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 ####tomcat::config::server::engine
 
@@ -559,9 +560,9 @@ Default value: `undef`.
 
 Specifies whether the [backgroundProcessorDelay XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`catalina_base`
 
@@ -569,7 +570,7 @@ Specifies the base directory of the Tomcat installation to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 #####`class_name`
 
@@ -583,9 +584,9 @@ Default value: `undef`.
 
 Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`default_host`
 
@@ -613,9 +614,9 @@ Default value: `undef`.
 
 Specifies whether the [jvmRoute XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`parent_service`
 
@@ -623,7 +624,7 @@ Specifies which Service element the Engine should nest under.
 
 Valid options: a string containing the name attribute of the Service.
 
-Default value: `Catalina`.
+Default value: 'Catalina'.
 
 #####`server_config`
 
@@ -631,7 +632,7 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 #####`start_stop_threads`
 
@@ -645,9 +646,9 @@ Default value: `undef`.
 
 Specifies whether the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #### tomcat::config::server::globalnamingresource
 
@@ -657,9 +658,9 @@ Configure GlobalNamingResources Resource elements in `$CATALINA_BASE/conf/server
 
 Determines whether the specified XML element should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 ##### `resource_name`
 
@@ -671,15 +672,15 @@ Specifies the base directory of the Tomcat instance.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$::tomcat::catalina_home`.
 
 ##### `type`
 
 Specifies the type of element to create
 
-Valid options: . `Resource`, `Environment` or any other valid node.
+Valid options: `Resource`, `Environment` or any other valid node.
 
-Default value: `Resource`
+Default value: `Resource`.
 
 >Note: This is used verbatim in your configuration so make sure the case is correct.
 
@@ -705,7 +706,7 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`
+Default value: '${catalina_base}/config/server.xml'.
 
 ####tomcat::config::server::host
 
@@ -723,7 +724,7 @@ Optional array that specifies the list of [Host Name Aliases](http://tomcat.apac
 
 #####`app_base`
 
-*Required unless [`host_ensure`](#host_ensure) is set to `false` or `absent`.* Specifies the Application Base directory for the virtual host. Maps to the [appBase XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes).
+*Required unless [`host_ensure`](#host_ensure) is set to `false` or 'absent'.* Specifies the Application Base directory for the virtual host. Maps to the [appBase XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes).
 
 Valid options: a string.
 
@@ -741,15 +742,15 @@ Specifies the base directory of the Tomcat installation to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 #####`host_ensure`
 
 Specifies whether the virtual host (the [Host XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Introduction)) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`host_name`
 
@@ -765,7 +766,7 @@ Specifies which Service element the Host should nest under.
 
 Valid options: a string containing the name attribute of the Service.
 
-Default value: `Catalina`.
+Default value: 'Catalina'.
 
 #####`server_config`
 
@@ -773,7 +774,7 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 ####tomcat::config::server::listener
 
@@ -799,7 +800,7 @@ Specifies the base directory of the Tomcat installation.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 #####`class_name`
 
@@ -813,9 +814,9 @@ Default value: `$name`.
 
 Specifies whether the [Listener XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`parent_engine`
 
@@ -839,7 +840,7 @@ Specifies which Service element the Listener should nest under. Only valid if `p
 
 Valid options: a string containing the name attribute of the Service.
 
-Default value: `Catalina`.
+Default value: 'Catalina'.
 
 #####`server_config`
 
@@ -847,7 +848,7 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 ####tomcat::config::server::realm
 
@@ -871,7 +872,7 @@ Default value: `[]`.
 
 Specifies the base directory of the Tomcat installation.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 #####`class_name`
 
@@ -887,7 +888,7 @@ Specifies which Engine element this Realm should nest under.
 
 Valid options: a string containing the name attribute of the Engine.
 
-Default value: `Catalina`.
+Default value: 'Catalina'.
 
 #####`parent_host`
 
@@ -911,7 +912,7 @@ Specifies which Service element this Realm element should nest under.
 
 Valid options: a string containing the name attribute of the Service.
 
-Default value: `Catalina`.
+Default value: 'Catalina'.
 
 #####`purge_realms`
 
@@ -925,9 +926,9 @@ Default value: `false`.
 
 Specifies whether the Realm element should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`server_config`
 
@@ -935,7 +936,7 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 ####tomcat::config::server::service
 
@@ -945,7 +946,7 @@ Specifies the base directory of the Tomcat installation.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 #####`class_name`
 
@@ -959,9 +960,9 @@ Default value: `undef`.
 
 Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`server_config`
 
@@ -969,15 +970,15 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 #####`service_ensure`
 
 Specifies whether the [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) should exist in the configuration file. 
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 ####tomcat::config::server::tomcat_users
 
@@ -987,7 +988,7 @@ Specifies the base directory of the Tomcat installation.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 #####`element`
 
@@ -1009,9 +1010,9 @@ Default value: `$name`.
 
 Determines whether the specified XML element should exist in the configuration file.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`file`
 
@@ -1019,13 +1020,13 @@ Specifies the configuration file to manage.
 
 Valid options: a string containing a fully-qualified path.
 
-Default value: `$CATALINA_BASE/conf/tomcat-users.xml`.
+Default value: '$CATALINA_BASE/conf/tomcat-users.xml'.
 
 #####`group`
 
 Specifies the group of the configuration file.
 
-Default value: `$::tomcat::group`
+Default value: `$::tomcat::group`.
 
 #####`manage_file`
 
@@ -1039,7 +1040,7 @@ Default value: `true`.
 
 Specifies the owner of the configuration file.
 
-Default value: `$::tomcat::user`
+Default value: `$::tomcat::user`.
 
 #####`password`
 
@@ -1105,7 +1106,7 @@ Specifies which Service element the Valve should nest under.
 
 Valid options: a string containing the name of a Service element.
 
-Default value: `Catalina`.
+Default value: 'Catalina'.
 
 #####`parent_context`
 
@@ -1121,15 +1122,15 @@ Specifies a server.xml file to manage.
 
 Valid options: a string containing an absolute path.
 
-Default value: `${catalina_base}/config/server.xml`.
+Default value: '${catalina_base}/config/server.xml'.
 
 #####`valve_ensure`
 
 Specifies whether the Valve should exist in the configuration file. Maps to the  [Valve XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Introduction).
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #### tomcat::config::context
 
@@ -1146,31 +1147,35 @@ Specifies a Manager element in the designated xml configuration.
 
 specifies whether you are trying to add or remove the Manager element.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 ##### `catalina_base`
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$tomcat::catalina_home`
+Default value: '$tomcat::catalina_home'.
 
 ##### `manager_classname`
 
 The name of the Manager to be created.
 
-Default value: `$name`
+Default value: `$name`.
 
 ##### `additional_attributes`
 
-Specifies any additional attributes to add to the Manager. Should be a hash of the format 'attribute' => 'value'.
+Specifies any additional attributes to add to the Manager.
+
+Should be a hash of the format 'attribute' => 'value'.
 
 Optional
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Manager. Should be a hash of the format 'attribute' => 'value'.
+Specifies any attributes to remove from the Manager. 
+
+Should be a hash of the format 'attribute' => 'value'.
 
 Optional
 
@@ -1182,23 +1187,27 @@ Specifies Environment elements in `${catalina_base}/conf/context.xml`
 
 Specifies whether you are trying to add or remove the Environment element
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 ##### `environment_name`
 
-The name of the Environment Entry to be created, relative to the java:comp/env context.
+The name of the Environment Entry to be created, relative to the `java:comp/env` context.
 
-Default value: `$name`
+Default value: `$name`.
 
 ##### `type`
 
-The fully qualified Java class name expected by the web application for this environment entry. Required to create the environment entry.
+The fully qualified Java class name expected by the web application for this environment entry.
+
+Required to create the environment entry.
 
 ##### `value`
 
-The value that will be presented to the application when requested from the JNDI context. Required to create the environment entry.
+The value that will be presented to the application when requested from the JNDI context.
+
+Required to create the environment entry.
 
 ##### `description`
 
@@ -1214,17 +1223,21 @@ By default, overrides are allowed.
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$tomcat::catalina_home`
+Default value: '$tomcat::catalina_home'.
 
 ##### `additional_attributes`
 
-Specifies any additional attributes to add to the Environment. Should be a hash of the format 'attribute' => 'value'.
+Specifies any additional attributes to add to the Environment.
+
+Should be a hash of the format 'attribute' => 'value'.
 
 Optional
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Environment. Should be a hash of the format 'attribute' => 'value'.
+Specifies any attributes to remove from the Environment.
+
+Should be a hash of the format 'attribute' => 'value'.
 
 Optional
 
@@ -1235,15 +1248,15 @@ Specifies Resource elements in `${catalina_base}/conf/context.xml`
 
 specifies whether you are trying to add or remove the Resource element. 
 
-Valid options: `true`, `false`, `present`, `absent`.
+Valid options: `true`, `false`, 'present', 'absent'.
 
-Defaults value: `present`
+Defaults value: 'present'
 
 ##### `resource_name`
 
-The name of the Resource to be created, relative to the java:comp/env context.
+The name of the Resource to be created, relative to the `java:comp/env` context.
 
-Default value: `$name`
+Default value: `$name`.
 
 ##### `resource_type`
 
@@ -1253,42 +1266,47 @@ The fully qualified Java class name expected by the web application when it perf
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`.
 
 ##### `additional_attributes`
 
-Specifies any additional attributes to add to the Valve. Should be a hash of the format 'attribute' => 'value'. 
+Specifies any additional attributes to add to the Valve.
+
+Should be a hash of the format 'attribute' => 'value'. 
 
 Optional
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'.
+Specifies any attributes to remove from the Valve.
+
+Should be a hash of the format 'attribute' => 'value'.
 
 Optional
 
 #### tomcat::config::context::resourcelink
+
 Specifies a ResourceLink element in the designated xml configuration.
 
 ##### `ensure`
 
 specifies whether you are trying to add or remove the ResourceLink element.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`
+Default value: 'present'.
 
 ##### `catalina_base`
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`.
 
 ##### `resourcelink_name`
 
-The name of the ResourceLink to be created, relative to the java:comp/env context.
+The name of the ResourceLink to be created, relative to the `java:comp/env` context.
 
-Default value: `$name`
+Default value: `$name`.
 
 ##### `resourcelink_type`
 
@@ -1296,22 +1314,28 @@ The fully qualified Java class name expected by the web application when it perf
 
 ##### `additional_attributes`
 
-Specifies any additional attributes to add to the Valve. Should be a hash of the format 'attribute' => 'value'.
+Specifies any additional attributes to add to the Valve.
+
+Should be a hash of the format 'attribute' => 'value'.
 
 Optional
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'.
+Specifies any attributes to remove from the Valve.
+
+Should be a hash of the format 'attribute' => 'value'.
 
 Optional
 
-#### tomcat::install
+#### `tomcat::install`
+
 Installs the software into the given directory from a source Apache Tomcat tarball. Alternatively, it may be used to install a tomcat package.
 
 Tomcat instances may then be created from the install using `tomcat::instance` and pointing `tomcat::instance::catalina_home` to the directory managed by `tomcat::install`.
 
 ##### `catalina_home`
+
 specifies the directory of the Tomcat installation from which the instance should be created.
 
 Valid options: a string containing an absolute path.
@@ -1319,6 +1343,7 @@ Valid options: a string containing an absolute path.
 Default value: `$::tomcat::catalina_home`.
 
 ##### `install_from_source`
+
 Specifies whether to install from source or from a package. If set to `true` installation uses the `source_url`, `source_strip_first_dir`, `user`, `group`, `manage_user`, and `manage_group` parameters. If set to `false` installation uses the `package_ensure`, `package_name`, and `package_options` parameters.
 
 Valid options: `true` and `false`.
@@ -1326,11 +1351,13 @@ Valid options: `true` and `false`.
 Default value: `true`.
 
 ##### `source_url`
+
 In single-instance mode: *Required if `install_from_source` is set to `true`.* Specifies the source URL to install from.
 
 Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 
 ##### `source_strip_first_dir`
+
 Specifies whether to strip the topmost directory of the tarball when unpacking it. Only valid if `install_from_source` is set to `true`.
 
 Valid options: `true` and `false`.
@@ -1338,49 +1365,59 @@ Valid options: `true` and `false`.
 Default value: `true`.
 
 ##### `environment`
-Environment variables for settings such as http_proxy, https_proxy, or ftp_proxy. These are passed through to the staging
-module and then to the underlying exec(s), so it follows the same format of the exec type `environment`
+
+Environment variables for settings such as http_proxy, https_proxy, or ftp_proxy. These are passed through to the staging module and then to the underlying exec(s), so it follows the same format of the exec type `environment`
+
 https://docs.puppet.com/puppet/latest/reference/type.html#exec-attribute-environment
 
 ##### `user`
+
 Specifies the owner of the source installation directory.
 
-Default value: `$::tomcat::user`
+Default value: `$::tomcat::user`.
 
 ##### `group`
+
 Specifies the group of the source installation directory.
 
-Default value: `$::tomcat::group`
+Default value: `$::tomcat::group`.
 
 ##### `manage_user`
+
 Specifies whether the user should be managed by this module or not.
 
-Default value: `$::tomcat::manage_user`
+Default value: `$::tomcat::manage_user`.
 
 ##### `manage_group`
+
 Specifies whether the group should be managed by this module or not.
 
-Default value: `$::tomcat::manage_group`
+Default value: `$::tomcat::manage_group`.
 
 ##### `manage_home`
+
 Specifies whether the directory of catalina_home should be managed by puppet. This may not be preferable in network filesystem environments.
 
-Default value: `true`
+Default value: `true`.
 
 ##### `package_ensure`
+
 Determines whether the specified package should be installed. Only valid if `install_from_source` is set to `false`. Maps to the `ensure` parameter of Puppet's native [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package).
 
-Default value: `present`.
+Default value: 'present'.
 
 ##### `package_name`
+
 *Required if `install_from_source` is set to `false`.* Specifies the package to install.
 
 Valid options: a string containing a valid package name.
 
 ##### `package_options`
+
 *Unused if `install_from_source` is set to `true`.* Specify additional options to use on the generated package resource. See the documentation of the [`package` resource type](https://docs.puppetlabs.com/references/latest/type.html#package-attribute-install_options) for possible values.
 
 #### tomcat::instance
+
 Declares a tomcat instance.
 
 There are two different modes of use: a single tomcat installation and instance (called 'single-instance' by this readme), or a single tomcat installation   with multiple instances, each with its own directory structure (called 'multi-instance' by this readme).
@@ -1389,45 +1426,53 @@ There are two different modes of use: a single tomcat installation and instance 
 - multi-instance: If a `tomcat::instance` is declared with `catalina_home` pointing to the same directory as a `tomcat::install` and `catalina_base` pointing at a different directory then it is configured as an instance of the Apache Tomcat software. Multiple instances of a single install may be created using this method. A `tomcat::install` declaration should use a user and/or group such that `tomcat::instance` declarations can access the install.
 
 ##### `catalina_base`
+
 Specifies the `$CATALINA_BASE` of the Tomcat instance where logs, configuration files, and the 'webapps' directory are managed. For single-instance installs, this is the same as the `catalina_home` parameter
 
 Valid options: a string containing an absolute path.
 
-Default value: `$catalina_home`
+Default value: `$catalina_home`.
 
 ##### `catalina_home`
+
 Specifies the directory where the Apache Tomcat software is installed by a `tomcat::install` resource.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$::tomcat::catalina_home`.
 
 ##### `user`
+
 Specifies the owner of the instance directories and files.
 
-Default value: `$::tomcat::user`
+Default value: `$::tomcat::user`.
 
 ##### `group`
+
 Specifies the group of the instance directories and files.
 
-Default value: `$::tomcat::group`
+Default value: `$::tomcat::group`.
 
 ##### `manage_user`
+
 Specifies whether the user should be managed by this module or not.
 
-Default value: `$::tomcat::manage_user`
+Default value: `$::tomcat::manage_user`.
 
 ##### `manage_group`
+
 Specifies whether the group should be managed by this module or not.
 
-Default value: `$::tomcat::manage_group`
+Default value: `$::tomcat::manage_group`.
 
 ##### `manage_base`
+
 Specifies whether the directory of catalina_base should be managed by puppet. This may not be preferable in network filesystem environments.
 
-Default value: `true`
+Default value: `true`.
 
 ##### `manage_service`
+
 Specifies whether a `tomcat::service` corresponding to this instance should be declared. 
 
 Valid options: `true`, `false`
@@ -1435,21 +1480,25 @@ Valid options: `true`, `false`
 Default value: `true` (multi-instance installs), `false` ()single-instance installs).
 
 ##### `manage_properties`
+
 Specifies whether the `catalina.properties` file is created and managed. If `true`, custom modifications to this file will be overwritten during runs
 
 Valid options: `true`, `false`
 
-Default value: `true`
+Default value: `true`.
 
 ##### `java_home`
+
 Specifies the java home to be used when declaring a `tomcat::service` instance. See [tomcat::service](#tomcatservice)
 
 ##### `use_jsvc`
+
 Specifies whether jsvc should be used when declaring a `tomcat::service` instance.
 
 >Note that this module will not compile and install jsvc for you. See [tomcat::service](#tomcatservice)
 
 ##### `use_init`
+
 Specifies whether an init script should be managed when declaring a `tomcat::service` instance. See [tomcat::service](#tomcatservice)
 
 #### tomcat::service
@@ -1476,7 +1525,7 @@ Specifies where Java is installed. Only applies if `use_jsvc` is set to `true`.
 
 Valid options: a string containing an absolute path.
 
-Default value: `undef`. 
+Default value: `undef`.
 
 >Note: if you don't specify a home path in this parameter, Puppet does not pass the `-home` switch to Tomcat. That can cause problems on some systems, so we recommend including this parameter.
 
@@ -1494,7 +1543,7 @@ Specifies whether the Tomcat service should be running. Maps to the `ensure` par
 
 Valid options: 'running', 'stopped', `true`, and `false`.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`service_name`
 
@@ -1558,20 +1607,21 @@ Specifies the configuration file to edit.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home/bin/setenv.sh`.
+Default value: '$::tomcat::catalina_home/bin/setenv.sh.
 
 #####`ensure`
 
 Determines whether the fragment should exist in the configuration file.
 
-Valid options: `present`, `absent`.
+Valid options: 'present', 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 ##### `group`
+
 Specifies the group of the config file.
 
-Default value: `$::tomcat::group`
+Default value: `$::tomcat::group`.
 
 #####`order`
 
@@ -1602,9 +1652,10 @@ Valid options: a string (usually a single or double quote).
 Default value: (blank).
 
 ##### `user`
+
 Specifies the owner of the config file.
 
-Default value: `$::tomcat::user`
+Default value: `$::tomcat::user`.
 
 #####`value`
 
@@ -1620,7 +1671,7 @@ Valid options: `true` or `false`
 
 Default value: `true`.
 
-####tomcat::war
+####`tomcat::war`
 
 #####`app_base`
 
@@ -1650,9 +1701,9 @@ Default value: If you don't specify a `deployment_path`, Puppet deploys the WAR 
 
 Specifies whether the WAR should exist.
 
-Valid options: `true`, `false`, `present`, and `absent`.
+Valid options: `true`, `false`, 'present', and 'absent'.
 
-Default value: `present`.
+Default value: 'present'.
 
 #####`war_name`
 
@@ -1664,7 +1715,7 @@ Default value: the `name` passed in your define.
 
 #####`war_purge`
 
-Specifies whether to purge the exploded WAR directory. Only applicable when `war_ensure` is set to `absent` or `false`.
+Specifies whether to purge the exploded WAR directory. Only applicable when `war_ensure` is set to 'absent' or `false`.
 
 Valid options: `true` and `false`.
 
@@ -1674,13 +1725,13 @@ Default value: `true`.
 
 #####`war_source`
 
-*Required unless `war_ensure` is set to `false` or `absent`.* Specifies the source to deploy the WAR from.
+*Required unless `war_ensure` is set to `false` or 'absent'.* Specifies the source to deploy the WAR from.
 
 Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 
 ##Limitations
 
-This module only supports Tomcat installations on \*nix systems.  The `tomcat::config::server*` defines require Augeas version 1.0.0 or newer.
+This module only supports Tomcat installations on Unix-like systems.  The `tomcat::config::server*` defines require Augeas version 1.0.0 or newer.
 
 ###Multiple Instances
 
