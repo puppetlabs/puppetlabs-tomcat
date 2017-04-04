@@ -240,7 +240,7 @@ Specifies the default root directory of the Tomcat installation.
 
 Valid options: a string containing an absolute path.
 
-Default value: `/opt/apache-tomcat`.
+Default value: '/opt/apache-tomcat'.
 
 #####`group`
 
@@ -248,7 +248,7 @@ Specifies a default group to run Tomcat as.
 
 Valid options: a string containing a valid group name.
 
-Default value: `tomcat`.
+Default value: 'tomcat'.
 
 #####`install_from_source`
 
@@ -260,7 +260,7 @@ Default value: `true`.
 
 #####`manage_group`
 
-Determines whether defines should default to creating the specified group, if it doesn't exist. Uses Puppet's native [`group` resource type](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters.
+Determines whether defined types should default to creating the specified group, if it doesn't exist. Uses Puppet's native [`group` resource type](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters.
 
 Valid options: `true` and `false`.
 
@@ -311,7 +311,7 @@ Specifies a default user to run Tomcat as.
 
 Valid options: a string containing a valid username.
 
-Default value: `tomcat`.
+Default value: 'tomcat'.
 
 #### tomcat::config::properties::property
 
@@ -652,7 +652,7 @@ Default value: 'present'.
 
 #### tomcat::config::server::globalnamingresource
 
-Configure GlobalNamingResources Resource elements in `$CATALINA_BASE/conf/server.xml`
+Configure GlobalNamingResources Resource elements in '$CATALINA_BASE/conf/server.xml'
 
 ##### `ensure`
 
@@ -672,7 +672,7 @@ Specifies the base directory of the Tomcat instance.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 ##### `type`
 
@@ -1266,7 +1266,7 @@ The fully qualified Java class name expected by the web application when it perf
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$tomcat::catalina_home`.
+Default value: '$tomcat::catalina_home'.
 
 ##### `additional_attributes`
 
@@ -1340,7 +1340,7 @@ specifies the directory of the Tomcat installation from which the instance shoul
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 ##### `install_from_source`
 
@@ -1439,7 +1439,7 @@ Specifies the directory where the Apache Tomcat software is installed by a `tomc
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 ##### `user`
 
@@ -1509,7 +1509,7 @@ Specifies the base directory of the Tomcat installation.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 #####`catalina_home`
 
@@ -1517,7 +1517,7 @@ Specifies the root directory of the Tomcat installation.
 
 Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`.
+Default value: '$::tomcat::catalina_home'.
 
 #####`java_home`
 
