@@ -74,7 +74,6 @@ define tomcat::setenv::entry (
     $_content = inline_template('<%= @_doexport %> <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char+"\n" %>')
   }
   concat::fragment { "setenv-${name}":
-    ensure  => $ensure,
     target  => $_config_file,
     content => $_content,
     order   => $order,
