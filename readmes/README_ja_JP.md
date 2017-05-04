@@ -8,8 +8,7 @@
     * [セットアップ要件](#要件)
     * [tomcatを開始する](#tomcatを開始する)
 4. [使用方法 - 設定オプションとその他の機能](#使用方法)
-    * [特定のソースから Tomcat をインストールしたい](#i-want-to-install-tomcat-from-a-specific-source)
-    * [1つのノード上で複数のTomcatを実行したい](#i-want-to-run-multiple-copies-of-tomcat-on-a-single-node)
+    * [複数のバージョン、複数インスタンスのtomcatを実行したい](#複数のバージョン、複数インスタンスのtomcatを実行したい)
     * [WARファイルをデプロイしたい](#warファイルをデプロイしたい)
     * [構成の一部を削除したい](#構成の一部を削除したい)
     * [既存のConnectorまたはRealmを管理したい](#既存のconnectorまたはrealmを管理したい)
@@ -27,8 +26,8 @@
         * [tomcat::config::server::host](#tomcatconfigserverhost)
         * [tomcat::config::server::listener](#tomcatconfigserverlistener)
         * [tomcat::config::server::realm](#tomcatconfigserverrealm)
-        * [tomcat::config::server::service](# tomcatconfigserverservice)
-        * [tomcat::config::server::tomcat_users](# tomcatconfigservertomcat_users)
+        * [tomcat::config::server::service](#tomcatconfigserverservice)
+        * [tomcat::config::server::tomcat_users](#tomcatconfigservertomcat_users)
         * [tomcat::config::server::valve](#tomcatconfigservervalve)
         * [tomcat::config::context](#tomcatconfigcontext)
         * [tomcat::config::context::environment](#tomcatconfigcontextenvironment)
@@ -77,6 +76,7 @@ tomcat::instance { 'default':
 > 注: [バージョンリスト](http://tomcat.apache.org/whichversion.html)でインストールするバージョンを照合してください。
 
 ## 使用方法
+
 ### 複数のバージョン、複数インスタンスのtomcatを実行したい
 
 ```puppet
