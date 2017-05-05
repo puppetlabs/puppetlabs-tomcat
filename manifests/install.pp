@@ -7,6 +7,8 @@ define tomcat::install (
   $source_url             = undef,
   $source_strip_first_dir = true,
   $environment            = undef,
+  $curl_option            = undef,
+  $wget_option            = undef,
   $user                   = undef,
   $group                  = undef,
   $manage_user            = undef,
@@ -46,6 +48,8 @@ define tomcat::install (
       source_url             => $source_url,
       source_strip_first_dir => $source_strip_first_dir,
       environment            => $environment,
+      curl_option            => $curl_option,
+      wget_option            => $wget_option,
       user                   => $_user,
       group                  => $_group,
     }

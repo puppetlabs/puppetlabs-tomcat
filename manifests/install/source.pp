@@ -18,6 +18,8 @@ define tomcat::install::source (
   $user,
   $group,
   $environment = undef,
+  $curl_option = undef,
+  $wget_option = undef
 ) {
   tag(sha1($catalina_home))
   include ::staging
@@ -43,6 +45,8 @@ define tomcat::install::source (
   ensure_resource('staging::file',$filename, {
     'source'      => $source_url,
     'environment' => $environment,
+    'curl_option' => $curl_option,
+    'wget_option' => $wget_option,
   })
 
   staging::extract { "${name}-${filename}":
