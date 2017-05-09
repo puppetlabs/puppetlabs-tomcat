@@ -1,3 +1,31 @@
+## Supported Release 1.7.0
+### Summary
+This release adds support for internationalization of the module. It also contains Japanese translations for the README, summary and description of the metadata.json and major cleanups in the README. Additional folders have been introduced called locales and readmes where translation files can be found. A number of features and bug fixes are also included in this release.
+
+#### Features
+- Addition of POT file for metadata translation for i18n.
+- Readme update and edit in preparation for localization.
+- Environment can now be passed through to staging, so we can set a proxy to download tomcat.
+- Add optional `$type` parameter to globalnamingresources that allows the definition of the element to be used. Use "Environment" to set an environment.
+- Allow the resource name to be overridden with a new `$resource_name` parameter.
+- Added Ubuntu Xenial support to metadata.
+- Bump in puppet-staging module dependancy for allowing newer versions.
+- Ability to not manage catalina.properties.
+
+#### Bugfixes
+- (MODULES-4003) Adds a 'require => Tomcat::Install[$name]' to the ensure_resource function.
+- (MODULES-4003) Removes logic that checks to see if catalina_base and catalina_home are the same.
+- (MODULES-1986) Added newline to the inline template assigned to $_content.
+- (MODULES-3224) Added mode attribute to concat resource that sets the executable bit for all permission levels.
+- Fix for fixtures.yml, was pointing to nanliu-staging instead of puppet-staging.
+- Fix duplicate resources in host/realm/valve.
+- Fix faulty header and link in ToC.
+- (MODULES-4528) Replace Puppet.version.to_f version comparison from spec_helper.rb.
+- Puppet lint warning fix.
+- (FM-6166) Updating tomcat tar mirror and test failure message.
+- (FM-6166) Removing concat-fragment 'ensure'
+
+
 ## Supported Release 1.6.1
 ### Summary
 This release removes an attempted bugfix made in 1.6.0 for working around strict
