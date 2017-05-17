@@ -12,9 +12,6 @@ describe 'Two different installations with two instances each of Tomcat 6 in the
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      Staging::File {
-        curl_option => '-k',
-      }
       class { 'java':}
       tomcat::install { 'tomcat6':
         catalina_home => '/opt/apache-tomcat6',
@@ -218,9 +215,6 @@ describe 'Two different installations with two instances each of Tomcat 6 in the
   context 'Start Tomcat without war' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      Staging::File {
-        curl_option => '-k',
-      }
       tomcat::war { 'tomcat6039-sample.war':
         catalina_base => '/opt/tomcat6039-first',
         war_source    => '#{SAMPLE_WAR}',
@@ -262,9 +256,6 @@ describe 'Two different installations with two instances each of Tomcat 6 in the
   context 'deploy the war' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      Staging::File {
-        curl_option => '-k',
-      }
       tomcat::war { 'tomcat6-sample.war':
         catalina_base => '/opt/tomcat6-first',
         war_source    => '#{SAMPLE_WAR}',

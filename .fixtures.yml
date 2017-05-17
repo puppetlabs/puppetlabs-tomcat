@@ -2,6 +2,6 @@ fixtures:
   repositories:
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
     concat: "https://github.com/puppetlabs/puppetlabs-concat.git"
-    staging: "https://github.com/voxpupuli/puppet-staging.git"
+    archive: "https://github.com/voxpupuli/puppet-archive.git"
   symlinks:
     tomcat: "#{source_dir}"

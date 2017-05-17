@@ -1364,9 +1364,19 @@ Valid options: `true` and `false`.
 
 Default value: `true`.
 
-##### `environment`
+##### `proxy_server`
 
-Environment variables for settings such as http_proxy, https_proxy, or ftp_proxy. These are passed through to the staging module and then to the underlying exec(s), so it follows the same format of the exec type [`environment`](https://docs.puppet.com/puppet/latest/reference/type.html#exec-attribute-environment).
+Specifies a proxy server to use when downloading Tomcat binaries. For example, 'https://example.com:8080'.
+
+Default value: `undef`.
+
+##### `proxy_type`
+
+Specifies the proxy server type used by `proxy_server`. Normally this defaults to the protocol specified in the `proxy_server` URI.
+
+Default value: auto-detected from `proxy_server`.
+
+Valid options: 'none', 'http', 'https', 'ftp'.
 
 ##### `user`
 
@@ -1594,10 +1604,6 @@ Default value: `false`.
 The user of the jsvc process when `use_init => true`
 
 #### tomcat::setenv::entry
-
-##### `base_path`
-
-**Deprecated.** Please use `config_file` instead.
 
 ##### `config_file`
 
