@@ -35,6 +35,7 @@ define tomcat::instance (
   $java_home              = undef,
   $use_jsvc               = undef,
   $use_init               = undef,
+  $copy_to_base_list      = undef,
 
   #used for single installs. Deprecated?
   $install_from_source    = undef,
@@ -140,13 +141,18 @@ define tomcat::instance (
         group  => $_group,
         mode   => '2770',
       }
-      $copy_to_base_list = [
-        "${_catalina_base}/conf/catalina.policy",
-        "${_catalina_base}/conf/context.xml",
-        "${_catalina_base}/conf/logging.properties",
-        "${_catalina_base}/conf/server.xml",
-        "${_catalina_base}/conf/web.xml",
-      ]
+
+      #to support log4j you can send a custom $copy_to_base_list
+      #instead of the default.
+      if $copy_to_base_list == undef {
+        $copy_to_base_list = [
+          "${_catalina_base}/conf/catalina.policy",
+          "${_catalina_base}/conf/context.xml",
+          "${_catalina_base}/conf/logging.properties",
+          "${_catalina_base}/conf/server.xml",
+          "${_catalina_base}/conf/web.xml",
+        ]
+      }
       tomcat::instance::copy_from_home { $copy_to_base_list:
         catalina_home => $_catalina_home,
         user          => $_user,
