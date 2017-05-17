@@ -6,7 +6,8 @@ define tomcat::install (
   # source options
   $source_url             = undef,
   $source_strip_first_dir = true,
-  $environment            = undef,
+  $proxy_type             = undef,
+  $proxy_server           = undef,
   $user                   = undef,
   $group                  = undef,
   $manage_user            = undef,
@@ -45,7 +46,8 @@ define tomcat::install (
       manage_home            => $_manage_home,
       source_url             => $source_url,
       source_strip_first_dir => $source_strip_first_dir,
-      environment            => $environment,
+      proxy_type             => $proxy_type,
+      proxy_server           => $proxy_server,
       user                   => $_user,
       group                  => $_group,
     }

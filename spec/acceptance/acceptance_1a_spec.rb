@@ -41,10 +41,12 @@ describe 'Acceptance case one', :unless => stop_test do
         source_url    => '#{TOMCAT8_RECENT_SOURCE}',
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
       }->
-      staging::extract { 'commons-daemon-native.tar.gz':
-        source => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-native.tar.gz",
-        target => "/opt/apache-tomcat/tomcat8-jsvc/bin",
-        unless => "test -d /opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src",
+      archive { 'commons-daemon-native.tar.gz':
+        extract      => true,
+        cleanup      => false,
+        path         => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-native.tar.gz",
+        extract_path => "/opt/apache-tomcat/tomcat8-jsvc/bin",
+        creates      => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src",
       }->
       exec { 'configure jsvc':
         command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",
