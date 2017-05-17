@@ -1605,10 +1605,6 @@ The user of the jsvc process when `use_init => true`
 
 #### tomcat::setenv::entry
 
-##### `base_path`
-
-**Deprecated.** Please use `config_file` instead.
-
 ##### `config_file`
 
 Specifies the configuration file to edit.

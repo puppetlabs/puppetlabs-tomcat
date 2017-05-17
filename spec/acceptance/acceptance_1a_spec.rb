@@ -95,8 +95,8 @@ describe 'Acceptance case one', :unless => stop_test do
         war_source    => '#{SAMPLE_WAR}',
       }->
       tomcat::setenv::entry { 'JAVA_HOME':
-        base_path => '/opt/apache-tomcat/tomcat8-jsvc/bin',
-        value     => $java_home,
+        catalina_home => '/opt/apache-tomcat/tomcat8-jsvc',
+        value         => $java_home,
       }->
       tomcat::service { 'jsvc-default':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
