@@ -1366,9 +1366,7 @@ Default value: `true`.
 
 ##### `environment`
 
-Environment variables for settings such as http_proxy, https_proxy, or ftp_proxy. These are passed through to the staging module and then to the underlying exec(s), so it follows the same format of the exec type `environment`
-
-https://docs.puppet.com/puppet/latest/reference/type.html#exec-attribute-environment
+Environment variables for settings such as http_proxy, https_proxy, or ftp_proxy. These are passed through to the staging module and then to the underlying exec(s), so it follows the same format of the exec type [`environment`](https://docs.puppet.com/puppet/latest/reference/type.html#exec-attribute-environment).
 
 ##### `user`
 
