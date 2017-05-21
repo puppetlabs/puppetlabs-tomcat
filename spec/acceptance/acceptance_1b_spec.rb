@@ -37,10 +37,12 @@ describe 'Acceptance case one', docker: true, :unless => stop_test do
       }
 
       class jsvc {
-        staging::extract { 'commons-daemon-native.tar.gz':
-          source => "/opt/apache-tomcat/bin/commons-daemon-native.tar.gz",
-          target => "/opt/apache-tomcat/bin",
-          unless => "test -d /opt/apache-tomcat/bin/commons-daemon-1.0.15-native-src",
+        archive { 'commons-daemon-native.tar.gz':
+          extract      => true,
+          cleanup      => false,
+          path         => "/opt/apache-tomcat/bin/commons-daemon-native.tar.gz",
+          extract_path => "/opt/apache-tomcat/bin",
+          creates      => "/opt/apache-tomcat/bin/commons-daemon-1.0.15-native-src",
         }
         -> exec { 'configure jsvc':
           command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",

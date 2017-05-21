@@ -31,7 +31,7 @@ class tomcat (
   $catalina_home       = $::tomcat::params::catalina_home,
   $user                = $::tomcat::params::user,
   $group               = $::tomcat::params::group,
-  $install_from_source = true,
+  $install_from_source = undef,
   $purge_connectors    = false,
   $purge_realms        = false,
   $manage_user         = true,
@@ -40,7 +40,6 @@ class tomcat (
   $manage_base         = true,
   $manage_properties   = true,
 ) inherits ::tomcat::params {
-  validate_bool($install_from_source)
   validate_bool($purge_connectors)
   validate_bool($purge_realms)
   validate_bool($manage_user)

@@ -7,10 +7,12 @@ class { 'java': }
 tomcat::instance { 'test':
   source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
 }
--> staging::extract { 'commons-daemon-native.tar.gz':
-  source => "${::tomcat::catalina_home}/bin/commons-daemon-native.tar.gz",
-  target => "${::tomcat::catalina_home}/bin",
-  unless => "test -d ${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src",
+-> archive { 'commons-daemon-native.tar.gz':
+  extract      => true,
+  cleanup      => false,
+  path         => "${::tomcat::catalina_home}/bin/commons-daemon-native.tar.gz",
+  extract_path => "${::tomcat::catalina_home}/bin",
+  creates      => "${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src",
 }
 -> exec { 'configure jsvc':
   command  => 'JAVA_HOME=/etc/alternatives/java_sdk configure',
