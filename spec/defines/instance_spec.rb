@@ -41,6 +41,36 @@ describe 'tomcat::instance', :type => :define do
     )
     }
   end
+  context 'default install from source, https location' do
+    let :facts do default_facts end
+    let :params do
+      {
+        :source_url     => 'https://apache.osuosl.org/tomcat/tomcat-8/v8.0.44/bin/apache-tomcat-8.0.44.tar.gz',
+        :allow_insecure => true
+      }
+    end
+    it { is_expected.to contain_user("tomcat").with(
+      'ensure' => 'present',
+      'gid'    => 'tomcat',
+    ) }
+    it { is_expected.to contain_group("tomcat").with(
+      'ensure' => 'present'
+    ) }
+    it { is_expected.to contain_file("/opt/apache-tomcat").with(
+      'ensure' => 'directory',
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
+      )
+    }
+    it { is_expected.to contain_archive('default-/opt/apache-tomcat/apache-tomcat-8.0.44.tar.gz').with(
+      'extract_path'  => '/opt/apache-tomcat',
+      'user'          => 'tomcat',
+      'group'         => 'tomcat',
+      'extract_flags' => '--strip 1 -xf',
+    )
+    }
+  end
+
   context 'install from source, different catalina_base' do
     let :facts do default_facts end
     let :params do
