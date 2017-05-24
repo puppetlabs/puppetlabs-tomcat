@@ -22,6 +22,10 @@
 # - $package_options to pass extra options to the package resource.
 # - $user is the owner of the tomcat home and base. Default: $tomcat::user
 # - $group is the group of the tomcat home and base. Default: $tomcat::group
+# - $manage_dirs is whether to manage sub-directories under $catalina_base. Default: true
+# - $dir_list is an array of sub-directories to manage under $catalina_base.
+#   Disable vai $manage_dirs. Default: ['bin','conf','lib','logs','temp','webapps','work']
+# - $dir_mode is the mode to use for sub-directories under $catalina_base. Default: '2770'
 define tomcat::instance (
   $catalina_home          = undef,
   $catalina_base          = undef,
@@ -35,6 +39,9 @@ define tomcat::instance (
   $java_home              = undef,
   $use_jsvc               = undef,
   $use_init               = undef,
+  $manage_dirs            = true,
+  $dir_list               = ['bin','conf','lib','logs','temp','webapps','work'],
+  $dir_mode               = '2770',
 
   #used for single installs. Deprecated.
   $install_from_source    = undef,
@@ -123,23 +130,19 @@ define tomcat::instance (
           group  => $_group,
         }
       }
-      $dir_list = [
-        "${_catalina_base}/bin",
-        "${_catalina_base}/conf",
-        "${_catalina_base}/lib",
-        "${_catalina_base}/logs",
-        "${_catalina_base}/temp",
-        "${_catalina_base}/webapps",
-        "${_catalina_base}/work",
-      ]
-      # Ensure install finishes before creating instances from it.
-      $home_sha = sha1($_catalina_home)
-      Tomcat::Install <| tag == $home_sha |> -> File[$dir_list]
-      file { $dir_list:
-        ensure => directory,
-        owner  => $_user,
-        group  => $_group,
-        mode   => '2770',
+      if $manage_dirs {
+        # Ensure install finishes before creating instances from it.
+        $home_sha = sha1($_catalina_home)
+        Tomcat::Install <| tag == $home_sha |> -> File <| tag == 'dir_list' |>
+        $dir_list.each |$dir| {
+          file { "${_catalina_base}/${dir}":
+            ensure => directory,
+            owner  => $_user,
+            group  => $_group,
+            mode   => $dir_mode,
+            tag    => 'dir_list',
+          }
+        }
       }
       $copy_to_base_list = [
         "${_catalina_base}/conf/catalina.policy",
