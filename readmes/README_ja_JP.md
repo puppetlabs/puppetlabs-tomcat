@@ -1352,7 +1352,7 @@ Valveから削除する属性を指定します。
 
 ##### `source_url`
 
-シングルインスタンスモードの場合: *`install_from_source`が`true`に設定されている場合は必須です。* インストール元のソースURLを指定します。 to install from.
+シングルインスタンスモードの場合: *`install_from_source`が`true`に設定されている場合は必須です。* インストール元のソースURLを指定します。
 
 有効なオプション: `puppet://`、`http(s)://`、または`ftp://`のURLを含む文字列。
 
@@ -1364,11 +1364,19 @@ Valveから削除する属性を指定します。
 
 デフォルト値: `true`。
 
-##### `environment`
+##### `proxy_server`
 
-http_proxy、https_proxy、ftp_proxyなどを設定するための環境変数です。これらはステージングモジュールを介して、配下のexecに渡されるので、execタイプ`environment`と同じ形式に従います。
+Tomcatのバイナリをダウンロードするときに使用するプロキシサーバを指定します。例：'https://example.com:8080'
 
-https://docs.puppet.com/puppet/latest/reference/type.html#exec-attribute-environment
+デフォルト値: `undef`。
+
+##### `proxy_type`
+
+`proxy_server` が使用するプロキシサーバのタイプを指定します。通常、これには`proxy_server` のURIで指定されたプロトコルがデフォルトで設定されます。
+
+デフォルト値: `proxy_server`から自動検出。
+
+有効なオプション: 'none', 'http', 'https', 'ftp'。
 
 ##### `user`
 
@@ -1596,10 +1604,6 @@ Tomcatサービスが実行中かどうかを指定します。Puppetのネイ�
 `use_init => true`のときのjsvcプロセスのユーザ。
 
 #### tomcat::setenv::entry
-
-##### `base_path`
-
-**廃止されました。** 代わりに`config_file`を使用してください。
 
 ##### `config_file`
 
