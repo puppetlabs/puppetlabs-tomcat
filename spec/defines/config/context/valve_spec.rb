@@ -27,9 +27,9 @@ describe 'tomcat::config::context::valve', :type => :define do
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/context.xml',
       'changes' => [
-        'set Context/Resource[#attribute/name=\'valve\']/#attribute/name valve',
-        'set Context/Resource[#attribute/name=\'valve\']/#attribute/type org.apache.catalina.valves.rewrite.RewriteValve',
-        'rm Context/Resource[#attribute/name=\'valve\']/#attribute/foobar',
+        'set Context/Valve[#attribute/name=\'valve\']/#attribute/name valve',
+        'set Context/Valve[#attribute/name=\'valve\']/#attribute/type org.apache.catalina.valves.rewrite.RewriteValve',
+        'rm Context/Valve[#attribute/name=\'valve\']/#attribute/foobar',
         ]
       )
     }
@@ -45,7 +45,7 @@ describe 'tomcat::config::context::valve', :type => :define do
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/context.xml',
       'changes' => [
-        'rm Context/Resource[#attribute/name=\'valve\']',
+        'rm Context/Valve[#attribute/name=\'valve\']',
         ]
       )
     }
