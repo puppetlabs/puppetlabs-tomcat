@@ -35,6 +35,7 @@
         * [tomcat::config::context::manager](#tomcatconfigcontextmanager)
         * [tomcat::config::context::resource](#tomcatconfigcontextresource)
         * [tomcat::config::context::resourcelink](#tomcatconfigcontextresourcelink)
+        * [tomcat::config::context::valve](#tomcatconfigcontextvalve)
         * [tomcat::install](#tomcatinstall)
         * [tomcat::instance](#tomcatinstance)
         * [tomcat::service](#tomcatservice)
@@ -213,6 +214,7 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::install`: Installs a Tomcat instance.
 * `tomcat::instance`: Configures a Tomcat instance.
 * `tomcat::service`: Provides Tomcat service management.
@@ -776,6 +778,33 @@ Specifies Resource elements in `${catalina_base}/conf/context.xml`
 ##### `ensure`
 
 specifies whether you are trying to add or remove the Resource element. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'
+
+##### `resource_name`
+
+The name of the Resource to be created, relative to the java:comp/env context. Default: `$name`
+
+##### `resource_type`
+
+The fully qualified Java class name expected by the web application when it performs a lookup for this resource. Required to create the resource.
+
+##### `catalina_base`
+
+Specifies the root of the Tomcat installation. Default: `$tomcat::catalina_home`
+
+##### `additional_attributes`
+
+Specifies any additional attributes to add to the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+##### `attributes_to_remove`
+
+Specifies any attributes to remove from the Valve. Should be a hash of the format 'attribute' => 'value'. This parameter is optional.
+
+#### tomcat::config::context::valve
+Specifies Valve elements in `${catalina_base}/conf/context.xml`
+
+##### `ensure`
+
+specifies whether you are trying to add or remove the Valve element. Valid values are 'true', 'false', 'present', and 'absent'. Defaults to 'present'
 
 ##### `resource_name`
 
