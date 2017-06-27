@@ -7,11 +7,17 @@
 # - $resource_ensure specifies whether you are trying to add or remove the
 #   Resource element. Valid values are 'true', 'false', 'present', and
 #   'absent'. Defaults to 'present'.
+# - An optional $resource_name that replaces the $name from the resource.
+# - An optional string containing the $type of the element. Used verbatim
+#   to create a <GlobalNamingResources><${type} /></GlobalNamingResources>
+#   node. Should be used for "Environment" entries, for example.
 # - An optional hash of $additional_attributes to add to the Resource. Should
 #   be of the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Resource.
 define tomcat::config::server::globalnamingresource (
   $catalina_base         = $::tomcat::catalina_home,
+  $resource_name         = undef,
+  $type                  = 'Resource',
   $ensure                = 'present',
   $additional_attributes = {},
   $attributes_to_remove  = [],
@@ -25,7 +31,13 @@ define tomcat::config::server::globalnamingresource (
   validate_hash($additional_attributes)
   validate_re($catalina_base, '^.*[^/]$', '$catalina_base must not end in a /!')
 
-  $base_path = "Server/GlobalNamingResources/Resource[#attribute/name='${name}']"
+  if $resource_name {
+    $_resource_name = $resource_name
+  } else {
+    $_resource_name = $name
+  }
+
+  $base_path = "Server/GlobalNamingResources/${type}[#attribute/name='${_resource_name}']"
 
   if $server_config {
     $_server_config = $server_config
@@ -59,7 +71,7 @@ define tomcat::config::server::globalnamingresource (
   augeas { "server-${catalina_base}-globalresource-${name}-definition":
     lens    => 'Xml.lns',
     incl    => $_server_config,
-    changes => "set ${base_path}/#attribute/name '${name}'",
+    changes => "set ${base_path}/#attribute/name '${_resource_name}'",
     before  => Augeas["server-${catalina_base}-globalresource-${name}"],
   }
 

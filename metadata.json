@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-tomcat",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "author": "puppetlabs",
   "summary": "Installs, deploys, and configures Apache Tomcat web services.",
   "license": "Apache-2.0",
@@ -10,7 +10,7 @@
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 5.0.0"},
     {"name":"puppetlabs/concat","version_requirement":">= 1.1.0 < 3.0.0"},
-    {"name":"puppet/staging","version_requirement":">= 0.4.1 < 2.0.0"}
+    {"name":"puppet/archive","version_requirement":">= 1.0.0 < 2.0.0"}
   ],
   "operatingsystem_support": [
     {
@@ -58,14 +58,22 @@
       "operatingsystemrelease": [
         "10.04",
         "12.04",
-        "14.04"
+        "14.04",
+        "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "11",
+        "12"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 3.0.0 < 5.0.0"
+      "version_requirement": ">= 4.7.0 < 5.0.0"
     }
   ]
 }

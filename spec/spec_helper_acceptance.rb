@@ -27,11 +27,11 @@ else # We're outside the CI system and use default locations
   latest8 = (match = latest_download_page.match(/apache-tomcat-(.{4,7}).tar.gz/) and match[1])
 
   TOMCAT6_RECENT_VERSION = ENV['TOMCAT6_RECENT_VERSION'] || latest6
-  TOMCAT6_RECENT_SOURCE = "http://mirror.symnds.com/software/Apache/tomcat/tomcat-6/v#{TOMCAT6_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT6_RECENT_VERSION}.tar.gz"
+  TOMCAT6_RECENT_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-6/v#{TOMCAT6_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT6_RECENT_VERSION}.tar.gz"
   TOMCAT7_RECENT_VERSION = ENV['TOMCAT7_RECENT_VERSION'] || latest7
-  TOMCAT7_RECENT_SOURCE = "http://mirror.symnds.com/software/Apache/tomcat/tomcat-7/v#{TOMCAT7_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT7_RECENT_VERSION}.tar.gz"
+  TOMCAT7_RECENT_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-7/v#{TOMCAT7_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT7_RECENT_VERSION}.tar.gz"
   TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
-  TOMCAT8_RECENT_SOURCE = "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v#{TOMCAT8_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT8_RECENT_VERSION}.tar.gz"
+  TOMCAT8_RECENT_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-8/v#{TOMCAT8_RECENT_VERSION}/bin/apache-tomcat-#{TOMCAT8_RECENT_VERSION}.tar.gz"
   TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '6.0.39'
   TOMCAT_LEGACY_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-6/v#{TOMCAT_LEGACY_VERSION}/bin/apache-tomcat-#{TOMCAT_LEGACY_VERSION}.tar.gz"
   SAMPLE_WAR = 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war'
@@ -60,7 +60,7 @@ RSpec.configure do |c|
       on host, puppet('module','install','puppetlabs-concat'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-java'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-gcc'), { :acceptable_exit_codes => [0,1] }
-      on host, puppet('module','install','puppet-staging'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module','install','puppet-archive'), { :acceptable_exit_codes => [0,1] }
       if fact('osfamily') == 'RedHat'
         on host, 'yum install -y nss'
       end

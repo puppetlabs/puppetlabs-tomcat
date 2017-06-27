@@ -75,9 +75,10 @@ define tomcat::war(
     if ! $war_source {
       fail('$war_source must be specified if you aren\'t removing the WAR')
     }
-    staging::file { $name:
-      source => $war_source,
-      target => "${_deployment_path}/${_war_name}",
+    archive { "tomcat::war ${name}":
+      extract => false,
+      source  => $war_source,
+      path    => "${_deployment_path}/${_war_name}",
     }
   }
 }

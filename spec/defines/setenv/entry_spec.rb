@@ -24,7 +24,6 @@ describe 'tomcat::setenv::entry', :type => :define do
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/bin/setenv.sh') }
     it { is_expected.to contain_concat__fragment('setenv-FOO').with_content(/export FOO=\/bin\/true/).with({
-      'ensure' => 'present',
       'target' => '/opt/apache-tomcat/bin/setenv.sh',
     })
     }
@@ -32,16 +31,15 @@ describe 'tomcat::setenv::entry', :type => :define do
   context 'quotes' do
     let :params do
       {
-        'param'      => 'BAR',
-        'value'      => '/bin/true',
-        'quote_char' => '"',
-        'base_path'  => '/opt/apache-tomcat/foo/bin'
+        'param'       => 'BAR',
+        'value'       => '/bin/true',
+        'quote_char'  => '"',
+        'config_file' => '/opt/apache-tomcat/foo/bin/setenv.sh'
       }
     end
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/foo/bin/setenv.sh') }
     it { is_expected.to contain_concat__fragment('setenv-FOO').with_content(/export BAR="\/bin\/true"/).with({
-      'ensure' => 'present',
       'target' => '/opt/apache-tomcat/foo/bin/setenv.sh',
     })
     }
@@ -50,13 +48,11 @@ describe 'tomcat::setenv::entry', :type => :define do
     let :params do
       {
         'value'  => '/bin/true',
-        'ensure' => 'absent',
       }
     end
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/bin/setenv.sh') }
     it { is_expected.to contain_concat__fragment('setenv-FOO').with({
-      'ensure' => 'absent',
       'target' => '/opt/apache-tomcat/bin/setenv.sh',
     })
     }
@@ -78,16 +74,15 @@ describe 'tomcat::setenv::entry', :type => :define do
   context 'array' do
     let :params do
       {
-        'param'      => 'BAR',
-        'value'      => ['/bin/true', '/bin/false'],
-        'quote_char' => '"',
-        'base_path'  => '/opt/apache-tomcat/foo/bin'
+        'param'       => 'BAR',
+        'value'       => ['/bin/true', '/bin/false'],
+        'quote_char'  => '"',
+        'config_file' => '/opt/apache-tomcat/foo/bin/setenv.sh'
       }
     end
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/foo/bin/setenv.sh') }
     it { is_expected.to contain_concat__fragment('setenv-FOO').with_content(/export BAR="\/bin\/true \/bin\/false"/).with({
-      'ensure' => 'present',
       'target' => '/opt/apache-tomcat/foo/bin/setenv.sh',
     })
     }
@@ -103,7 +98,6 @@ describe 'tomcat::setenv::entry', :type => :define do
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/bin/setenv.sh') }
     it { is_expected.to contain_concat__fragment('setenv-FOO').with_content(/export BAR=\/bin\/true/).with({
-      'ensure' => 'present',
       'target' => '/opt/apache-tomcat/bin/setenv.sh',
       'order'  => '10',
     })

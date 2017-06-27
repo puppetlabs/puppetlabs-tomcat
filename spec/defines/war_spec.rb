@@ -6,8 +6,7 @@ describe 'tomcat::war', :type => :define do
   end
   let :facts do
     {
-      :osfamily         => 'Debian',
-      :staging_http_get => 'curl',
+      :osfamily => 'Debian',
     }
   end
   let :title do
@@ -19,9 +18,9 @@ describe 'tomcat::war', :type => :define do
         :war_source => '/tmp/sample.war',
       }
     end
-    it { is_expected.to contain_staging__file('sample.war').with(
+    it { is_expected.to contain_archive('tomcat::war sample.war').with(
       'source' => '/tmp/sample.war',
-      'target' => '/opt/apache-tomcat/webapps/sample.war',
+      'path'   => '/opt/apache-tomcat/webapps/sample.war',
     )
     }
   end
@@ -52,9 +51,9 @@ describe 'tomcat::war', :type => :define do
         :war_source    => '/tmp/sample.war',
       }
     end
-    it { is_expected.to contain_staging__file('sample.war').with(
+    it { is_expected.to contain_archive('tomcat::war sample.war').with(
       'source' => '/tmp/sample.war',
-      'target' => '/opt/apache-tomcat/test/webapps2/sample2.war',
+      'path'   => '/opt/apache-tomcat/test/webapps2/sample2.war',
     )
     }
   end
@@ -65,9 +64,9 @@ describe 'tomcat::war', :type => :define do
         :war_source      => '/tmp/sample.war',
       }
     end
-    it { is_expected.to contain_staging__file('sample.war').with(
+    it { is_expected.to contain_archive('tomcat::war sample.war').with(
       'source' => '/tmp/sample.war',
-      'target' => '/opt/apache-tomcat/webapps3/sample.war',
+      'path'   => '/opt/apache-tomcat/webapps3/sample.war',
     )
     }
   end
@@ -137,8 +136,8 @@ describe 'tomcat::war', :type => :define do
       end
       it do
         expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /not recognize source/)
+          catalogue.to_ral
+        }.to raise_error(Puppet::Error, /invalid source url/)
       end
     end
     context 'no source' do

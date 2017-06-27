@@ -55,7 +55,7 @@ describe 'tomcat::config::server::host', :type => :define do
         ],
       }
     end
-    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-host-test.example.com').with(
+    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-host-localhost').with(
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/server.xml',
       'changes' => [
