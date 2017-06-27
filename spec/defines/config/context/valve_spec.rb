@@ -28,7 +28,7 @@ describe 'tomcat::config::context::valve', :type => :define do
       'incl' => '/opt/apache-tomcat/test/conf/context.xml',
       'changes' => [
         'set Context/Valve[#attribute/name=\'valve\']/#attribute/name valve',
-        'set Context/Valve[#attribute/name=\'valve\']/#attribute/type org.apache.catalina.valves.rewrite.RewriteValve',
+        'set Context/Valve[#attribute/name=\'valve\']/#attribute/className org.apache.catalina.valves.rewrite.RewriteValve',
         'rm Context/Valve[#attribute/name=\'valve\']/#attribute/foobar',
         ]
       )
