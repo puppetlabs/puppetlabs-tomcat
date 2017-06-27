@@ -23,7 +23,7 @@ describe 'tomcat::config::context::valve', :type => :define do
         ],
       }
     end
-    it { is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resource-valve').with(
+    it { is_expected.to contain_augeas('context-/opt/apache-tomcat/test-valve-valve').with(
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/context.xml',
       'changes' => [
