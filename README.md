@@ -9,6 +9,7 @@
     * [Beginning with tomcat](#beginning-with-tomcat)
 4. [Usage - Configuration options and additional functionality](#usage)
     * [I want to run multiple instances of multiple versions of Tomcat](#i-want-to-run-multiple-instances-of-multiple-versions-of-tomcat)
+    * [I want to configure SSL and specify which protocols and ciphers to use](#i-want-to-configure-ssl-and-specify-which-protocols-and-ciphers-to-use)
     * [I want to deploy WAR files.](#i-want-to-deploy-war-files)
     * [I want to remove some configuration](#i-want-to-remove-some-configuration)
     * [I want to manage a Connector or Realm that already exists](#i-want-to-manage-a-connector-or-realm-that-already-exists)
@@ -137,6 +138,40 @@ tomcat::config::server::connector { 'tomcat6-ajp':
 ```
 
 > Note: look up the correct version you want to install on the [version list](http://tomcat.apache.org/whichversion.html).
+
+### I want to configure SSL and specify which protocols and ciphers to use
+```puppet
+  file { $keystore_path: 
+    ensure => present,
+    source => $keystore_source,
+    owner => $keystore_user,
+    mode => '0400',
+    checksum => 'md5',
+    checksum_value => $keystore_checksum,
+  } ->
+
+  tomcat::config::server::connector { "${tomcat_instance}-https":
+    catalina_base         => $catalina_base,
+    port                  => $https_port,
+    protocol              => $http_version,
+    purge_connectors      => true,
+    additional_attributes => {
+      'SSLEnabled'          => bool2str($https_enabled),
+      'maxThreads'          => $https_connector_max_threads,
+      'scheme'              => $https_connector_scheme,
+      'secure'              => bool2str($https_connector_secure),
+      'clientAuth'          => bool2str($https_connector_client_auth),
+      'sslProtocol'         => $https_connector_ssl_protocol,
+      'sslEnabledProtocols' => join($https_connector_ssl_protocols_enabled, ","),
+      'ciphers'             => join($ciphers_enabled, ","),
+      
+      'keystorePass'        => $keystore_pass.unwrap,
+      'keystoreFile'        => $keystore_path,
+    },
+  }
+```
+
+> See also: [SSL/TLS Configuration HOW-TO](https://tomcat.apache.org/tomcat-8.5-doc/ssl-howto.html)
 
 ### I want to deploy WAR files
 
