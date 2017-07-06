@@ -6,8 +6,7 @@
 # @param catalina_base is the base directory for the Tomcat installation.
 # @param class_name is the Java class name of the Realm implementation to use.
 # @param realm_ensure specifies whether you are adding or removing a
-#        Realm element. Valid values are 'true', 'false', 'present', and
-#        'absent'. Defaults to 'present'.
+#        Realm element. Valid values are 'present', and 'absent'. Defaults to 'present'.
 # @param parent_service is the `name` attribute for the Service element this Realm
 #        should be nested beneath. Defaults to 'Catalina'.
 # @param parent_engine is the `name` attribute for the Engine element this Realm
@@ -23,17 +22,17 @@
 #        from the configuration file by default.
 # @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::realm (
-  $catalina_base         = undef,
-  $class_name            = $name,
-  $realm_ensure          = 'present',
-  $parent_service        = 'Catalina',
-  $parent_engine         = 'Catalina',
-  $parent_host           = undef,
-  $parent_realm          = undef,
-  $additional_attributes = {},
-  $attributes_to_remove  = [],
-  $purge_realms          = undef,
-  $server_config         = undef,
+  $catalina_base                                          = undef,
+  $class_name                                             = $name,
+  Variant[Enum['present','absent'],Boolean] $realm_ensure = 'present',
+  $parent_service                                         = 'Catalina',
+  $parent_engine                                          = 'Catalina',
+  $parent_host                                            = undef,
+  $parent_realm                                           = undef,
+  Hash $additional_attributes                             = {},
+  Array $attributes_to_remove                             = [],
+  Optional[Boolean] $purge_realms                         = undef,
+  $server_config                                          = undef,
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -43,13 +42,9 @@ define tomcat::config::server::realm (
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
-  validate_re($realm_ensure, '^(present|absent|true|false)$')
-  validate_hash($additional_attributes)
-  validate_array($attributes_to_remove)
-  validate_bool($_purge_realms)
 
   if $_purge_realms and ($realm_ensure =~ /^(absent|false)$/) {
-    fail('$realm_ensure must be set to \'true\' or \'present\' to use $purge_realms')
+    fail('$realm_ensure must be set to \'present\' to use $purge_realms')
   }
 
   if $_purge_realms {

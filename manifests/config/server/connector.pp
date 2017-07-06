@@ -3,30 +3,32 @@
 # Configure Connector elements in $CATALINA_BASE/conf/server.xml
 #
 # Parameters:
-# - $catalina_base is the base directory for the Tomcat installation.
-# - $connector_ensure specifies whether you are trying to add or remove the
-#   Connector element. Valid values are 'true', 'false', 'present', and
-#   'absent'. Defaults to 'present'.
-# - The $port attribute. This attribute is required unless $connector_ensure
-#   is set to false.
-# - The $protocol attribute. Defaults to $name when not specified.
-# - $parent_service is the Service element this Connector should be nested
-#   beneath. Defaults to 'Catalina'.
-# - An optional hash of $additional_attributes to add to the Connector. Should
+# @param catalina_base is the base directory for the Tomcat installation.
+# @param connector_ensure specifies whether you are trying to add or remove the
+#   Connector element. Valid values are 'present' and 'absent'. Defaults to 'present'.
+# @param port This attribute is required unless $connector_ensure is set to false.
+# @param protocol Defaults to $name when not specified.
+# @param parent_service The Service element which this Connector should be nested
+#        beneath. Defaults to 'Catalina'.
+# @param additional_attributes An optional hash of additional attributes to add to the Connector. Should
 #   be of the format 'attribute' => 'value'.
-# - An optional array of $attributes_to_remove from the Connector.
+# @param attributes_to_remove An optional array of attributes to remove from the Connector.
+# @param purge_connectors Specifies whether to purge any unmanaged Connector
+#        elements that match defined protocol but have a different port from the
+#        configuration file.
+# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::connector (
-  $catalina_base         = undef,
-  $connector_ensure      = 'present',
-  $port                  = undef,
-  $protocol              = $name,
-  $parent_service        = 'Catalina',
-  $additional_attributes = {},
-  $attributes_to_remove  = [],
-  $purge_connectors      = undef,
-  $server_config         = undef,
+  $catalina_base                             = undef,
+  Enum['present','absent'] $connector_ensure = 'present',
+  $port                                      = undef,
+  $protocol                                  = $name,
+  $parent_service                            = 'Catalina',
+  Hash $additional_attributes                = {},
+  Array $attributes_to_remove                = [],
+  Optional[Boolean] $purge_connectors        = undef,
+  $server_config                             = undef,
 ) {
-  include tomcat
+  include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
   tag(sha1($_catalina_base))
   $_purge_connectors = pick($purge_connectors, $::tomcat::purge_connectors)
@@ -34,10 +36,9 @@ define tomcat::config::server::connector (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
-  validate_re($connector_ensure, '^(present|absent|true|false)$')
-  validate_hash($additional_attributes)
-  validate_bool($_purge_connectors)
-  validate_re($_catalina_base, '^.*[^/]$', '$catalina_base must not end in a /!')
+  if $_catalina_base !~ /^.*[^\/]$/ {
+    fail('$catalina_base must not end in a /!')
+  }
 
   $path = "Server/Service[#attribute/name='${parent_service}']"
 
@@ -83,7 +84,13 @@ define tomcat::config::server::connector (
       $_attributes_to_remove = undef
     }
 
-    $changes = delete_undef_values(flatten([ $__purge_connectors, $_port, $_protocol_change, $_additional_attributes, $_attributes_to_remove ]))
+    $changes = delete_undef_values(flatten([
+      $__purge_connectors,
+      $_port,
+      $_protocol_change,
+      $_additional_attributes,
+      $_attributes_to_remove,
+    ]))
   }
 
   augeas { "server-${_catalina_base}-${parent_service}-connector-${port}":

@@ -4,34 +4,33 @@
 # or any other specified file
 #
 # Parameters:
-# - $catalina_base is the base directory for the Tomcat installation
-# - $element specifies the element type. Valid values are 'user' or 'role'.
-#   Defaults to 'user'.
-# - $element_name sets the 'username' or 'rolename'. Depends on the $element.
-#   Defaults to $name.
-# - $ensure specifies whether you are trying to add or remove the element.
-#   Valid values are 'present', 'absent', 'true', and 'false'. Defaults to
-#   'present'.
-# - $file: The path to the file to manage. Must be fully qualified.
-#   Defaults to $CATALINA_BASE/conf/tomcat-users.xml.
-# - Set $manage_file to true for managing the file. It sets file permission,
-#   owner, group and create a basic tomcat-users XML if file does not exist yet.
-# - $owner specifies the owner of the file if $manage_file is true. Default: $tomcat::user
-# - $group specifies the group of the file if $manage_file is true. Default: $tomcat::group
-# - $password specifies the password for a user ($element = 'user').
-# - $roles specifies the roles for a user ($element = 'user').
+# @param catalina_base is the base directory for the Tomcat installation
+# @param element specifies the element type. Valid values are 'user' or 'role'.
+#        Defaults to 'user'.
+# @param element_name sets the 'username' or 'rolename'. Depends on the $element.
+#        Defaults to $name.
+# @param ensure specifies whether you are trying to add or remove the element.
+#        Valid values are 'present' and 'absent'. Defaults to 'present'.
+# @param file The path to the file to manage. Must be fully qualified.
+#        Defaults to $CATALINA_BASE/conf/tomcat-users.xml.
+# @param manage_file Set to true for managing the file. It sets file permission,
+#        owner, group and create a basic tomcat-users XML if file does not exist yet.
+# @param owner specifies the owner of the file if $manage_file is true. Default: $tomcat::user
+# @param group specifies the group of the file if $manage_file is true. Default: $tomcat::group
+# @param password specifies the password for a user ($element = 'user').
+# @param roles specifies the roles for a user ($element = 'user').
 #
 define tomcat::config::server::tomcat_users (
-  $catalina_base = $::tomcat::catalina_home,
-  $element       = 'user',
-  $element_name  = undef,
-  $ensure        = present,
-  $file          = undef,
-  $manage_file   = true,
-  $owner         = undef,
-  $group         = undef,
-  $password      = undef,
-  $roles         = [],
+  $catalina_base                   = $::tomcat::catalina_home,
+  Enum['user','role'] $element     = 'user',
+  $element_name                    = undef,
+  Enum['present','absent'] $ensure = present,
+  $file                            = undef,
+  Boolean $manage_file             = true,
+  $owner                           = undef,
+  $group                           = undef,
+  $password                        = undef,
+  Array $roles                     = [],
 ) {
 
   if versioncmp($::augeasversion, '1.0.0') < 0 {
@@ -40,11 +39,6 @@ define tomcat::config::server::tomcat_users (
 
   $_owner = pick($owner, $::tomcat::user)
   $_group = pick($group, $::tomcat::group)
-
-  validate_re($element, '^(user|role)$')
-  validate_re($ensure, '^(present|absent|true|false)$')
-  validate_array($roles)
-  validate_bool($manage_file)
 
   if $element == 'role' and ( $password or ! empty($roles) ) {
     warning('$password and $roles are useless when $element is set to \'role\'')
@@ -77,6 +71,7 @@ define tomcat::config::server::tomcat_users (
       owner   => $_owner,
       group   => $_group,
       mode    => '0640',
+      before  => Augeas["${catalina_base}-tomcat_users-${element}-${_element_name}-${name}"],
     })
   }
 
@@ -105,7 +100,6 @@ define tomcat::config::server::tomcat_users (
     lens    => 'Xml.lns',
     incl    => $_file,
     changes => $changes,
-    require => File[$_file],
   }
 
 }

@@ -3,56 +3,36 @@
 # Configure Environment elements in $CATALINA_BASE/conf/context.xml
 #
 # Parameters:
-# - $ensure specifies whether you are trying to add or remove the
-#   Environment element. Valid values are 'true', 'false', 'present', and
-#   'absent'. Defaults to 'present'.
-# - $catalina_base is the base directory for the Tomcat installation.
-# - $environment_name is the name of the Environment to be created, relative to
-#   the java:comp/env context.
-# - $type is the fully qualified Java class name expected by the web application
-#   for this environment entry.
-# - $value that will be presented to the application when requested from
-#   the JNDI context.
-# - $description is an optional string for a human-readable description
-#   of this environment entry.
-# - Set $override to false if you do not want an <env-entry> for
-#   the same environment entry name to override the value specified here.
-# - An optional hash of $additional_attributes to add to the Environment. Should
-#   be of the format 'attribute' => 'value'.
-# - An optional array of $attributes_to_remove from the Environment.
+# @param ensure specifies whether you are trying to add or remove the
+#        Environment element. Valid values are 'present', and 'absent'. Defaults to 'present'.
+# @param catalina_base is the base directory for the Tomcat installation.
+# @param environment_name is the name of the Environment to be created,
+#        relative to the java:comp/env context.
+# @param type is the fully qualified Java class name expected by the web
+#        application for this environment entry.
+# @param value that will be presented to the application when requested from
+#        the JNDI context.
+# @param description is an optional string for a human-readable description
+#        of this environment entry.
+# @param override should be false if you do not want an <env-entry> for
+#        the same environment entry name to override the value specified here.
+# @param additional_attributes optional hash to add to the Environment. Should
+#        be of the format 'attribute' => 'value'.
+# @param attributes_to_remove optional array to remove attributes from the Environment.
 define tomcat::config::context::environment (
-  $ensure                  = 'present',
-  $catalina_base           = $::tomcat::catalina_home,
-  $environment_name        = $name,
-  $type                    = undef,
-  $value                   = undef,
-  $description             = undef,
-  $override                = undef,
-  $additional_attributes   = {},
-  $attributes_to_remove    = [],
+  Enum['present','absent'] $ensure    = 'present',
+  Stdlib::Absolutepath $catalina_base = $::tomcat::catalina_home,
+  String $environment_name            = $name,
+  Optional[String] $type              = undef,
+  Optional[String] $value             = undef,
+  Optional[String] $description       = undef,
+  Optional[Boolean] $override         = undef,
+  Hash $additional_attributes         = {},
+  Array $attributes_to_remove         = [],
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
-
-  if is_bool($override) {
-    $_override = bool2str($override)
-  } else {
-    $_override = $override
-  }
-
-  validate_re($ensure, '^(present|absent|true|false)$')
-  validate_absolute_path($catalina_base)
-
-  validate_string(
-    $environment_name,
-    $type,
-    $value,
-    $description,
-  )
-
-  validate_hash($additional_attributes)
-  validate_array($attributes_to_remove)
 
   $base_path = "Context/Environment[#attribute/name='${environment_name}']"
 
@@ -71,8 +51,8 @@ define tomcat::config::context::environment (
     $set_type  = "set ${base_path}/#attribute/type ${type}"
     $set_value = "set ${base_path}/#attribute/value ${value}"
 
-    if ! empty($_override) {
-      validate_re($_override, '(true|false)', '$override must be true or false')
+    if $override != undef {
+      $_override = bool2str($override)
       $set_override = "set ${base_path}/#attribute/override ${_override}"
     } else {
       $set_override = "rm ${base_path}/#attribute/override"

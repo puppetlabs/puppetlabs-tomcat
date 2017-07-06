@@ -15,18 +15,16 @@
 #   be of the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Connector.
 define tomcat::config::context::valve (
-  $ensure                = 'present',
-  $resource_name         = $name,
-  $resource_type         = undef,
-  $catalina_base         = $::tomcat::catalina_home,
-  $additional_attributes = {},
-  $attributes_to_remove  = [],
+  Enum['present','absent'] $ensure = 'present',
+  $resource_name                   = $name,
+  $resource_type                   = undef,
+  $catalina_base                   = $::tomcat::catalina_home,
+  Hash $additional_attributes      = {},
+  Array $attributes_to_remove      = [],
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
-
-  validate_re($ensure, '^(present|absent|true|false)$')
 
   if $resource_name {
     $_resource_name = $resource_name

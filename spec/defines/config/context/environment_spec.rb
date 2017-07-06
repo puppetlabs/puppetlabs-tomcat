@@ -90,7 +90,7 @@ describe 'tomcat::config::context::environment', :type => :define do
         :catalina_base => '/opt/apache-tomcat/foo',
         :type          => 'java.lang.Integer',
         :value         => '10',
-        :override      => 'true',
+        :override      => true,
       }
     end
     it { is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
@@ -139,7 +139,7 @@ describe 'tomcat::config::context::environment', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /match/)
       end
     end
     context 'Empty catalina_base' do
@@ -151,7 +151,7 @@ describe 'tomcat::config::context::environment', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /is not an absolute path/)
+        }.to raise_error(Puppet::Error, /path/)
       end
     end
     context 'No type' do
@@ -192,7 +192,7 @@ describe 'tomcat::config::context::environment', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /\$override must be true or false/)
+        }.to raise_error(Puppet::Error, /got String/)
       end
     end
   end

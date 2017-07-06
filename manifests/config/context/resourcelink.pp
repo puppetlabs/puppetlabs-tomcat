@@ -3,27 +3,24 @@
 # Configure a ResourceLink element in the designated xml config.
 #
 # Parameters:
-# - $ensure specifies whether you are trying to add or remove the
-#   ResourceLink element. Valid values are 'true', 'false', 'present', and
-#   'absent'. Defaults to 'present'.
-# - $catalina_base is the base directory for the Tomcat instance.
-# - $resourcelink_name is the name of the resource link to be created, relative
-#   to the java:comp/env context. Defaults to $name
-# - $resourcelink_type is the fully qualified Java class name expected by the web
-#   application when it performs a lookup for this resource link. Required
+# @param ensure specifies whether you are trying to add or remove the
+#        ResourceLink element. Valid values are 'present' and 'absent'. Defaults to 'present'.
+# @param catalina_base is the base directory for the Tomcat instance.
+# @param resourcelink_name is the name of the resource link to be created, relative
+#        to the java:comp/env context. Defaults to $name
+# @param resourcelink_type is the fully qualified Java class name expected by the web
+#        application when it performs a lookup for this resource link. Required
 define tomcat::config::context::resourcelink (
-  $ensure                = 'present',
-  $catalina_base         = $::tomcat::catalina_home,
-  $resourcelink_name     = $name,
-  $resourcelink_type     = undef,
-  $additional_attributes = {},
-  $attributes_to_remove  = [],
+  Enum['present','absent'] $ensure = 'present',
+  $catalina_base                   = $::tomcat::catalina_home,
+  $resourcelink_name               = $name,
+  $resourcelink_type               = undef,
+  Hash $additional_attributes      = {},
+  Array $attributes_to_remove      = [],
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Context configurations require Augeas >= 1.0.0')
   }
-
-  validate_re($ensure, '^(present|absent|true|false)$')
 
   $base_path = "Context/ResourceLink[#attribute/name='${resourcelink_name}']"
 

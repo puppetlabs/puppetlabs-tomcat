@@ -1,23 +1,23 @@
 #
 define tomcat::install (
-  $catalina_home          = $name,
-  $install_from_source    = true,
+  $catalina_home                  = $name,
+  Boolean $install_from_source    = true,
 
   # source options
-  $source_url             = undef,
-  $source_strip_first_dir = true,
-  $proxy_type             = undef,
-  $proxy_server           = undef,
-  $user                   = undef,
-  $group                  = undef,
-  $manage_user            = undef,
-  $manage_group           = undef,
-  $manage_home            = undef,
+  $source_url                     = undef,
+  Boolean $source_strip_first_dir = true,
+  $proxy_type                     = undef,
+  $proxy_server                   = undef,
+  $user                           = undef,
+  $group                          = undef,
+  $manage_user                    = undef,
+  $manage_group                   = undef,
+  $manage_home                    = undef,
 
   # package options
-  $package_ensure         = undef,
-  $package_name           = undef,
-  $package_options        = undef,
+  $package_ensure                 = undef,
+  $package_name                   = undef,
+  $package_options                = undef,
 ) {
   include ::tomcat
   $_user = pick($user, $::tomcat::user)
@@ -25,7 +25,6 @@ define tomcat::install (
   $_manage_user = pick($manage_user, $::tomcat::manage_user)
   $_manage_group = pick($manage_group, $::tomcat::manage_group)
   $_manage_home = pick($manage_home, $::tomcat::manage_home)
-  validate_bool($install_from_source, $source_strip_first_dir)
   tag(sha1($catalina_home))
 
   if $install_from_source {
