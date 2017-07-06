@@ -82,7 +82,7 @@ describe 'Use two realms within a configuration', :unless => stop_test do
     end
     it 'Should contain two realms in config file' do
       shell('cat /opt/apache-tomcat/tomcat40/conf/server.xml', :acceptable_exit_codes => 0) do |r|
-        r.stdout.should match(/<Realm className="org.apache.catalina.realm.MemoryRealm"><\/Realm>/)
+        r.stdout.should match(/<Realm puppetName="org.apache.catalina.realm.MemoryRealm" className="org.apache.catalina.realm.MemoryRealm"><\/Realm>/)
       end
     end
     it 'should be idempotent' do

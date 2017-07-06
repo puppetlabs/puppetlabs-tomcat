@@ -37,14 +37,15 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens'    => 'Xml.lns',
       'incl'    => '/opt/apache-tomcat/server.xml',
       'changes' => [
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/connectionURL 'ldap://localhost'",
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/roleName 'cn'",
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/roleSearch 'member={0}'",
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/spaces 'foo bar'",
-        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/foo",
-        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/bar",
-        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/baz",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName org.apache.catalina.realm.JNDIRealm",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/connectionURL 'ldap://localhost'",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/roleName 'cn'",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/roleSearch 'member={0}'",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/spaces 'foo bar'",
+        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/foo",
+        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/bar",
+        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/baz",
       ]
     )
     }
@@ -75,11 +76,12 @@ describe 'tomcat::config::server::realm', :type => :define do
         "rm //Host//Realm",
         "rm //Engine//Realm",
         "rm //Server//Realm",
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/connectionURL 'ldap://localhost'",
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/roleName 'cn'",
-        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/foo",
-        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/bar",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName org.apache.catalina.realm.JNDIRealm",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/connectionURL 'ldap://localhost'",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/roleName 'cn'",
+        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/foo",
+        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/bar",
       ]
     )
     }
@@ -98,7 +100,8 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName org.apache.catalina.realm.JNDIRealm",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
       ]
     )
     }
@@ -127,7 +130,8 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='first' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName first",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='first' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
       ]
     )
     }
@@ -135,7 +139,8 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='second' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName second",
+        "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='second' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
       ]
     )
     }
@@ -154,7 +159,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']",
+        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]",
       ]
     )
     }
@@ -173,7 +178,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
       'incl' => '/opt/apache-tomcat/test/conf/server.xml',
       'changes' => [
-        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']",
+        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]",
       ]
     )
     }
@@ -194,7 +199,8 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
        'changes' => [
-         "set Server/Service[#attribute/name='NewService']/Engine[#attribute/name='AnotherEngine']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
+         "set Server/Service[#attribute/name='NewService']/Engine[#attribute/name='AnotherEngine']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName org.apache.catalina.realm.JNDIRealm",
+         "set Server/Service[#attribute/name='NewService']/Engine[#attribute/name='AnotherEngine']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
        ]
     )
     }
@@ -214,7 +220,8 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
        'changes' => [
-         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName org.apache.catalina.realm.JNDIRealm",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
        ]
     )
     }
@@ -235,7 +242,8 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
        'changes' => [
-         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName org.apache.catalina.realm.JNDIRealm",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
        ]
     )
     }
@@ -261,11 +269,12 @@ describe 'tomcat::config::server::realm', :type => :define do
       'lens' => 'Xml.lns',
        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
        'changes' => [
-         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/className org.apache.catalina.realm.JNDIRealm",
-         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/connectionURL 'ldap://localhost'",
-         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/roleName 'cn'",
-         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/roleSearch 'member={0}'",
-         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.JNDIRealm']/#attribute/spaces 'foo bar'",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName org.apache.catalina.realm.JNDIRealm",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className org.apache.catalina.realm.JNDIRealm",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/connectionURL 'ldap://localhost'",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/roleName 'cn'",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/roleSearch 'member={0}'",
+         "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/spaces 'foo bar'",
        ]
     )
     }

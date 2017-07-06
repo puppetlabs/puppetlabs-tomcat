@@ -179,7 +179,7 @@ describe 'Acceptance case one', :unless => stop_test do
     end
     it 'Should not have deployed the war' do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
-        r.stdout.should match(/The requested resource is not available./)
+        r.stdout.should match(/The requested resource is not available/)
       end
     end
     it 'Should still have the server running on port 80' do

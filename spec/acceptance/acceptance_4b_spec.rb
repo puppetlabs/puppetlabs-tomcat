@@ -58,19 +58,29 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
         war_source    => '/tmp/sample.war',
         war_name      => 'tomcat40-sample.war',
       }
+      tomcat::config::server::realm { 'org.apache.catalina.realm.CombinedRealm':
+        catalina_base => '/opt/apache-tomcat40',
+      }
       tomcat::config::server::realm { 'org.apache.catalina.realm.MyRealm1':
         realm_ensure          => present,
         catalina_base         => '/opt/apache-tomcat40',
+        parent_realm          => 'org.apache.catalina.realm.CombinedRealm',
+        class_name            => 'org.apache.catalina.realm.MyRealm',
         server_config         => '/opt/apache-tomcat40/conf/server.xml',
         additional_attributes => {
-          resourceName => "MyRealm1",
+          resourceName   => "MyRealm1",
+          otherAttribute => "more stuff",
         }
       }
       tomcat::config::server::realm { 'org.apache.catalina.realm.MyRealm2':
         realm_ensure          => present,
+        catalina_base         => '/opt/apache-tomcat40',
+        parent_realm          => 'org.apache.catalina.realm.CombinedRealm',
+        class_name            => 'org.apache.catalina.realm.MyRealm',
         server_config         => '/opt/apache-tomcat40/conf/server.xml',
         additional_attributes => {
-          resourceName => "MyRealm2",
+          resourceName   => "MyRealm2",
+          otherAttribute => "more stuff",
         }
       }
       EOS
@@ -79,17 +89,35 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
     end
     it 'Should contain two realms in config file' do
       shell('cat /opt/apache-tomcat40/conf/server.xml', :acceptable_exit_codes => 0) do |r|
-        r.stdout.should match(/<Realm className="org.apache.catalina.realm.MyRealm1" resourceName="MyRealm1"><\/Realm>/)
-        r.stdout.should match(/<Realm className="org.apache.catalina.realm.MyRealm2" resourceName="MyRealm2"><\/Realm>/)
+        r.stdout.should match(/<Realm puppetName="org.apache.catalina.realm.MyRealm1" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm1" otherAttribute="more stuff"><\/Realm>/)
+        r.stdout.should match(/<Realm puppetName="org.apache.catalina.realm.MyRealm2" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm2" otherAttribute="more stuff"><\/Realm>/)
       end
     end
     it 'should be idempotent' do
       pp = <<-EOS
-      tomcat::config::server::realm { 'org.apache.catalina.realm.MyRealm2':
+      tomcat::config::server::realm { 'org.apache.catalina.realm.CombinedRealm':
+        catalina_base => '/opt/apache-tomcat40',
+      }
+      tomcat::config::server::realm { 'org.apache.catalina.realm.MyRealm1':
         realm_ensure          => present,
+        catalina_base         => '/opt/apache-tomcat40',
+        parent_realm          => 'org.apache.catalina.realm.CombinedRealm',
+        class_name            => 'org.apache.catalina.realm.MyRealm',
         server_config         => '/opt/apache-tomcat40/conf/server.xml',
         additional_attributes => {
-          resourceName => "MyRealm2",
+          resourceName   => "MyRealm1",
+          otherAttribute => "more stuff",
+        }
+      }
+      tomcat::config::server::realm { 'org.apache.catalina.realm.MyRealm2':
+        realm_ensure          => present,
+        catalina_base         => '/opt/apache-tomcat40',
+        parent_realm          => 'org.apache.catalina.realm.CombinedRealm',
+        class_name            => 'org.apache.catalina.realm.MyRealm',
+        server_config         => '/opt/apache-tomcat40/conf/server.xml',
+        additional_attributes => {
+          resourceName   => "MyRealm2",
+          otherAttribute => "more stuff",
         }
       }
       EOS
