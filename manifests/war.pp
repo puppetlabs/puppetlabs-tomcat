@@ -27,6 +27,7 @@ define tomcat::war(
   $war_name        = undef,
   $war_purge       = true,
   $war_source      = undef,
+  $war_sha1sum     = undef,
 ) {
   include tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -79,6 +80,12 @@ define tomcat::war(
       extract => false,
       source  => $war_source,
       path    => "${_deployment_path}/${_war_name}",
+      
+      checksum_type => $war_sha1sum ? {
+        undef => 'none',
+        default => 'sha1'
+      },
+      checksum => $war_sha1sum,
     }
   }
 }
