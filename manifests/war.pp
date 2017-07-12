@@ -27,6 +27,7 @@ define tomcat::war(
   $war_name        = undef,
   $war_purge       = true,
   $war_source      = undef,
+  $war_sha256sum     = undef,
 ) {
   include tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -75,9 +76,12 @@ define tomcat::war(
     if ! $war_source {
       fail('$war_source must be specified if you aren\'t removing the WAR')
     }
-    staging::file { $name:
+
+    file { "${_deployment_path}/${_war_name}": 
       source => $war_source,
-      target => "${_deployment_path}/${_war_name}",
+      
+      checksum => 'sha256',
+      checksum_value => $war_sha256sum,
     }
   }
 }
