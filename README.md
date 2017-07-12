@@ -145,6 +145,7 @@ Add the following to any existing installation with your own war source:
 tomcat::war { 'sample.war':
   catalina_base => '/opt/tomcat8/first',
   war_source    => '/opt/tomcat8/webapps/docs/appdev/sample/sample.war',
+  war_sha256sum => $war_sha256sum,
 }
 ```
 
