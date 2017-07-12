@@ -187,7 +187,7 @@ describe 'tomcat::config::server::listener', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /does not match/)
+        }. to raise_error(Puppet::Error, /foo/)
       end
     end
     context 'Bad additional_attributes' do
@@ -199,7 +199,7 @@ describe 'tomcat::config::server::listener', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /is not a Hash/)
+        }. to raise_error(Puppet::Error, /Hash/)
       end
     end
     context 'Bad attributes_to_remove' do
@@ -211,7 +211,7 @@ describe 'tomcat::config::server::listener', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /is not an Array/)
+        }. to raise_error(Puppet::Error, /Array/)
       end
     end
     context 'old augeas' do

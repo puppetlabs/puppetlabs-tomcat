@@ -3,36 +3,33 @@
 # Manage deployment of WAR files.
 #
 # Parameters:
-# - $catalina_base is the base directory for the Tomcat installation
-# - $app_base is the path relative to $catalina_base to deploy the WAR to.
-#   Defaults to 'webapps'.
-# - The $deployment_path can optionally be specified. Only one of $app_base and
-#   $deployment_path can be specified.
-# - $war_ensure specifies whether you are trying to add or remove the WAR.
-#   Valid values are 'present', 'absent', 'true', and 'false'. Defaults to
-#   'present'.
-# _ Optionally specify a $war_name. Defaults to $name.
-# - $war_purge is a boolean specifying whether or not to purge the exploded WAR
-#   directory. Defaults to true. Only applicable when $war_ensure is 'absent'
-#   or 'false'. Note: if tomcat is running and autodeploy is on, setting
-#   $war_purge to false won't stop tomcat from auto-undeploying exploded WARs.
-# - $war_source is the source to deploy the WAR from. Currently supports
-#   http(s)://, puppet://, and ftp:// paths. $war_source must be specified
-#   unless $war_ensure is set to 'false' or 'absent'.
+# @param catalina_base is the base directory for the Tomcat installation
+# @param app_base is the path relative to $catalina_base to deploy the WAR to.
+#        Defaults to 'webapps'.
+# @param deployment_path Optional. Only one of $app_base and $deployment_path
+#        can be specified.
+# @param war_ensure specifies whether you are trying to add or remove the WAR.
+#        Valid values are 'present' and 'absent'. Defaults to 'present'.
+# @param war_name Optional. Defaults to $name.
+# @param war_purge is a boolean specifying whether or not to purge the exploded WAR
+#        directory. Defaults to true. Only applicable when $war_ensure is 'absent'
+#        or 'false'. Note: if tomcat is running and autodeploy is on, setting
+#        $war_purge to false won't stop tomcat from auto-undeploying exploded WARs.
+# @param war_source is the source to deploy the WAR from. Currently supports
+#        http(s)://, puppet://, and ftp:// paths. $war_source must be specified
+#        unless $war_ensure is set to 'false' or 'absent'.
 define tomcat::war(
-  $catalina_base   = undef,
-  $app_base        = undef,
-  $deployment_path = undef,
-  $war_ensure      = 'present',
-  $war_name        = undef,
-  $war_purge       = true,
-  $war_source      = undef,
+  $catalina_base                       = undef,
+  $app_base                            = undef,
+  $deployment_path                     = undef,
+  Enum['present','absent'] $war_ensure = 'present',
+  $war_name                            = undef,
+  Boolean $war_purge                   = true,
+  $war_source                          = undef,
 ) {
-  include tomcat
+  include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
   tag(sha1($_catalina_base))
-  validate_re($war_ensure, '^(present|absent|true|false)$')
-  validate_bool($war_purge)
 
   if $app_base and $deployment_path {
     fail('Only one of $app_base and $deployment_path can be specified.')
@@ -44,7 +41,9 @@ define tomcat::war(
     $_war_name = $name
   }
 
-  validate_re($_war_name, '\.war$')
+  if $_war_name !~ /\.war$/ {
+    fail('war_name must end with .war')
+  }
 
   if $deployment_path {
     $_deployment_path = $deployment_path

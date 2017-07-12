@@ -46,7 +46,7 @@ describe 'tomcat::war', :type => :define do
       {
         :catalina_base => '/opt/apache-tomcat/test',
         :app_base      => 'webapps2',
-        :war_ensure    => 'true',
+        :war_ensure    => 'present',
         :war_name      => 'sample2.war',
         :war_source    => '/tmp/sample.war',
       }
@@ -99,7 +99,7 @@ describe 'tomcat::war', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /war_name/)
       end
     end
     context 'bad ensure' do
@@ -112,7 +112,7 @@ describe 'tomcat::war', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /foo/)
       end
     end
     context 'bad purge' do
@@ -125,7 +125,7 @@ describe 'tomcat::war', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /is not a boolean/)
+        }.to raise_error(Puppet::Error, /Boolean/)
       end
     end
     context 'invalid source' do

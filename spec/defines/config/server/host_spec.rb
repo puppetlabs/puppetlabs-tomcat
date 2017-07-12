@@ -34,7 +34,7 @@ describe 'tomcat::config::server::host', :type => :define do
       {
         :app_base              => 'webapps2',
         :catalina_base         => '/opt/apache-tomcat/test',
-        :host_ensure           => 'true',
+        :host_ensure           => 'present',
         :host_name             => 'test.example.com',
         :parent_service        => 'Catalina2',
         :server_config         => '/opt/apache-tomcat/server.xml',
@@ -96,7 +96,7 @@ describe 'tomcat::config::server::host', :type => :define do
   context 'remove the host' do
     let :params do
       {
-        :host_ensure => 'false'
+        :host_ensure => 'absent'
       }
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-host-localhost').with(
@@ -125,7 +125,7 @@ describe 'tomcat::config::server::host', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /is not a Hash/)
+        }.to raise_error(Puppet::Error, /Hash/)
       end
     end
     context 'invalid host_ensure' do
@@ -137,7 +137,7 @@ describe 'tomcat::config::server::host', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /foo/)
       end
     end
     context 'invalid aliases' do
@@ -150,7 +150,7 @@ describe 'tomcat::config::server::host', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /is not an Array/)
+        }.to raise_error(Puppet::Error, /Array/)
       end
     end
     context 'old augeas' do

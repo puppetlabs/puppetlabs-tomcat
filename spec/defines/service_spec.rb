@@ -196,7 +196,7 @@ describe 'tomcat::service', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /not a boolean/)
+        }.to raise_error(Puppet::Error, /Boolean/)
       end
     end
     context "bad use_init" do
@@ -208,7 +208,7 @@ describe 'tomcat::service', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /not a boolean/)
+        }.to raise_error(Puppet::Error, /Boolean/)
       end
     end
     context "java_home without use_jsvc warning" do

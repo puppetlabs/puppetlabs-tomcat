@@ -5,8 +5,7 @@
 # Parameters:
 # - $catalina_base is the base directory for the Tomcat installation.
 # - $ensure specifies whether you are trying to add or remove the
-#   Manager element. Valid values are 'true', 'false', 'present', and
-#   'absent'. Defaults to 'present'.
+#   Manager element. Valid values are 'present' and 'absent'. Defaults to 'present'.
 # - $manager_name is the name of the Manager to be created, relative to
 #   the java:comp/env context.
 # - $type is the fully qualified Java class name expected by the web application
@@ -15,17 +14,15 @@
 #   be of the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Manager.
 define tomcat::config::context::manager (
-  $ensure                = 'present',
-  $catalina_base         = $::tomcat::catalina_home,
-  $manager_classname     = $name,
-  $additional_attributes = {},
-  $attributes_to_remove  = [],
+  Enum['present','absent'] $ensure = 'present',
+  $catalina_base                   = $::tomcat::catalina_home,
+  $manager_classname               = $name,
+  Hash $additional_attributes      = {},
+  Array $attributes_to_remove      = [],
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
-
-  validate_re($ensure, '^(present|absent|true|false)$')
 
   if $manager_classname {
     $_manager_classname = $manager_classname

@@ -150,10 +150,10 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       pp = <<-EOS
       class{ 'tomcat':}
       tomcat::config::server::service { 'org.apache.catalina.core.StandardService':
-        catalina_base => '/opt/apache-tomcat7/tomcat7',
-        class_name => 'org.apache.catalina.core.StandardService',
-        class_name_ensure => 'true',
-        service_ensure  => 'true',
+        catalina_base     => '/opt/apache-tomcat7/tomcat7',
+        class_name        => 'org.apache.catalina.core.StandardService',
+        class_name_ensure => 'present',
+        service_ensure    => 'present',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -188,7 +188,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       tomcat::config::server::valve { 'logger':
         catalina_base => '/opt/apache-tomcat7/tomcat7',
         class_name    => 'org.apache.catalina.valves.AccessLogValve',
-        valve_ensure  => 'false',
+        valve_ensure  => 'absent',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -274,9 +274,9 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
         additional_attributes => {
           astrological_sign => 'scorpio',
         },
-        attributes_to_remove => {
-          favorite-beer => 'PBR',
-        },
+        attributes_to_remove => [
+          'favorite-beer',
+        ],
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])

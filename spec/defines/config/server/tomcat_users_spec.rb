@@ -39,7 +39,6 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/password \'bar\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'foo_role,bar_role\'',
       ],
-      'require' => 'File[/opt/apache-tomcat/test/conf/tomcat-users.xml]',
     )
     }
     it do
@@ -49,6 +48,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
         'group'   => 'tomcat',
         'mode'    => '0640',
         'replace' => false,
+        'before'  => 'Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]',
       })
     end
   end
@@ -72,7 +72,6 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/password \'very-secret-password\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'foobar\'',
       ],
-      'require' => 'File[/opt/apache-tomcat/test/conf/tomcat-users.xml]',
     )
     }
   end
@@ -98,7 +97,6 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/password \'bar\'',
         'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'role\'',
       ],
-      'require' => 'File[/opt/apache-tomcat/test/conf/users.xml]',
     )
     }
     it do
@@ -109,6 +107,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
         'mode'    => '0640',
         'replace' => false,
         'content' => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>',
+        'before'  => 'Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]',
       })
     end
   end
@@ -126,7 +125,6 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'changes' => [
         'rm tomcat-users/user[#attribute/username=\'foo\']',
       ],
-      'require' => 'File[/opt/apache-tomcat/test/conf/tomcat-users.xml]',
     )
     }
   end
@@ -149,10 +147,9 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'changes' => [
         'set tomcat-users/role[#attribute/rolename=\'foobar\']/#attribute/rolename \'foobar\'',
       ],
-      'require' => 'File[/opt/apache-tomcat/test/conf/tomcat-users.xml]',
     )
     }
-    it { is_expected.to_not contain_file('/opt/apache-tomcat/test/conf/users.xml') }
+    it { is_expected.to_not contain_file('/opt/apache-tomcat/test/conf/tomcat-users.xml') }
   end
   context 'Add Role no element_name' do
     let :title do
@@ -170,7 +167,6 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'changes' => [
         'set tomcat-users/role[#attribute/rolename=\'noname\']/#attribute/rolename \'noname\'',
       ],
-      'require' => 'File[/opt/apache-tomcat/test/conf/tomcat-users.xml]',
     )
     }
   end
@@ -189,7 +185,6 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       'changes' => [
         'rm tomcat-users/role[#attribute/rolename=\'foobar\']',
       ],
-      'require' => 'File[/opt/apache-tomcat/test/conf/tomcat-users.xml]',
     )
     }
   end
@@ -203,7 +198,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /does not match/)
+        }. to raise_error(Puppet::Error, /foo/)
       end
     end
     context 'Bad manage_file' do
@@ -215,7 +210,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /is not a boolean/)
+        }.to raise_error(Puppet::Error, /Boolean/)
       end
     end
     context 'Bad roles' do
@@ -227,7 +222,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /is not an Array/)
+        }. to raise_error(Puppet::Error, /Array/)
       end
     end
     context 'old augeas' do

@@ -56,7 +56,7 @@ describe 'tomcat::config::server::realm', :type => :define do
         :purge_realms => true,
         :class_name => 'org.apache.catalina.realm.JNDIRealm',
         :catalina_base => '/opt/apache-tomcat/test',
-        :realm_ensure => 'true',
+        :realm_ensure => 'present',
         :additional_attributes => {
           'connectionURL' => 'ldap://localhost',
           'roleName'      => 'cn',
@@ -171,7 +171,7 @@ describe 'tomcat::config::server::realm', :type => :define do
     let :params do
       {
         :catalina_base => '/opt/apache-tomcat/test',
-        :realm_ensure => 'false',
+        :realm_ensure => 'absent',
       }
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
@@ -289,7 +289,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /does not match/)
+        }. to raise_error(Puppet::Error, /foo/)
       end
     end
     context 'Bad additional_attributes' do
@@ -301,7 +301,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /is not a Hash/)
+        }. to raise_error(Puppet::Error, /Hash/)
       end
     end
     context 'Bad attributes_to_remove' do
@@ -313,7 +313,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /is not an Array/)
+        }. to raise_error(Puppet::Error, /Array/)
       end
     end
     context 'Bad purge_realms' do
@@ -325,20 +325,20 @@ describe 'tomcat::config::server::realm', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /is not a boolean/)
+        }. to raise_error(Puppet::Error, /Boolean/)
       end
     end
     context 'Purge realms with $realm_ensure => false' do
       let :params do
         {
-          :realm_ensure => 'false',
+          :realm_ensure => 'absent',
           :purge_realms => true,
         }
       end
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /\$realm_ensure must be set to 'true' or 'present' to use \$purge_realms/)
+        }. to raise_error(Puppet::Error, /\$realm_ensure must be set to 'present' to use \$purge_realms/)
       end
     end
     context 'Purge realms with $realm_ensure => absent' do
@@ -351,7 +351,7 @@ describe 'tomcat::config::server::realm', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /\$realm_ensure must be set to 'true' or 'present' to use \$purge_realms/)
+        }. to raise_error(Puppet::Error, /\$realm_ensure must be set to 'present' to use \$purge_realms/)
       end
     end
     context 'old augeas' do

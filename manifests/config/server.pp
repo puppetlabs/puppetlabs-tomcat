@@ -3,28 +3,27 @@
 # Configure attributes for the Server element in $CATALINA_BASE/conf/server.xml
 #
 # Parameters
-# - $catalina_base is the base directory for the Tomcat installation.
-# - $class_name is the optional className attribute.
-# - $class_name_ensure specifies whether you are trying to set or remove the
-#   className attribute. Valid values are 'true', 'false', 'present', or
-#   'absent'. Defaults to 'present'.
-# - $address is the optional address attribute.
-# - $address_ensure specifies whether you are trying to set of remove the
-#   address attribute. Valid values are 'true', 'false', 'present', or
-#   'absent'. Defaults to 'present'.
-# - The $port to wait for shutdown commands on.
-# - The $shutdown command that must be sent to $port.
+# @param catalina_base is the base directory for the Tomcat installation.
+# @param class_name is the optional className attribute.
+# @param class_name_ensure specifies whether you are trying to set or remove the
+#        className attribute. Valid values are 'present' or 'absent'. Defaults to 'present'.
+# @param address is the optional address attribute.
+# @param address_ensure specifies whether you are trying to set of remove the
+#        address attribute. Valid values are 'present' or 'absent'. Defaults to 'present'.
+# @param port The port to wait for shutdown commands on.
+# @param shutdown The shutdown command that must be sent to $port.
+# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server (
-  $catalina_base           = undef,
-  $class_name              = undef,
-  $class_name_ensure       = 'present',
-  $address                 = undef,
-  $address_ensure          = 'present',
-  $port                    = undef,
-  $shutdown                = undef,
-  $server_config           = undef,
+  $catalina_base                              = undef,
+  $class_name                                 = undef,
+  Enum['present','absent'] $class_name_ensure = 'present',
+  $address                                    = undef,
+  Enum['present','absent'] $address_ensure    = 'present',
+  $port                                       = undef,
+  $shutdown                                   = undef,
+  $server_config                              = undef,
 ) {
-  include tomcat
+  include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
   tag(sha1($_catalina_base))
 
@@ -32,10 +31,7 @@ define tomcat::config::server (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
-  validate_re($class_name_ensure, '^(present|absent|true|false)$')
-  validate_re($address_ensure, '^(present|absent|true|false)$')
-
-  if $class_name_ensure =~ /^(absent|false)$/ {
+  if $class_name_ensure == 'absent' {
     $_class_name = 'rm Server/#attribute/className'
   } elsif $class_name {
     $_class_name = "set Server/#attribute/className ${class_name}"
@@ -43,7 +39,7 @@ define tomcat::config::server (
     $_class_name = undef
   }
 
-  if $address_ensure =~ /^(absent|false)$/ {
+  if $address_ensure == 'absent' {
     $_address = 'rm Server/#attribute/address'
   } elsif $address {
     $_address = "set Server/#attribute/address ${address}"

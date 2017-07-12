@@ -109,7 +109,7 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
       tomcat::war{'tomcat7-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat7',
         war_source    => '/tmp/sample.war',
-        war_ensure => 'false',
+        war_ensure => 'absent',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -130,7 +130,7 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
         catalina_base => '/opt/apache-tomcat/tomcat7',
         port => '8180',
         protocol => 'HTTP/1.1',
-        connector_ensure => 'false',
+        connector_ensure => 'absent',
         notify => Tomcat::Service['tomcat7'],
       }
       tomcat::service { 'tomcat7':
@@ -152,8 +152,8 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
       tomcat::config::server::service{ 'org.apache.catalina.core.StandardService':
         catalina_base => '/opt/apache-tomcat/tomcat7',
         class_name => 'org.apache.catalina.core.StandardService',
-        class_name_ensure => 'true',
-        service_ensure  => 'true',
+        class_name_ensure => 'present',
+        service_ensure  => 'present',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -190,7 +190,7 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
       tomcat::config::server::valve{'logger':
         catalina_base => '/opt/apache-tomcat/tomcat7',
         class_name => 'org.apache.catalina.valves.AccessLogValve',
-        valve_ensure => 'false',
+        valve_ensure => 'absent',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -280,9 +280,9 @@ describe 'Tomcat Install source -defaults', :unless => stop_test do
         additional_attributes => {
           astrological_sign => 'scorpio',
         },
-        attributes_to_remove => {
-          favorite-beer => 'PBR',
-        },
+        attributes_to_remove => [
+          'favorite-beer',
+        ],
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])

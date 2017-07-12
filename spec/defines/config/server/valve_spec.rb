@@ -55,7 +55,7 @@ describe 'tomcat::config::server::valve', :type => :define do
   context 'remove the valve' do
     let :params do
       {
-        :valve_ensure => 'false'
+        :valve_ensure => 'absent'
       }
     end
     it { is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.AccessLog').with(
@@ -75,7 +75,7 @@ describe 'tomcat::config::server::valve', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /foo/)
       end
     end
     context 'bad additional_attributes' do
@@ -87,7 +87,7 @@ describe 'tomcat::config::server::valve', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /not a Hash/)
+        }.to raise_error(Puppet::Error, /Hash/)
       end
     end
     context 'old augeas' do

@@ -4,31 +4,28 @@
 # $CATALINA_BASE/conf/server.xml
 #
 # Parameters:
-# - $catalina_base is the root of the Tomcat installation.
-# - $class_name is the optional className attribute
-# - $class_name_ensure specifies whether you are trying to set or remove the
-#   className attribute. Valid values are 'true', 'false', 'present', or
-#   'absent'. Defaults to 'present'.
-# - $service_ensure specifies whether you are trying to add or remove the
-#   service element. Valid values are 'true', 'false', 'present', or 'absent'.
-#   Defaults to 'present'.
+# @param catalina_base is the root of the Tomcat installation.
+# @param class_name is the optional className attribute
+# @param class_name_ensure specifies whether you are trying to set or remove the
+#        className attribute. Valid values are 'present' or 'absent'. Defaults to 'present'.
+# @param service_ensure specifies whether you are trying to add or remove the
+#        service element. Valid values are 'present' or 'absent'.
+#        Defaults to 'present'.
+# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::service (
-  $catalina_base     = undef,
-  $class_name        = undef,
-  $class_name_ensure = 'present',
-  $service_ensure    = 'present',
-  $server_config     = undef,
+  $catalina_base                              = undef,
+  $class_name                                 = undef,
+  Enum['present','absent'] $class_name_ensure = 'present',
+  Enum['present','absent'] $service_ensure    = 'present',
+  $server_config                              = undef,
 ) {
-  include tomcat
+  include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
   tag(sha1($_catalina_base))
 
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
-
-  validate_re($service_ensure, '^(present|absent|true|false)$')
-  validate_re($class_name_ensure, '^(present|absent|true|false)$')
 
   if $server_config {
     $_server_config = $server_config
