@@ -198,7 +198,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, /foo/)
+        }. to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'Bad manage_file' do

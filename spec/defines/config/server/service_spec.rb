@@ -99,7 +99,7 @@ describe 'tomcat::config::server::service', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /foo/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'bad class_name_ensure' do
@@ -111,7 +111,7 @@ describe 'tomcat::config::server::service', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /foo/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'old augeas' do
