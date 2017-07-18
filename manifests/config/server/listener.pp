@@ -3,40 +3,36 @@
 # Configure Listener elements in $CATALINA_BASE/conf/server.xml
 #
 # Parameters:
-# - $catalina_base is the base directory for the Tomcat installation.
-# - $listener_ensure specifies whether you are trying to add or remove the
-#   Listener element. Valid values are 'true', 'false', 'present', and
-#   'absent'. Defaults to 'present'.
-# - $class_name is the Java class name of the implementation to use.
+# @param catalina_base is the base directory for the Tomcat installation.
+# @param listener_ensure specifies whether you are trying to add or remove the
+#   Listener element. Valid values are 'present' and 'absent'. Defaults to 'present'.
+# @param class_name is the Java class name of the implementation to use.
 #   Defaults to $name.
-# - $parent_service is the Service element this Listener should be nested 
+# @param parent_service is the Service element this Listener should be nested 
 #   beneath. Only valid if $parent_host or $parent_engine is specified. Defaults
 #   to 'Catalina' if $parent_host or $parent_engine was specified.
-# - $parent_engine is the `name` attribute to the Engine element this Listener
+# @param parent_engine is the `name` attribute to the Engine element this Listener
 #   should be nested beneath.
-# - $parent_host is the `name` attribute to the Engine element this Listener
+# @param parent_host is the `name` attribute to the Engine element this Listener
 #   should be nested beneath.
-# - An optional hash of $additional_attributes to add to the Listener. Should
+# @param additional_attributes An optional hash of additional attributes to add to the Listener. Should
 #   be of the format 'attribute' => 'value'.
-# - An optional array of $attributes_to_remove from the Listener.
+# @param attributes_to_remove An optional array of attributes to remove from the Listener.
+# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::listener (
-  $catalina_base         = $::tomcat::catalina_home,
-  $listener_ensure       = 'present',
-  $class_name            = undef,
-  $parent_service        = undef,
-  $parent_engine         = undef,
-  $parent_host           = undef,
-  $additional_attributes = {},
-  $attributes_to_remove  = [],
-  $server_config         = undef,
+  $catalina_base                            = $::tomcat::catalina_home,
+  Enum['present','absent'] $listener_ensure = 'present',
+  $class_name                               = undef,
+  $parent_service                           = undef,
+  $parent_engine                            = undef,
+  $parent_host                              = undef,
+  Hash $additional_attributes               = {},
+  Array $attributes_to_remove               = [],
+  $server_config                            = undef,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
-
-  validate_re($listener_ensure, '^(present|absent|true|false)$')
-  validate_hash($additional_attributes)
-  validate_array($attributes_to_remove)
 
   if $parent_service and ! ($parent_host or $parent_engine) {
     warning('listener elements cannot be nested directly under service elements, ignoring $parent_service')

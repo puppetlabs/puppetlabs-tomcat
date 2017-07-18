@@ -54,7 +54,7 @@ describe 'tomcat', :type => :class do
     it do
       expect {
         catalogue
-      }.to raise_error(Puppet::Error, /is not a boolean/)
+      }.to raise_error(Puppet::Error, /Boolean/)
     end
   end
 

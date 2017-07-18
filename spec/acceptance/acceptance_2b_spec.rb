@@ -177,12 +177,12 @@ describe 'Two different installations with two instances each of Tomcat 6 in the
       tomcat::service { 'tomcat6-first':
         catalina_home  => '/opt/apache-tomcat6',
         catalina_base  => '/opt/tomcat6-first',
-        service_ensure => 'false',
+        service_ensure => 'stopped',
       }
       tomcat::service { 'tomcat6-second':
         catalina_home  => '/opt/apache-tomcat6',
         catalina_base  => '/opt/tomcat6-second',
-        service_ensure => 'false',
+        service_ensure => 'stopped',
       }
       tomcat::service { 'tomcat6039-first':
         catalina_home  => '/opt/apache-tomcat6039',
@@ -224,13 +224,13 @@ describe 'Two different installations with two instances each of Tomcat 6 in the
       tomcat::service { 'tomcat6039-first':
         catalina_home  => '/opt/apache-tomcat6039',
         catalina_base  => '/opt/tomcat6039-first',
-        service_ensure => 'true',
+        service_ensure => 'running',
       }->
       tomcat::war { 'tomcat6-sample.war':
         catalina_base => '/opt/tomcat6-first',
         war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6-sample.war',
-        war_ensure    => 'false',
+        war_ensure    => 'absent',
       }->
       tomcat::service { 'tomcat6-first':
         catalina_home  => '/opt/apache-tomcat6',
@@ -266,7 +266,7 @@ describe 'Two different installations with two instances each of Tomcat 6 in the
         catalina_base => '/opt/tomcat6039-first',
         war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6039-sample.war',
-        war_ensure    => 'true',
+        war_ensure    => 'present',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])

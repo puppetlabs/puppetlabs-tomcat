@@ -88,7 +88,7 @@ describe 'Acceptance case one', :unless => stop_test do
         additional_attributes => {
           'redirectPort' => '443'
         },
-        connector_ensure => 'false',
+        connector_ensure => 'absent',
       }->
       tomcat::war { 'war_one.war':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
@@ -171,7 +171,7 @@ describe 'Acceptance case one', :unless => stop_test do
       tomcat::war { 'war_one.war':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
         war_source => '#{SAMPLE_WAR}',
-        war_ensure => 'false',
+        war_ensure => 'absent',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -179,7 +179,7 @@ describe 'Acceptance case one', :unless => stop_test do
     end
     it 'Should not have deployed the war' do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
-        r.stdout.should match(/The requested resource is not available./)
+        r.stdout.should match(/The requested resource is not available/)
       end
     end
     it 'Should still have the server running on port 80' do
