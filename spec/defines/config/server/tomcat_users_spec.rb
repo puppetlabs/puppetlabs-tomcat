@@ -48,8 +48,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
         'group'   => 'tomcat',
         'mode'    => '0640',
         'replace' => false,
-        'before'  => 'Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]',
-      })
+      }).that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]')
     end
   end
   context 'Add User no element' do
@@ -107,8 +106,7 @@ describe 'tomcat::config::server::tomcat_users', :type => :define do
         'mode'    => '0640',
         'replace' => false,
         'content' => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>',
-        'before'  => 'Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]',
-      })
+      }).that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]')
     end
   end
   context 'Remove User' do

@@ -12,7 +12,7 @@ def latest_tomcat_tarball_url(version)
   else
     mirror_url = (match = page.match(%r{<strong>(https?://.*?)/</strong>}) and match[1])
     page = Net::HTTP.get(URI("#{mirror_url}/tomcat/tomcat-#{version}/"))
-    latest_version = (match = page.match(%r{<a href="v(.{4,7})/">}) and match[1])
+    latest_version = (match = page.match(%r{href="v(.{4,7})/"}) and match[1])
 
     "#{mirror_url}/tomcat/tomcat-#{version}/v#{latest_version}/bin/apache-tomcat-#{latest_version}.tar.gz"
   end

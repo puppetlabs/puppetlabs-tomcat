@@ -71,8 +71,8 @@ define tomcat::config::server::tomcat_users (
       owner   => $_owner,
       group   => $_group,
       mode    => '0640',
-      before  => Augeas["${catalina_base}-tomcat_users-${element}-${_element_name}-${name}"],
     })
+    File[$_file] -> Augeas["${catalina_base}-tomcat_users-${element}-${_element_name}-${name}"]
   }
 
   $path = "tomcat-users/${element}[#attribute/${element_identifier}='${_element_name}']"
