@@ -153,7 +153,7 @@ describe 'tomcat::config::server::context', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /foo/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'Bad additional_attributes' do

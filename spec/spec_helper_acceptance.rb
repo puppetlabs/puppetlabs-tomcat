@@ -4,6 +4,20 @@ require 'beaker/puppet_install_helper'
 
 run_puppet_install_helper
 
+def latest_tomcat_tarball_url(version)
+  require 'net/http'
+  page = Net::HTTP.get(URI("http://tomcat.apache.org/download-#{version}0.cgi"))
+  if url = (match = page.match(%r{https?://.*?apache-tomcat-(.{4,7}).tar.gz}) and match[0])
+    url
+  else
+    mirror_url = (match = page.match(%r{<strong>(https?://.*?)/</strong>}) and match[1])
+    page = Net::HTTP.get(URI("#{mirror_url}/tomcat/tomcat-#{version}/"))
+    latest_version = (match = page.match(%r{<a href="v(.{4,7})/">}) and match[1])
+
+    "#{mirror_url}/tomcat/tomcat-#{version}/v#{latest_version}/bin/apache-tomcat-#{latest_version}.tar.gz"
+  end
+end
+
 if ENV['BUILD_ID'] # We're in our CI system and use internal resources
   ARTIFACT_HOST = ENV['TOMCAT_ARTIFACT_HOST'] || 'http://int-resources.corp.puppetlabs.net/QA_resources/tomcat'
 
@@ -19,19 +33,19 @@ if ENV['BUILD_ID'] # We're in our CI system and use internal resources
 
 else # We're outside the CI system and use default locations
   require 'net/http'
-  latest_download_page = Net::HTTP.get(URI('http://tomcat.apache.org/download-60.cgi'))
-  latest6 = (match = latest_download_page.match(%r{https?://.*?apache-tomcat-(.{4,7}).tar.gz}) and match[0])
-  latest_download_page = Net::HTTP.get(URI('http://tomcat.apache.org/download-70.cgi'))
-  latest7 = (match = latest_download_page.match(%r{https?://.*?apache-tomcat-(.{4,7}).tar.gz}) and match[0])
-  latest_download_page = Net::HTTP.get(URI('http://tomcat.apache.org/download-80.cgi'))
-  latest8 = (match = latest_download_page.match(%r{https?://.*?apache-tomcat-(.{4,7}).tar.gz}) and match[0])
+  latest6 = latest_tomcat_tarball_url('6')
+  latest7 = latest_tomcat_tarball_url('7')
+  latest8 = latest_tomcat_tarball_url('8')
 
   TOMCAT6_RECENT_VERSION = ENV['TOMCAT6_RECENT_VERSION'] || latest6
   TOMCAT6_RECENT_SOURCE = latest6
+  puts "TOMCAT6_RECENT_SOURCE is #{TOMCAT6_RECENT_SOURCE.inspect}"
   TOMCAT7_RECENT_VERSION = ENV['TOMCAT7_RECENT_VERSION'] || latest7
   TOMCAT7_RECENT_SOURCE = latest7
+  puts "TOMCAT7_RECENT_SOURCE is #{TOMCAT7_RECENT_SOURCE.inspect}"
   TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
   TOMCAT8_RECENT_SOURCE = latest8
+  puts "TOMCAT8_RECENT_SOURCE is #{TOMCAT8_RECENT_SOURCE.inspect}"
   TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '6.0.39'
   TOMCAT_LEGACY_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-6/v#{TOMCAT_LEGACY_VERSION}/bin/apache-tomcat-#{TOMCAT_LEGACY_VERSION}.tar.gz"
   SAMPLE_WAR = 'https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war'

@@ -91,7 +91,7 @@ describe 'tomcat::config::server', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /foo/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'invalid address_ensure' do
@@ -103,7 +103,7 @@ describe 'tomcat::config::server', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /foo/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'old augeas' do
