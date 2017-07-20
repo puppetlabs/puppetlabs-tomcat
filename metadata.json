@@ -9,7 +9,7 @@
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 5.0.0"},
-    {"name":"puppetlabs/concat","version_requirement":">= 1.1.0 < 3.0.0"},
+    {"name":"puppetlabs/concat","version_requirement":">= 1.1.0 < 5.0.0"},
     {"name":"puppet/archive","version_requirement":">= 1.0.0 < 2.0.0"}
   ],
   "operatingsystem_support": [
@@ -73,7 +73,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 5.0.0"
+      "version_requirement": ">= 4.7.0 < 6.0.0"
     }
   ]
 }
