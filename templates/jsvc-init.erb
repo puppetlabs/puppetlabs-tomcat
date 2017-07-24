@@ -166,7 +166,7 @@ do_status()
 {
   if [ -f $CATALINA_PID ];then
         ps -p `cat $CATALINA_PID` >/dev/null 2>&1
-        if [[ "$?" == "0" ]];then
+        if [ "$?" -eq 0 ];then
             echo "tomcat alive (pid `cat $CATALINA_PID`)..."
             exit 0
         else
@@ -202,7 +202,7 @@ do_version()
      -version \
      -check \
      $CATALINA_MAIN
-  if [ "$?" = 0 ]; then
+  if [ "$?" -eq 0 ]; then
     "$JAVA_BIN" \
       -classpath "$CATALINA_HOME/lib/catalina.jar" \
       org.apache.catalina.util.ServerInfo
