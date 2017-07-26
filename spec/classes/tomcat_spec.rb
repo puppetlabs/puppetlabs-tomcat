@@ -1,15 +1,6 @@
 require 'spec_helper'
 
 describe 'tomcat', :type => :class do
-  context "on a Debian OS" do
-    let :facts do
-      {
-        :osfamily => 'Debian'
-      }
-    end
-    it { is_expected.to contain_class("tomcat::params") }
-  end
-
   context "not installing from source" do
     let :facts do
       {
