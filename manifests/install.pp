@@ -4,15 +4,16 @@ define tomcat::install (
   Boolean $install_from_source    = true,
 
   # source options
-  $source_url                     = undef,
+  $source_url             = undef,
   Boolean $source_strip_first_dir = true,
-  $proxy_type                     = undef,
-  $proxy_server                   = undef,
-  $user                           = undef,
-  $group                          = undef,
-  $manage_user                    = undef,
-  $manage_group                   = undef,
-  $manage_home                    = undef,
+  $proxy_type             = undef,
+  $proxy_server           = undef,
+  $allow_insecure         = false,
+  $user                   = undef,
+  $group                  = undef,
+  $manage_user            = undef,
+  $manage_group           = undef,
+  $manage_home            = undef,
 
   # package options
   $package_ensure                 = undef,
@@ -46,6 +47,7 @@ define tomcat::install (
       source_strip_first_dir => $source_strip_first_dir,
       proxy_type             => $proxy_type,
       proxy_server           => $proxy_server,
+      allow_insecure         => $allow_insecure,
       user                   => $_user,
       group                  => $_group,
     }

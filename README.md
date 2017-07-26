@@ -1423,6 +1423,14 @@ Default value: auto-detected from `proxy_server`.
 
 Valid options: 'none', 'http', 'https', 'ftp'.
 
+##### `allow_insecure`
+
+Specifies if HTTPS errors should be ignored
+
+Default vallue: false,
+
+Valid options: 'true', 'false'.
+
 ##### `user`
 
 Specifies the owner of the source installation directory.
