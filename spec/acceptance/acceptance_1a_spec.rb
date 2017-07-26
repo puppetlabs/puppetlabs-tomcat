@@ -81,6 +81,14 @@ describe 'Acceptance case one', :unless => stop_test do
         },
         notify                => Tomcat::Service['jsvc-default'],
       }->
+      tomcat::config::server::connector { 'tomcat8-jsvc-8080':
+        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        port                  => '8080',
+        protocol              => 'HTTP/1.1',
+        additional_attributes => {
+          'redirectPort' => '443'
+        },
+      }->
       tomcat::config::server::connector { 'tomcat8-ajp':
         catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
         port                  => '8309',
@@ -109,6 +117,11 @@ describe 'Acceptance case one', :unless => stop_test do
     end
     it 'Should be serving a page on port 80' do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'Should be serving a page on port 8080' do
+      shell('curl localhost:8080/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
