@@ -15,6 +15,7 @@ define tomcat::install::source (
   $source_url,
   $source_strip_first_dir,
   $group,
+  $allow_insecure = false,
   $user = 'root',
   $proxy_type   = undef,
   $proxy_server = undef,
@@ -42,14 +43,15 @@ define tomcat::install::source (
   }
 
   archive { "${name}-${catalina_home}/${filename}":
-    path          => "${catalina_home}/${filename}",
-    source        => $source_url,
-    extract       => true,
-    extract_path  => $catalina_home,
-    creates       => "${catalina_home}/NOTICE",
-    extract_flags => "--strip ${_strip} -xf",
-    cleanup       => true,
-    user          => $user,
-    group         => $group,
+    path           => "${catalina_home}/${filename}",
+    source         => $source_url,
+    extract        => true,
+    extract_path   => $catalina_home,
+    creates        => "${catalina_home}/NOTICE",
+    extract_flags  => "--strip ${_strip} -xf",
+    cleanup        => true,
+    allow_insecure => $allow_insecure,
+    user           => $user,
+    group          => $group,
   }
 }
