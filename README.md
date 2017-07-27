@@ -1423,6 +1423,14 @@ Default value: auto-detected from `proxy_server`.
 
 Valid options: 'none', 'http', 'https', 'ftp'.
 
+##### `allow_insecure`
+
+Specifies if HTTPS errors should be ignored when downloading the source tarball.
+
+Default vallue: `false`,
+
+Valid options: `true` and `false`.
+
 ##### `user`
 
 Specifies the owner of the source installation directory.
