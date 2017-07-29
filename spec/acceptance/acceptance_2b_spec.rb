@@ -72,12 +72,12 @@ describe 'Two different installations with two instances each of Tomcat 6 in the
       tomcat::war { 'first tomcat6-sample.war':
         catalina_base => '/opt/tomcat6-first',
         war_source    => '#{SAMPLE_WAR}',
-        war_name      => 'tomcat6-sample.war',
+        war_name      => 'tomcat6#sample.war',
       }
       tomcat::war { 'second tomcat6-sample.war':
         catalina_base => '/opt/tomcat6-second',
         war_source    => '#{SAMPLE_WAR}',
-        war_name      => 'tomcat6-sample.war',
+        war_name      => 'tomcat6#sample.war',
       }
 
 
@@ -150,12 +150,12 @@ describe 'Two different installations with two instances each of Tomcat 6 in the
     end
     #test the war
     it 'tomcat6-first should have war deployed by default' do
-      shell('curl localhost:8280/tomcat6-sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
+      shell('curl localhost:8280/tomcat6/sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
     it 'tomcat6-second should have war deployed by default' do
-      shell('curl localhost:8281/tomcat6-sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
+      shell('curl localhost:8281/tomcat6/sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
