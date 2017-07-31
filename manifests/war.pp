@@ -74,10 +74,14 @@ define tomcat::war(
     if ! $war_source {
       fail('$war_source must be specified if you aren\'t removing the WAR')
     }
+    # wget allows context paths to have ## as per
+    # https://tomcat.apache.org/tomcat-8.0-doc/config/context.html whereas curl
+    # does not.
     archive { "tomcat::war ${name}":
-      extract => false,
-      source  => $war_source,
-      path    => "${_deployment_path}/${_war_name}",
+      extract  => false,
+      source   => $war_source,
+      path     => "${_deployment_path}/${_war_name}",
+      provider => 'wget',
     }
   }
 }
