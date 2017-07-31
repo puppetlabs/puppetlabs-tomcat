@@ -53,5 +53,7 @@ define tomcat::install::source (
     allow_insecure => $allow_insecure,
     user           => $user,
     group          => $group,
+    proxy_server   => $proxy_server,
+    proxy_type     => $proxy_type,
   }
 }
