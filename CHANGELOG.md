@@ -1,8 +1,35 @@
-## Supported Release 1.7.0
+## Supported Release [2.0.0]
+### Summary
+This major release drops puppet 3, changes dependencies from staging to archive, and adds various "real world" configuration abilities.
+
+### Changed
+- Dependency puppet-staging (which is deprecated) removed in favor of puppet-archive
+- Dropped compatibility with puppet 3.x series
+- Remove `true`/`false` as valid values for all ensure attributes as they are ambiguous.
+
+### Removed
+- Deprecated `tomcat::setenv::entry` attribute `base_path`. Use `config_file` instead.
+- Base `tomcat` class `install_from_source` parameter now does nothing. Use `tomcat::install` attribute `install_from_source` directly instead.
+- `tomcat::install` attribute `environment` previously used for proxy settings. Use `proxy_server` and `proxy_type` instead.
+
+### Added
+- Compatibility with puppet 5.x series
+- Puppet 4.x data type parameter validation.
+- `tomcat::config::server::realm` Can manage multiple realms of identical class names.
+- `tomcat::config::server::tomcat_users` Can be declared multiple times for the same element name.
+- `tomcat::config::context::value` defined type.
+- `tomcat::install` attributes `proxy_server` and `proxy_type` for installing behind a proxy.
+- `tomcat::install` attribute `allow_insecure` for disabling https verification.
+- `tomcat::war` ability to use context paths and versions with `war_name` attribute.
+
+### Fixed
+- Corrected documentation for all `attributes_to_remove` attributes.
+
+## Supported Release [1.7.0]
 ### Summary
 This release adds support for internationalization of the module. It also contains Japanese translations for the README, summary and description of the metadata.json and major cleanups in the README. Additional folders have been introduced called locales and readmes where translation files can be found. A number of features and bug fixes are also included in this release.
 
-#### Features
+### Added
 - Addition of POT file for metadata translation for i18n.
 - Readme update and edit in preparation for localization.
 - Environment can now be passed through to staging, so we can set a proxy to download tomcat.
@@ -12,7 +39,7 @@ This release adds support for internationalization of the module. It also contai
 - Bump in puppet-staging module dependancy for allowing newer versions.
 - Ability to not manage catalina.properties.
 
-#### Bugfixes
+### Fixed
 - (MODULES-4003) Adds a 'require => Tomcat::Install[$name]' to the ensure_resource function.
 - (MODULES-4003) Removes logic that checks to see if catalina_base and catalina_home are the same.
 - (MODULES-1986) Added newline to the inline template assigned to $_content.
@@ -33,14 +60,14 @@ umasks. The previous change caused duplicate resource declarations when
 downloading a tomcat tarball from `puppet://` or local paths. The umask bug
 remains (it is actually present in staging, not tomcat).
 
-#### Bugfixes
+### Fixed
 - Fix duplicate resource declarations when using local source paths
 
 ## Supported Release 1.6.0
 ### Summary
 This release adds two new defines for managing environment variables and manager elements, enhances multi-instance multi-user support, allows valves to be nested in contexts, fixes an issue with installing directly to NFS mounted directories, fixes installation on systems with a strict root umask,
 
-#### Features
+### Added
 - Add `tomcat::config::context::environment` define
 - Add `tomcat::config::context::manager` define
 - Add `owner` and `group` to `tomcat::config::server::tomcat_users`
@@ -52,7 +79,7 @@ This release adds two new defines for managing environment variables and manager
 - Change from `nanliu/staging` to `puppet/staging`
 - Allow `role` to be set for user elements in `tomcat::config::server::tomcat_users`
 
-#### Bugfixes
+### Fixed
 - Fix globalresource missing (MODULES-3353)
 - Fix strict vars for `tomcat::config::server::service` (MODULES-3742)
 - Work around duplicate user resources (PUP-5971)
@@ -73,7 +100,7 @@ create an init script for service management of source-based installs. And
 `tomcat::instance` can declare a `tomcat::service` resource for your instance to
 make life easier.
 
-#### Features
+### Added
 - Added `tomcat::config::properties::property` define
 - Added `tomcat::config::server::globalnamingresource` define
 - Added `tomcat::config::context` define
@@ -96,7 +123,7 @@ make life easier.
   - `use_init`
 - Added Debian 8 compatibility
 
-#### Bugfixes
+### Fixed
 - Fixed conflating `CATALINA_BASE` with `CATALINA_HOME`
 - Made `tomcat::config::server::connector` protocol default to `$name`
 - Lots of additional validation
@@ -108,12 +135,12 @@ make life easier.
 
 Small release for bug with multiple Realms in the same parent path.
 
-#### Features
+### Added
 - Improved documentation for purging connectors.
 - Improved documentation for purging realms.
 - Added package_options to tomcat::instance
 
-#### Bugfixes
+### Fixed
 - Fixed bug where multiple Realms in the same parent would corrupt data.
 - Added work-around for Augeas bug when purging Realms.
 
@@ -126,7 +153,7 @@ Small release for support of newer PE versions. This increments the version of P
 ### Summary
 This release fixes username quoting and metadata.
 
-#### Bugfixes
+### Fixed
 - Allow username values that contain non-string characters like whitespace
 - Validate $catalina\_base
 - Correct pe/puppet compatibility metadata
@@ -140,7 +167,7 @@ This release fixes metadata because it supports puppet 4.
 
 This is a feature release, with a couple of bugfixes and readme changes.
 
-#### Features
+### Added
 - Update additional_attributes to support values with spaces
 - Documentation changes
 - Add a manifest for Context Containers in Tomcat configuration
@@ -152,7 +179,7 @@ This is a feature release, with a couple of bugfixes and readme changes.
 - Add ability to specify server_config location
 - Allow configuration of location of server.xml
 
-#### Bugfixes
+### Fixed
 - Make sure setenv entries have export
 - Test improvements
 - version pinning for acceptance tests
@@ -162,11 +189,11 @@ This is a feature release, with a couple of bugfixes and readme changes.
 
 This is primarily a feature release, with a couple of bugfixes for tests and metadata.
 
-#### Features
+### Added
 - Add `install_from_source` parameter to class `tomcat`
 - Add `purge_connectors` parameter to class `tomcat` and define `tomcat::server::connector`
 
-#### Bugfixes
+### Fixed
 - Fix dependencies to remove missing dependency warnings with the PMT
 - Use `curl -k` in the tests
 
@@ -175,13 +202,13 @@ This is primarily a feature release, with a couple of bugfixes for tests and met
 
 This release includes documentation and test updates, strict variable support, metadata bugs, and added support for multiple connectors with the same protocol.
 
-### Features
+### Added
 - Strict variable support
 - Support multiple connectors with the same protocol
 - Update tests to not break when tomcat releases happen
 - Update README based on QA feedback
 
-### Bugfixes
+### Fixed
 - Update stdlib requirement to 4.2.0
 - Fix illegal version range in metadata.json
 - Fix typo in README
@@ -191,7 +218,7 @@ This release includes documentation and test updates, strict variable support, m
 
 This is a bugfix release.
 
-### Bugfixes
+### Fixed
 - Fix typo in tomcat::instance
 - Update acceptance tests for new tomcat releases
 
@@ -200,14 +227,14 @@ This is a bugfix release.
 
 This release has added support for installation from packages, improved WAR management, and updates to testing and documentation.
 
-### Features
+### Added
 - Updated tomcat::setenv::entry to better support installations from package
 - Added the ability to purge auto-exploded WAR directories when removing WARs. Defaults to purging these directories
 - Added warnings for unused variables when installing from package
 - Updated acceptance tests and nodesets
 - Updated README
 
-### Deprecations
+### Deprecated
 - $tomcat::setenv::entry::base_path is being deprecated in favor of $tomcat::setenv::entry::config_file
 
 ## 2014-08-20 - Release 0.1.2
@@ -220,7 +247,7 @@ This release adds compatibility information and updates the README with informat
 
 This is a bugfix release.
 
-### Bugfixes
+### Fixed
 - Update 'warn' to correct 'warning' function.
 - Update README for use_init.
 - Test updates and fixes.
@@ -229,3 +256,7 @@ This is a bugfix release.
 ### Summary
 
 Initial release of the tomcat module.
+
+
+[2.0.0]: https://github.com/puppetlabs/puppetlabs-tomcat/compare/1.7.0...2.0.0
+[1.7.0]: https://github.com/puppetlabs/puppetlabs-tomcat/compare/1.6.1...1.7.0
