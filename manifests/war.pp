@@ -78,10 +78,9 @@ define tomcat::war(
     # https://tomcat.apache.org/tomcat-8.0-doc/config/context.html whereas curl
     # does not.
     archive { "tomcat::war ${name}":
-      extract  => false,
-      source   => $war_source,
-      path     => "${_deployment_path}/${_war_name}",
-      provider => 'wget',
+      extract => false,
+      source  => $war_source,
+      path    => "${_deployment_path}/${_war_name}",
     }
   }
 }
