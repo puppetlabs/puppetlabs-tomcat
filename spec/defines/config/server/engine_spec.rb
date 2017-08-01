@@ -61,9 +61,9 @@ describe 'tomcat::config::server::engine', :type => :define do
     let :params do
       {
         :default_host => 'localhost',
-        :background_processor_delay_ensure => 'false',
+        :background_processor_delay_ensure => 'absent',
         :class_name_ensure => 'absent',
-        :jvm_route_ensure => 'false',
+        :jvm_route_ensure => 'absent',
         :start_stop_threads_ensure => 'absent',
       }
     end
@@ -92,7 +92,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'bad class_name_ensure' do
@@ -105,7 +105,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'bad jvm_route_ensure' do
@@ -118,7 +118,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'bad start_stop_threads ensure' do
@@ -131,7 +131,7 @@ describe 'tomcat::config::server::engine', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'old augeas' do

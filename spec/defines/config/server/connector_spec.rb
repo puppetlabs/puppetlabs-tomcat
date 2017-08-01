@@ -158,7 +158,7 @@ describe 'tomcat::config::server::connector', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /does not match/)
+        }.to raise_error(Puppet::Error, /(String|foo)/)
       end
     end
     context 'bad additional_attributes' do
@@ -170,7 +170,7 @@ describe 'tomcat::config::server::connector', :type => :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error, /is not a Hash/)
+        }.to raise_error(Puppet::Error, /Hash/)
       end
     end
     context 'no port' do

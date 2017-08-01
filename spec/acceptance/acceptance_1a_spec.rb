@@ -41,10 +41,12 @@ describe 'Acceptance case one', :unless => stop_test do
         source_url    => '#{TOMCAT8_RECENT_SOURCE}',
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
       }->
-      staging::extract { 'commons-daemon-native.tar.gz':
-        source => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-native.tar.gz",
-        target => "/opt/apache-tomcat/tomcat8-jsvc/bin",
-        unless => "test -d /opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src",
+      archive { 'commons-daemon-native.tar.gz':
+        extract      => true,
+        cleanup      => false,
+        path         => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-native.tar.gz",
+        extract_path => "/opt/apache-tomcat/tomcat8-jsvc/bin",
+        creates      => "/opt/apache-tomcat/tomcat8-jsvc/bin/commons-daemon-1.0.15-native-src",
       }->
       exec { 'configure jsvc':
         command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",
@@ -79,6 +81,14 @@ describe 'Acceptance case one', :unless => stop_test do
         },
         notify                => Tomcat::Service['jsvc-default'],
       }->
+      tomcat::config::server::connector { 'tomcat8-jsvc-8080':
+        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        port                  => '8080',
+        protocol              => 'HTTP/1.1',
+        additional_attributes => {
+          'redirectPort' => '443'
+        },
+      }->
       tomcat::config::server::connector { 'tomcat8-ajp':
         catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
         port                  => '8309',
@@ -86,15 +96,15 @@ describe 'Acceptance case one', :unless => stop_test do
         additional_attributes => {
           'redirectPort' => '443'
         },
-        connector_ensure => 'false',
+        connector_ensure => 'absent',
       }->
       tomcat::war { 'war_one.war':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
         war_source    => '#{SAMPLE_WAR}',
       }->
       tomcat::setenv::entry { 'JAVA_HOME':
-        base_path => '/opt/apache-tomcat/tomcat8-jsvc/bin',
-        value     => $java_home,
+        catalina_home => '/opt/apache-tomcat/tomcat8-jsvc',
+        value         => $java_home,
       }->
       tomcat::service { 'jsvc-default':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
@@ -107,6 +117,11 @@ describe 'Acceptance case one', :unless => stop_test do
     end
     it 'Should be serving a page on port 80' do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'Should be serving a page on port 8080' do
+      shell('curl localhost:8080/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
@@ -169,7 +184,7 @@ describe 'Acceptance case one', :unless => stop_test do
       tomcat::war { 'war_one.war':
         catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
         war_source => '#{SAMPLE_WAR}',
-        war_ensure => 'false',
+        war_ensure => 'absent',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -177,7 +192,7 @@ describe 'Acceptance case one', :unless => stop_test do
     end
     it 'Should not have deployed the war' do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
-        r.stdout.should match(/The requested resource is not available./)
+        r.stdout.should match(/The requested resource is not available/)
       end
     end
     it 'Should still have the server running on port 80' do

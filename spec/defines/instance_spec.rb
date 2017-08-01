@@ -6,9 +6,8 @@ describe 'tomcat::instance', :type => :define do
   end
   let :default_facts do
     {
-      :osfamily         => 'Debian',
-      :staging_http_get => 'curl',
-      :path             => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      :osfamily => 'Debian',
+      :path     => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     }
   end
   let :title do
@@ -34,12 +33,11 @@ describe 'tomcat::instance', :type => :define do
       'group'  => 'tomcat',
       )
     }
-    it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
-    it { is_expected.to contain_staging__extract('default-apache-tomcat-8.0.8.tar.gz').with(
-      'target' => '/opt/apache-tomcat',
-      'user'   => 'tomcat',
-      'group'  => 'tomcat',
-      'strip'  => 1,
+    it { is_expected.to contain_archive('default-/opt/apache-tomcat/apache-tomcat-8.0.8.tar.gz').with(
+      'extract_path'  => '/opt/apache-tomcat',
+      'user'          => 'tomcat',
+      'group'         => 'tomcat',
+      'extract_flags' => '--strip 1 -xf',
     )
     }
   end
@@ -51,12 +49,11 @@ describe 'tomcat::instance', :type => :define do
         :source_url    => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
       }
     end
-    it { is_expected.to contain_staging__file('apache-tomcat-8.0.8.tar.gz') }
-    it { is_expected.to contain_staging__extract('default-apache-tomcat-8.0.8.tar.gz').with(
-      'target' => '/opt/apache-tomcat/test-tomcat',
-      'user'   => 'tomcat',
-      'group'  => 'tomcat',
-      'strip'  => 1,
+    it { is_expected.to contain_archive('default-/opt/apache-tomcat/test-tomcat/apache-tomcat-8.0.8.tar.gz').with(
+      'extract_path'  => '/opt/apache-tomcat/test-tomcat',
+      'user'          => 'tomcat',
+      'group'         => 'tomcat',
+      'extract_flags' => '--strip 1 -xf',
     )
     }
     it { is_expected.to contain_file('/opt/apache-tomcat/test-tomcat').with(

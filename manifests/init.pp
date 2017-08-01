@@ -4,50 +4,46 @@
 #
 # === Parameters
 #
-# [*catalina_home*]
+# @param catalina_home
 #   The base directory for the Tomcat installation. Default: /opt/apache-tomcat
 #
-# [*user*]
+# @param user
 #   The user to run Tomcat as. Default: tomcat
 #
-# [*group*]
+# @param group
 #   The group to run Tomcat as. Default: tomcat
 #
-# [*manage_user*]
+# @param manage_user
 #   Boolean specifying whether or not to manage the user. Defaults to true.
 #
-# [*purge_connectors*]
+# @param purge_connectors
 #   Boolean specifying whether to purge all Connector elements from server.xml. Defaults to false.
 #
-# [*purge_realms*]
+# @param purge_realms
 #   Boolean specifying whether to purge all Realm elements from server.xml. Defaults to false.
 #
-# [*manage_group*]
+# @param manage_group
 #   Boolean specifying whether or not to manage the group. Defaults to true.
 #
-# [*manage_properties*]
+# @param manage_properties
 #   Boolean specifying whether or not to manage the catalina.properties file. Defaults to true.
 class tomcat (
-  $catalina_home       = $::tomcat::params::catalina_home,
-  $user                = $::tomcat::params::user,
-  $group               = $::tomcat::params::group,
-  $install_from_source = true,
-  $purge_connectors    = false,
-  $purge_realms        = false,
-  $manage_user         = true,
-  $manage_group        = true,
-  $manage_home         = true,
-  $manage_base         = true,
-  $manage_properties   = true,
-) inherits ::tomcat::params {
-  validate_bool($install_from_source)
-  validate_bool($purge_connectors)
-  validate_bool($purge_realms)
-  validate_bool($manage_user)
-  validate_bool($manage_group)
-  validate_bool($manage_home)
-  validate_bool($manage_base)
+  $catalina_home             = '/opt/apache-tomcat',
+  $user                      = 'tomcat',
+  $group                     = 'tomcat',
+  $install_from_source       = undef,
+  Boolean $purge_connectors  = false,
+  Boolean $purge_realms      = false,
+  Boolean $manage_user       = true,
+  Boolean $manage_group      = true,
+  Boolean $manage_home       = true,
+  Boolean $manage_base       = true,
+  Boolean $manage_properties = true,
+) {
 
+  if $install_from_source {
+    fail('install_from_source is no longer available in the base class. Please use install_from_source on a specific tomcat::install declaration instead.')
+  }
   case $::osfamily {
     'windows','Solaris','Darwin': {
       fail("Unsupported osfamily: ${::osfamily}")

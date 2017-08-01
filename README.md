@@ -34,6 +34,7 @@
         * [tomcat::config::context::manager](#tomcatconfigcontextmanager)
         * [tomcat::config::context::resource](#tomcatconfigcontextresource)
         * [tomcat::config::context::resourcelink](#tomcatconfigcontextresourcelink)
+        * [tomcat::config::context::valve](#tomcatconfigcontextvalve)
         * [tomcat::install](#tomcatinstall)
         * [tomcat::instance](#tomcatinstance)
         * [tomcat::service](#tomcatservice)
@@ -208,11 +209,12 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::config::server::service`: Configures a [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html) element nested in the `Server` element in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::tomcat_users`: Configures user and role elements for [UserDatabaseRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#UserDatabaseRealm) or [MemoryRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#MemoryRealm) in `$CATALINA_BASE/conf/tomcat-users.xml` or any other specified file.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in `$CATALINA_BASE/conf/server.xml`.
-* `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in `$CATALINA_BASE/conf/context.xml`.
-* `tomcat::config::context::manager`: Configures a [Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html) element in `$CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in `$CATALINA_BASE/conf/context.xml`.
-* `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in `$CATALINA_BASE/conf/context.xml`.
-* `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::manager`: Configures a [Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/context.xml.
 * `tomcat::install`: Installs a Tomcat instance.
 * `tomcat::instance`: Configures a Tomcat instance.
 * `tomcat::service`: Provides Tomcat service management.
@@ -249,14 +251,6 @@ Specifies a default group to run Tomcat as.
 Valid options: a string containing a valid group name.
 
 Default value: 'tomcat'.
-
-##### `install_from_source`
-
-Specifies whether to default to installing Tomcat from source.
-
-Valid options: `true` and `false`.
-
-Default value: `true`.
 
 ##### `manage_group`
 
@@ -348,7 +342,7 @@ Default value: `undef`.
 
 Specifies whether the [address XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -372,7 +366,7 @@ Default value: `undef`.
 
 Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -412,9 +406,9 @@ Default value: `{}`.
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Connector.
+Specifies an array of attributes to remove from the element.
 
-Valid options: a hash of '< attribute >' => '< value >' pairs.
+Valid options: an array of strings.
 
 Default value: `[]`.
 
@@ -430,7 +424,7 @@ Default value: '$::tomcat/catalina_home'.
 
 Specifies whether the [Connector XML element](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -484,9 +478,9 @@ Default value: `{}`.
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Context. 
+Specifies an array of attributes to remove from the element.
 
-Valid options: a hash of '< attribute >' => '< value >' pairs.
+Valid options: an array of strings.
 
 Default value: `[]`.
 
@@ -502,7 +496,7 @@ Default value: '$::tomcat/catalina_home'.
 
 Specifies whether the [Context XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -560,7 +554,7 @@ Default value: `undef`.
 
 Specifies whether the [backgroundProcessorDelay XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -584,7 +578,7 @@ Default value: `undef`.
 
 Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -614,7 +608,7 @@ Default value: `undef`.
 
 Specifies whether the [jvmRoute XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -646,7 +640,7 @@ Default value: `undef`.
 
 Specifies whether the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -658,7 +652,7 @@ Configure GlobalNamingResources Resource elements in '$CATALINA_BASE/conf/server
 
 Determines whether the specified XML element should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -694,9 +688,9 @@ Default value: `{}`.
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Host.
+Specifies an array of attributes to remove from the element.
 
-Valid options: an array of `'< attribute >' => '< value >'` pairs.
+Valid options: an array of strings.
 
 Default value: `[]`.
 
@@ -730,9 +724,9 @@ Valid options: a string.
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Host.
+Specifies an array of attributes to remove from the element.
 
-Valid options: an array of '< attribute >' => '< value >' pairs.
+Valid options: an array of strings.
 
 Default value: `[]`.
 
@@ -748,7 +742,7 @@ Default value: '$::tomcat::catalina_home'.
 
 Specifies whether the virtual host (the [Host XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Introduction)) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -788,9 +782,9 @@ Default value: `{}`.
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Listener.
+Specifies an array of attributes to remove from the element.
 
-Valid options: a hash of '< attribute >' => '< value >' pairs.
+Valid options: an array of strings.
 
 Default value: `[]`.
 
@@ -814,7 +808,7 @@ Default value: `$name`.
 
 Specifies whether the [Listener XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -862,9 +856,9 @@ Default value: `{}`.
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Realm element.
+Specifies an array of attributes to remove from the element.
 
-Valid options: an array of '< attribute >' => '< value >' pairs.
+Valid options: an array of strings.
 
 Default value: `[]`.
 
@@ -926,7 +920,7 @@ Default value: `false`.
 
 Specifies whether the Realm element should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -960,7 +954,7 @@ Default value: `undef`.
 
 Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes) should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -976,7 +970,7 @@ Default value: '${catalina_base}/config/server.xml'.
 
 Specifies whether the [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) should exist in the configuration file. 
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -1010,7 +1004,7 @@ Default value: `$name`.
 
 Determines whether the specified XML element should exist in the configuration file.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -1070,9 +1064,9 @@ Default value: `{}`.
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Valve.
+Specifies an array of attributes to remove from the element.
 
-Valid options: a hash of '< attribute >' => '< value >' pairs.
+Valid options: an array of strings.
 
 Default value: `[]`.
 
@@ -1128,7 +1122,7 @@ Default value: '${catalina_base}/config/server.xml'.
 
 Specifies whether the Valve should exist in the configuration file. Maps to the  [Valve XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Introduction).
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -1147,7 +1141,7 @@ Specifies a Manager element in the designated xml configuration.
 
 specifies whether you are trying to add or remove the Manager element.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -1173,11 +1167,11 @@ Optional
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Manager. 
+Specifies an array of attributes to remove from the element.
 
-Should be a hash of the format 'attribute' => 'value'.
+Valid options: an array of strings.
 
-Optional
+Default value: `[]`.
 
 #### tomcat::config::context::environment
 
@@ -1187,7 +1181,7 @@ Specifies Environment elements in `${catalina_base}/conf/context.xml`
 
 Specifies whether you are trying to add or remove the Environment element
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -1235,20 +1229,20 @@ Optional
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Environment.
+Specifies an array of attributes to remove from the element.
 
-Should be a hash of the format 'attribute' => 'value'.
+Valid options: an array of strings.
 
-Optional
+Default value: `[]`.
 
 #### tomcat::config::context::resource
 Specifies Resource elements in `${catalina_base}/conf/context.xml`
 
 ##### `ensure`
 
-specifies whether you are trying to add or remove the Resource element. 
+Specifies whether you are trying to add or remove the Resource element. 
 
-Valid options: `true`, `false`, 'present', 'absent'.
+Valid options: 'present', 'absent'.
 
 Defaults value: 'present'
 
@@ -1278,11 +1272,54 @@ Optional
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Valve.
+Specifies an array of attributes to remove from the element.
 
-Should be a hash of the format 'attribute' => 'value'.
+Valid options: an array of strings.
 
-Optional
+Default value: `[]`.
+
+#### tomcat::config::context::valve
+Specifies Valve elements in `${catalina_base}/conf/context.xml`
+
+##### `ensure`
+
+Specifies whether you are trying to add or remove the Valve element.
+
+Valid values are 'present', 'absent'.
+
+Defaults to 'present'
+
+##### `resource_name`
+
+The name of the Resource to be created, relative to the java:comp/env context.
+
+Default: `$name`
+
+##### `resource_type`
+
+The fully qualified Java class name expected by the web application when it performs a lookup for this resource. Required to create the resource.
+
+##### `catalina_base`
+
+Specifies the root of the Tomcat installation.
+
+Default: `$tomcat::catalina_home`
+
+##### `additional_attributes`
+
+Specifies any further attributes to add to the Valve.
+
+Valid options: a hash of '< attribute >' => '< value >' pairs.
+
+Default value: `{}`.
+
+##### `attributes_to_remove`
+
+Specifies an array of attributes to remove from the element.
+
+Valid options: an array of strings.
+
+Default value: `[]`.
 
 #### tomcat::config::context::resourcelink
 
@@ -1292,7 +1329,7 @@ Specifies a ResourceLink element in the designated xml configuration.
 
 specifies whether you are trying to add or remove the ResourceLink element.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 
@@ -1322,11 +1359,11 @@ Optional
 
 ##### `attributes_to_remove`
 
-Specifies any attributes to remove from the Valve.
+Specifies an array of attributes to remove from the element.
 
-Should be a hash of the format 'attribute' => 'value'.
+Valid options: an array of strings.
 
-Optional
+Default value: `[]`.
 
 #### `tomcat::install`
 
@@ -1364,9 +1401,27 @@ Valid options: `true` and `false`.
 
 Default value: `true`.
 
-##### `environment`
+##### `proxy_server`
 
-Environment variables for settings such as http_proxy, https_proxy, or ftp_proxy. These are passed through to the staging module and then to the underlying exec(s), so it follows the same format of the exec type [`environment`](https://docs.puppet.com/puppet/latest/reference/type.html#exec-attribute-environment).
+Specifies a proxy server to use when downloading Tomcat binaries. For example, 'https://example.com:8080'.
+
+Default value: `undef`.
+
+##### `proxy_type`
+
+Specifies the proxy server type used by `proxy_server`. Normally this defaults to the protocol specified in the `proxy_server` URI.
+
+Default value: auto-detected from `proxy_server`.
+
+Valid options: 'none', 'http', 'https', 'ftp'.
+
+##### `allow_insecure`
+
+Specifies if HTTPS errors should be ignored when downloading the source tarball.
+
+Default vallue: `false`,
+
+Valid options: `true` and `false`.
 
 ##### `user`
 
@@ -1539,7 +1594,7 @@ Default value: `true`, if `use_init` is set to `true` and `service_ensure` is se
 
 Specifies whether the Tomcat service should be running. Maps to the `ensure` parameter of Puppet's native [`service` resource type](https://docs.puppetlabs.com/references/latest/type.html#service).
 
-Valid options: 'running', 'stopped', `true`, and `false`.
+Valid options: 'running', 'stopped', `true`, `false`.
 
 Default value: 'present'.
 
@@ -1594,10 +1649,6 @@ Default value: `false`.
 The user of the jsvc process when `use_init => true`
 
 #### tomcat::setenv::entry
-
-##### `base_path`
-
-**Deprecated.** Please use `config_file` instead.
 
 ##### `config_file`
 
@@ -1699,7 +1750,7 @@ Default value: If you don't specify a `deployment_path`, Puppet deploys the WAR 
 
 Specifies whether the WAR should exist.
 
-Valid options: `true`, `false`, 'present', and 'absent'.
+Valid options: 'present', 'absent'.
 
 Default value: 'present'.
 

@@ -1,11 +1,12 @@
-# Definition: tomcat::config::context::resource
+# Definition: tomcat::config::context::valve
 #
 # Configure Resource elements in $CATALINA_BASE/conf/context.xml
 #
 # Parameters:
 # - $catalina_base is the base directory for the Tomcat installation.
 # - $ensure specifies whether you are trying to add or remove the
-#   Resource element. Valid values are 'present' and 'absent'. Defaults to 'present'.
+#   Resource element. Valid values are 'true', 'false', 'present', and
+#   'absent'. Defaults to 'present'.
 # - $resource_name is the name of the Resource to be created, relative to
 #   the java:comp/env context.
 # - $type is the fully qualified Java class name expected by the web application
@@ -13,7 +14,7 @@
 # - An optional hash of $additional_attributes to add to the Resource. Should
 #   be of the format 'attribute' => 'value'.
 # - An optional array of $attributes_to_remove from the Connector.
-define tomcat::config::context::resource (
+define tomcat::config::context::valve (
   Enum['present','absent'] $ensure = 'present',
   $resource_name                   = $name,
   $resource_type                   = undef,
@@ -31,7 +32,7 @@ define tomcat::config::context::resource (
     $_resource_name = $name
   }
 
-  $base_path = "Context/Resource[#attribute/name='${_resource_name}']"
+  $base_path = "Context/Valve[#attribute/name='${_resource_name}']"
 
   if $ensure =~ /^(absent|false)$/ {
     $changes = "rm ${base_path}"
@@ -39,7 +40,7 @@ define tomcat::config::context::resource (
     # (MODULES-3353) does this need to be quoted?
     $set_name = "set ${base_path}/#attribute/name ${_resource_name}"
     if $resource_type {
-      $set_type = "set ${base_path}/#attribute/type ${resource_type}"
+      $set_type = "set ${base_path}/#attribute/className ${resource_type}"
     } else {
       $set_type = undef
     }
@@ -64,7 +65,7 @@ define tomcat::config::context::resource (
     ]))
   }
 
-  augeas { "context-${catalina_base}-resource-${name}":
+  augeas { "context-${catalina_base}-valve-${name}":
     lens    => 'Xml.lns',
     incl    => "${catalina_base}/conf/context.xml",
     changes => $changes,

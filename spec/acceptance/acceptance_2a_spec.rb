@@ -12,9 +12,6 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      Staging::File {
-        curl_option => '-k',
-      }
       class { 'tomcat':}
       class { 'java':}
       tomcat::instance { 'tomcat6':
@@ -120,7 +117,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       }
       tomcat::service { 'tomcat6':
         catalina_base => '/opt/apache-tomcat/tomcat6',
-        service_ensure => 'false',
+        service_ensure => 'stopped',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -137,9 +134,6 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
   context 'Start Tomcat without war' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      Staging::File {
-        curl_option => '-k',
-      }
       class{ 'tomcat':}
       tomcat::war { 'tomcat6039-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6039',
@@ -149,13 +143,13 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
       }->
       tomcat::service { 'tomcat6039':
         catalina_base => '/opt/apache-tomcat/tomcat6039',
-        service_ensure => 'true',
+        service_ensure => 'running',
       }
       tomcat::war { 'tomcat6-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6',
         war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6-sample.war',
-        war_ensure    => 'false',
+        war_ensure    => 'absent',
       }->
       tomcat::service { 'tomcat6':
         catalina_base => '/opt/apache-tomcat/tomcat6',
@@ -180,9 +174,6 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
   context 'deploy the war' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      Staging::File {
-        curl_option => '-k',
-      }
       class{ 'tomcat':}
       tomcat::war { 'tomcat6-sample.war':
         catalina_base => '/opt/apache-tomcat/tomcat6',
@@ -194,7 +185,7 @@ describe 'Two different instances of Tomcat 6 in the same manifest', :unless => 
         catalina_base => '/opt/apache-tomcat/tomcat6039',
         war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat6039-sample.war',
-        war_ensure    => 'true',
+        war_ensure    => 'present',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])

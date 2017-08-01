@@ -13,7 +13,7 @@ confine_array = [
 stop_test = false
 stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || confine_array.any?
 
-describe 'Acceptance case one', docker: true, :unless => stop_test do
+describe 'Acceptance case one', :unless => stop_test do
   after :all do
     shell('pkill -f tomcat', :acceptable_exit_codes => [0,1])
     shell('rm -rf /opt/tomcat*', :acceptable_exit_codes => [0,1])
@@ -37,10 +37,12 @@ describe 'Acceptance case one', docker: true, :unless => stop_test do
       }
 
       class jsvc {
-        staging::extract { 'commons-daemon-native.tar.gz':
-          source => "/opt/apache-tomcat/bin/commons-daemon-native.tar.gz",
-          target => "/opt/apache-tomcat/bin",
-          unless => "test -d /opt/apache-tomcat/bin/commons-daemon-1.0.15-native-src",
+        archive { 'commons-daemon-native.tar.gz':
+          extract      => true,
+          cleanup      => false,
+          path         => "/opt/apache-tomcat/bin/commons-daemon-native.tar.gz",
+          extract_path => "/opt/apache-tomcat/bin",
+          creates      => "/opt/apache-tomcat/bin/commons-daemon-1.0.15-native-src",
         }
         -> exec { 'configure jsvc':
           command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",
@@ -90,6 +92,14 @@ describe 'Acceptance case one', docker: true, :unless => stop_test do
           'redirectPort' => '443'
         },
       }
+      tomcat::config::server::connector { 'tomcat8-jsvc-8080':
+        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        port                  => '8080',
+        protocol              => 'HTTP/1.1',
+        additional_attributes => {
+          'redirectPort' => '443'
+        },
+      }
       tomcat::config::server::connector { 'tomcat8-ajp':
         catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
         connector_ensure      => absent,
@@ -111,6 +121,11 @@ describe 'Acceptance case one', docker: true, :unless => stop_test do
     end
     it 'Should be serving a page on port 80' do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
+        r.stdout.should match(/Sample Application JSP Page/)
+      end
+    end
+    it 'Should be serving a page on port 8080' do
+      shell('curl localhost:8080/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
