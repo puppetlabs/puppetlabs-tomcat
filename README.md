@@ -252,14 +252,6 @@ Valid options: a string containing a valid group name.
 
 Default value: 'tomcat'.
 
-##### `install_from_source`
-
-Specifies whether to default to installing Tomcat from source.
-
-Valid options: `true` and `false`.
-
-Default value: `true`.
-
 ##### `manage_group`
 
 Determines whether defined types should default to creating the specified group, if it doesn't exist. Uses Puppet's native [`group` resource type](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters.

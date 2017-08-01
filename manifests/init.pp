@@ -41,6 +41,9 @@ class tomcat (
   Boolean $manage_properties = true,
 ) {
 
+  if $install_from_source {
+    fail('install_from_source is no longer available in the base class. Please use install_from_source on a specific tomcat::install declaration instead.')
+  }
   case $::osfamily {
     'windows','Solaris','Darwin': {
       fail("Unsupported osfamily: ${::osfamily}")
