@@ -152,14 +152,6 @@ define tomcat::instance (
         user          => $_user,
         group         => $_group,
       }
-      if $_manage_properties {
-        tomcat::config::properties { "${_catalina_base} catalina.properties":
-          catalina_home => $_catalina_home,
-          catalina_base => $_catalina_base,
-          user          => $_user,
-          group         => $_group,
-        }
-      }
     }
     $_manage_service = pick($manage_service, true)
   }
@@ -171,6 +163,14 @@ define tomcat::instance (
       use_jsvc      => $use_jsvc,
       use_init      => $use_init,
       user          => $_user,
+    }
+  }
+  if $_manage_properties {
+    tomcat::config::properties { "${_catalina_base} catalina.properties":
+      catalina_home => $_catalina_home,
+      catalina_base => $_catalina_base,
+      user          => $_user,
+      group         => $_group,
     }
   }
 }
