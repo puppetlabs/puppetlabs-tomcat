@@ -1419,7 +1419,7 @@ Valid options: 'none', 'http', 'https', 'ftp'.
 
 Specifies if HTTPS errors should be ignored when downloading the source tarball.
 
-Default vallue: `false`,
+Default value: `false`,
 
 Valid options: `true` and `false`.
 
