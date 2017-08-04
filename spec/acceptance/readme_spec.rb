@@ -25,7 +25,7 @@ describe 'README examples', :unless => stop_test do
       pp = <<-EOS
       class{'java':}
       tomcat::install { '/opt/tomcat':
-        source_url => '#{TOMCAT7_RECENT_SOURCE}',
+        source_url => '#{TOMCAT8_RECENT_SOURCE}',
       }
       tomcat::instance { 'default':
         catalina_home => '/opt/tomcat',
@@ -47,24 +47,24 @@ describe 'README examples', :unless => stop_test do
       pp = <<-EOS
       class { 'java': }
 
-      tomcat::install { '/opt/tomcat8':
-        source_url => '#{TOMCAT8_RECENT_SOURCE}'
+      tomcat::install { '/opt/tomcat9':
+        source_url => '#{TOMCAT9_RECENT_SOURCE}'
       }
-      tomcat::instance { 'tomcat8-first':
-        catalina_home => '/opt/tomcat8',
-        catalina_base => '/opt/tomcat8/first',
+      tomcat::instance { 'tomcat9-first':
+        catalina_home => '/opt/tomcat9',
+        catalina_base => '/opt/tomcat9/first',
       }
-      tomcat::instance { 'tomcat8-second':
-        catalina_home => '/opt/tomcat8',
-        catalina_base => '/opt/tomcat8/second',
+      tomcat::instance { 'tomcat9-second':
+        catalina_home => '/opt/tomcat9',
+        catalina_base => '/opt/tomcat9/second',
       }
       # Change the default port of the second instance server and HTTP connector
-      tomcat::config::server { 'tomcat8-second':
-        catalina_base => '/opt/tomcat8/second',
+      tomcat::config::server { 'tomcat9-second':
+        catalina_base => '/opt/tomcat9/second',
         port          => '8006',
       }
-      tomcat::config::server::connector { 'tomcat8-second-http':
-        catalina_base         => '/opt/tomcat8/second',
+      tomcat::config::server::connector { 'tomcat9-second-http':
+        catalina_base         => '/opt/tomcat9/second',
         port                  => '8081',
         protocol              => 'HTTP/1.1',
         additional_attributes => {
@@ -72,27 +72,27 @@ describe 'README examples', :unless => stop_test do
         },
       }
 
-      tomcat::install { '/opt/tomcat6':
-        source_url => '#{TOMCAT6_RECENT_SOURCE}',
+      tomcat::install { '/opt/tomcat7':
+        source_url => '#{TOMCAT7_RECENT_SOURCE}',
       }
-      tomcat::instance { 'tomcat6':
-        catalina_home => '/opt/tomcat6',
+      tomcat::instance { 'tomcat7':
+        catalina_home => '/opt/tomcat7',
       }
-      # Change tomcat 6's server and HTTP/AJP connectors
-      tomcat::config::server { 'tomcat6':
-        catalina_base => '/opt/tomcat6',
+      # Change tomcat 7's server and HTTP/AJP connectors
+      tomcat::config::server { 'tomcat7':
+        catalina_base => '/opt/tomcat7',
         port          => '8105',
       }
-      tomcat::config::server::connector { 'tomcat6-http':
-        catalina_base         => '/opt/tomcat6',
+      tomcat::config::server::connector { 'tomcat7-http':
+        catalina_base         => '/opt/tomcat7',
         port                  => '8180',
         protocol              => 'HTTP/1.1',
         additional_attributes => {
           'redirectPort' => '8543'
         },
       }
-      tomcat::config::server::connector { 'tomcat6-ajp':
-        catalina_base         => '/opt/tomcat6',
+      tomcat::config::server::connector { 'tomcat7-ajp':
+        catalina_base         => '/opt/tomcat7',
         port                  => '8109',
         protocol              => 'AJP/1.3',
         additional_attributes => {

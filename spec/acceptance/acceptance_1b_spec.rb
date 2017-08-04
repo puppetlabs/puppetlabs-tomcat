@@ -68,50 +68,50 @@ describe 'Acceptance case one', :unless => stop_test do
 
       # The default
       tomcat::install { '/opt/apache-tomcat':
-        user       => 'tomcat8',
-        group      => 'tomcat8',
-        source_url => '#{TOMCAT8_RECENT_SOURCE}',
+        user       => 'tomcat9',
+        group      => 'tomcat9',
+        source_url => '#{TOMCAT9_RECENT_SOURCE}',
       }
       -> class { 'jsvc': } ->
       tomcat::instance { 'tomcat_one':
-        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        user          => 'tomcat8',
-        group         => 'tomcat8',
+        catalina_base => '/opt/apache-tomcat/tomcat9-jsvc',
+        user          => 'tomcat9',
+        group         => 'tomcat9',
         java_home     => $java_home,
         use_jsvc      => true,
       }
-      tomcat::config::server { 'tomcat8-jsvc':
-        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+      tomcat::config::server { 'tomcat9-jsvc':
+        catalina_base => '/opt/apache-tomcat/tomcat9-jsvc',
         port          => '80',
       }
-      tomcat::config::server::connector { 'tomcat8-jsvc':
-        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+      tomcat::config::server::connector { 'tomcat9-jsvc':
+        catalina_base         => '/opt/apache-tomcat/tomcat9-jsvc',
         port                  => '80',
         protocol              => 'HTTP/1.1',
         additional_attributes => {
           'redirectPort' => '443'
         },
       }
-      tomcat::config::server::connector { 'tomcat8-jsvc-8080':
-        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+      tomcat::config::server::connector { 'tomcat9-jsvc-8080':
+        catalina_base         => '/opt/apache-tomcat/tomcat9-jsvc',
         port                  => '8080',
         protocol              => 'HTTP/1.1',
         additional_attributes => {
           'redirectPort' => '443'
         },
       }
-      tomcat::config::server::connector { 'tomcat8-ajp':
-        catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+      tomcat::config::server::connector { 'tomcat9-ajp':
+        catalina_base         => '/opt/apache-tomcat/tomcat9-jsvc',
         connector_ensure      => absent,
         port                  => '8309',
       }
       tomcat::war { 'war_one.war':
-        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+        catalina_base => '/opt/apache-tomcat/tomcat9-jsvc',
         war_source    => '#{SAMPLE_WAR}',
       }
       tomcat::setenv::entry { 'JAVA_HOME':
-        user  => 'tomcat8',
-        group => 'tomcat8',
+        user  => 'tomcat9',
+        group => 'tomcat9',
         value => $java_home,
       }
       EOS
@@ -147,10 +147,10 @@ describe 'Acceptance case one', :unless => stop_test do
       tomcat::service { 'jsvc-default':
         service_ensure => stopped,
         catalina_home  => '/opt/apache-tomcat',
-        catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+        catalina_base  => '/opt/apache-tomcat/tomcat9-jsvc',
         use_jsvc       => true,
         java_home      => $java_home,
-        user           => 'tomcat8',
+        user           => 'tomcat9',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -177,10 +177,10 @@ describe 'Acceptance case one', :unless => stop_test do
       tomcat::service { 'jsvc-default':
         service_ensure => running,
         catalina_home  => '/opt/apache-tomcat',
-        catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+        catalina_base  => '/opt/apache-tomcat/tomcat9-jsvc',
         use_jsvc       => true,
         java_home      => $java_home,
-        user           => 'tomcat8',
+        user           => 'tomcat9',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -197,7 +197,7 @@ describe 'Acceptance case one', :unless => stop_test do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
       tomcat::war { 'war_one.war':
-        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+        catalina_base => '/opt/apache-tomcat/tomcat9-jsvc',
         war_source    => '#{SAMPLE_WAR}',
         war_ensure    => absent,
       }
@@ -226,19 +226,19 @@ describe 'Acceptance case one', :unless => stop_test do
         }
       }
 
-      tomcat::config::server::connector { 'tomcat8-jsvc':
+      tomcat::config::server::connector { 'tomcat9-jsvc':
         connector_ensure => 'absent',
-        catalina_base    => '/opt/apache-tomcat/tomcat8-jsvc',
+        catalina_base    => '/opt/apache-tomcat/tomcat9-jsvc',
         port             => '80',
         notify           => Tomcat::Service['jsvc-default']
       }
       tomcat::service { 'jsvc-default':
         service_ensure => running,
         catalina_home  => '/opt/apache-tomcat',
-        catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+        catalina_base  => '/opt/apache-tomcat/tomcat9-jsvc',
         java_home      => $java_home,
         use_jsvc       => true,
-        user           => 'tomcat8',
+        user           => 'tomcat9',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
