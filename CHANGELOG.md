@@ -10,7 +10,11 @@ This major release drops puppet 3, changes dependencies from staging to archive,
 ### Removed
 - Deprecated `tomcat::setenv::entry` attribute `base_path`. Use `config_file` instead.
 - Base `tomcat` class `install_from_source` parameter now does nothing. Use `tomcat::install` attribute `install_from_source` directly instead.
+- No longer testing tomcat 6 as it is EOL and removed from the mirrors.
 - `tomcat::install` attribute `environment` previously used for proxy settings. Use `proxy_server` and `proxy_type` instead.
+
+### Deprecated
+- `tomcat::instance` define parameters `install_from_source`, `source_url`, `source_strip_first_dir`, `package_ensure`, `package_name`, and `package_options` have been unofficially deprecated since 1.5.0 and are now formally deprecated. Please use `tomcat::install` instead and point any `tomcat::instance::catalina_home` there. See the readme for further examples.
 
 ### Added
 - Compatibility with puppet 5.x series

@@ -18,38 +18,38 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       pp = <<-EOS
       class { 'java':}
       class { 'tomcat':
-        catalina_home => '/opt/apache-tomcat7',
+        catalina_home => '/opt/apache-tomcat8',
       }
-      tomcat::install { '/opt/apache-tomcat7':
-        source_url => '#{TOMCAT7_RECENT_SOURCE}',
+      tomcat::install { '/opt/apache-tomcat8':
+        source_url => '#{TOMCAT8_RECENT_SOURCE}',
       }
-      tomcat::instance { 'tomcat7':
-        catalina_base => '/opt/apache-tomcat7/tomcat7',
+      tomcat::instance { 'tomcat8':
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
       }
-      tomcat::config::server { 'tomcat7':
-        catalina_base => '/opt/apache-tomcat7/tomcat7',
+      tomcat::config::server { 'tomcat8':
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
         port          => '8105',
       }
-      tomcat::config::server::connector { 'tomcat7-http':
-        catalina_base         => '/opt/apache-tomcat7/tomcat7',
+      tomcat::config::server::connector { 'tomcat8-http':
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
         port                  => '8180',
         protocol              => 'HTTP/1.1',
         additional_attributes => {
           'redirectPort' => '8543'
         },
       }
-      tomcat::config::server::connector { 'tomcat7-ajp':
-        catalina_base         => '/opt/apache-tomcat7/tomcat7',
+      tomcat::config::server::connector { 'tomcat8-ajp':
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
         port                  => '8109',
         protocol              => 'AJP/1.3',
         additional_attributes => {
           'redirectPort' => '8543'
         },
       }
-      tomcat::war { 'tomcat7-sample.war':
-        catalina_base => '/opt/apache-tomcat7/tomcat7',
+      tomcat::war { 'tomcat8-sample.war':
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
         war_source    => '/tmp/sample.war',
-        war_name      => 'tomcat7-sample.war',
+        war_name      => 'tomcat8-sample.war',
       }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -62,7 +62,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       end
     end
     it 'Should be serving a JSP page from the war' do
-      shell('curl localhost:8180/tomcat7-sample/hello.jsp') do |r|
+      shell('curl localhost:8180/tomcat8-sample/hello.jsp') do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
@@ -71,9 +71,9 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
   context 'Stop tomcat' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      tomcat::service { 'tomcat7':
-        catalina_home  => '/opt/apache-tomcat7',
-        catalina_base  => '/opt/apache-tomcat7/tomcat7',
+      tomcat::service { 'tomcat8':
+        catalina_home  => '/opt/apache-tomcat8',
+        catalina_base  => '/opt/apache-tomcat8/tomcat8',
         service_ensure => stopped,
       }
       EOS
@@ -88,9 +88,9 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
   context 'Start Tomcat' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      tomcat::service { 'tomcat7':
-        catalina_home  => '/opt/apache-tomcat7',
-        catalina_base  => '/opt/apache-tomcat7/tomcat7',
+      tomcat::service { 'tomcat8':
+        catalina_home  => '/opt/apache-tomcat8',
+        catalina_base  => '/opt/apache-tomcat8/tomcat8',
         service_ensure => running,
       }
       EOS
@@ -107,9 +107,9 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
   context 'un-deploy the war' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      tomcat::war { 'tomcat7-sample.war':
+      tomcat::war { 'tomcat8-sample.war':
         war_ensure    => absent,
-        catalina_base => '/opt/apache-tomcat7/tomcat7',
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
         war_source    => '/tmp/sample.war',
       }
       EOS
@@ -117,7 +117,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       shell('sleep 15')
     end
     it 'Should not have deployed the war' do
-      shell('curl localhost:8180/tomcat7-sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
+      shell('curl localhost:8180/tomcat8-sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should eq("")
       end
     end
@@ -126,15 +126,15 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
   context 'remove the connector' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
-      tomcat::config::server::connector { 'tomcat7-http':
+      tomcat::config::server::connector { 'tomcat8-http':
         connector_ensure => absent,
-        catalina_base    => '/opt/apache-tomcat7/tomcat7',
+        catalina_base    => '/opt/apache-tomcat8/tomcat8',
         port             => '8180',
-        notify           => Tomcat::Service['tomcat7'],
+        notify           => Tomcat::Service['tomcat8'],
       }
-      tomcat::service { 'tomcat7':
-        catalina_home => '/opt/apache-tomcat7',
-        catalina_base => '/opt/apache-tomcat7/tomcat7'
+      tomcat::service { 'tomcat8':
+        catalina_home => '/opt/apache-tomcat8',
+        catalina_base => '/opt/apache-tomcat8/tomcat8'
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
@@ -150,7 +150,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       pp = <<-EOS
       class{ 'tomcat':}
       tomcat::config::server::service { 'org.apache.catalina.core.StandardService':
-        catalina_base     => '/opt/apache-tomcat7/tomcat7',
+        catalina_base     => '/opt/apache-tomcat8/tomcat8',
         class_name        => 'org.apache.catalina.core.StandardService',
         class_name_ensure => 'present',
         service_ensure    => 'present',
@@ -159,7 +159,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'shoud have a service named FooBar and a class names FooBar' do
-      shell('cat /opt/apache-tomcat7/tomcat7/conf/server.xml', :acceptable_exit_codes => 0) do |r|
+      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><\/Service>/)
       end
     end
@@ -169,14 +169,14 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
     it 'Should apply the manifest without error' do
       pp = <<-EOS
       tomcat::config::server::valve { 'logger':
-        catalina_base => '/opt/apache-tomcat7/tomcat7',
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
         class_name    => 'org.apache.catalina.valves.AccessLogValve',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'should have changed the conf.xml file' do
-      shell('cat /opt/apache-tomcat7/tomcat7/conf/server.xml', :acceptable_exit_codes => 0) do |r|
+      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/<Valve className="org.apache.catalina.valves.AccessLogValve"><\/Valve>/)
       end
     end
@@ -186,7 +186,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
     it 'Should apply the manifest without error' do
       pp = <<-EOS
       tomcat::config::server::valve { 'logger':
-        catalina_base => '/opt/apache-tomcat7/tomcat7',
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
         class_name    => 'org.apache.catalina.valves.AccessLogValve',
         valve_ensure  => 'absent',
       }
@@ -194,7 +194,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
     it 'should have changed the conf.xml file' do
-      shell('cat /opt/apache-tomcat7/tomcat7/conf/server.xml', :acceptable_exit_codes => 0) do |r|
+      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         r.stdout.should_not match(/<Valve className="org.apache.catalina.valves.AccessLogValve"><\/Valve>/)
       end
     end
@@ -205,7 +205,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       pp = <<-EOS
       tomcat::config::server::engine{'org.apache.catalina.core.StandardEngine':
         default_host               => 'localhost',
-        catalina_base              => '/opt/apache-tomcat7/tomcat7',
+        catalina_base              => '/opt/apache-tomcat8/tomcat8',
         background_processor_delay => 5,
         parent_service             => 'org.apache.catalina.core.StandardService',
         start_stop_threads         => 3,
@@ -216,7 +216,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
     it 'should have changed the conf.xml file' do
       #validation
       v = '<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><Engine name="org.apache.catalina.core.StandardEngine" defaultHost="localhost" backgroundProcessorDelay="5" startStopThreads="3"><\/Engine>'
-      shell('cat /opt/apache-tomcat7/tomcat7/conf/server.xml', :acceptable_exit_codes => 0) do |r|
+      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/#{v}/)
       end
     end
@@ -224,7 +224,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       pp = <<-EOS
       tomcat::config::server::engine { 'org.apache.catalina.core.StandardEngine':
         default_host               => 'localhost',
-        catalina_base              => '/opt/apache-tomcat7/tomcat7',
+        catalina_base              => '/opt/apache-tomcat8/tomcat8',
         background_processor_delay => 999,
         parent_service             => 'org.apache.catalina.core.StandardService',
         start_stop_threads         => 555,
@@ -235,7 +235,7 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
     it 'should have changed the conf.xml file' do
       #validation
       v = '<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><Engine name="org.apache.catalina.core.StandardEngine" defaultHost="localhost" backgroundProcessorDelay="999" startStopThreads="555"><\/Engine>'
-      shell('cat /opt/apache-tomcat7/tomcat7/conf/server.xml', :acceptable_exit_codes => 0) do |r|
+      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/#{v}/)
       end
     end
@@ -245,8 +245,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
     it 'Should apply the manifest to create the engine without error' do
       pp = <<-EOS
       tomcat::config::server::host { 'org.apache.catalina.core.StandardHost':
-        app_base              => '/opt/apache-tomcat7/tomcat7/webapps',
-        catalina_base         => '/opt/apache-tomcat7/tomcat7',
+        app_base              => '/opt/apache-tomcat8/tomcat8/webapps',
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
         host_name             => 'hulk-smash',
         additional_attributes => {
           astrological_sign => 'scorpio',
@@ -258,8 +258,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
     end
     it 'should have changed the conf.xml file' do
       #validation
-      matches = ['<Host name="hulk-smash".*appBase="/opt/apache-tomcat7/tomcat7/webapps".*></Host>','<Host name="hulk-smash".*astrological_sign="scorpio".*></Host>','<Host name="hulk-smash".*favorite-beer="PBR".*></Host>']
-      shell('cat /opt/apache-tomcat7/tomcat7/conf/server.xml', :acceptable_exit_codes => 0) do |r|
+      matches = ['<Host name="hulk-smash".*appBase="/opt/apache-tomcat8/tomcat8/webapps".*></Host>','<Host name="hulk-smash".*astrological_sign="scorpio".*></Host>','<Host name="hulk-smash".*favorite-beer="PBR".*></Host>']
+      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         matches.each do |m|
           r.stdout.should match(/#{m}/)
         end
@@ -268,8 +268,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
     it 'Should apply the manifest to remove a engine attribute without error' do
       pp = <<-EOS
       tomcat::config::server::host { 'org.apache.catalina.core.StandardHost':
-        app_base => '/opt/apache-tomcat7/tomcat7/webapps',
-        catalina_base => '/opt/apache-tomcat7/tomcat7',
+        app_base => '/opt/apache-tomcat8/tomcat8/webapps',
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
         host_name => 'hulk-smash',
         additional_attributes => {
           astrological_sign => 'scorpio',
@@ -283,8 +283,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
     end
     it 'should have changed the conf.xml file' do
       #validation
-      v = '<Host name="hulk-smash" appBase="/opt/apache-tomcat7/tomcat7/webapps" astrological_sign="scorpio"><\/Host>'
-      shell('cat /opt/apache-tomcat7/tomcat7/conf/server.xml', :acceptable_exit_codes => 0) do |r|
+      v = '<Host name="hulk-smash" appBase="/opt/apache-tomcat8/tomcat8/webapps" astrological_sign="scorpio"><\/Host>'
+      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/#{v}/)
       end
     end
