@@ -89,36 +89,49 @@ define tomcat::service (
     }
   } elsif $use_jsvc {
     if $java_home {
-      $_jsvc_home = "-home ${java_home} "
+      $_jsvc_home = "--java-home ${java_home} "
+      #$_jsvc_home = "-home ${java_home} "
     } else {
       $_jsvc_home = undef
     }
     $_service_name = "tomcat-${name}"
     $_hasstatus    = false
     $_hasrestart   = false
+    $daemon_sh = "${_catalina_home}/bin/daemon.sh \
+                  --catalina-home ${_catalina_home} \
+                  --catalina-base ${_catalina_base} \
+                  ${_jsvc_home}\
+                  --tomcat-user ${_user} \
+                  --catalina-pid ${_catalina_base}/logs/jsvc.pid"
+    # Query the version first to make sure it's all compatible
+    $daemon_command = "${daemon_sh} version && ${daemon_sh}"
     if $start_command {
       $_start = $start_command
     } else {
-      $_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base}; \
-                 \$CATALINA_HOME/bin/jsvc \
-                   ${_jsvc_home}-user ${_user} \
-                   -classpath \$CATALINA_HOME/bin/bootstrap.jar:\$CATALINA_HOME/bin/tomcat-juli.jar \
-                   -outfile \$CATALINA_BASE/logs/catalina.out \
-                   -errfile \$CATALINA_BASE/logs/catalina.err \
-                   -pidfile \$CATALINA_BASE/logs/jsvc.pid \
-                   -Dcatalina.home=\$CATALINA_HOME \
-                   -Dcatalina.base=\$CATALINA_BASE \
-                   -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
-                   -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
-                   org.apache.catalina.startup.Bootstrap"
+      $_start = "${daemon_command} start"
+
+      #$_start = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base}; \
+      #           \$CATALINA_HOME/bin/jsvc \
+      #             ${_jsvc_home}-user ${_user} \
+      #             -classpath \$CATALINA_HOME/bin/bootstrap.jar:\$CATALINA_HOME/bin/tomcat-juli.jar \
+      #             -outfile \$CATALINA_BASE/logs/catalina.out \
+      #             -errfile \$CATALINA_BASE/logs/catalina.err \
+      #             -pidfile \$CATALINA_BASE/logs/jsvc.pid \
+      #             -Dcatalina.home=\$CATALINA_HOME \
+      #             -Dcatalina.base=\$CATALINA_BASE \
+      #             -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+      #             -Djava.util.logging.config.file=\$CATALINA_BASE/conf/logging.properties \
+      #             org.apache.catalina.startup.Bootstrap"
     }
     if $stop_command {
       $_stop = $stop_command
     } else {
-      $_stop = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
-                 \$CATALINA_HOME/bin/jsvc \
-                   -pidfile \$CATALINA_BASE/logs/jsvc.pid \
-                   -stop org.apache.catalina.startup.Bootstrap"
+      $_stop = "${daemon_command} stop"
+
+      #$_stop = "export CATALINA_HOME=${_catalina_home}; export CATALINA_BASE=${_catalina_base};
+      #           \$CATALINA_HOME/bin/jsvc \
+      #             -pidfile \$CATALINA_BASE/logs/jsvc.pid \
+      #             -stop org.apache.catalina.startup.Bootstrap"
     }
     $_status       = "ps p `cat ${_catalina_base}/logs/jsvc.pid` > /dev/null"
     $_provider     = 'base'
