@@ -85,7 +85,6 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
     it 'Should contain two realms in config file' do
       shell('cat /opt/apache-tomcat40/conf/server.xml', :acceptable_exit_codes => 0) do |r|
