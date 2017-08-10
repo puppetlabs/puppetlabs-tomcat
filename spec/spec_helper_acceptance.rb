@@ -2,6 +2,7 @@ require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'beaker/puppet_install_helper'
 require 'beaker/module_install_helper'
+require 'rspec/retry'
 
 run_puppet_install_helper
 install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ /pe/i
@@ -46,6 +47,8 @@ UNSUPPORTED_PLATFORMS = ['windows','Solaris','Darwin']
 RSpec.configure do |c|
   c.filter_run :focus => true
   c.run_all_when_everything_filtered = true
+  c.verbose_retry = true
+  c.display_try_failure_messages = true
 
   # Readable test descriptions
   c.formatter = :documentation

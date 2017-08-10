@@ -54,14 +54,13 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       EOS
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_changes  => true)
-      shell('sleep 15')
     end
-    it 'Should be serving a page on port 8180' do
+    it 'Should be serving a page on port 8180', :retry => 3, :retry_wait => 10 do
       shell('curl --retry 15 --retry-delay 4 localhost:8180') do |r|
         r.stdout.should eq("")
       end
     end
-    it 'Should be serving a JSP page from the war' do
+    it 'Should be serving a JSP page from the war', :retry => 3, :retry_wait => 10 do
       shell('curl localhost:8180/tomcat8-sample/hello.jsp') do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
@@ -78,9 +77,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should not be serving a page on port 8180' do
+    it 'Should not be serving a page on port 8180', :retry => 3, :retry_wait => 10 do
       shell('curl localhost:8180', :acceptable_exit_codes => 7)
     end
   end
@@ -95,9 +93,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should be serving a page on port 8180' do
+    it 'Should be serving a page on port 8180', :retry => 3, :retry_wait => 10 do
       shell('curl localhost:8180') do |r|
         r.stdout.should eq("")
       end
@@ -114,9 +111,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should not have deployed the war' do
+    it 'Should not have deployed the war', :retry => 3, :retry_wait => 10 do
       shell('curl localhost:8180/tomcat8-sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should eq("")
       end
@@ -138,9 +134,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should not be abble to serve pages over port 8180' do
+    it 'Should not be abble to serve pages over port 8180', :retry => 3, :retry_wait => 10 do
       shell('curl localhost:8180', :acceptable_exit_codes => 7)
     end
   end
