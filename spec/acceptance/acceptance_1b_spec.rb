@@ -118,12 +118,12 @@ describe 'Acceptance case one', :unless => stop_test do
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_changes  => true)
     end
-    it 'Should be serving a page on port 80', :retry => 3, :retry_wait => 10 do
+    it 'Should be serving a page on port 80', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
-    it 'Should be serving a page on port 8080', :retry => 3, :retry_wait => 10 do
+    it 'Should be serving a page on port 8080', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8080/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
@@ -154,7 +154,7 @@ describe 'Acceptance case one', :unless => stop_test do
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'Should not be serving a page on port 80', :retry => 3, :retry_wait => 10 do
+    it 'Should not be serving a page on port 80', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 7)
     end
   end
@@ -183,7 +183,7 @@ describe 'Acceptance case one', :unless => stop_test do
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'Should be serving a page on port 80', :retry => 3, :retry_wait => 10 do
+    it 'Should be serving a page on port 80', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
@@ -201,7 +201,7 @@ describe 'Acceptance case one', :unless => stop_test do
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'Should not have deployed the war', :retry => 3, :retry_wait => 10 do
+    it 'Should not have deployed the war', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should eq("")
       end
@@ -239,7 +239,7 @@ describe 'Acceptance case one', :unless => stop_test do
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'Should not be able to serve pages over port 80', :retry => 3, :retry_wait => 10 do
+    it 'Should not be able to serve pages over port 80', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80', :acceptable_exit_codes => 7)
     end
   end

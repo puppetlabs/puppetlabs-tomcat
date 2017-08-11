@@ -86,7 +86,7 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'Should contain two realms in config file' do
+    it 'Should contain two realms in config file', :retry => 5, :retry_wait => 10 do
       shell('cat /opt/apache-tomcat40/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/<Realm puppetName="org.apache.catalina.realm.MyRealm1" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm1" otherAttribute="more stuff"><\/Realm>/)
         r.stdout.should match(/<Realm puppetName="org.apache.catalina.realm.MyRealm2" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm2" otherAttribute="more stuff"><\/Realm>/)
