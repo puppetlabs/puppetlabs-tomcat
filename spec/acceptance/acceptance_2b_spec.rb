@@ -148,22 +148,22 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
       apply_manifest(pp, :catch_changes => true)
     end
     #test the war
-    it 'tomcat7-first should have war deployed by default', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7-first should have war deployed by default', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8280/tomcat7/sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
-    it 'tomcat7-second should have war deployed by default', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7-second should have war deployed by default', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8281/tomcat7/sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
-    it 'tomcat7078-first should have war deployed by default', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7078-first should have war deployed by default', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8380/tomcat7078-sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
-    it 'tomcat7078-second should have war deployed by default', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7078-second should have war deployed by default', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8381/tomcat7078-sample/hello.jsp', :acceptable_exit_codes => 0) do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
@@ -196,16 +196,16 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'tomcat7-first should not be serving a page on port 8280', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7-first should not be serving a page on port 8280', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8280', :acceptable_exit_codes => 7)
     end
-    it 'tomcat7-second should not be serving a page on port 8281', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7-second should not be serving a page on port 8281', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8281', :acceptable_exit_codes => 7)
     end
-    it 'tomcat7078-first should not be serving a page on port 8380', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7078-first should not be serving a page on port 8380', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8380', :acceptable_exit_codes => 7)
     end
-    it 'tomcat7078-second should not be serving a page on port 8381', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7078-second should not be serving a page on port 8381', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8381', :acceptable_exit_codes => 7)
     end
   end
@@ -238,12 +238,12 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'tomcat7-first should not display message when war is not deployed', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7-first should not display message when war is not deployed', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8280/tomcat7-sample/hello.jsp') do |r|
         expect(r.stdout).to_not match(/Sample Application JSP Page/)
       end
     end
-    it 'tomcat7078-first should not display message when war is not deployed', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7078-first should not display message when war is not deployed', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8380/tomcat7078-sample/hello.jsp') do |r|
         expect(r.stdout).to_not match(/Sample Application JSP Page/)
       end
@@ -268,12 +268,12 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'tomcat7 should be serving a war on port 8280', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7 should be serving a war on port 8280', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8280/tomcat7-sample/hello.jsp') do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
-    it 'tomcat7078 should be serving a war on port 8380', :retry => 3, :retry_wait => 10 do
+    it 'tomcat7078 should be serving a war on port 8380', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8380/tomcat7078-sample/hello.jsp') do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
