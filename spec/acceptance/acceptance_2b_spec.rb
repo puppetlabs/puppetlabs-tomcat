@@ -258,12 +258,22 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
         war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat7-sample.war',
         war_ensure    => 'present',
+      } ~>
+      tomcat::service { 'tomcat7-first':
+        catalina_home  => '/opt/apache-tomcat7',
+        catalina_base  => '/opt/tomcat7-first',
+        service_ensure => 'running',
       }
       tomcat::war { 'tomcat7078-sample.war':
         catalina_base => '/opt/tomcat7078-first',
         war_source    => '#{SAMPLE_WAR}',
         war_name      => 'tomcat7078-sample.war',
         war_ensure    => 'present',
+      } ~>
+      tomcat::service { 'tomcat7078-first':
+        catalina_home  => '/opt/apache-tomcat7078',
+        catalina_base  => '/opt/tomcat7078-first',
+        service_ensure => 'running',
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
