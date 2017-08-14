@@ -34,6 +34,7 @@
         * [tomcat::config::context::manager](#tomcatconfigcontextmanager)
         * [tomcat::config::context::resource](#tomcatconfigcontextresource)
         * [tomcat::config::context::resourcelink](#tomcatconfigcontextresourcelink)
+        * [tomcat::config::context::valve](#tomcatconfigcontextvalve)
         * [tomcat::install](#tomcatinstall)
         * [tomcat::instance](#tomcatinstance)
         * [tomcat::service](#tomcatservice)
@@ -208,11 +209,12 @@ tomcat::config::server::realm { 'org.apache.catalina.realm.LockOutRealm':
 * `tomcat::config::server::service`: `$CATALINA_BASE/conf/server.xml`の`Server`要素にネストされた[Service要素](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html)要素を構成します。
 * `tomcat::config::server::tomcat_users`: `$CATALINA_BASE/conf/tomcat-users.xml`または指定した他のファイルの[UserDatabaseRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#UserDatabaseRealm)または[MemoryRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#MemoryRealm)のユーザおよびロール要素を構成します。
 * `tomcat::config::server::valve`: `$CATALINA_BASE/conf/server.xml`の[Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html)要素を構成します。
-* `tomcat::config::context`: `$CATALINA_BASE/conf/context.xml`の[Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html)要素を構成します。
-* `tomcat::config::context::manager`: `$CATALINA_BASE/conf/context.xml`の[Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html)要素を構成します。
-* `tomcat::config::context::environment`: `$CATALINA_BASE/conf/context.xml`の[Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries)要素を構成します。
-* `tomcat::config::context::resource`: `$CATALINA_BASE/conf/context.xml`の[Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions)要素を構成します。
-* `tomcat::config::context::resourcelink`: `$CATALINA_BASE/conf/context.xml`の[ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links)要素を構成します。
+* `tomcat::config::context`: $CATALINA_BASE/conf/context.xmlの[Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html)要素を構成します。
+* `tomcat::config::context::manager`: $CATALINA_BASE/conf/context.xmlの[Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html)要素を構成します。
+* `tomcat::config::context::environment`: $CATALINA_BASE/conf/context.xmlの[Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries)要素を構成します。
+* `tomcat::config::context::resource`: $CATALINA_BASE/conf/context.xmlの[Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions)要素を構成します。
+* `tomcat::config::context::resourcelink`: $CATALINA_BASE/conf/context.xmlの[ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links)要素を構成します。
+* `tomcat::config::context::valve`: $CATALINA_BASE/conf/context.xmlの[Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html)要素を構成します。
 * `tomcat::install`: Tomcatインスタンスをインストールします。
 * `tomcat::instance`: Tomcatインスタンスを構成します。
 * `tomcat::service`: Tomcatサービス管理を提供します。
@@ -348,7 +350,7 @@ catalina.propertiesファイルのあるcatalinaベースです。`${catalina_ba
 
 [address XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -372,7 +374,7 @@ catalina.propertiesファイルのあるcatalinaベースです。`${catalina_ba
 
 [className XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -412,9 +414,9 @@ Connectorに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Connectorコネクタから削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-有効なオプション: '< attribute >' => '< value >'ペアのハッシュ値。
+有効なオプション: 文字列の配列。
 
 デフォルト値: `[]`。
 
@@ -430,7 +432,7 @@ Connectorコネクタから削除する属性を指定します。
 
 [Connector XML要素](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -484,9 +486,9 @@ Contextに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Contextから削除する属性を指定します。 
+要素から削除する属性の配列を指定します。
 
-有効なオプション: '< attribute >' => '< value >'ペアのハッシュ値。
+有効なオプション: 文字列の配列。
 
 デフォルト値: `[]`。
 
@@ -502,7 +504,7 @@ Contextから削除する属性を指定します。
 
 [Context XML要素](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -560,7 +562,7 @@ ContextをどのService XML要素下にネストするかを指定します。
 
 [backgroundProcessorDelay XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -584,7 +586,7 @@ ContextをどのService XML要素下にネストするかを指定します。
 
 [className XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -614,7 +616,7 @@ Engineの論理名を指定します。ログやエラーに使用されます�
 
 [jvmRoute XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -646,7 +648,7 @@ EngineをどのService要素下にネストするかを指定します。
 
 [startStopThreads XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -658,7 +660,7 @@ EngineをどのService要素下にネストするかを指定します。
 
 指定したXML要素が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -694,9 +696,9 @@ Hostに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Hostから削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-有効なオプション: `'< attribute >' => '< value >'`ペアの配列。
+有効なオプション: 文字列の配列。
 
 デフォルト値: `[]`。
 
@@ -730,9 +732,9 @@ Hostに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Hostから削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-有効なオプション: '< attribute >' => '< value >'ペアの配列。
+有効なオプション: 文字列の配列。
 
 デフォルト値: `[]`。
 
@@ -748,7 +750,7 @@ Hostから削除する属性を指定します。
 
 仮想ホスト([Host XML要素](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Introduction))が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -788,9 +790,9 @@ Listenerに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Listenerから削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-有効なオプション: '< attribute >' => '< value >'ペアのハッシュ値。
+有効なオプション: 文字列の配列。
 
 デフォルト値: `[]`。
 
@@ -814,7 +816,7 @@ Tomcatインストール先のベースディレクトリを指定します。
 
 [Listener XML要素](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -862,9 +864,9 @@ Realm要素に追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Realm要素から削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-有効なオプション: '< attribute >' => '< value >'ペアの配列。
+有効なオプション: 文字列の配列。
 
 デフォルト値: `[]`。
 
@@ -926,7 +928,7 @@ RealmをどのRealm要素下にネストするかを指定します。
 
 Realm要素が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -960,7 +962,7 @@ Tomcatインストール先のベースディレクトリを指定します。
 
 [className XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes)が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -976,7 +978,7 @@ Tomcatインストール先のベースディレクトリを指定します。
 
 [Service要素](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction)が構成ファイルに存在するかどうかを指定します。 
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -1010,7 +1012,7 @@ Tomcatインストール先のベースディレクトリを指定します。
 
 指定したXML要素が構成ファイルに存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -1070,9 +1072,9 @@ Valveに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Valveから削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-有効なオプション: '< attribute >' => '< value >'ペアのハッシュ値。
+有効なオプション: 文字列の配列。
 
 デフォルト値: `[]`。
 
@@ -1128,7 +1130,7 @@ ValveをどのContext要素下にネストするかを指定します。
 
 Valveが構成ファイルに存在するかどうかを指定します。[Valve XML要素](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Introduction)にマッピングします。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -1147,7 +1149,7 @@ Tomcatインストール先のルートディレクトリを指定します。
 
 Manager要素を追加しようとしているのか、削除しようとしているのかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -1173,11 +1175,11 @@ Managerに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Managerから削除する属性を指定します。 
+要素から削除する属性の配列を指定します。
 
-'attribute' => 'value'形式のハッシュ値である必要があります。
+有効なオプション: 文字列の配列。
 
-任意指定
+デフォルト値: `[]`。
 
 #### tomcat::config::context::environment
 
@@ -1187,7 +1189,7 @@ Managerから削除する属性を指定します。
 
 Environment要素を追加しようとしているのか、削除しようとしているのかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -1235,11 +1237,11 @@ Environmentに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Environmentから削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-'attribute' => 'value'形式のハッシュ値である必要があります。
+有効なオプション: 文字列の配列。
 
-任意指定
+デフォルト値: `[]`。
 
 #### tomcat::config::context::resource
 `${catalina_base}/conf/context.xml`のResource要素を指定します。
@@ -1248,7 +1250,7 @@ Environmentから削除する属性を指定します。
 
 Resource要素の追加または削除のどちらを試みるか指定します。 
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -1278,11 +1280,54 @@ Valveに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Valveから削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-'attribute' => 'value'形式のハッシュ値である必要があります。
+有効なオプション: 文字列の配列。
 
-任意指定
+デフォルト値: `[]`。
+
+#### tomcat::config::context::valve
+`${catalina_base}/conf/context.xml`のValve要素を指定します。
+
+##### `ensure`
+
+Valve要素を追加しようとしているのか、削除しようとしているのかを指定します。
+
+有効な値：'present'、'absent'。
+
+デフォルト値：'present'
+
+##### `resource_name`
+
+作成するResourceの名前。java:comp/envコンテキストに対して相対的な名前です。
+
+デフォルト値: `$name`
+
+##### `resource_type`
+
+このリソースのルックアップを実行するときにWebアプリケーションから期待される完全修飾Javaクラス名。リソースを作成する場合は必須です。
+
+##### `catalina_base`
+
+Tomcatインストール先のルートディレクトリを指定します。
+
+デフォルト値: `$tomcat::catalina_home`
+
+##### `additional_attributes`
+
+Valveに追加するその他の属性を指定します。
+
+有効なオプション: '< attribute >' => '< value >'ペアのハッシュ値。
+
+デフォルト値: `{}`。
+
+##### `attributes_to_remove`
+
+要素から削除する属性の配列を指定します。
+
+有効なオプション: 文字列の配列。
+
+デフォルト値: `[]`。
 
 #### tomcat::config::context::resourcelink
 
@@ -1292,7 +1337,7 @@ Valveから削除する属性を指定します。
 
 ResourceLink要素の追加または削除のどちらを試みるかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
@@ -1322,11 +1367,11 @@ Valveに追加するその他の属性を指定します。
 
 ##### `attributes_to_remove`
 
-Valveから削除する属性を指定します。
+要素から削除する属性の配列を指定します。
 
-'attribute' => 'value'形式のハッシュ値である必要があります。
+有効なオプション: 文字列の配列。
 
-任意指定
+デフォルト値: `[]`。
 
 #### `tomcat::install`
 
@@ -1377,6 +1422,14 @@ Tomcatのバイナリをダウンロードするときに使用するプロキ�
 デフォルト値: `proxy_server`から自動検出。
 
 有効なオプション: 'none', 'http', 'https', 'ftp'。
+
+##### `allow_insecure`
+
+ソースコードのダウンロード時にHTTPSエラーを無視する必要がある場合に指定します。
+
+デフォルト値: `false`
+
+有効なオプション: `true`と`false`。
 
 ##### `user`
 
@@ -1705,7 +1758,7 @@ WARをデプロイする場所を指定します。`app_base`と組み合わせ�
 
 WARが存在するかどうかを指定します。
 
-有効なオプション: `true`、`false`、'present'、'absent'。
+有効なオプション: 'present'、'absent'。
 
 デフォルト値: 'present'。
 
