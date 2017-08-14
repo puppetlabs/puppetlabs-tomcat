@@ -21,7 +21,8 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
         catalina_home => '/opt/apache-tomcat8',
       }
       tomcat::install { '/opt/apache-tomcat8':
-        source_url => '#{TOMCAT8_RECENT_SOURCE}',
+        source_url     => '#{TOMCAT8_RECENT_SOURCE}',
+        allow_insecure => true,
       }
       tomcat::instance { 'tomcat8':
         catalina_base => '/opt/apache-tomcat8/tomcat8',

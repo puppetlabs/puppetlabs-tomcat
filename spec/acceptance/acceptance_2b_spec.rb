@@ -14,8 +14,9 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
       pp = <<-EOS
       class { 'java':}
       tomcat::install { 'tomcat7':
-        catalina_home => '/opt/apache-tomcat7',
-        source_url    => '#{TOMCAT7_RECENT_SOURCE}',
+        catalina_home  => '/opt/apache-tomcat7',
+        source_url     => '#{TOMCAT7_RECENT_SOURCE}',
+        allow_insecure => true,
       }
       tomcat::instance { 'tomcat7-first':
         catalina_home => '/opt/apache-tomcat7',
@@ -82,8 +83,9 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
 
 
       tomcat::install { 'tomcat7078':
-        catalina_home => '/opt/apache-tomcat7078',
-        source_url    => '#{TOMCAT_LEGACY_SOURCE}',
+        catalina_home  => '/opt/apache-tomcat7078',
+        source_url     => '#{TOMCAT_LEGACY_SOURCE}',
+        allow_insecure => true,
       }
       tomcat::instance { 'tomcat7078-first':
         catalina_home => '/opt/apache-tomcat7078',
