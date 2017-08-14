@@ -30,7 +30,8 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
       class { 'java':}
       class { 'tomcat': catalina_home => '/opt/apache-tomcat40', }
       tomcat::install { '/opt/apache-tomcat40':
-        source_url => '#{TOMCAT8_RECENT_SOURCE}',
+        source_url     => '#{TOMCAT8_RECENT_SOURCE}',
+        allow_insecure => true,
       }
       tomcat::instance { 'tomcat40':}
       tomcat::config::server { 'tomcat40':
