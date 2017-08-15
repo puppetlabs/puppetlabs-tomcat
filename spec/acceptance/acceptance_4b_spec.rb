@@ -1,17 +1,6 @@
 require 'spec_helper_acceptance'
 
-#fact based two stage confine
-
-#confine array
-confine_array = [
-  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '10.04'),
-  (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
-  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '6'),
-  fact('osfamily') == 'Suse'
-]
-
-stop_test = false
-stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || confine_array.any?
+stop_test = (UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || SKIP_TOMCAT_8)
 
 describe 'Use two realms within a configuration', docker: true, :unless => stop_test do
   after :all do

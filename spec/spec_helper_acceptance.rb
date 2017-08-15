@@ -43,6 +43,23 @@ SAMPLE_WAR = 'https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'
 
 UNSUPPORTED_PLATFORMS = ['windows','Solaris','Darwin']
 
+# Tomcat 7 needs java 1.6 or newer
+SKIP_TOMCAT_7 = false
+
+# Tomcat 8 needs java 1.7 or newer
+confine_8_array = [
+  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '10.04'),
+  (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
+  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '6'),
+  (fact('osfamily') == 'Suse'           &&  fact('operatingsystemmajrelease') == '11'),
+]
+# puppetlabs-gcc doesn't work on Suse
+confine_gcc_array = [
+  (fact('osfamily') == 'Suse'           &&  fact('operatingsystemmajrelease') == '11'),
+  (fact('osfamily') == 'Suse'           &&  fact('operatingsystemmajrelease') == '12'),
+]
+SKIP_TOMCAT_8 = confine_8_array.any?
+SKIP_GCC = confine_gcc_array.any?
 
 RSpec.configure do |c|
   c.filter_run :focus => true
