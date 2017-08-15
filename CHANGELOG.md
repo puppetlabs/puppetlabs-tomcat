@@ -25,6 +25,7 @@ This major release drops puppet 3, changes dependencies from staging to archive,
 - `tomcat::install` attributes `proxy_server` and `proxy_type` for installing behind a proxy.
 - `tomcat::install` attribute `allow_insecure` for disabling https verification.
 - `tomcat::war` ability to use context paths and versions with `war_name` attribute.
+- `tomcat::war` ability to ignore HTTPS errors with `allow_insecure` attribute.
 
 ### Fixed
 - Corrected documentation for all `attributes_to_remove` attributes.

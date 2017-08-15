@@ -48,9 +48,10 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
         },
       }
       tomcat::war { 'tomcat8-sample.war':
-        catalina_base => '/opt/apache-tomcat8/tomcat8',
-        war_source    => '/tmp/sample.war',
-        war_name      => 'tomcat8-sample.war',
+        catalina_base  => '/opt/apache-tomcat8/tomcat8',
+        war_source     => '/tmp/sample.war',
+        war_name       => 'tomcat8-sample.war',
+        allow_insecure => true,
       }
       EOS
       apply_manifest(pp, :catch_failures => true)

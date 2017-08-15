@@ -1722,6 +1722,14 @@ Default value: `true`.
 
 #### `tomcat::war`
 
+##### `allow_insecure`
+
+Specifies if HTTPS errors should be ignored when downloading the war tarball.
+
+Default value: `false`,
+
+Valid options: `true` and `false`.
+
 ##### `app_base`
 
 Specifies where to deploy the WAR. Cannot be used in combination with `deployment_path`.
