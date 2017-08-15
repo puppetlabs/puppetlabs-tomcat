@@ -18,6 +18,9 @@
 # @param war_source is the source to deploy the WAR from. Currently supports
 #        http(s)://, puppet://, and ftp:// paths. $war_source must be specified
 #        unless $war_ensure is set to 'false' or 'absent'.
+# @param allow_insecure Specifies if HTTPS errors should be ignored when
+#        downloading the war tarball. Valid options: `true` and `false`.
+#        Defaults to `false`.
 define tomcat::war(
   $catalina_base                       = undef,
   $app_base                            = undef,
@@ -26,6 +29,7 @@ define tomcat::war(
   $war_name                            = undef,
   Boolean $war_purge                   = true,
   $war_source                          = undef,
+  Boolean $allow_insecure              = false,
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -75,9 +79,10 @@ define tomcat::war(
       fail('$war_source must be specified if you aren\'t removing the WAR')
     }
     archive { "tomcat::war ${name}":
-      extract => false,
-      source  => $war_source,
-      path    => "${_deployment_path}/${_war_name}",
+      extract        => false,
+      source         => $war_source,
+      path           => "${_deployment_path}/${_war_name}",
+      allow_insecure => $allow_insecure,
     }
   }
 }

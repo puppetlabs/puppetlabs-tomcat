@@ -71,14 +71,16 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
         },
       }
       tomcat::war { 'first tomcat7-sample.war':
-        catalina_base => '/opt/tomcat7-first',
-        war_source    => '#{SAMPLE_WAR}',
-        war_name      => 'tomcat7#sample.war',
+        catalina_base  => '/opt/tomcat7-first',
+        war_source     => '#{SAMPLE_WAR}',
+        war_name       => 'tomcat7#sample.war',
+        allow_insecure => true,
       }
       tomcat::war { 'second tomcat7-sample.war':
-        catalina_base => '/opt/tomcat7-second',
-        war_source    => '#{SAMPLE_WAR}',
-        war_name      => 'tomcat7#sample.war',
+        catalina_base  => '/opt/tomcat7-second',
+        war_source     => '#{SAMPLE_WAR}',
+        war_name       => 'tomcat7#sample.war',
+        allow_insecure => true,
       }
 
 
@@ -136,14 +138,16 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
         },
       }
       tomcat::war { 'first tomcat7078-sample.war':
-        catalina_base => '/opt/tomcat7078-first',
-        war_source    => '#{SAMPLE_WAR}',
-        war_name      => 'tomcat7078-sample.war',
+        catalina_base  => '/opt/tomcat7078-first',
+        war_source     => '#{SAMPLE_WAR}',
+        war_name       => 'tomcat7078-sample.war',
+        allow_insecure => true,
       }
       tomcat::war { 'second tomcat7078-sample.war':
-        catalina_base => '/opt/tomcat7078-second',
-        war_source    => '#{SAMPLE_WAR}',
-        war_name      => 'tomcat7078-sample.war',
+        catalina_base  => '/opt/tomcat7078-second',
+        war_source     => '#{SAMPLE_WAR}',
+        war_name       => 'tomcat7078-sample.war',
+        allow_insecure => true,
       }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -256,10 +260,11 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
     it 'Should apply the manifest without error' do
       pp = <<-EOS
       tomcat::war { 'tomcat7-sample.war':
-        catalina_base => '/opt/tomcat7-first',
-        war_source    => '#{SAMPLE_WAR}',
-        war_name      => 'tomcat7-sample.war',
-        war_ensure    => 'present',
+        catalina_base  => '/opt/tomcat7-first',
+        war_source     => '#{SAMPLE_WAR}',
+        war_name       => 'tomcat7-sample.war',
+        war_ensure     => 'present',
+        allow_insecure => true,
       } ~>
       tomcat::service { 'tomcat7-first':
         catalina_home  => '/opt/apache-tomcat7',
@@ -267,10 +272,11 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
         service_ensure => 'running',
       }
       tomcat::war { 'tomcat7078-sample.war':
-        catalina_base => '/opt/tomcat7078-first',
-        war_source    => '#{SAMPLE_WAR}',
-        war_name      => 'tomcat7078-sample.war',
-        war_ensure    => 'present',
+        catalina_base  => '/opt/tomcat7078-first',
+        war_source     => '#{SAMPLE_WAR}',
+        war_name       => 'tomcat7078-sample.war',
+        war_ensure     => 'present',
+        allow_insecure => true,
       } ~>
       tomcat::service { 'tomcat7078-first':
         catalina_home  => '/opt/apache-tomcat7078',

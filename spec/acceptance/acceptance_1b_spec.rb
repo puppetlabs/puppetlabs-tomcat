@@ -107,8 +107,9 @@ describe 'Acceptance case one', :unless => stop_test do
         port                  => '8309',
       }
       tomcat::war { 'war_one.war':
-        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        war_source    => '#{SAMPLE_WAR}',
+        catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+        war_source     => '#{SAMPLE_WAR}',
+        allow_insecure => true,
       }
       tomcat::setenv::entry { 'JAVA_HOME':
         user  => 'tomcat8',

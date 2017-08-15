@@ -55,9 +55,10 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
         },
       }
       tomcat::war { 'tomcat40-sample.war':
-        catalina_base => '/opt/apache-tomcat40',
-        war_source    => '/tmp/sample.war',
-        war_name      => 'tomcat40-sample.war',
+        catalina_base  => '/opt/apache-tomcat40',
+        war_source     => '/tmp/sample.war',
+        war_name       => 'tomcat40-sample.war',
+        allow_insecure => true,
       }
       tomcat::config::server::realm { 'org.apache.catalina.realm.CombinedRealm':
         catalina_base => '/opt/apache-tomcat40',
