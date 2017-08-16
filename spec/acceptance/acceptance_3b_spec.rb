@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up}
+stop_test = (UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || SKIP_TOMCAT_8)
 
 describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test do
   after :all do
