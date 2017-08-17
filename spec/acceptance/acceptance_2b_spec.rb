@@ -286,12 +286,12 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
     end
-    it 'tomcat7 should be serving a war on port 8280', :retry => 5, :retry_wait => 10 do
+    it 'tomcat7 should be serving a war on port 8280', :retry => 10, :retry_wait => 10 do
       shell('curl localhost:8280/tomcat7-sample/hello.jsp') do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
     end
-    it 'tomcat7078 should be serving a war on port 8380', :retry => 5, :retry_wait => 10 do
+    it 'tomcat7078 should be serving a war on port 8380', :retry => 10, :retry_wait => 10 do
       shell('curl localhost:8380/tomcat7078-sample/hello.jsp') do |r|
         expect(r.stdout).to match(/Sample Application JSP Page/)
       end
