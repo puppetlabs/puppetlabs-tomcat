@@ -209,16 +209,16 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::config::server::service`: Configures a [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html) element nested in the `Server` element in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::tomcat_users`: Configures user and role elements for [UserDatabaseRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#UserDatabaseRealm) or [MemoryRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#MemoryRealm) in `$CATALINA_BASE/conf/tomcat-users.xml` or any other specified file.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in `$CATALINA_BASE/conf/server.xml`.
-* `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::manager`: Configures a [Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::manager`: Configures a [Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in `$CATALINA_BASE/conf/context.xml`.
 * `tomcat::install`: Installs a Tomcat instance.
 * `tomcat::instance`: Configures a Tomcat instance.
 * `tomcat::service`: Provides Tomcat service management.
-* `tomcat::setenv::entry`: Adds an entry to a Tomcat configuration file (e.g., `setenv.sh` or `/etc/sysconfig/tomcat`).
+* `tomcat::setenv::entry`: Adds an entry to a Tomcat configuration file (for example, `setenv.sh` or `/etc/sysconfig/tomcat`).
 * `tomcat::war`:  Manages the deployment of WAR files.
 
 #### Private defined types
@@ -269,16 +269,19 @@ Valid options: `true` and `false`.
 Default value: `true`.
 
 ##### `manage_base`
+
 Specifies the default value of `manage_base` for all `tomcat::install` instances.
 
 Default value: `true`.
 
 ##### `manage_home`
+
 Specifies the default value of `manage_home` for all `tomcat::instance` instances.
 
 Default value: `true`.
 
 ##### `manage_properties`
+
 Specifies the default value of `manage_properties` for all `tomcat::instance` instances.
 
 Default value: `true`.
@@ -584,7 +587,7 @@ Default value: 'present'.
 
 ##### `default_host`
 
-*Required.* Specifies a host to handle any requests directed to hostnames that exist on the server but are not defined in this configuration file. Maps to the [defaultHost XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) of the Engine.
+**Required**. Specifies a host to handle any requests directed to hostnames that exist on the server but are not defined in this configuration file. Maps to the [defaultHost XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) of the Engine.
 
 Valid options: a string containing a hostname.
 
@@ -1236,6 +1239,7 @@ Valid options: an array of strings.
 Default value: `[]`.
 
 #### tomcat::config::context::resource
+
 Specifies Resource elements in `${catalina_base}/conf/context.xml`
 
 ##### `ensure`
@@ -1279,6 +1283,7 @@ Valid options: an array of strings.
 Default value: `[]`.
 
 #### tomcat::config::context::valve
+
 Specifies Valve elements in `${catalina_base}/conf/context.xml`
 
 ##### `ensure`
@@ -1419,7 +1424,7 @@ Valid options: 'none', 'http', 'https', 'ftp'.
 
 Specifies if HTTPS errors should be ignored when downloading the source tarball.
 
-Default value: `false`,
+Default value: `false`.
 
 Valid options: `true` and `false`.
 
@@ -1580,7 +1585,7 @@ Valid options: a string containing an absolute path.
 
 Default value: `undef`.
 
->Note: if you don't specify a home path in this parameter, Puppet does not pass the `-home` switch to Tomcat. That can cause problems on some systems, so we recommend including this parameter.
+>Note: If you don't specify a home path in this parameter, Puppet does not pass the `-home` switch to Tomcat. That can cause problems on some systems, so we recommend including this parameter.
 
 ##### `service_enable`
 
@@ -1708,7 +1713,7 @@ Default value: `$::tomcat::user`.
 
 ##### `value`
 
-*Required.* Provides the value(s) of the managed parameter.
+**Required**. Provides the value(s) of the managed parameter.
 
 Valid options: a string or an array. If passing an array, separate values with a single space.
 
