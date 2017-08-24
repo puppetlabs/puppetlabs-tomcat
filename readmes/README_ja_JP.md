@@ -83,24 +83,24 @@ tomcat::instance { 'default':
 ```puppet
 class { 'java': }
 
-tomcat::install { '/opt/tomcat8':
-  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.x/bin/apache-tomcat-8.0.x.tar.gz'
+tomcat::install { '/opt/tomcat9':
+  source_url => 'https://www.apache.org/dist/tomcat/tomcat-9/v9.0.x/bin/apache-tomcat-9.0.x.tar.gz'
 }
-tomcat::instance { 'tomcat8-first':
-  catalina_home => '/opt/tomcat8',
-  catalina_base => '/opt/tomcat8/first',
+tomcat::instance { 'tomcat9-first':
+  catalina_home => '/opt/tomcat9',
+  catalina_base => '/opt/tomcat9/first',
 }
-tomcat::instance { 'tomcat8-second':
-  catalina_home => '/opt/tomcat8',
-  catalina_base => '/opt/tomcat8/second',
+tomcat::instance { 'tomcat9-second':
+  catalina_home => '/opt/tomcat9',
+  catalina_base => '/opt/tomcat9/second',
 }
 # 2つ目のインスタンスのサーバおよびHTTPコネクタのデフォルトポートを変更
-tomcat::config::server { 'tomcat8-second':
-  catalina_base => '/opt/tomcat8/second',
+tomcat::config::server { 'tomcat9-second':
+  catalina_base => '/opt/tomcat9/second',
   port          => '8006',
 }
-tomcat::config::server::connector { 'tomcat8-second-http':
-  catalina_base         => '/opt/tomcat8/second',
+tomcat::config::server::connector { 'tomcat9-second-http':
+  catalina_base         => '/opt/tomcat9/second',
   port                  => '8081',
   protocol              => 'HTTP/1.1',
   additional_attributes => {
@@ -108,27 +108,27 @@ tomcat::config::server::connector { 'tomcat8-second-http':
   },
 }
 
-tomcat::install { '/opt/tomcat6':
-  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.x/bin/apache-tomcat-6.0.x.tar.gz',
+tomcat::install { '/opt/tomcat7':
+  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-7/v7.0.x/bin/apache-tomcat-7.0.x.tar.gz',
 }
-tomcat::instance { 'tomcat6':
-  catalina_home => '/opt/tomcat6',
+tomcat::instance { 'tomcat7':
+  catalina_home => '/opt/tomcat7',
 }
-# tomcat 6のサーバとHTTP/AJPコネクタを変更
-tomcat::config::server { 'tomcat6':
-  catalina_base => '/opt/tomcat6',
+# tomcat 7のサーバとHTTP/AJPコネクタを変更
+tomcat::config::server { 'tomcat7':
+  catalina_base => '/opt/tomcat7',
   port          => '8105',
 }
-tomcat::config::server::connector { 'tomcat6-http':
-  catalina_base         => '/opt/tomcat6',
+tomcat::config::server::connector { 'tomcat7-http':
+  catalina_base         => '/opt/tomcat7',
   port                  => '8180',
   protocol              => 'HTTP/1.1',
   additional_attributes => {
     'redirectPort' => '8543'
   },
 }
-tomcat::config::server::connector { 'tomcat6-ajp':
-  catalina_base         => '/opt/tomcat6',
+tomcat::config::server::connector { 'tomcat7-ajp':
+  catalina_base         => '/opt/tomcat7',
   port                  => '8109',
   protocol              => 'AJP/1.3',
   additional_attributes => {
@@ -144,8 +144,8 @@ tomcat::config::server::connector { 'tomcat6-ajp':
 既存のインストールファイルに次のコードを追加し、warソースの場所を指定します。
 ```puppet
 tomcat::war { 'sample.war':
-  catalina_base => '/opt/tomcat8/first',
-  war_source    => '/opt/tomcat8/webapps/docs/appdev/sample/sample.war',
+  catalina_base => '/opt/tomcat9/first',
+  war_source    => '/opt/tomcat9/webapps/docs/appdev/sample/sample.war',
 }
 ```
 
@@ -160,9 +160,9 @@ WARファイル名は`.war`で終わる必要があります。
 たとえばコネクタを削除するには、次の構成でコネクタが存在しないものとして処理します。
 
 ```puppet
-tomcat::config::server::connector { 'tomcat8-jsvc':
+tomcat::config::server::connector { 'tomcat9-jsvc':
   connector_ensure => 'absent',
-  catalina_base    => '/opt/tomcat8/first',
+  catalina_base    => '/opt/tomcat9/first',
   port             => '8080',
   protocol         => 'HTTP/1.1',
 }
@@ -209,16 +209,16 @@ tomcat::config::server::realm { 'org.apache.catalina.realm.LockOutRealm':
 * `tomcat::config::server::service`: `$CATALINA_BASE/conf/server.xml`の`Server`要素にネストされた[Service要素](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html)要素を構成します。
 * `tomcat::config::server::tomcat_users`: `$CATALINA_BASE/conf/tomcat-users.xml`または指定した他のファイルの[UserDatabaseRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#UserDatabaseRealm)または[MemoryRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#MemoryRealm)のユーザおよびロール要素を構成します。
 * `tomcat::config::server::valve`: `$CATALINA_BASE/conf/server.xml`の[Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html)要素を構成します。
-* `tomcat::config::context`: $CATALINA_BASE/conf/context.xmlの[Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html)要素を構成します。
-* `tomcat::config::context::manager`: $CATALINA_BASE/conf/context.xmlの[Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html)要素を構成します。
-* `tomcat::config::context::environment`: $CATALINA_BASE/conf/context.xmlの[Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries)要素を構成します。
-* `tomcat::config::context::resource`: $CATALINA_BASE/conf/context.xmlの[Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions)要素を構成します。
-* `tomcat::config::context::resourcelink`: $CATALINA_BASE/conf/context.xmlの[ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links)要素を構成します。
-* `tomcat::config::context::valve`: $CATALINA_BASE/conf/context.xmlの[Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html)要素を構成します。
+* `tomcat::config::context`: `$CATALINA_BASE/conf/context.xml`の[Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html)要素を構成します。
+* `tomcat::config::context::manager`: `$CATALINA_BASE/conf/context.xml`の[Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html)要素を構成します。
+* `tomcat::config::context::environment`: `$CATALINA_BASE/conf/context.xml`の[Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries)要素を構成します。
+* `tomcat::config::context::resource`: `$CATALINA_BASE/conf/context.xml`の[Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions)要素を構成します。
+* `tomcat::config::context::resourcelink`: `$CATALINA_BASE/conf/context.xml`の[ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links)要素を構成します。
+* `tomcat::config::context::valve`: `$CATALINA_BASE/conf/context.xml`の[Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html)要素を構成します。
 * `tomcat::install`: Tomcatインスタンスをインストールします。
 * `tomcat::instance`: Tomcatインスタンスを構成します。
 * `tomcat::service`: Tomcatサービス管理を提供します。
-* `tomcat::setenv::entry`: Tomcat構成ファイル(`setenv.sh`または`/etc/sysconfig/tomcat`など)にエントリを追加します。
+* `tomcat::setenv::entry`: Tomcat設定ファイル(`setenv.sh`または`/etc/sysconfig/tomcat`など)にエントリを追加します。
 * `tomcat::war`:  WARファイルのデプロイを管理します。
 
 #### プライベート定義タイプ
@@ -252,14 +252,6 @@ Tomcatを実行するデフォルトグループを指定します。
 
 デフォルト値: 'tomcat'。
 
-##### `install_from_source`
-
-デフォルトでTomcatをソースからインストールするかどうかを指定します。
-
-有効なオプション: `true`と`false`。
-
-デフォルト値: `true`。
-
 ##### `manage_group`
 
 指定されたグループが存在しない場合、定義タイプがデフォルトでそのグループを作成するかどうかを指定します。Puppetのネイティブ[`group`リソースタイプ](https://docs.puppetlabs.com/references/latest/type.html#group)をデフォルトのパラメータとともに使用します。
@@ -277,16 +269,19 @@ Tomcatを実行するデフォルトグループを指定します。
 デフォルト値: `true`。
 
 ##### `manage_base`
+
 すべての`tomcat::install`インスタンスに対して、`manage_base`のデフォルト値を指定します。
 
 デフォルト値: `true`。
 
 ##### `manage_home`
+
 すべての`tomcat::instance`インスタンスに対して、`manage_home`のデフォルト値を指定します。
 
 デフォルト値: `true`。
 
 ##### `manage_properties`
+
 すべての`tomcat::instance`インスタンスに対して、`manage_properties`のデフォルト値を指定します。
 
 デフォルト値: `true`。
@@ -592,7 +587,7 @@ ContextをどのService XML要素下にネストするかを指定します。
 
 ##### `default_host`
 
-*必須指定です。* サーバ上に存在するがこの構成ファイルに定義されていないホスト名を宛先とするリクエストを処理するホストを指定します。Engineの[defaultHost XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes)にマッピングします。
+**必須**。サーバ上に存在するがこの設定ファイルに定義されていないホスト名を宛先とするリクエストを処理するホストを指定します。Engineの[defaultHost XML属性](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes)にマッピングします。
 
 有効なオプション: ホスト名を含む文字列。
 
@@ -1244,6 +1239,7 @@ Environmentに追加するその他の属性を指定します。
 デフォルト値: `[]`。
 
 #### tomcat::config::context::resource
+
 `${catalina_base}/conf/context.xml`のResource要素を指定します。
 
 ##### `ensure`
@@ -1287,6 +1283,7 @@ Valveに追加するその他の属性を指定します。
 デフォルト値: `[]`。
 
 #### tomcat::config::context::valve
+
 `${catalina_base}/conf/context.xml`のValve要素を指定します。
 
 ##### `ensure`
@@ -1427,7 +1424,7 @@ Tomcatのバイナリをダウンロードするときに使用するプロキ�
 
 ソースコードのダウンロード時にHTTPSエラーを無視する必要がある場合に指定します。
 
-デフォルト値: `false`
+デフォルト値: `false`。
 
 有効なオプション: `true`と`false`。
 
@@ -1588,7 +1585,7 @@ Javaのインストール場所を指定します。`use_jsvc`が`true`に設定
 
 デフォルト値: `undef`。
 
->注: このパラメータにhomeパスを指定しない場合、Puppetは`-home`スイッチをTomcatに受け渡しません。これにより、一部のシステムで問題が生じる可能性があるため、このパラメータを指定することを推奨します。
+>注: このパラメータにhomeパスを指定しない場合、Puppetは`-home`スイッチをTomcatに受け渡しません。一部のシステムでは、これにより問題が生じる可能性があるため、このパラメータを指定することを推奨します。
 
 ##### `service_enable`
 
@@ -1716,7 +1713,7 @@ Tomcatサービスが実行中かどうかを指定します。Puppetのネイ�
 
 ##### `value`
 
-*必須です。* 管理対象のパラメータの値を提供します。
+**必須**。管理対象のパラメータの値を提供します。
 
 有効なオプション: 文字列または配列。配列を渡す場合、半角空白1つで値を区切ります。
 
@@ -1729,6 +1726,14 @@ Tomcatサービスが実行中かどうかを指定します。Puppetのネイ�
 デフォルト値: `true`。
 
 #### `tomcat::war`
+
+##### `allow_insecure`
+
+war tarballのダウンロード時にHTTPSエラーを無視する必要がある場合に指定します。
+
+デフォルト値: `false`、
+
+有効なオプション: `true`と`false`。
 
 ##### `app_base`
 
