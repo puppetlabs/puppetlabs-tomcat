@@ -83,24 +83,24 @@ tomcat::instance { 'default':
 ```puppet
 class { 'java': }
 
-tomcat::install { '/opt/tomcat8':
-  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.x/bin/apache-tomcat-8.0.x.tar.gz'
+tomcat::install { '/opt/tomcat9':
+  source_url => 'https://www.apache.org/dist/tomcat/tomcat-9/v9.0.x/bin/apache-tomcat-9.0.x.tar.gz'
 }
-tomcat::instance { 'tomcat8-first':
-  catalina_home => '/opt/tomcat8',
-  catalina_base => '/opt/tomcat8/first',
+tomcat::instance { 'tomcat9-first':
+  catalina_home => '/opt/tomcat9',
+  catalina_base => '/opt/tomcat9/first',
 }
-tomcat::instance { 'tomcat8-second':
-  catalina_home => '/opt/tomcat8',
-  catalina_base => '/opt/tomcat8/second',
+tomcat::instance { 'tomcat9-second':
+  catalina_home => '/opt/tomcat9',
+  catalina_base => '/opt/tomcat9/second',
 }
 # Change the default port of the second instance server and HTTP connector
-tomcat::config::server { 'tomcat8-second':
-  catalina_base => '/opt/tomcat8/second',
+tomcat::config::server { 'tomcat9-second':
+  catalina_base => '/opt/tomcat9/second',
   port          => '8006',
 }
-tomcat::config::server::connector { 'tomcat8-second-http':
-  catalina_base         => '/opt/tomcat8/second',
+tomcat::config::server::connector { 'tomcat9-second-http':
+  catalina_base         => '/opt/tomcat9/second',
   port                  => '8081',
   protocol              => 'HTTP/1.1',
   additional_attributes => {
@@ -108,27 +108,27 @@ tomcat::config::server::connector { 'tomcat8-second-http':
   },
 }
 
-tomcat::install { '/opt/tomcat6':
-  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-6/v6.0.x/bin/apache-tomcat-6.0.x.tar.gz',
+tomcat::install { '/opt/tomcat7':
+  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-7/v7.0.x/bin/apache-tomcat-7.0.x.tar.gz',
 }
-tomcat::instance { 'tomcat6':
-  catalina_home => '/opt/tomcat6',
+tomcat::instance { 'tomcat7':
+  catalina_home => '/opt/tomcat7',
 }
-# Change tomcat 6's server and HTTP/AJP connectors
-tomcat::config::server { 'tomcat6':
-  catalina_base => '/opt/tomcat6',
+# Change tomcat 7's server and HTTP/AJP connectors
+tomcat::config::server { 'tomcat7':
+  catalina_base => '/opt/tomcat7',
   port          => '8105',
 }
-tomcat::config::server::connector { 'tomcat6-http':
-  catalina_base         => '/opt/tomcat6',
+tomcat::config::server::connector { 'tomcat7-http':
+  catalina_base         => '/opt/tomcat7',
   port                  => '8180',
   protocol              => 'HTTP/1.1',
   additional_attributes => {
     'redirectPort' => '8543'
   },
 }
-tomcat::config::server::connector { 'tomcat6-ajp':
-  catalina_base         => '/opt/tomcat6',
+tomcat::config::server::connector { 'tomcat7-ajp':
+  catalina_base         => '/opt/tomcat7',
   port                  => '8109',
   protocol              => 'AJP/1.3',
   additional_attributes => {
@@ -144,8 +144,8 @@ tomcat::config::server::connector { 'tomcat6-ajp':
 Add the following to any existing installation with your own war source:
 ```puppet
 tomcat::war { 'sample.war':
-  catalina_base => '/opt/tomcat8/first',
-  war_source    => '/opt/tomcat8/webapps/docs/appdev/sample/sample.war',
+  catalina_base => '/opt/tomcat9/first',
+  war_source    => '/opt/tomcat9/webapps/docs/appdev/sample/sample.war',
 }
 ```
 
@@ -160,9 +160,9 @@ Different configuration defined types will allow an ensure parameter to be passe
 To remove a connector, for instance, the following configuration ensure that it is absent:
 
 ```puppet
-tomcat::config::server::connector { 'tomcat8-jsvc':
+tomcat::config::server::connector { 'tomcat9-jsvc':
   connector_ensure => 'absent',
-  catalina_base    => '/opt/tomcat8/first',
+  catalina_base    => '/opt/tomcat9/first',
   port             => '8080',
   protocol         => 'HTTP/1.1',
 }
@@ -209,16 +209,16 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::config::server::service`: Configures a [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html) element nested in the `Server` element in `$CATALINA_BASE/conf/server.xml`.
 * `tomcat::config::server::tomcat_users`: Configures user and role elements for [UserDatabaseRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#UserDatabaseRealm) or [MemoryRealm] (http://tomcat.apache.org/tomcat-8.0-doc/realm-howto.html#MemoryRealm) in `$CATALINA_BASE/conf/tomcat-users.xml` or any other specified file.
 * `tomcat::config::server::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in `$CATALINA_BASE/conf/server.xml`.
-* `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::manager`: Configures a [Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in $CATALINA_BASE/conf/context.xml.
-* `tomcat::config::context::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in $CATALINA_BASE/conf/context.xml.
+* `tomcat::config::context`: Configures a [Context](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::manager`: Configures a [Manager](https://tomcat.apache.org/tomcat-8.0-doc/config/manager.html) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::environment`: Configures a [Environment](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Environment_Entries) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::resource`: Configures a [Resource](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Definitions) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::resourcelink`: Configures a [ResourceLink](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Resource_Links) element in `$CATALINA_BASE/conf/context.xml`.
+* `tomcat::config::context::valve`: Configures a [Valve](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html) element in `$CATALINA_BASE/conf/context.xml`.
 * `tomcat::install`: Installs a Tomcat instance.
 * `tomcat::instance`: Configures a Tomcat instance.
 * `tomcat::service`: Provides Tomcat service management.
-* `tomcat::setenv::entry`: Adds an entry to a Tomcat configuration file (e.g., `setenv.sh` or `/etc/sysconfig/tomcat`).
+* `tomcat::setenv::entry`: Adds an entry to a Tomcat configuration file (for example, `setenv.sh` or `/etc/sysconfig/tomcat`).
 * `tomcat::war`:  Manages the deployment of WAR files.
 
 #### Private defined types
@@ -252,14 +252,6 @@ Valid options: a string containing a valid group name.
 
 Default value: 'tomcat'.
 
-##### `install_from_source`
-
-Specifies whether to default to installing Tomcat from source.
-
-Valid options: `true` and `false`.
-
-Default value: `true`.
-
 ##### `manage_group`
 
 Determines whether defined types should default to creating the specified group, if it doesn't exist. Uses Puppet's native [`group` resource type](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters.
@@ -277,16 +269,19 @@ Valid options: `true` and `false`.
 Default value: `true`.
 
 ##### `manage_base`
+
 Specifies the default value of `manage_base` for all `tomcat::install` instances.
 
 Default value: `true`.
 
 ##### `manage_home`
+
 Specifies the default value of `manage_home` for all `tomcat::instance` instances.
 
 Default value: `true`.
 
 ##### `manage_properties`
+
 Specifies the default value of `manage_properties` for all `tomcat::instance` instances.
 
 Default value: `true`.
@@ -592,7 +587,7 @@ Default value: 'present'.
 
 ##### `default_host`
 
-*Required.* Specifies a host to handle any requests directed to hostnames that exist on the server but are not defined in this configuration file. Maps to the [defaultHost XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) of the Engine.
+**Required**. Specifies a host to handle any requests directed to hostnames that exist on the server but are not defined in this configuration file. Maps to the [defaultHost XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) of the Engine.
 
 Valid options: a string containing a hostname.
 
@@ -1244,6 +1239,7 @@ Valid options: an array of strings.
 Default value: `[]`.
 
 #### tomcat::config::context::resource
+
 Specifies Resource elements in `${catalina_base}/conf/context.xml`
 
 ##### `ensure`
@@ -1287,6 +1283,7 @@ Valid options: an array of strings.
 Default value: `[]`.
 
 #### tomcat::config::context::valve
+
 Specifies Valve elements in `${catalina_base}/conf/context.xml`
 
 ##### `ensure`
@@ -1427,7 +1424,7 @@ Valid options: 'none', 'http', 'https', 'ftp'.
 
 Specifies if HTTPS errors should be ignored when downloading the source tarball.
 
-Default vallue: `false`,
+Default value: `false`.
 
 Valid options: `true` and `false`.
 
@@ -1588,7 +1585,7 @@ Valid options: a string containing an absolute path.
 
 Default value: `undef`.
 
->Note: if you don't specify a home path in this parameter, Puppet does not pass the `-home` switch to Tomcat. That can cause problems on some systems, so we recommend including this parameter.
+>Note: If you don't specify a home path in this parameter, Puppet does not pass the `-home` switch to Tomcat. That can cause problems on some systems, so we recommend including this parameter.
 
 ##### `service_enable`
 
@@ -1716,7 +1713,7 @@ Default value: `$::tomcat::user`.
 
 ##### `value`
 
-*Required.* Provides the value(s) of the managed parameter.
+**Required**. Provides the value(s) of the managed parameter.
 
 Valid options: a string or an array. If passing an array, separate values with a single space.
 
@@ -1729,6 +1726,14 @@ Valid options: `true` or `false`
 Default value: `true`.
 
 #### `tomcat::war`
+
+##### `allow_insecure`
+
+Specifies if HTTPS errors should be ignored when downloading the war tarball.
+
+Default value: `false`,
+
+Valid options: `true` and `false`.
 
 ##### `app_base`
 

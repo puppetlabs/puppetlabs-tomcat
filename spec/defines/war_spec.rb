@@ -44,16 +44,18 @@ describe 'tomcat::war', :type => :define do
   context 'set everything' do
     let :params do
       {
-        :catalina_base => '/opt/apache-tomcat/test',
-        :app_base      => 'webapps2',
-        :war_ensure    => 'present',
-        :war_name      => 'sample2.war',
-        :war_source    => '/tmp/sample.war',
+        :catalina_base  => '/opt/apache-tomcat/test',
+        :app_base       => 'webapps2',
+        :war_ensure     => 'present',
+        :war_name       => 'sample2.war',
+        :war_source     => '/tmp/sample.war',
+        :allow_insecure => true,
       }
     end
     it { is_expected.to contain_archive('tomcat::war sample.war').with(
-      'source' => '/tmp/sample.war',
-      'path'   => '/opt/apache-tomcat/test/webapps2/sample2.war',
+      'source'         => '/tmp/sample.war',
+      'path'           => '/opt/apache-tomcat/test/webapps2/sample2.war',
+      'allow_insecure' => true,
     )
     }
   end

@@ -1,17 +1,6 @@
 require 'spec_helper_acceptance'
 
-#fact based two stage confine
-
-#confine array
-confine_array = [
-  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '10.04'),
-  (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
-  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '6'),
-  fact('osfamily') == 'Suse'
-]
-
-stop_test = false
-stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || confine_array.any?
+stop_test = (UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || SKIP_TOMCAT_8 || SKIP_GCC)
 
 describe 'Acceptance case one', :unless => stop_test do
   after :all do
@@ -68,9 +57,10 @@ describe 'Acceptance case one', :unless => stop_test do
 
       # The default
       tomcat::install { '/opt/apache-tomcat':
-        user       => 'tomcat8',
-        group      => 'tomcat8',
-        source_url => '#{TOMCAT8_RECENT_SOURCE}',
+        user           => 'tomcat8',
+        group          => 'tomcat8',
+        source_url     => '#{TOMCAT8_RECENT_SOURCE}',
+        allow_insecure => true,
       }
       -> class { 'jsvc': } ->
       tomcat::instance { 'tomcat_one':
@@ -106,8 +96,9 @@ describe 'Acceptance case one', :unless => stop_test do
         port                  => '8309',
       }
       tomcat::war { 'war_one.war':
-        catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-        war_source    => '#{SAMPLE_WAR}',
+        catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+        war_source     => '#{SAMPLE_WAR}',
+        allow_insecure => true,
       }
       tomcat::setenv::entry { 'JAVA_HOME':
         user  => 'tomcat8',
@@ -117,14 +108,13 @@ describe 'Acceptance case one', :unless => stop_test do
       EOS
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_changes  => true)
-      shell('sleep 15')
     end
-    it 'Should be serving a page on port 80' do
+    it 'Should be serving a page on port 80', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
     end
-    it 'Should be serving a page on port 8080' do
+    it 'Should be serving a page on port 8080', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:8080/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
@@ -154,9 +144,8 @@ describe 'Acceptance case one', :unless => stop_test do
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should not be serving a page on port 80' do
+    it 'Should not be serving a page on port 80', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 7)
     end
   end
@@ -184,9 +173,8 @@ describe 'Acceptance case one', :unless => stop_test do
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should be serving a page on port 80' do
+    it 'Should be serving a page on port 80', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/Sample Application JSP Page/)
       end
@@ -203,9 +191,8 @@ describe 'Acceptance case one', :unless => stop_test do
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should not have deployed the war' do
+    it 'Should not have deployed the war', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80/war_one/hello.jsp', :acceptable_exit_codes => 0) do |r|
         r.stdout.should eq("")
       end
@@ -242,9 +229,8 @@ describe 'Acceptance case one', :unless => stop_test do
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should not be able to serve pages over port 80' do
+    it 'Should not be able to serve pages over port 80', :retry => 5, :retry_wait => 10 do
       shell('curl localhost:80', :acceptable_exit_codes => 7)
     end
   end

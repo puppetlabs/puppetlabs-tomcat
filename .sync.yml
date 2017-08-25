@@ -1,4 +1,8 @@
 ---
+Gemfile:
+  optional:
+    ':system-tests':
+      - gem: rspec-retry
 appveyor.yml:
   delete: true
 # only run a minimal subset of tests on travis, running all the tests can cause travis to timeout

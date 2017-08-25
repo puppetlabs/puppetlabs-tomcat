@@ -1,17 +1,6 @@
 require 'spec_helper_acceptance'
 
-#fact based two stage confine
-
-#confine array
-confine_array = [
-  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '10.04'),
-  (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
-  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '6'),
-  fact('osfamily') == 'Suse'
-]
-
-stop_test = false
-stop_test = true if UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || confine_array.any?
+stop_test = (UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up} || SKIP_TOMCAT_8)
 
 describe 'Use two realms within a configuration', docker: true, :unless => stop_test do
   after :all do
@@ -30,7 +19,8 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
       class { 'java':}
       class { 'tomcat': catalina_home => '/opt/apache-tomcat40', }
       tomcat::install { '/opt/apache-tomcat40':
-        source_url => '#{TOMCAT7_RECENT_SOURCE}',
+        source_url     => '#{TOMCAT8_RECENT_SOURCE}',
+        allow_insecure => true,
       }
       tomcat::instance { 'tomcat40':}
       tomcat::config::server { 'tomcat40':
@@ -54,9 +44,10 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
         },
       }
       tomcat::war { 'tomcat40-sample.war':
-        catalina_base => '/opt/apache-tomcat40',
-        war_source    => '/tmp/sample.war',
-        war_name      => 'tomcat40-sample.war',
+        catalina_base  => '/opt/apache-tomcat40',
+        war_source     => '/tmp/sample.war',
+        war_name       => 'tomcat40-sample.war',
+        allow_insecure => true,
       }
       tomcat::config::server::realm { 'org.apache.catalina.realm.CombinedRealm':
         catalina_base => '/opt/apache-tomcat40',
@@ -85,9 +76,8 @@ describe 'Use two realms within a configuration', docker: true, :unless => stop_
       }
       EOS
       apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
-      shell('sleep 15')
     end
-    it 'Should contain two realms in config file' do
+    it 'Should contain two realms in config file', :retry => 5, :retry_wait => 10 do
       shell('cat /opt/apache-tomcat40/conf/server.xml', :acceptable_exit_codes => 0) do |r|
         r.stdout.should match(/<Realm puppetName="org.apache.catalina.realm.MyRealm1" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm1" otherAttribute="more stuff"><\/Realm>/)
         r.stdout.should match(/<Realm puppetName="org.apache.catalina.realm.MyRealm2" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm2" otherAttribute="more stuff"><\/Realm>/)

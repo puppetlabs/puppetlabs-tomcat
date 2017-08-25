@@ -36,7 +36,7 @@ define tomcat::instance (
   $use_jsvc               = undef,
   $use_init               = undef,
 
-  #used for single installs. Deprecated?
+  #used for single installs. Deprecated.
   $install_from_source    = undef,
   $source_url             = undef,
   $source_strip_first_dir = undef,
@@ -44,7 +44,7 @@ define tomcat::instance (
   $package_name           = undef,
   $package_options        = undef,
 ) {
-  include tomcat
+  include ::tomcat
   $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
   $_catalina_base = pick($catalina_base, $_catalina_home) #default to home
   tag(sha1($_catalina_home))
@@ -72,6 +72,7 @@ define tomcat::instance (
   }
 
   if $_install_from_source != undef {
+    warning('Passing install_from_source, source_url, source_strip_first_dir, package_ensure, package_name, or package_options to tomcat::instance is deprecated. Please use tomcat::install instead and point tomcat::instance::catalina_home there.')
     # XXX This file resource is for backwards compatibility. Previously the base
     # class created this directory for source installs, even though it may never
     # be used. Users may have created source installs under this directory, so
@@ -152,14 +153,6 @@ define tomcat::instance (
         user          => $_user,
         group         => $_group,
       }
-      if $_manage_properties {
-        tomcat::config::properties { "${_catalina_base} catalina.properties":
-          catalina_home => $_catalina_home,
-          catalina_base => $_catalina_base,
-          user          => $_user,
-          group         => $_group,
-        }
-      }
     }
     $_manage_service = pick($manage_service, true)
   }
@@ -171,6 +164,14 @@ define tomcat::instance (
       use_jsvc      => $use_jsvc,
       use_init      => $use_init,
       user          => $_user,
+    }
+  }
+  if $_manage_properties {
+    tomcat::config::properties { "${_catalina_base} catalina.properties":
+      catalina_home => $_catalina_home,
+      catalina_base => $_catalina_base,
+      user          => $_user,
+      group         => $_group,
     }
   }
 }
