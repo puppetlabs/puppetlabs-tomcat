@@ -50,6 +50,7 @@ define tomcat::config::server::listener (
     $_class_name = $name
   }
 
+  # lint:ignore:140chars
   if $parent_engine and ! $parent_host {
     $path = "Server/Service[#attribute/name='${_parent_service}']/Engine[#attribute/name='${parent_engine}']/Listener[#attribute/className='${_class_name}']"
   } elsif $parent_engine and $parent_host {
@@ -59,6 +60,7 @@ define tomcat::config::server::listener (
   } else {
     $path = "Server/Listener[#attribute/className='${_class_name}']"
   }
+  # lint:endignore
 
   if $server_config {
     $_server_config = $server_config

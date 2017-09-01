@@ -65,6 +65,7 @@ define tomcat::config::server::context (
     $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
+  # lint:ignore:140chars
   if $parent_host and ! $_parent_engine {
     $path = "Server/Service[#attribute/name='${_parent_service}']/Engine/Host[#attribute/name='${parent_host}']/Context[#attribute/docBase='${_doc_base}']"
   } elsif $parent_host and $_parent_engine {
@@ -72,6 +73,7 @@ define tomcat::config::server::context (
   } else {
     $path = "Server/Service[#attribute/name='${_parent_service}']/Engine/Host/Context[#attribute/docBase='${_doc_base}']"
   }
+  # lint:endignore
 
   if $context_ensure =~ /^(absent|false)$/ {
     $augeaschanges = "rm ${path}"

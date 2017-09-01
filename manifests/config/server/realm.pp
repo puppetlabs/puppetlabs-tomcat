@@ -98,7 +98,8 @@ define tomcat::config::server::realm (
     $puppet_name = "set ${path}[${path_expression}]/#attribute/puppetName ${name}"
 
     if ! empty($additional_attributes) {
-      $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${path}[${path_expression}]/#attribute/"), "'")
+      $_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"),
+                                              "set ${path}[${path_expression}]/#attribute/"), "'")
     } else {
       $_additional_attributes = undef
     }
@@ -108,7 +109,12 @@ define tomcat::config::server::realm (
       $_attributes_to_remove = undef
     }
 
-    $changes = delete_undef_values(flatten([ $__purge_realms, $puppet_name, $_class_name, $_additional_attributes, $_attributes_to_remove ]))
+    $changes = delete_undef_values(flatten([
+      $__purge_realms,
+      $puppet_name,
+      $_class_name,
+      $_additional_attributes,
+      $_attributes_to_remove ]))
   }
 
   augeas { "${_catalina_base}-${parent_service}-${parent_engine}-${parent_host}-${parent_realm}-realm-${name}":

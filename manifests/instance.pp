@@ -72,7 +72,7 @@ define tomcat::instance (
   }
 
   if $_install_from_source != undef {
-    warning('Passing install_from_source, source_url, source_strip_first_dir, package_ensure, package_name, or package_options to tomcat::instance is deprecated. Please use tomcat::install instead and point tomcat::instance::catalina_home there.')
+    warning('Passing install_from_source, source_url, source_strip_first_dir, package_ensure, package_name, or package_options to tomcat::instance is deprecated. Please use tomcat::install instead and point tomcat::instance::catalina_home there.') # lint:ignore:140chars
     # XXX This file resource is for backwards compatibility. Previously the base
     # class created this directory for source installs, even though it may never
     # be used. Users may have created source installs under this directory, so

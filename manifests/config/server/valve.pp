@@ -44,6 +44,7 @@ define tomcat::config::server::valve (
     $_class_name = $name
   }
 
+  # lint:ignore:140chars
   if $parent_host {
     if $parent_context {
       $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Host[#attribute/name='${parent_host}']/Context[#attribute/docBase='${parent_context}']/Valve[#attribute/className='${_class_name}']"
@@ -53,6 +54,7 @@ define tomcat::config::server::valve (
   } else {
     $base_path = "Server/Service[#attribute/name='${parent_service}']/Engine/Valve[#attribute/className='${_class_name}']"
   }
+  # lint:endignore
 
   if $server_config {
     $_server_config = $server_config

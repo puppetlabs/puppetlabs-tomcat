@@ -1,11 +1,11 @@
 # This code fragment downloads tomcat 8.0, compiles jsvc, then starts the service
 #
-class { 'tomcat': }
-class { 'gcc': }
-class { 'java': }
+class { '::tomcat': }
+class { '::gcc': }
+class { '::java': }
 
 tomcat::instance { 'test':
-  source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
+  source_url => 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
 }
 -> archive { 'commons-daemon-native.tar.gz':
   extract      => true,
@@ -18,7 +18,7 @@ tomcat::instance { 'test':
   command  => 'JAVA_HOME=/etc/alternatives/java_sdk configure',
   creates  => "${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix/Makefile",
   cwd      => "${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix",
-  path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix",
+  path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix", # lint:ignore:140chars
   require  => [ Class['gcc'], Class['java'] ],
   provider => shell,
 }
@@ -26,7 +26,7 @@ tomcat::instance { 'test':
   command  => 'make',
   creates  => "${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix/jsvc",
   cwd      => "${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix",
-  path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix",
+  path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${::tomcat::catalina_home}/bin/commons-daemon-1.0.15-native-src/unix", # lint:ignore:140chars
   provider => shell,
 }
 -> file { 'jsvc':
