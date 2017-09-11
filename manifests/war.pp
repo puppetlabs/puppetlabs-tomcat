@@ -30,6 +30,8 @@ define tomcat::war(
   Boolean $war_purge                   = true,
   $war_source                          = undef,
   Boolean $allow_insecure              = false,
+  $user                                = 'tomcat',
+  $group                               = 'tomcat',
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -83,6 +85,8 @@ define tomcat::war(
       source         => $war_source,
       path           => "${_deployment_path}/${_war_name}",
       allow_insecure => $allow_insecure,
+      user           => $user,
+      group          => $group,
     }
   }
 }
