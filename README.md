@@ -1793,11 +1793,15 @@ Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 
 ##### `user`
 
-*The `owner` of the tomcat war file.  By default, is set to `tomcat`.
+*The `owner` of the tomcat war file.
+
+Default value: `tomcat`.
 
 ##### `group`
 
-*The `group` owner of the tomcat war file.  By default, is set to `tomcat`.
+*The `group` owner of the tomcat war file.
+
+Default value: `tomcat`.
 
 
 ## Limitations
