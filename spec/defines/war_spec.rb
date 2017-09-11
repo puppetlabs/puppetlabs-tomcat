@@ -163,5 +163,27 @@ describe 'tomcat::war', :type => :define do
         }.to raise_error(Puppet::Error, /Only one of \$app_base and \$deployment_path can be specified/)
       end
     end
+    context 'set owner/group to war file' do
+    let :params do
+      {
+        :catalina_base  => '/opt/apache-tomcat',
+        :app_base       => 'webapps2',
+        :war_ensure     => 'present',
+        :war_name       => 'sample2.war',
+        :war_source     => '/tmp/sample.war',
+        :allow_insecure => true,
+        :user           => 'tomcat',
+        :group          => 'tomcat',
+      }
+    end
+    it { is_expected.to contain_archive('tomcat::war sample.war').with(
+      'source'         => '/tmp/sample.war',
+      'path'           => '/opt/apache-tomcat/webapps2/sample2.war',
+      'allow_insecure' => true,
+      'user'           => 'tomcat',
+      'group'          => 'tomcat',
+    )
+    }
+  end
   end
 end
