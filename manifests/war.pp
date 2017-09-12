@@ -21,6 +21,10 @@
 # @param allow_insecure Specifies if HTTPS errors should be ignored when
 #        downloading the war tarball. Valid options: `true` and `false`.
 #        Defaults to `false`.
+# @param user specifies the user of the tomcat war file.
+#        Defaults to 'tomcat'.
+# @param group specifies the user group of the tomcat war file.
+#        Defaults to 'tomcat'.
 define tomcat::war(
   $catalina_base                       = undef,
   $app_base                            = undef,
@@ -30,6 +34,8 @@ define tomcat::war(
   Boolean $war_purge                   = true,
   $war_source                          = undef,
   Boolean $allow_insecure              = false,
+  $user                                = 'tomcat',
+  $group                               = 'tomcat',
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -83,6 +89,8 @@ define tomcat::war(
       source         => $war_source,
       path           => "${_deployment_path}/${_war_name}",
       allow_insecure => $allow_insecure,
+      user           => $user,
+      group          => $group,
     }
   }
 }

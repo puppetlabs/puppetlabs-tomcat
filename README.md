@@ -1826,6 +1826,19 @@ Default value: `true`.
 
 Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 
+##### `user`
+
+The 'owner' of the tomcat war file.
+
+Default value: 'tomcat'.
+
+##### `group`
+
+The 'group' owner of the tomcat war file.
+
+Default value: 'tomcat'.
+
+
 ## Limitations
 
 This module only supports Tomcat installations on Unix-like systems.  The `tomcat::config::server*` defined types require Augeas version 1.0.0 or newer.
