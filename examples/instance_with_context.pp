@@ -1,7 +1,7 @@
 # This code fragment downloads tomcat 7.0.53, creates an instance and adds a context to localhost
 #
-class { 'tomcat': }
-class { 'java': }
+class { '::tomcat': }
+class { '::java': }
 
 tomcat::instance { 'mycat':
   catalina_base => '/opt/apache-tomcat/mycat',

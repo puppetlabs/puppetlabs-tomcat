@@ -135,11 +135,11 @@ define tomcat::service (
     $_hasstatus    = false
     $_hasrestart   = false
     $_start        = $start_command ? {
-      undef   => "su -s /bin/bash -c 'CATALINA_HOME=${_catalina_home} CATALINA_BASE=${_catalina_base} ${_catalina_home}/bin/catalina.sh start' ${_user}",
+      undef   => "su -s /bin/bash -c 'CATALINA_HOME=${_catalina_home} CATALINA_BASE=${_catalina_base} ${_catalina_home}/bin/catalina.sh start' ${_user}", # lint:ignore:140chars
       default => $start_command
     }
     $_stop         = $stop_command ? {
-      undef   => "su -s /bin/bash -c 'CATALINA_HOME=${_catalina_home} CATALINA_BASE=${_catalina_base} ${_catalina_home}/bin/catalina.sh stop' ${_user}",
+      undef   => "su -s /bin/bash -c 'CATALINA_HOME=${_catalina_home} CATALINA_BASE=${_catalina_base} ${_catalina_home}/bin/catalina.sh stop' ${_user}", # lint:ignore:140chars
       default => $stop_command
     }
     $_status       = "ps aux | grep 'catalina.base=${_catalina_base} ' | grep -v grep"
