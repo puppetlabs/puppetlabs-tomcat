@@ -9,6 +9,7 @@
     * [tomcatを開始する](#tomcatを開始する)
 4. [使用方法 - 設定オプションとその他の機能](#使用方法)
     * [複数のバージョン、複数インスタンスのtomcatを実行したい](#複数のバージョン、複数インスタンスのtomcatを実行したい)
+    * [SSLを設定し、使用するプロトコルと暗号を指定したい](#SSLを設定し、使用するプロトコルと暗号を指定したい)
     * [WARファイルをデプロイしたい](#warファイルをデプロイしたい)
     * [構成の一部を削除したい](#構成の一部を削除したい)
     * [既存のConnectorまたはRealmを管理したい](#既存のconnectorまたはrealmを管理したい)
@@ -138,6 +139,41 @@ tomcat::config::server::connector { 'tomcat7-ajp':
 ```
 
 > 注: [バージョンリスト](http://tomcat.apache.org/whichversion.html)でインストールするバージョンを照合してください。
+
+### SSLを設定し、使用するプロトコルと暗号を指定したい
+
+```puppet
+  file { $keystore_path: 
+    ensure => present,
+    source => $keystore_source,
+    owner => $keystore_user,
+    mode => '0400',
+    checksum => 'md5',
+    checksum_value => $keystore_checksum,
+  } ->
+
+  tomcat::config::server::connector { "${tomcat_instance}-https":
+    catalina_base         => $catalina_base,
+    port                  => $https_port,
+    protocol              => $http_version,
+    purge_connectors      => true,
+    additional_attributes => {
+      'SSLEnabled'          => bool2str($https_enabled),
+      'maxThreads'          => $https_connector_max_threads,
+      'scheme'              => $https_connector_scheme,
+      'secure'              => bool2str($https_connector_secure),
+      'clientAuth'          => bool2str($https_connector_client_auth),
+      'sslProtocol'         => $https_connector_ssl_protocol,
+      'sslEnabledProtocols' => join($https_connector_ssl_protocols_enabled, ","),
+      'ciphers'             => join($ciphers_enabled, ","),
+      
+      'keystorePass'        => $keystore_pass.unwrap,
+      'keystoreFile'        => $keystore_path,
+    },
+  }
+```
+
+> [SSL/TLS Configuration HOW-TO](https://tomcat.apache.org/tomcat-8.5-doc/ssl-howto.html)も参照してください
 
 ### WARファイルをデプロイしたい
 
@@ -1790,6 +1826,19 @@ WARの名前を指定します。
 *`war_ensure`が`false`または'absent'に設定されている場合を除き、必須です。* WARのデプロイ元のソースを指定します。
 
 有効なオプション: `puppet://`、`http(s)://`、または`ftp://`のURLを含む文字列。
+
+##### `user`
+
+tomcat warファイルの'owner'。
+
+デフォルト値: 'tomcat'。
+
+##### `group`
+
+tomcat warファイルの'group'所有者。
+
+デフォルト値: 'tomcat'。
+
 
 ## 制限事項
 
