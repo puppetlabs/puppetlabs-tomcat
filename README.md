@@ -141,6 +141,7 @@ tomcat::config::server::connector { 'tomcat7-ajp':
 > Note: look up the correct version you want to install on the [version list](http://tomcat.apache.org/whichversion.html).
 
 ### I want to configure SSL and specify which protocols and ciphers to use
+
 ```puppet
   file { $keystore_path: 
     ensure => present,

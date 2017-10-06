@@ -1,3 +1,19 @@
+## Supported Release [2.1.0]
+### Summary
+Addition of user and group to tomcat war file, along with a couple of docs updates and some old Ubuntu support dropped.
+
+### Added
+- User/group to tomcat war file.
+
+### Fixed
+- Update to README around SSL configuration.
+- A couple of other simple readme fixes.
+- Lint warnings.
+
+### Removed
+- Unsupported versions of Ubuntu 10.04, 12.04.
+
+
 ## Supported Release [2.0.0]
 ### Summary
 This major release drops puppet 3, changes dependencies from staging to archive, and adds various "real world" configuration abilities.
