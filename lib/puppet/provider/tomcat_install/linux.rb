@@ -81,6 +81,7 @@ Puppet::Type.type(:tomcat_install).provide(:linux) do
 
     tar_extract.close
 
+    FileUtils.mkdir_p "#{resource[:catalina_home]}/logs"
     File.delete("#{resource[:catalina_home]}/apache-tomcat-#{resource[:version]}.tar.gz")
     FileUtils.chown_R resource[:user], resource[:group], resource[:catalina_home]
   end
