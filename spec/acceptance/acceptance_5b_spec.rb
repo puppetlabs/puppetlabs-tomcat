@@ -9,9 +9,9 @@ describe 'Test tomcat install custom type', docker: true, unless: stop_test do
     shell('rm -rf /opt/apache-tomcat*', acceptable_exit_codes: [0, 1])
   end
 
-  before :all do
-    shell("/opt/puppetlabs/puppet/bin/gem install open_uri_redirections", acceptable_exit_codes: 0)
-  end
+  # before :all do
+  #   shell("/opt/puppetlabs/puppet/bin/gem install open_uri_redirections", acceptable_exit_codes: 0)
+  # end
 
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do
