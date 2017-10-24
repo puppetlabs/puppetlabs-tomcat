@@ -2,11 +2,8 @@ require 'fileutils'
 require 'rubygems/package'
 require 'zlib'
 require 'open-uri'
-require 'open_uri_redirections'
 
 Puppet::Type.type(:tomcat_install).provide(:linux) do
-  commands :geminstall => '/opt/puppetlabs/puppet/bin/gem'
-
   def initialize(value={})
     super(value)
   end
@@ -27,9 +24,6 @@ Puppet::Type.type(:tomcat_install).provide(:linux) do
   end
 
   def exists?
-    # Install open_uri_redirections if not available
-    geminstall(['install', 'open_uri_redirections'])
-
     get_tomcat_version(resource[:catalina_home]) == resource[:version]
   end
 
@@ -58,11 +52,22 @@ Puppet::Type.type(:tomcat_install).provide(:linux) do
       tomcat_url_index += 1
 
       begin
-        open(url, allow_redirections: :all) do |f|
+        open(url, :redirect => false) do |f|
           File.open("#{resource[:catalina_home]}/apache-tomcat-#{resource[:version]}.tar.gz", 'wb') do |file|
             file.puts f.read
           end
           break
+        end
+      rescue OpenURI::HTTPRedirect => http_redirect
+        begin
+          open(http_redirect.uri, redirect: true) do |f|
+            File.open("#{resource[:catalina_home]}/apache-tomcat-#{resource[:version]}.tar.gz", 'wb') do |file|
+              file.puts f.read
+            end
+            break
+          end
+        rescue OpenURI::HTTPError
+          next
         end
       rescue OpenURI::HTTPError
         next
