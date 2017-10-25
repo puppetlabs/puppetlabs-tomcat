@@ -286,10 +286,21 @@ describe 'Tomcat Install source -defaults', docker: true, :unless => stop_test d
       end
     end
   end
-
+  context 'add a context environment' do
+    it 'Should apply the manifest without error' do
+      pp = <<-EOS
+      tomcat::config::context::environment { 'testEnvVar':
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
+        type          => 'java.lang.String',
+        value         => 'a value with a space',
+      }
+      EOS
+      apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0,2])
+    end
+    it 'should have changed the context.xml file' do
+      shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml', :acceptable_exit_codes => 0) do |r|
+        r.stdout.should match(/<Environment name="testEnvVar" type="java.lang.String" value="a value with a space"><\/Environment>/)
+      end
+    end
+  end
 end
-
-
-
-
-

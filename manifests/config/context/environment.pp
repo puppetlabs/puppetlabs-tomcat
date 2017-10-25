@@ -47,9 +47,9 @@ define tomcat::config::context::environment (
       fail('$value must be specified')
     }
 
-    $set_name  = "set ${base_path}/#attribute/name ${environment_name}"
-    $set_type  = "set ${base_path}/#attribute/type ${type}"
-    $set_value = "set ${base_path}/#attribute/value ${value}"
+    $set_name  = "set ${base_path}/#attribute/name '${environment_name}'"
+    $set_type  = "set ${base_path}/#attribute/type '${type}'"
+    $set_value = "set ${base_path}/#attribute/value '${value}'"
 
     if $override != undef {
       $_override = bool2str($override)
