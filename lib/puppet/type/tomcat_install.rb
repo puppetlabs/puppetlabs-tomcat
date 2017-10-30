@@ -23,7 +23,7 @@ Puppet::Type.newtype(:tomcat_install) do
     desc "Specifies the owner of the source installation directory."
 
     validate do |value|
-      raise ArgumentError, "Tomcat version is required." if value.nil? || value !~ /\d{1,2}\.\d{1,2}\.\d{1,2}/
+      raise ArgumentError, "Tomcat version is required." if value.nil? or value !~ /\d{1,2}\.\d{1,2}\.\d{1,2}/
     end
   end
 
@@ -37,5 +37,11 @@ Puppet::Type.newtype(:tomcat_install) do
     desc "Specifies the group of the source installation directory."
 
     defaultto 'tomcat'
+  end
+
+  validate do
+    unless self[:version]
+      raise(Puppet::Error, "version is a required attribute")
+    end
   end
 end

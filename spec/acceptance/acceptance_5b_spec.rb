@@ -9,10 +9,6 @@ describe 'Test tomcat install custom type', docker: true, unless: stop_test do
     shell('rm -rf /opt/apache-tomcat*', acceptable_exit_codes: [0, 1])
   end
 
-  # before :all do
-  #   shell("/opt/puppetlabs/puppet/bin/gem install open_uri_redirections", acceptable_exit_codes: 0)
-  # end
-
   context 'Initial install Tomcat and verification' do
     it 'Should apply the manifest without error' do
       pp = <<-EOS
@@ -78,6 +74,28 @@ describe 'Test tomcat install custom type', docker: true, unless: stop_test do
       tomcat_install { '/opt/apache-tomcat40':
         ensure => present,
         version => '7.0.14',
+      }
+      EOS
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+    end
+  end
+
+  context 'No version on install should fail' do
+    it 'Should apply the manifest without error' do
+      pp = <<-EOS
+      class { 'java':}
+      class { 'tomcat': catalina_home => '/opt/apache-tomcat40', }
+
+      user { 'tomcat':
+        ensure => present,
+      }
+
+      group { 'tomcat':
+        ensure => present,
+      }
+
+      tomcat_install { '/opt/apache-tomcat40':
+        ensure => present,
       }
       EOS
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
