@@ -15,9 +15,8 @@
     * [I want to manage a Connector or Realm that already exists](#i-want-to-manage-a-connector-or-realm-that-already-exists)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Classes](#classes)
-    * [Defined types](#defined-types)
-    * [Parameters](#parameters)
         * [tomcat](#tomcat-1)
+    * [Defined types](#defined-types)
         * [tomcat::config::properties::property](#tomcatconfigpropertiesproperty)
         * [tomcat::config::server](#tomcatconfigserver)
         * [tomcat::config::server::connector](#tomcatconfigserverconnector)
@@ -41,6 +40,8 @@
         * [tomcat::service](#tomcatservice)
         * [tomcat::setenv::entry](#tomcatsetenventry)
         * [tomcat::war](#tomcatwar)
+        * [tomcat_install](#tomcat_install)
+    * [Parameters](#parameters)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
 
@@ -75,6 +76,18 @@ tomcat::instance { 'default':
 }
 ```
 
+If you are using a fully qualified version number, and you do not have a proxy, install with:
+
+```puppet
+tomcat_install { '/opt/tomcat':
+  ensure  => present,
+  version => '7.0.82',
+}
+tomcat::instance { 'default':
+  catalina_home => '/opt/tomcat',
+}
+```
+
 > Note: look up the correct version you want to install on the [version list](http://tomcat.apache.org/whichversion.html).
 
 ## Usage
@@ -84,8 +97,9 @@ tomcat::instance { 'default':
 ```puppet
 class { 'java': }
 
-tomcat::install { '/opt/tomcat9':
-  source_url => 'https://www.apache.org/dist/tomcat/tomcat-9/v9.0.x/bin/apache-tomcat-9.0.x.tar.gz'
+tomcat_install { '/opt/tomcat9':
+  ensure  => present,
+  version => '9.0.1',
 }
 tomcat::instance { 'tomcat9-first':
   catalina_home => '/opt/tomcat9',
@@ -143,7 +157,7 @@ tomcat::config::server::connector { 'tomcat7-ajp':
 ### I want to configure SSL and specify which protocols and ciphers to use
 
 ```puppet
-  file { $keystore_path: 
+  file { $keystore_path:
     ensure => present,
     source => $keystore_source,
     owner => $keystore_user,
@@ -166,7 +180,7 @@ tomcat::config::server::connector { 'tomcat7-ajp':
       'sslProtocol'         => $https_connector_ssl_protocol,
       'sslEnabledProtocols' => join($https_connector_ssl_protocols_enabled, ","),
       'ciphers'             => join($ciphers_enabled, ","),
-      
+
       'keystorePass'        => $keystore_pass.unwrap,
       'keystoreFile'        => $keystore_path,
     },
@@ -256,6 +270,7 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::service`: Provides Tomcat service management.
 * `tomcat::setenv::entry`: Adds an entry to a Tomcat configuration file (for example, `setenv.sh` or `/etc/sysconfig/tomcat`).
 * `tomcat::war`:  Manages the deployment of WAR files.
+* `tomcat_install`: Installs, or replaces, a Tomcat instance.
 
 #### Private defined types
 
@@ -787,7 +802,7 @@ Default value: 'present'.
 
 ##### `host_name`
 
-Specifies the network name of the virtual host, as registered on your DNS server. Maps to the [name XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes). 
+Specifies the network name of the virtual host, as registered on your DNS server. Maps to the [name XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes).
 
 Valid options: a string.
 
@@ -795,7 +810,7 @@ Default value: the 'name' passed in your defined type.
 
 ##### `parent_service`
 
-Specifies which Service element the Host should nest under. 
+Specifies which Service element the Host should nest under.
 
 Valid options: a string containing the name attribute of the Service.
 
@@ -853,7 +868,7 @@ Default value: 'present'.
 
 ##### `parent_engine`
 
-Specifies which Engine element this Listener should nest under. 
+Specifies which Engine element this Listener should nest under.
 
 Valid options: a string containing the name attribute of the Engine.
 
@@ -1007,7 +1022,7 @@ Default value: '${catalina_base}/config/server.xml'.
 
 ##### `service_ensure`
 
-Specifies whether the [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) should exist in the configuration file. 
+Specifies whether the [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) should exist in the configuration file.
 
 Valid options: 'present', 'absent'.
 
@@ -1280,7 +1295,7 @@ Specifies Resource elements in `${catalina_base}/conf/context.xml`
 
 ##### `ensure`
 
-Specifies whether you are trying to add or remove the Resource element. 
+Specifies whether you are trying to add or remove the Resource element.
 
 Valid options: 'present', 'absent'.
 
@@ -1306,7 +1321,7 @@ Default value: '$tomcat::catalina_home'.
 
 Specifies any additional attributes to add to the Valve.
 
-Should be a hash of the format 'attribute' => 'value'. 
+Should be a hash of the format 'attribute' => 'value'.
 
 Optional
 
@@ -1567,7 +1582,7 @@ Default value: `true`.
 
 ##### `manage_service`
 
-Specifies whether a `tomcat::service` corresponding to this instance should be declared. 
+Specifies whether a `tomcat::service` corresponding to this instance should be declared.
 
 Valid options: `true`, `false`
 
@@ -1839,6 +1854,53 @@ The 'group' owner of the tomcat war file.
 
 Default value: 'tomcat'.
 
+#### `tomcat_install`
+
+Installs the software into the given directory. Must be given a fully qualified version number.
+
+##### `ensure`
+
+Specifies whether you are trying to add or remove the Tomcat install.
+
+Valid options: 'present', 'absent'.
+
+Required
+
+##### `catalina_home`
+
+(Namevar: If omitted, this attribute’s value defaults to the resource’s title.)
+
+Specifies the directory of the Tomcat installation from which the instance should be created.
+
+Valid options: a string containing an absolute path.
+
+Required
+
+##### `version`
+
+Specifies the version Tomcat to install.
+
+If the installed version of Tomcat does not match the defined version the current install will be deleted and replaced.
+
+Valid options: a fully qualified version number in the format: MM.mm.pp
+
+Required
+
+##### `user`
+
+Specifies the owner of the source installation directory.
+
+If a 'user' resource is defined Tomcat will automatically install AFTER user is generated.
+
+Default value: `tomcat`.
+
+##### `group`
+
+Specifies the group of the source installation directory.
+
+If a 'group' resource is defined Tomcat will automatically install AFTER group is generated.
+
+Default value: `tomcat`.
 
 ## Limitations
 

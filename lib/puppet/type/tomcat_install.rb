@@ -40,8 +40,11 @@ Puppet::Type.newtype(:tomcat_install) do
   end
 
   validate do
+    unless self[:ensure]
+      raise(Puppet::Error, "Ensure is a required attribute")
+    end
     unless self[:version]
-      raise(Puppet::Error, "version is a required attribute")
+      raise(Puppet::Error, "Version is a required attribute")
     end
   end
 end
