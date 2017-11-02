@@ -1707,6 +1707,14 @@ Valid options: a string.
 
 Default value: determined by the values of `use_init` and `use_jsvc`.
 
+##### `status_command`
+
+Designates a command to get the status of the service.
+
+Valid options: a string.
+
+Default value: determined by the values of `use_init` and `use_jsvc`.
+
 ##### `stop_command`
 
 Designates a command to stop the service.
