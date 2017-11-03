@@ -1535,6 +1535,22 @@ Valid options: a string containing an absolute path.
 
 Default value: '$::tomcat::catalina_home'.
 
+##### `dir_list`
+
+Specifies the subdirectories under `catalina_base` to be managed for an instance (disabled via `manage_dirs` boolean).
+
+Valid options: an array of strings, each being a relative subdirectory to `catalina_base`.
+
+Default value: `['bin','conf','lib','logs','temp','webapps','work']`.
+
+##### `dir_mode`
+
+Specifies a mode for the managed subdirectories under `catalina_base` for an instance (as specified in `dir_list` and disabled via `manage_dirs` boolean).
+
+Valid option: a string containing a standard Linux mode.
+
+Default value: '2770'.
+
 ##### `copy_from_home_list`
 
 Specifies the full path of config files to copy from `catalina_home` to `catalina_base` for an instance (disabled via `manage_copy_from_home` boolean).
@@ -1573,11 +1589,19 @@ Specifies whether the directory of catalina_base should be managed by puppet. Th
 
 Default value: `true`.
 
+
+##### `manage_dirs`
+
+Determines whether subdirectories for `catalina_base` should be managed as part of tomcat::instance. The default directories are listed in `dir_list`.
+
+Valid options: `true` and `false`.
+
 ##### `manage_copy_from_home`
 
 Specifies whether to copy the initial config files from `catalina_home` to `catalina_base`.
 
 Valid options: boolean.
+
 
 Default value: `true`.
 
