@@ -189,4 +189,67 @@ describe 'tomcat::instance', :type => :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
   end
+  context "install from source, no copy_from_home" do
+    let :pre_condition do
+      'tomcat::install { "tomcat6":
+        catalina_home => "/opt/apache-tomcat",
+        source_url    => "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz",
+      }'
+    end
+    let :facts do default_facts end
+    let :params do
+      {
+        catalina_home: '/opt/apache-tomcat',
+        catalina_base: '/opt/apache-tomcat/foo',
+        manage_copy_from_home: false,
+      }
+    end
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/catalina.policy') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/context.xml') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/logging.properties') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/server.xml') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/web.xml') }
+  end
+  context "install from source, different copy_from_home_mode" do
+    let :pre_condition do
+      'tomcat::install { "tomcat6":
+        catalina_home => "/opt/apache-tomcat",
+        source_url    => "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz",
+      }'
+    end
+    let :facts do default_facts end
+    let :params do
+      {
+        catalina_home: '/opt/apache-tomcat',
+        catalina_base: '/opt/apache-tomcat/foo',
+        copy_from_home_mode: '0664',
+      }
+    end
+    it { is_expected.to contain_file('/opt/apache-tomcat/foo/conf/catalina.policy').with_mode('0664') }
+    it { is_expected.to contain_file('/opt/apache-tomcat/foo/conf/context.xml').with_mode('0664') }
+    it { is_expected.to contain_file('/opt/apache-tomcat/foo/conf/logging.properties').with_mode('0664') }
+    it { is_expected.to contain_file('/opt/apache-tomcat/foo/conf/server.xml').with_mode('0664') }
+    it { is_expected.to contain_file('/opt/apache-tomcat/foo/conf/web.xml').with_mode('0664') }
+  end
+  context "install from source, different copy_from_home_list" do
+    let :pre_condition do
+      'tomcat::install { "tomcat6":
+        catalina_home => "/opt/apache-tomcat",
+        source_url    => "http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz",
+      }'
+    end
+    let :facts do default_facts end
+    let :params do
+      {
+        catalina_home: '/opt/apache-tomcat',
+        catalina_base: '/opt/apache-tomcat/foo',
+        copy_from_home_list: '/opt/apache-tomcat/foo/conf/catalina.policy',
+      }
+    end
+    it { is_expected.to contain_file('/opt/apache-tomcat/foo/conf/catalina.policy') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/context.xml') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/logging.properties') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/server.xml') }
+    it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/web.xml') }
+  end
 end
