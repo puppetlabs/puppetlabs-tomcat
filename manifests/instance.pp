@@ -26,6 +26,14 @@
 # - $dir_list is an array of sub-directories to manage under $catalina_base.
 #   Disable vai $manage_dirs. Default: ['bin','conf','lib','logs','temp','webapps','work']
 # - $dir_mode is the mode to use for sub-directories under $catalina_base. Default: '2770'
+# - $manage_copy_from_home is whether to copy initial files from $catalina_home
+#    to $catalina_base. Default: true
+# - $copy_from_home_list is an optional custom list of files to copy from $catalina_home
+#    to $catalina_base.  Supports log4j.
+#    Default: catalina.policy, context.xml, logging.properties, server.xml, web.xml
+# - $copy_from_home_mode is the mode to use when copying initial files from $catalina_home
+#    to $catalina_base. Defaults to '0660'
+
 define tomcat::instance (
   $catalina_home          = undef,
   $catalina_base          = undef,
@@ -42,6 +50,9 @@ define tomcat::instance (
   $manage_dirs            = true,
   $dir_list               = ['bin','conf','lib','logs','temp','webapps','work'],
   $dir_mode               = '2770',
+  $manage_copy_from_home  = true,
+  $copy_from_home_list    = undef,
+  $copy_from_home_mode    = '0660',
 
   #used for single installs. Deprecated.
   $install_from_source    = undef,
@@ -144,17 +155,26 @@ define tomcat::instance (
           }
         }
       }
-      $copy_to_base_list = [
-        "${_catalina_base}/conf/catalina.policy",
-        "${_catalina_base}/conf/context.xml",
-        "${_catalina_base}/conf/logging.properties",
-        "${_catalina_base}/conf/server.xml",
-        "${_catalina_base}/conf/web.xml",
-      ]
-      tomcat::instance::copy_from_home { $copy_to_base_list:
-        catalina_home => $_catalina_home,
-        user          => $_user,
-        group         => $_group,
+      # Set default copy_from_home files list if not overridden; requires $_catalina_base
+      if $copy_from_home_list == undef {
+        $_copy_from_home_list = [
+          "${_catalina_base}/conf/catalina.policy",
+          "${_catalina_base}/conf/context.xml",
+          "${_catalina_base}/conf/logging.properties",
+          "${_catalina_base}/conf/server.xml",
+          "${_catalina_base}/conf/web.xml",
+        ]
+      }
+      else {
+        $_copy_from_home_list = $copy_from_home_list
+      }
+      if $manage_copy_from_home {
+        tomcat::instance::copy_from_home { $_copy_from_home_list:
+          catalina_home => $_catalina_home,
+          user          => $_user,
+          group         => $_group,
+          mode          => $copy_from_home_mode,
+        }
       }
     }
     $_manage_service = pick($manage_service, true)
