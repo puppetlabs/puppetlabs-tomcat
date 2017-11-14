@@ -1,7 +1,10 @@
 Puppet::Type.newtype(:tomcat_install) do
   desc "Installs the software into the given directory."
 
-  ensurable
+  ensurable do
+    defaultvalues
+    defaultto :present
+  end
 
   autorequire(:user) do
     self[:user]
@@ -40,9 +43,6 @@ Puppet::Type.newtype(:tomcat_install) do
   end
 
   validate do
-    unless self[:ensure]
-      raise(Puppet::Error, "Ensure is a required attribute")
-    end
     unless self[:version]
       raise(Puppet::Error, "Version is a required attribute")
     end
