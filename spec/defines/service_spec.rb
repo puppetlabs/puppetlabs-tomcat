@@ -25,12 +25,13 @@ describe 'tomcat::service', :type => :define do
     )
     }
   end
-  context 'set start/stop with jsvc' do
+  context 'set start/stop/status with jsvc' do
     let :params do
       {
-        :use_jsvc      => true,
-        :start_command => '/bin/true',
-        :stop_command  => '/bin/true',
+        :use_jsvc       => true,
+        :start_command  => '/bin/true',
+        :stop_command   => '/bin/true',
+        :status_command => '/bin/true',
       }
     end
     it { is_expected.to contain_service('tomcat-default').with(
@@ -39,6 +40,7 @@ describe 'tomcat::service', :type => :define do
       'ensure'     => 'running',
       'start'      => '/bin/true',
       'stop'       => '/bin/true',
+      'status'     => '/bin/true',
     )
     }
   end
@@ -114,11 +116,12 @@ describe 'tomcat::service', :type => :define do
     )
     }
   end
-  context "default, set start/stop" do
+  context "default, set start/stop/status" do
     let :params do
       {
-        :start_command => '/bin/true',
-        :stop_command  => '/bin/true',
+        :start_command  => '/bin/true',
+        :stop_command   => '/bin/true',
+        :status_command => '/bin/true',
       }
     end
     it { is_expected.to contain_service('tomcat-default').with(
@@ -127,6 +130,7 @@ describe 'tomcat::service', :type => :define do
       'ensure'     => 'running',
       'start'      => '/bin/true',
       'stop'       => '/bin/true',
+      'status'     => '/bin/true',
     )
     }
   end

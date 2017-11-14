@@ -6,3 +6,7 @@ begin
   require 'spec_helper_local'
 rescue LoadError
 end
+
+RSpec.configure do |config|
+  config.before(:all) {Facter.clear}
+end
