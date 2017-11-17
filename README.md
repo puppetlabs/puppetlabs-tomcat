@@ -1550,11 +1550,43 @@ Valid options: a string containing an absolute path.
 
 Default value: '$::tomcat::catalina_home'.
 
-##### `user`
+##### `dir_list`
 
-Specifies the owner of the instance directories and files.
+Specifies the subdirectories under `catalina_base` to be managed for an instance (disabled via `manage_dirs` boolean).
 
-Default value: `$::tomcat::user`.
+Valid options: an array of strings, each being a relative subdirectory to `catalina_base`.
+
+Default value: `['bin','conf','lib','logs','temp','webapps','work']`.
+
+##### `dir_mode`
+
+Specifies a mode for the managed subdirectories under `catalina_base` for an instance (as specified in `dir_list` and disabled via `manage_dirs` boolean).
+
+Valid option: a string containing a standard Linux mode.
+
+Default value: '2770'.
+
+##### `copy_from_home_list`
+
+Specifies the full path of config files to copy from `catalina_home` to `catalina_base` for an instance (disabled via `manage_copy_from_home` boolean).
+
+Valid options: array of strings containing path + filename.
+
+Default value:
+    [ '${_catalina_base}/conf/catalina.policy',
+      '${_catalina_base}/conf/context.xml',
+      '${_catalina_base}/conf/logging.properties',
+      '${_catalina_base}/conf/server.xml',
+      '${_catalina_base}/conf/web.xml',
+    ]
+
+##### `copy_from_home_mode`
+
+Specifies the file mode when copying the initial config files from `catalina_home` to `catalina_base`.
+
+Valid options: a string containing a standard Linux mode.
+
+Default value: '0660'.
 
 ##### `group`
 
@@ -1562,11 +1594,31 @@ Specifies the group of the instance directories and files.
 
 Default value: `$::tomcat::group`.
 
-##### `manage_user`
+##### `java_home`
 
-Specifies whether the user should be managed by this module or not.
+Specifies the java home to be used when declaring a `tomcat::service` instance. See [tomcat::service](# tomcatservice)
 
-Default value: `$::tomcat::manage_user`.
+##### `manage_base`
+
+Specifies whether the directory of catalina_base should be managed by puppet. This may not be preferable in network filesystem environments.
+
+Default value: `true`.
+
+
+##### `manage_dirs`
+
+Determines whether subdirectories for `catalina_base` should be managed as part of tomcat::instance. The default directories are listed in `dir_list`.
+
+Valid options: `true` and `false`.
+
+##### `manage_copy_from_home`
+
+Specifies whether to copy the initial config files from `catalina_home` to `catalina_base`.
+
+Valid options: boolean.
+
+
+Default value: `true`.
 
 ##### `manage_group`
 
@@ -1574,9 +1626,11 @@ Specifies whether the group should be managed by this module or not.
 
 Default value: `$::tomcat::manage_group`.
 
-##### `manage_base`
+##### `manage_properties`
 
-Specifies whether the directory of catalina_base should be managed by puppet. This may not be preferable in network filesystem environments.
+Specifies whether the `catalina.properties` file is created and managed. If `true`, custom modifications to this file will be overwritten during runs
+
+Valid options: `true`, `false`
 
 Default value: `true`.
 
@@ -1588,17 +1642,15 @@ Valid options: `true`, `false`
 
 Default value: `true` (multi-instance installs), `false` ()single-instance installs).
 
-##### `manage_properties`
+##### `manage_user`
 
-Specifies whether the `catalina.properties` file is created and managed. If `true`, custom modifications to this file will be overwritten during runs
+Specifies whether the user should be managed by this module or not.
 
-Valid options: `true`, `false`
+Default value: `$::tomcat::manage_user`.
 
-Default value: `true`.
+##### `use_init`
 
-##### `java_home`
-
-Specifies the java home to be used when declaring a `tomcat::service` instance. See [tomcat::service](# tomcatservice)
+Specifies whether an init script should be managed when declaring a `tomcat::service` instance. See [tomcat::service](# tomcatservice)
 
 ##### `use_jsvc`
 
@@ -1606,9 +1658,11 @@ Specifies whether jsvc should be used when declaring a `tomcat::service` instanc
 
 >Note that this module will not compile and install jsvc for you. See [tomcat::service](# tomcatservice)
 
-##### `use_init`
+##### `user`
 
-Specifies whether an init script should be managed when declaring a `tomcat::service` instance. See [tomcat::service](# tomcatservice)
+Specifies the owner of the instance directories and files.
+
+Default value: `$::tomcat::user`.
 
 #### tomcat::service
 
@@ -1663,6 +1717,14 @@ Valid options: a string.
 ##### `start_command`
 
 Designates a command to start the service.
+
+Valid options: a string.
+
+Default value: determined by the values of `use_init` and `use_jsvc`.
+
+##### `status_command`
+
+Designates a command to get the status of the service.
 
 Valid options: a string.
 

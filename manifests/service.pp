@@ -23,6 +23,7 @@
 # @param service_name The name to use for the packaged init script
 # @param start_command The start command to use for the service
 # @param stop_command The stop command to use for the service
+# @param status_command The status command to use for the service
 # @param user is the user of the jsvc process.
 define tomcat::service (
   $catalina_home                    = undef,
@@ -35,6 +36,7 @@ define tomcat::service (
   $service_name                     = undef,
   $start_command                    = undef,
   $stop_command                     = undef,
+  $status_command                   = undef,
   $user                             = undef,
 ) {
   include ::tomcat
@@ -120,7 +122,11 @@ define tomcat::service (
                    -pidfile \$CATALINA_BASE/logs/jsvc.pid \
                    -stop org.apache.catalina.startup.Bootstrap"
     }
-    $_status       = "ps p `cat ${_catalina_base}/logs/jsvc.pid` > /dev/null"
+    if $status_command {
+      $_status = $status_command
+    } else {
+      $_status     = "ps p `cat ${_catalina_base}/logs/jsvc.pid` > /dev/null"
+    }
     $_provider     = 'base'
   } elsif $use_init {
     $_service_name = $service_name
@@ -142,7 +148,10 @@ define tomcat::service (
       undef   => "su -s /bin/bash -c 'CATALINA_HOME=${_catalina_home} CATALINA_BASE=${_catalina_base} ${_catalina_home}/bin/catalina.sh stop' ${_user}", # lint:ignore:140chars
       default => $stop_command
     }
-    $_status       = "ps aux | grep 'catalina.base=${_catalina_base} ' | grep -v grep"
+    $_status       = $status_command ? {
+      undef   => "ps aux | grep 'catalina.base=${_catalina_base} ' | grep -v grep",
+      default => $status_command
+    }
     $_provider     = 'base'
   }
 
