@@ -23,6 +23,14 @@ describe 'tomcat::war', :type => :define do
       'path'   => '/opt/apache-tomcat/webapps/sample.war',
     )
     }
+    it { is_expected.to contain_file('tomcat::war sample.war').with(
+      'ensure' => 'file',
+      'path'   => '/opt/apache-tomcat/webapps/sample.war',
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
+      'mode'   => '0640',
+    ).that_subscribes_to('Archive[tomcat::war sample.war]')
+    }
   end
   context 'basic undeployment' do
     let :params do
@@ -58,6 +66,14 @@ describe 'tomcat::war', :type => :define do
       'allow_insecure' => true,
     )
     }
+    it { is_expected.to contain_file('tomcat::war sample.war').with(
+      'ensure' => 'file',
+      'path'   => '/opt/apache-tomcat/test/webapps2/sample2.war',
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
+      'mode'   => '0640',
+    ).that_subscribes_to('Archive[tomcat::war sample.war]')
+    }
   end
   context 'set deployment_path' do
     let :params do
@@ -70,6 +86,14 @@ describe 'tomcat::war', :type => :define do
       'source' => '/tmp/sample.war',
       'path'   => '/opt/apache-tomcat/webapps3/sample.war',
     )
+    }
+    it { is_expected.to contain_file('tomcat::war sample.war').with(
+      'ensure' => 'file',
+      'path'   => '/opt/apache-tomcat/webapps3/sample.war',
+      'owner'  => 'tomcat',
+      'group'  => 'tomcat',
+      'mode'   => '0640',
+    ).that_subscribes_to('Archive[tomcat::war sample.war]')
     }
   end
   context 'war_purge is false' do
@@ -172,17 +196,23 @@ describe 'tomcat::war', :type => :define do
         :war_name       => 'sample2.war',
         :war_source     => '/tmp/sample.war',
         :allow_insecure => true,
-        :user           => 'tomcat',
-        :group          => 'tomcat',
+        :user           => 'tomcat2',
+        :group          => 'tomcat2',
       }
     end
     it { is_expected.to contain_archive('tomcat::war sample.war').with(
       'source'         => '/tmp/sample.war',
       'path'           => '/opt/apache-tomcat/webapps2/sample2.war',
       'allow_insecure' => true,
-      'user'           => 'tomcat',
-      'group'          => 'tomcat',
     )
+    }
+    it { is_expected.to contain_file('tomcat::war sample.war').with(
+      'ensure' => 'file',
+      'path'   => '/opt/apache-tomcat/webapps2/sample2.war',
+      'owner'  => 'tomcat2',
+      'group'  => 'tomcat2',
+      'mode'   => '0640',
+    ).that_subscribes_to('Archive[tomcat::war sample.war]')
     }
   end
   end
