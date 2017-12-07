@@ -89,8 +89,14 @@ define tomcat::war(
       source         => $war_source,
       path           => "${_deployment_path}/${_war_name}",
       allow_insecure => $allow_insecure,
-      user           => $user,
-      group          => $group,
+    }
+    file { "tomcat::war ${name}":
+      ensure    => file,
+      path      => "${_deployment_path}/${_war_name}",
+      owner     => $user,
+      group     => $group,
+      mode      => '0640',
+      subscribe => Archive["tomcat::war ${name}"],
     }
   }
 }
