@@ -1,3 +1,25 @@
+## Supported Release [2.2.0]
+### Summary
+A clean release made in order to allow the Rubocopification of the module.
+
+### Changed
+- Gemfile updates.
+- Module sync updates.
+
+### Added
+- Flexibility added to directory management in tomcat::instance.
+- flexibility added to copy_from_home.
+- Can now set status_command.
+
+### Fixed
+- Spaces now accounted for in context elements.
+- tomcat::war now copies the war as root user and not as tomcat.
+- Syntax error in $addto parameter in tomcat::setenv::entry fixed.
+- Test fix for Tomcat 8.
+
+### Removed
+- Unsupported Debian 6.
+
 ## Supported Release [2.1.0]
 ### Summary
 Addition of user and group to tomcat war file, along with a couple of docs updates and some old Ubuntu support dropped.
@@ -12,7 +34,6 @@ Addition of user and group to tomcat war file, along with a couple of docs updat
 
 ### Removed
 - Unsupported versions of Ubuntu 10.04, 12.04.
-
 
 ## Supported Release [2.0.0]
 ### Summary
@@ -278,6 +299,6 @@ This is a bugfix release.
 
 Initial release of the tomcat module.
 
-
+[2.3.0]: https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.1.0...2.2.0
 [2.0.0]: https://github.com/puppetlabs/puppetlabs-tomcat/compare/1.7.0...2.0.0
 [1.7.0]: https://github.com/puppetlabs/puppetlabs-tomcat/compare/1.6.1...1.7.0
