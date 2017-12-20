@@ -23,6 +23,13 @@ def latest_tomcat_tarball_url(version)
   end
 end
 
+def latest_daemon_version
+  require 'net/http'
+  page = Net::HTTP.get(URI('https://commons.apache.org/proper/commons-daemon/apidocs/index.html'))
+  latest_version = (match = page.match(%r{(?:Apache\sCommons\sDaemon\s)(\d.\d.\d)?(?:\sAPI)}) and match[1])
+  latest_version
+end
+
 latest7 = latest_tomcat_tarball_url('7')
 latest8 = latest_tomcat_tarball_url('8')
 latest9 = latest_tomcat_tarball_url('9')
@@ -40,6 +47,7 @@ TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '7.0.78'
 TOMCAT_LEGACY_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-7/v#{TOMCAT_LEGACY_VERSION}/bin/apache-tomcat-#{TOMCAT_LEGACY_VERSION}.tar.gz"
 SAMPLE_WAR = 'https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'
 
+LATEST_DAEMON = latest_daemon_version
 
 UNSUPPORTED_PLATFORMS = ['windows','Solaris','Darwin']
 
