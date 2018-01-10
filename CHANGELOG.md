@@ -1,10 +1,11 @@
 ## Supported Release [2.2.0]
 ### Summary
-A clean release made in order to allow the Rubocopification of the module.
+A clean release made in order to Rubocop the module.
 
 ### Changed
 - Gemfile updates.
 - Module sync updates.
+- All ruby files altered to match the current rubocop standards.
 
 ### Added
 - Flexibility added to directory management in tomcat::instance.
@@ -16,6 +17,7 @@ A clean release made in order to allow the Rubocopification of the module.
 - tomcat::war now copies the war as root user and not as tomcat.
 - Syntax error in $addto parameter in tomcat::setenv::entry fixed.
 - Test fix for Tomcat 8.
+- Fix added to the travis/sync file via modulesync.
 
 ### Removed
 - Unsupported Debian 6.
