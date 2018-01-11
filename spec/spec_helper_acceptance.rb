@@ -23,10 +23,12 @@ def latest_tomcat_tarball_url(version)
   "#{mirror_url}/tomcat/tomcat-#{version}/v#{latest_version}/bin/apache-tomcat-#{latest_version}.tar.gz"
 end
 
-def latest_daemon_version
+def latest_daemon_version(tomcat_version)
   require 'net/http'
-  page = Net::HTTP.get(URI('https://commons.apache.org/proper/commons-daemon/apidocs/index.html'))
-  latest_version = ((match = page.match(%r{(?:Apache\sCommons\sDaemon\s)(\d.\d.\d)?(?:\sAPI)})) && match[1])
+  build_value = tomcat_version.match(%r{(\d+)\.(\d+)\.(\d+)})
+  uri = "http://svn.apache.org/repos/asf/tomcat/tc#{build_value[1]}.#{build_value[2]}.x/tags/TOMCAT_#{build_value[1]}_#{build_value[2]}_#{build_value[3]}/build.properties.default"
+  page = Net::HTTP.get(URI(uri))
+  latest_version = page.match(%r{(?:commons-daemon.version=)(\d.\d.\d)})[1]
   latest_version
 end
 
@@ -47,7 +49,7 @@ TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '7.0.78'
 TOMCAT_LEGACY_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-7/v#{TOMCAT_LEGACY_VERSION}/bin/apache-tomcat-#{TOMCAT_LEGACY_VERSION}.tar.gz".freeze
 SAMPLE_WAR = 'https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'.freeze
 
-LATEST_DAEMON = latest_daemon_version
+LATEST_DAEMON_8 = latest_daemon_version(TOMCAT8_RECENT_VERSION)
 
 UNSUPPORTED_PLATFORMS = %w[windows Solaris Darwin].freeze
 
