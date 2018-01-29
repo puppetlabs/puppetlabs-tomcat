@@ -10,7 +10,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
   end
 
   before :all do
-    shell("curl -k -o /tmp/sample.war '#{SAMPLE_WAR}'", acceptable_exit_codes: 0)
+    shell("curl -k -1 -o /tmp/sample.war '#{SAMPLE_WAR}'", acceptable_exit_codes: 0)
   end
 
   context 'Initial install Tomcat and verification' do
