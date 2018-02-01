@@ -112,12 +112,12 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_changes: true)
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
     it 'is serving a page on port 8080', retry: 5, retry_wait: 10 do
-      shell('curl localhost:8080/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:8080/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
@@ -148,7 +148,7 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is not serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 7)
+      shell('curl --retry 5 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 7)
     end
   end
 
@@ -177,7 +177,7 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
@@ -232,7 +232,7 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is not able to serve pages over port 80', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80', acceptable_exit_codes: 7)
+      shell('curl --retry 5 --retry-delay 15 localhost:80', acceptable_exit_codes: 7)
     end
   end
 end
