@@ -155,22 +155,22 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
     end
     # test the war
     it 'tomcat7-first should have war deployed by default', retry: 5, retry_wait: 10 do
-      shell('curl localhost:8280/tomcat7/sample/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:8280/tomcat7/sample/hello.jsp', acceptable_exit_codes: 0) do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
     it 'tomcat7-second should have war deployed by default', retry: 5, retry_wait: 10 do
-      shell('curl localhost:8281/tomcat7/sample/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:8281/tomcat7/sample/hello.jsp', acceptable_exit_codes: 0) do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
     it 'tomcat7078-first should have war deployed by default', retry: 5, retry_wait: 10 do
-      shell('curl localhost:8380/tomcat7078-sample/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:8380/tomcat7078-sample/hello.jsp', acceptable_exit_codes: 0) do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
     it 'tomcat7078-second should have war deployed by default', retry: 5, retry_wait: 10 do
-      shell('curl localhost:8381/tomcat7078-sample/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:8381/tomcat7078-sample/hello.jsp', acceptable_exit_codes: 0) do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
@@ -287,12 +287,12 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'tomcat7 should be serving a war on port 8280', retry: 10, retry_wait: 10 do
-      shell('curl localhost:8280/tomcat7-sample/hello.jsp') do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:8280/tomcat7-sample/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
     it 'tomcat7078 should be serving a war on port 8380', retry: 10, retry_wait: 10 do
-      shell('curl localhost:8380/tomcat7078-sample/hello.jsp') do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:8380/tomcat7078-sample/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end

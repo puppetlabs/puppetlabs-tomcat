@@ -30,27 +30,27 @@ describe 'Acceptance case one', unless: stop_test do
           cleanup      => false,
           path         => "/opt/apache-tomcat/bin/commons-daemon-native.tar.gz",
           extract_path => "/opt/apache-tomcat/bin",
-          creates      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON}-native-src",
+          creates      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src",
         }
         -> exec { 'configure jsvc':
           command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",
-          creates  => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON}-native-src/unix/Makefile",
-          cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON}-native-src/unix",
-          path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON}-native-src/unix",
+          creates  => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix/Makefile",
+          cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix",
+          path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix",
           require  => [ Class['gcc'], Class['java'] ],
           provider => shell,
         }
         -> exec { 'make jsvc':
           command  => 'make',
-          creates  => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON}-native-src/unix/jsvc",
-          cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON}-native-src/unix",
-          path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON}-native-src/unix",
+          creates  => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix/jsvc",
+          cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix",
+          path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix",
           provider => shell,
         }
         -> file { 'jsvc':
           ensure => link,
           path   => "/opt/apache-tomcat/bin/jsvc",
-          target => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON}-native-src/unix/jsvc",
+          target => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix/jsvc",
         }
       }
 
@@ -112,12 +112,12 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_changes: true)
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
     it 'is serving a page on port 8080', retry: 5, retry_wait: 10 do
-      shell('curl localhost:8080/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:8080/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
@@ -148,7 +148,7 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is not serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 7)
+      shell('curl --retry 5 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 7)
     end
   end
 
@@ -177,7 +177,7 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 5 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
@@ -232,7 +232,7 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is not able to serve pages over port 80', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80', acceptable_exit_codes: 7)
+      shell('curl --retry 5 --retry-delay 15 localhost:80', acceptable_exit_codes: 7)
     end
   end
 end
