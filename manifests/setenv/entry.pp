@@ -61,7 +61,7 @@ define tomcat::setenv::entry (
   }
 
   if $addto {
-    $_content = inline_template('<%= @_doexport %> <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char+"\n" %> ; <%= @_doexport %> <%= @addto %>="$<%= @addto %> $<%= @param %>"')
+    $_content = inline_template('<%= @_doexport %> <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char %> ; <%= @_doexport %> <%= @addto %>="$<%= @addto %> $<%= @param %>"')
   } else {
     $_content = inline_template('<%= @_doexport %> <%= @param %>=<%= @_quote_char %><%= Array(@value).join(" ") %><%= @_quote_char+"\n" %>')
   }
