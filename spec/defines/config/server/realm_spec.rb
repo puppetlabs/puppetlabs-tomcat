@@ -18,13 +18,13 @@ describe 'tomcat::config::server::realm', type: :define do
     let(:title) { 'LockOutRealm for /opt/apache-tomcat/test' }
     let :params do
       {
-        :class_name    => 'org.apache.catalina.realm.LockOutRealm',
-        :catalina_base => '/opt/apache-tomcat/test',
+        class_name: 'org.apache.catalina.realm.LockOutRealm',
+        catalina_base: '/opt/apache-tomcat/test',
       }
 
     end
 
-    changes =  [
+    changes = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='LockOutRealm for /opt/apache-tomcat/test' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]/#attribute/puppetName 'LockOutRealm for /opt/apache-tomcat/test'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='LockOutRealm for /opt/apache-tomcat/test' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]/#attribute/className 'org.apache.catalina.realm.LockOutRealm'",
     ]
