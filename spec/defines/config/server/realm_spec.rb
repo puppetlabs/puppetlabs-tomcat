@@ -205,11 +205,16 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    it {
+    # rubocop:disable Metrics/LineLength
+    changes = [
+      "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"
+    ]
+    # rubocop:enable Metrics/LineLength
+    iu {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
-        'changes' => ["rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"],
+        'changes' => changes,
       )
     }
   end
@@ -224,11 +229,16 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
+    # rubocop:disable Metrics/LineLength
+      changes = [
+        "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"
+      ]
+    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
-        'changes' => ["rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"],
+        'changes' => changes,
       )
     }
   end
