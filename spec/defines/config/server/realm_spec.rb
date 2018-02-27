@@ -207,7 +207,7 @@ describe 'tomcat::config::server::realm', type: :define do
 
     # rubocop:disable Metrics/LineLength
     changes = [
-      "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"
+      "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]",
     ]
     # rubocop:enable Metrics/LineLength
     it {
@@ -231,7 +231,7 @@ describe 'tomcat::config::server::realm', type: :define do
 
     # rubocop:disable Metrics/LineLength
     changes = [
-      "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"
+      "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]",
     ]
     # rubocop:enable Metrics/LineLength
     it {
