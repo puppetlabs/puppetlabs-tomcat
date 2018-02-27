@@ -23,10 +23,9 @@ describe 'tomcat::config::server::realm', type: :define do
       }
 
     end
-    # rubocop:disable Metrics/LineLength
     it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-LockOutRealm for /opt/apache-tomcat/test').with
       ( 
-        ' lens'    => 'Xml.lns',
+        'lens'    => 'Xml.lns',
         'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => [
           "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='LockOutRealm for /opt/apache-tomcat/test' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]/#attribute/puppetName 'LockOutRealm for /opt/apache-tomcat/test'",
@@ -34,7 +33,6 @@ describe 'tomcat::config::server::realm', type: :define do
         ]
       )
     }
-    # rubocop:enable Metrics/LineLength
   end
 
   context 'Add Realm' do
@@ -58,7 +56,6 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
     changes = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'org.apache.catalina.realm.JNDIRealm'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
@@ -70,7 +67,6 @@ describe 'tomcat::config::server::realm', type: :define do
       "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/bar",
       "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/baz",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens'    => 'Xml.lns',
@@ -97,7 +93,6 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
     changes = [
       'rm //Realm//Realm',
       'rm //Context//Realm',
@@ -111,7 +106,6 @@ describe 'tomcat::config::server::realm', type: :define do
       "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/foo",
       "rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/bar",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
@@ -131,12 +125,10 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
     changes = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'org.apache.catalina.realm.JNDIRealm'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
@@ -166,12 +158,10 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
     changes_one = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='first' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'first'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='first' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-first').with(
         'lens' => 'Xml.lns',
@@ -179,12 +169,10 @@ describe 'tomcat::config::server::realm', type: :define do
         'changes' => changes_one,
       )
     }
-    # rubocop:disable Metrics/LineLength
     changes_two = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='second' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'second'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='second' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-second').with(
         'lens' => 'Xml.lns',
@@ -208,7 +196,7 @@ describe 'tomcat::config::server::realm', type: :define do
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
-        'changes' => ["rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"], # rubocop:disable Metrics/LineLength
+        'changes' => ["rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"],
       )
     }
   end
@@ -227,7 +215,7 @@ describe 'tomcat::config::server::realm', type: :define do
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
-        'changes' => ["rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"], # rubocop:disable Metrics/LineLength
+        'changes' => ["rm Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='org.apache.catalina.realm.LockOutRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]"],
       )
     }
   end
@@ -244,12 +232,10 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
     changes = [
       "set Server/Service[#attribute/name='NewService']/Engine[#attribute/name='AnotherEngine']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'org.apache.catalina.realm.JNDIRealm'",
       "set Server/Service[#attribute/name='NewService']/Engine[#attribute/name='AnotherEngine']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-NewService-AnotherEngine---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
@@ -270,12 +256,10 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
     changes = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'org.apache.catalina.realm.JNDIRealm'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost--realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
@@ -297,12 +281,10 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
     changes = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'org.apache.catalina.realm.JNDIRealm'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Host[#attribute/name='localhost']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost-org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
@@ -329,7 +311,6 @@ describe 'tomcat::config::server::realm', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
     changes = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'org.apache.catalina.realm.JNDIRealm'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
@@ -338,7 +319,6 @@ describe 'tomcat::config::server::realm', type: :define do
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/roleSearch 'member={0}'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/spaces 'foo bar'",
     ]
-    # rubocop:enable Metrics/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina--org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
