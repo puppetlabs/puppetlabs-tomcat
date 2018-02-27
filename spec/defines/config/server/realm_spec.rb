@@ -28,7 +28,8 @@ describe 'tomcat::config::server::realm', type: :define do
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='LockOutRealm for /opt/apache-tomcat/test' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]/#attribute/puppetName 'LockOutRealm for /opt/apache-tomcat/test'",
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='LockOutRealm for /opt/apache-tomcat/test' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.LockOutRealm')]/#attribute/className 'org.apache.catalina.realm.LockOutRealm'",
     ]
-    it { is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-LockOutRealm for /opt/apache-tomcat/test').with( 
+    it {
+      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-LockOutRealm for /opt/apache-tomcat/test').with(
         'lens'    => 'Xml.lns',
         'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
