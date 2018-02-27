@@ -1,3 +1,14 @@
+## Supported Release [2.3.0]
+### Summary
+A release that introduced the module to the PDK through conversion. Also a dependancy bump on the archive module along with a small fix.
+
+### Changed
+- puppet/archive compatibility version bumped from 2.0.0 to 3.0.0.
+- Module is now converted with PDK 1.3.2.
+
+### Fixed
+- (MODULES-6626) Fixed the generated shell when using addto.
+
 ## Supported Release [2.2.0]
 ### Summary
 A clean release made in order to Rubocop the module.
