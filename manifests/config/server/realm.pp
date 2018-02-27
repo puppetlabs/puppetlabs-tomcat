@@ -94,7 +94,7 @@ define tomcat::config::server::realm (
   } else {
 
     # This will create the node if there are no matches
-    $_class_name = "set ${path}[${path_expression}]/#attribute/className '${class_name}'" 
+    $_class_name = "set ${path}[${path_expression}]/#attribute/className '${class_name}'"
     $puppet_name = "set ${path}[${path_expression}]/#attribute/puppetName '${name}'"
 
     if ! empty($additional_attributes) {
