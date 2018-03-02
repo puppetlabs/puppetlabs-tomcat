@@ -270,7 +270,7 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 * `tomcat::service`: Provides Tomcat service management.
 * `tomcat::setenv::entry`: Adds an entry to a Tomcat configuration file (for example, `setenv.sh` or `/etc/sysconfig/tomcat`).
 * `tomcat::war`:  Manages the deployment of WAR files.
-* `tomcat_install`: Installs, or replaces, a Tomcat instance.
+* `tomcat_install`: Installs or replaces a Tomcat install.
 
 #### Private defined types
 
