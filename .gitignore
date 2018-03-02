@@ -21,7 +21,4 @@ log/
 .DS_Store
 tmp/
 vendor/
-<<<<<<< HEAD
-=======
 doc/
->>>>>>> a0b12a9ec532cde5390ea79bd57903d682664b63
