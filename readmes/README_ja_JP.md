@@ -1535,11 +1535,43 @@ Apache Tomcatソフトウェアが`tomcat::install`リソースによってイ�
 
 デフォルト値: '$::tomcat::catalina_home'。
 
-##### `user`
+##### `dir_list`
 
-インスタンスディレクトリおよびファイルの所有者を指定します。
+ `catalina_base`の下に、インスタンスを管理するためのサブディレクトリを指定します(`manage_dirs`ブール値では無効)。
 
-デフォルト値: `$::tomcat::user`。
+有効なオプション: 文字列。それぞれが`catalina_base`の相対サブディレクトリになります。
+
+デフォルト値: `['bin','conf','lib','logs','temp','webapps','work']`。
+
+##### `dir_mode`
+
+`catalina_base`の下のインスタンス用管理サブディレクトリのモードを指定します(`dir_list`で指定され、`manage_dirs`ブール値では無効)。
+
+有効なオプション: 標準Linuxモードを含む文字列。
+
+デフォルト値: '2770'。
+
+##### `copy_from_home_list`
+
+`catalina_home`から`catalina_base`へインスタンスをコピーするための構成ファイルのフルパスを指定します(`manage_copy_from_home`ブール値では無効)。
+
+有効なオプション: パスとファイル名を含む文字列。
+
+デフォルト値:
+    [ '${_catalina_base}/conf/catalina.policy',
+      '${_catalina_base}/conf/context.xml',
+      '${_catalina_base}/conf/logging.properties',
+      '${_catalina_base}/conf/server.xml',
+      '${_catalina_base}/conf/web.xml',
+    ]
+
+##### `copy_from_home_mode`
+
+`catalina_home` から`catalina_base`へ初期構成ファイルをコピーする場合のファイルモードを指定します。
+
+有効なオプション: 標準Linuxモードを含む文字列。
+
+デフォルト値: '0660'。 
 
 ##### `group`
 
@@ -1547,11 +1579,31 @@ Apache Tomcatソフトウェアが`tomcat::install`リソースによってイ�
 
 デフォルト値: `$::tomcat::group`。
 
-##### `manage_user`
+##### `java_home`
 
-ユーザをこのモジュールで管理するかどうかを指定します。
+`tomcat::service`インスタンスの宣言時にjava homeを使用するかどうかを指定します。[tomcat::service](#tomcatservice)を参照してください。
 
-デフォルト値: `$::tomcat::manage_user`。
+##### `manage_base`
+
+catalina_baseディレクトリをpuppetで管理するかどうかを指定します。ネットワークファイルシステム環境では推奨されないことがあります。
+
+デフォルト値: `true`。
+
+
+##### `manage_dirs`
+
+`catalina_base`のサブディレクトリをtomcat::instanceの一部として管理するかどうかを指定します。デフォルトのディレクトリは`dir_list`に記載されています。
+
+有効なオプション: `true`と`false`。
+
+##### `manage_copy_from_home`
+
+`catalina_home` から`catalina_base`へ初期構成ファイルをコピーするかどうかを指定します。
+
+有効なオプション: ブール値。
+
+
+デフォルト値: `true`。
 
 ##### `manage_group`
 
@@ -1559,9 +1611,11 @@ Apache Tomcatソフトウェアが`tomcat::install`リソースによってイ�
 
 デフォルト値: `$::tomcat::manage_group`。
 
-##### `manage_base`
+##### `manage_properties`
 
-catalina_baseディレクトリをpuppetで管理するかどうかを指定します。ネットワークファイルシステム環境では推奨されないことがあります。
+`catalina.properties`ファイルを作成および管理しているかどうかを指定します。`true`の場合、このファイルに加えられたカスタム変更が実行中にオーバーライドされます。
+
+有効なオプション: `true`、`false`。
 
 デフォルト値: `true`。
 
@@ -1573,17 +1627,15 @@ catalina_baseディレクトリをpuppetで管理するかどうかを指定し�
 
 デフォルト値: `true` (マルチインスタンスをインストールする場合)、 `false` (シングルインスタンスをインストールする場合)。
 
-##### `manage_properties`
+##### `manage_user`
 
-`catalina.properties`ファイルを作成および管理しているかどうかを指定します。`true`の場合、このファイルに加えられたカスタム変更が実行中にオーバーライドされます。
+ユーザをこのモジュールで管理するかどうかを指定します。
 
-有効なオプション: `true`、`false`。
+デフォルト値: `$::tomcat::manage_user`。
 
-デフォルト値: `true`。
+##### `use_init`
 
-##### `java_home`
-
-`tomcat::service`インスタンスの宣言時にjava homeを使用するかどうかを指定します。[tomcat::service](#tomcatservice)を参照してください。
+`tomcat::service`インスタンスの宣言時にinitスクリプトを管理するかどうかを指定します。[tomcat::service](#tomcatservice)を参照してください。
 
 ##### `use_jsvc`
 
@@ -1591,9 +1643,11 @@ catalina_baseディレクトリをpuppetで管理するかどうかを指定し�
 
 >注: このモジュールはjsvcのコンパイル/インストールは行いません。[tomcat::service](#tomcatservice)を参照してください。
 
-##### `use_init`
+##### `user`
 
-`tomcat::service`インスタンスの宣言時にinitスクリプトを管理するかどうかを指定します。[tomcat::service](#tomcatservice)を参照してください。
+インスタンスディレクトリおよびファイルの所有者を指定します。
+
+デフォルト値: `$::tomcat::user`。
 
 #### tomcat::service
 
@@ -1648,6 +1702,14 @@ Tomcatサービスが実行中かどうかを指定します。Puppetのネイ�
 ##### `start_command`
 
 サービスを起動するコマンドを指定します。Designates a command to start the service.
+
+有効なオプション: 文字列。
+
+デフォルト値: `use_init`および`use_jsvc`の値によって決まります。
+
+##### `status_command`
+
+サービスのステータスを得るコマンドを指定します。
 
 有効なオプション: 文字列。
 

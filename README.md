@@ -307,7 +307,7 @@ Default value: 'tomcat'.
 
 Determines whether defined types should default to creating the specified group, if it doesn't exist. Uses Puppet's native [`group` resource type](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `true`.
 
@@ -315,7 +315,7 @@ Default value: `true`.
 
 Determines whether defined types should default to creating the specified user, if it doesn't exist. Uses Puppet's native [`user` resource type](https://docs.puppetlabs.com/references/latest/type.html#user) with default parameters.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `true`.
 
@@ -341,7 +341,7 @@ Default value: `true`.
 
 Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file by default.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `false`.
 
@@ -349,7 +349,7 @@ Default value: `false`.
 
 Specifies whether to purge any unmanaged realm elements from the configuration file by default.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `false`.  If two realms are defined for a specific server config only use `purge_realms` for the first realm and ensure the realms enforce a strict order between each other.
 
@@ -508,7 +508,7 @@ Default value: `$name`.
 
 Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `false`.
 
@@ -966,7 +966,7 @@ Default value: 'Catalina'.
 
 Specifies whether to purge any unmanaged Realm elements from the configuration file.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `false`.
 
@@ -1080,7 +1080,7 @@ Default value: `$::tomcat::group`.
 
 Specifies whether to create the specified configuration file if it doesn't exist. Uses Puppet's native [`file` resource type](https://docs.puppetlabs.com/references/latest/type.html#file) with default parameters.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `true`.
 
@@ -1263,7 +1263,7 @@ The description is an an optional string for a human-readable description of thi
 
 ##### `override`
 
-An optional string or boolean to specify if you do not want an `<env-entry>` for the same environment entry name to override the value specified here (set it to `false`).
+An optional string or Boolean to specify if you do not want an `<env-entry>` for the same environment entry name to override the value specified here (set it to `false`).
 
 By default, overrides are allowed.
 
@@ -1439,7 +1439,7 @@ Default value: '$::tomcat::catalina_home'.
 
 Specifies whether to install from source or from a package. If set to `true` installation uses the `source_url`, `source_strip_first_dir`, `user`, `group`, `manage_user`, and `manage_group` parameters. If set to `false` installation uses the `package_ensure`, `package_name`, and `package_options` parameters.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `true`.
 
@@ -1453,7 +1453,7 @@ Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 
 Specifies whether to strip the topmost directory of the tarball when unpacking it. Only valid if `install_from_source` is set to `true`.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `true`.
 
@@ -1477,7 +1477,7 @@ Specifies if HTTPS errors should be ignored when downloading the source tarball.
 
 Default value: `false`.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 ##### `user`
 
@@ -1552,7 +1552,7 @@ Default value: '$::tomcat::catalina_home'.
 
 ##### `dir_list`
 
-Specifies the subdirectories under `catalina_base` to be managed for an instance (disabled via `manage_dirs` boolean).
+Specifies the subdirectories under `catalina_base` to be managed for an instance (disabled via `manage_dirs` Boolean).
 
 Valid options: an array of strings, each being a relative subdirectory to `catalina_base`.
 
@@ -1560,7 +1560,7 @@ Default value: `['bin','conf','lib','logs','temp','webapps','work']`.
 
 ##### `dir_mode`
 
-Specifies a mode for the managed subdirectories under `catalina_base` for an instance (as specified in `dir_list` and disabled via `manage_dirs` boolean).
+Specifies a mode for the managed subdirectories under `catalina_base` for an instance (as specified in `dir_list` and disabled via `manage_dirs` Boolean).
 
 Valid option: a string containing a standard Linux mode.
 
@@ -1568,7 +1568,7 @@ Default value: '2770'.
 
 ##### `copy_from_home_list`
 
-Specifies the full path of config files to copy from `catalina_home` to `catalina_base` for an instance (disabled via `manage_copy_from_home` boolean).
+Specifies the full path of config files to copy from `catalina_home` to `catalina_base` for an instance (disabled via `manage_copy_from_home` Boolean).
 
 Valid options: array of strings containing path + filename.
 
@@ -1600,7 +1600,7 @@ Specifies the java home to be used when declaring a `tomcat::service` instance. 
 
 ##### `manage_base`
 
-Specifies whether the directory of catalina_base should be managed by puppet. This may not be preferable in network filesystem environments.
+Specifies whether the directory of catalina_base should be managed by Puppet. This might not be preferable in network filesystem environments.
 
 Default value: `true`.
 
@@ -1609,14 +1609,13 @@ Default value: `true`.
 
 Determines whether subdirectories for `catalina_base` should be managed as part of tomcat::instance. The default directories are listed in `dir_list`.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 ##### `manage_copy_from_home`
 
 Specifies whether to copy the initial config files from `catalina_home` to `catalina_base`.
 
-Valid options: boolean.
-
+Valid options: Boolean.
 
 Default value: `true`.
 
@@ -1630,7 +1629,7 @@ Default value: `$::tomcat::manage_group`.
 
 Specifies whether the `catalina.properties` file is created and managed. If `true`, custom modifications to this file will be overwritten during runs
 
-Valid options: `true`, `false`
+Valid options: Boolean
 
 Default value: `true`.
 
@@ -1638,7 +1637,7 @@ Default value: `true`.
 
 Specifies whether a `tomcat::service` corresponding to this instance should be declared.
 
-Valid options: `true`, `false`
+Valid options: Boolean
 
 Default value: `true` (multi-instance installs), `false` ()single-instance installs).
 
@@ -1696,7 +1695,7 @@ Default value: `undef`.
 
 Specifies whether to enable the Tomcat service at boot. Only valid if `use_init` is set to `true`.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `true`, if `use_init` is set to `true` and `service_ensure` is set to 'running' or `true`.
 
@@ -1745,7 +1744,7 @@ Specifies whether to use a package-provided init script for service management.
  * `$CATALINA_HOME/bin/catalina.sh start`
  * `$CATALINA_HOME/bin/catalina.sh stop`
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `false`.
 
@@ -1758,7 +1757,7 @@ Specifies whether to use Jsvc for service management. If both `use_jsvc` and `us
  * `$CATALINA_HOME/bin/catalina.sh start`
  * `$CATALINA_HOME/bin/catalina.sh stop`
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `false`.
 
@@ -1834,7 +1833,7 @@ Valid options: a string or an array. If passing an array, separate values with a
 
 Specifies if you want to append export to the entry.
 
-Valid options: `true` or `false`
+Valid options: Boolean
 
 Default value: `true`.
 
@@ -1846,7 +1845,7 @@ Specifies if HTTPS errors should be ignored when downloading the war tarball.
 
 Default value: `false`,
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 ##### `app_base`
 
@@ -1892,7 +1891,7 @@ Default value: the `name` passed in your defined type.
 
 Specifies whether to purge the exploded WAR directory. Only applicable when `war_ensure` is set to 'absent' or `false`.
 
-Valid options: `true` and `false`.
+Valid options: Boolean.
 
 Default value: `true`.
 
