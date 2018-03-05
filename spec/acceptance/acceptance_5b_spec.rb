@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-stop_test = (UNSUPPORTED_PLATFORMS.any?{ |up| fact('osfamily') == up } || SKIP_TOMCAT_8)
+stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| fact('osfamily') == up } || SKIP_TOMCAT_8)
 
 describe 'Test tomcat install custom type', docker: true, unless: stop_test do
   after :all do
@@ -10,7 +10,7 @@ describe 'Test tomcat install custom type', docker: true, unless: stop_test do
   end
 
   context 'Initial install Tomcat and verification' do
-    it 'Should apply the manifest without error' do
+    it 'applies the manifest without error' do
       pp = <<-EOS
       class { 'java':}
       class { 'tomcat': catalina_home => '/opt/apache-tomcat40', }
@@ -34,7 +34,7 @@ describe 'Test tomcat install custom type', docker: true, unless: stop_test do
   end
 
   context 'Delete and reinstall' do
-    it 'Should apply the manifest without error' do
+    it 'applies the manifest without error' do
       pp = <<-EOS
       class { 'java':}
       class { 'tomcat': catalina_home => '/opt/apache-tomcat40', }
@@ -58,7 +58,7 @@ describe 'Test tomcat install custom type', docker: true, unless: stop_test do
   end
 
   context 'Change to early version' do
-    it 'Should apply the manifest without error' do
+    it 'applies the manifest without error' do
       pp = <<-EOS
       class { 'java':}
       class { 'tomcat': catalina_home => '/opt/apache-tomcat40', }
@@ -80,19 +80,19 @@ describe 'Test tomcat install custom type', docker: true, unless: stop_test do
     end
   end
 
- context 'No version on install should fail' do
-   it 'Should apply the manifest without error' do
-     pp = <<-EOS
+  context 'No version on install should fail' do
+    it 'applies the manifest without error' do
+      pp = <<-EOS
      tomcat_install { '/opt/apache-tomcat40':
        ensure => present,
      }
      EOS
-     apply_manifest(pp, expect_failures: true, acceptable_exit_codes: [0, 2])
-   end
- end
+      apply_manifest(pp, expect_failures: true, acceptable_exit_codes: [0, 2])
+    end
+  end
 
   context 'No ensure on install should fail' do
-    it 'Should apply the manifest without error' do
+    it 'applies the manifest without error' do
       pp = <<-EOS
       tomcat_install { '/opt/apache-tomcat40':
         version => '7.0.82,
