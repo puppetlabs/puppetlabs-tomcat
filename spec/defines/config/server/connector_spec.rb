@@ -27,11 +27,7 @@ describe 'tomcat::config::server::connector', type: :define do
           'connectionTimeout' => '20000',
           'spaces'            => 'foo bar',
         },
-        attributes_to_remove: %w[
-          foo
-          bar
-          baz
-        ],
+        attributes_to_remove: ['foo', 'bar', 'baz'],
       }
     end
 
@@ -65,11 +61,7 @@ describe 'tomcat::config::server::connector', type: :define do
           'redirectPort'      => '8543',
           'connectionTimeout' => '20000',
         },
-        attributes_to_remove: %w[
-          foo
-          bar
-          baz
-        ],
+        attributes_to_remove: ['foo', 'bar', 'baz'],
       }
     end
 

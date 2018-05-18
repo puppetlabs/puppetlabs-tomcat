@@ -362,7 +362,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        dir_list: %w[config webappstest],
+        dir_list: ['config', 'webappstest'],
       }
     end
 
@@ -420,7 +420,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        dir_list: %w[config webappstest],
+        dir_list: ['config', 'webappstest'],
         dir_mode: '0775',
       }
     end

@@ -37,7 +37,7 @@ describe 'tomcat::config::server::valve', type: :define do
           'directory' => 'logs',
           'spaces'    => 'foo bar',
         },
-        attributes_to_remove: %w[foo bar],
+        attributes_to_remove: ['foo', 'bar'],
       }
     end
 

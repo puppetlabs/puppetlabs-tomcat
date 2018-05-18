@@ -52,7 +52,7 @@ SAMPLE_WAR = 'http://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'.
 
 LATEST_DAEMON_8 = latest_daemon_version(TOMCAT8_RECENT_VERSION)
 
-UNSUPPORTED_PLATFORMS = %w[windows Solaris Darwin].freeze
+UNSUPPORTED_PLATFORMS = ['windows', 'Solaris', 'Darwin'].freeze
 
 # Tomcat 7 needs java 1.6 or newer
 SKIP_TOMCAT_7 = false
