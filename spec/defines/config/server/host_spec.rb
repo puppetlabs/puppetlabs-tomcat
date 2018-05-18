@@ -47,16 +47,8 @@ describe 'tomcat::config::server::host', type: :define do
           'unpackWARs' => 'false',
           'spaces'     => 'foo bar',
         },
-        attributes_to_remove: %w[
-          foo
-          bar
-          baz
-        ],
-        aliases: %w[
-          able
-          baker
-          charlie
-        ],
+        attributes_to_remove: ['foo', 'bar', 'baz'],
+        aliases: ['able', 'baker', 'charlie'],
       }
     end
 

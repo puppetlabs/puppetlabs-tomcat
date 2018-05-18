@@ -25,10 +25,7 @@ describe 'tomcat::config::context::environment', type: :define do
           'foo' => 'bar',
           'bar' => 'foo',
         },
-        attributes_to_remove: %w[
-          foobar
-          barfoo
-        ],
+        attributes_to_remove: ['foobar', 'barfoo'],
       }
     end
 

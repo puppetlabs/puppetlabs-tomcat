@@ -51,11 +51,7 @@ describe 'tomcat::config::server::realm', type: :define do
           'roleSearch'    => 'member={0}',
           'spaces'        => 'foo bar',
         },
-        attributes_to_remove: %w[
-          foo
-          bar
-          baz
-        ],
+        attributes_to_remove: ['foo', 'bar', 'baz'],
       }
     end
 
@@ -91,10 +87,7 @@ describe 'tomcat::config::server::realm', type: :define do
           'connectionURL' => 'ldap://localhost',
           'roleName'      => 'cn',
         },
-        attributes_to_remove: %w[
-          foo
-          bar
-        ],
+        attributes_to_remove: ['foo', 'bar'],
       }
     end
 

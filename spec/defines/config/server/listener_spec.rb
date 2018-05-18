@@ -26,11 +26,7 @@ describe 'tomcat::config::server::listener', type: :define do
           'rmiServerPortPlatform'   => '10002',
           'spaces'                  => 'foo bar',
         },
-        attributes_to_remove: %w[
-          foo
-          bar
-          baz
-        ],
+        attributes_to_remove: ['foo', 'bar', 'baz'],
       }
     end
 

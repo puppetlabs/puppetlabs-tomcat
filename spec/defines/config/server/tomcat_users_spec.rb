@@ -26,10 +26,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         ensure: 'present',
         manage_file: true,
         password: 'bar',
-        roles: %w[
-          foo_role
-          bar_role
-        ],
+        roles: ['foo_role', 'bar_role'],
       }
     end
 
