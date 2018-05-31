@@ -59,9 +59,9 @@ SKIP_TOMCAT_7 = false
 
 # Tomcat 8 needs java 1.7 or newer
 confine_8_array = [
-  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '10.04'),
+  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '16.04'),
   (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
-  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '6'),
+  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '8'),
   (fact('osfamily') == 'Suse'           &&  fact('operatingsystemmajrelease') == '11'),
 ]
 # puppetlabs-gcc doesn't work on Suse
