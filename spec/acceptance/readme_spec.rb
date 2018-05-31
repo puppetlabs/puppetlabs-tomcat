@@ -4,9 +4,9 @@ require 'spec_helper_acceptance'
 
 # confine array
 confine_array = [
-  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '10.04'),
+  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '16.04'),
   (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
-  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '6'),
+  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '8'),
   fact('osfamily') == 'Suse',
 ]
 
