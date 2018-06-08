@@ -14,14 +14,16 @@ describe 'Acceptance case one', unless: stop_test do
       class{'java':}
       class{'gcc':}
 
-      if $::operatingsystemmajrelease == '16.04' {
-        $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
-      } else {
-        $java_home = $::osfamily ? {
-          'RedHat' => '/etc/alternatives/java_sdk',
-          'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
-          default  => undef
+      if $::osfamily == 'Debian' {
+        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '9'  {
+          $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
+        } else {
+          $java_home = "/usr/lib/jvm/java-7-openjdk-${::architecture}"
         }
+      } elsif $::osfamily == 'RedHat' {
+        $java_home = "/etc/alternatives/java_sdk"
+      } else {
+        $java_home = undef
       }
 
       class jsvc {
@@ -125,14 +127,16 @@ describe 'Acceptance case one', unless: stop_test do
 
   context 'Stop tomcat with verification!!!' do
     pp = <<-MANIFEST
-      if $::operatingsystemmajrelease == '16.04' {
-        $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
-      } else {
-        $java_home = $::osfamily ? {
-          'RedHat' => '/etc/alternatives/java_sdk',
-          'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
-          default  => undef
+      if $::osfamily == 'Debian' {
+        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '9'  {
+          $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
+        } else {
+          $java_home = "/usr/lib/jvm/java-7-openjdk-${::architecture}"
         }
+      } elsif $::osfamily == 'RedHat' {
+        $java_home = "/etc/alternatives/java_sdk"
+      } else {
+        $java_home = undef
       }
 
       tomcat::service { 'jsvc-default':
@@ -154,14 +158,16 @@ describe 'Acceptance case one', unless: stop_test do
 
   context 'Start Tomcat with verification' do
     pp = <<-MANIFEST
-      if $::operatingsystemmajrelease == '16.04' {
-        $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
-      } else {
-        $java_home = $::osfamily ? {
-          'RedHat' => '/etc/alternatives/java_sdk',
-          'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
-          default  => undef
+      if $::osfamily == 'Debian' {
+        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '9'  {
+          $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
+        } else {
+          $java_home = "/usr/lib/jvm/java-7-openjdk-${::architecture}"
         }
+      } elsif $::osfamily == 'RedHat' {
+        $java_home = "/etc/alternatives/java_sdk"
+      } else {
+        $java_home = undef
       }
 
       tomcat::service { 'jsvc-default':
@@ -203,14 +209,16 @@ describe 'Acceptance case one', unless: stop_test do
 
   context 'remove the connector with verification' do
     pp = <<-MANIFEST
-      if $::operatingsystemmajrelease == '16.04' {
-        $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
-      } else {
-        $java_home = $::osfamily ? {
-          'RedHat' => '/etc/alternatives/java_sdk',
-          'Debian' => "/usr/lib/jvm/java-7-openjdk-${::architecture}",
-          default  => undef
+      if $::osfamily == 'Debian' {
+        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '9'  {
+          $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
+        } else {
+          $java_home = "/usr/lib/jvm/java-7-openjdk-${::architecture}"
         }
+      } elsif $::osfamily == 'RedHat' {
+        $java_home = "/etc/alternatives/java_sdk"
+      } else {
+        $java_home = undef
       }
 
       tomcat::config::server::connector { 'tomcat8-jsvc':
