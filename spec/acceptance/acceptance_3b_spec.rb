@@ -10,7 +10,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
   end
 
   before :all do
-    shell("curl --retry 5 --retry-delay 15 -k -o /tmp/sample.war '#{SAMPLE_WAR}'", acceptable_exit_codes: 0)
+    shell("curl --retry 10 --retry-delay 15 -k -o /tmp/sample.war '#{SAMPLE_WAR}'", acceptable_exit_codes: 0)
   end
 
   context 'Initial install Tomcat and verification' do
@@ -58,12 +58,12 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_changes: true)
     end
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
-      shell('curl --retry 5 --retry-delay 15 localhost:8180') do |r|
+      shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
         r.stdout.should eq('')
       end
     end
     it 'is serving a JSP page from the war', retry: 5, retry_wait: 10 do
-      shell('curl --retry 5 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp') do |r|
+      shell('curl --retry 10 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp') do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
@@ -97,7 +97,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
-      shell('curl --retry 5 --retry-delay 15 localhost:8180') do |r|
+      shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
         r.stdout.should eq('')
       end
     end
@@ -115,7 +115,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
-      shell('curl --retry 5 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp', acceptable_exit_codes: 0) do |r|
+      shell('curl --retry 10 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp', acceptable_exit_codes: 0) do |r|
         r.stdout.should eq('')
       end
     end
