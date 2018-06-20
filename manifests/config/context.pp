@@ -11,6 +11,8 @@
 
 define tomcat::config::context (
   $catalina_base = undef,
+  $resources_attributes = {},
+  $resources_remove_attributes = {},
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
