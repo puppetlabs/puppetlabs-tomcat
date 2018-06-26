@@ -1750,6 +1750,14 @@ Default value: `false`.
 
 The user of the jsvc process when `use_init => true`
 
+##### `wait_timeout`
+
+The wait timeout set in the jsvc init script when `use_init => true` and `use_jsvc => true`
+
+Valid options: Integer.
+
+Default value: `10`.
+
 #### tomcat::setenv::entry
 
 ##### `config_file`
