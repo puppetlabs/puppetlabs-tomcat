@@ -212,6 +212,19 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+  context 'jsvc true and init true with wait_timeoutl, expect init script contains wait_timeout' do
+    let :params do
+      {
+        use_jsvc: true,
+        use_init: true,
+        wait_timeout: 15,
+      }
+    end
+
+    it {
+      is_expected.to contain_file('/etc/init.d/tomcat-default').with_content(%r{^WAIT_TIMEOUT=15$})
+    }
+  end
   describe 'failing tests' do
     context 'bad use_jsvc' do
       let :params do
