@@ -39,7 +39,7 @@ define tomcat::service (
   $stop_command                     = undef,
   $status_command                   = undef,
   $user                             = undef,
-  $wait_timeout                     = 10,
+  Integer $wait_timeout             = 10,
 ) {
   include ::tomcat
   $_user = pick($user, $::tomcat::user)
