@@ -25,6 +25,7 @@
 # @param stop_command The stop command to use for the service
 # @param status_command The status command to use for the service
 # @param user is the user of the jsvc process.
+# @param wait_timeout is the wait timeout set in the init script. Defaults to 10.
 define tomcat::service (
   $catalina_home                    = undef,
   $catalina_base                    = undef,
@@ -38,6 +39,7 @@ define tomcat::service (
   $stop_command                     = undef,
   $status_command                   = undef,
   $user                             = undef,
+  Integer $wait_timeout             = 10,
 ) {
   include ::tomcat
   $_user = pick($user, $::tomcat::user)

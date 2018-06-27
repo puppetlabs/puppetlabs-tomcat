@@ -55,6 +55,7 @@ CATALINA_BASE=<%= @_catalina_base %>
 CATALINA_HOME=<%= @_catalina_home %>
 JAVA_HOME=<%= @java_home %>
 TOMCAT_USER=<%= @_user %>
+WAIT_TIMEOUT=<%= @wait_timeout %>
 
 # Use the maximum available, or set MAX_FD != -1 to use that
 test ".$MAX_FD" = . && MAX_FD="maximum"
@@ -150,7 +151,7 @@ do_start()
     -java-home "$JAVA_HOME" \
     -user "$TOMCAT_USER" \
     -pidfile "$CATALINA_PID" \
-    -wait 10 \
+    -wait $WAIT_TIMEOUT \
     -outfile "SYSLOG" \
     -errfile "SYSLOG" \
     -classpath "$CLASSPATH" \
@@ -219,7 +220,7 @@ case "$1" in
       -java-home "$JAVA_HOME" \
       -user "$TOMCAT_USER" \
       -pidfile "$CATALINA_PID" \
-      -wait 10 \
+      -wait $WAIT_TIMEOUT \
       -nodetach \
       -outfile "&1" \
       -errfile "&2" \
