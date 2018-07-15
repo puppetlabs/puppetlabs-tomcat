@@ -1,12 +1,8 @@
-# Definition: tomcat::config::context
+# @summary Configure attributes for the Context element in $CATALINA_BASE/conf/context.xml
 #
-# Configure attributes for the Context element in $CATALINA_BASE/conf/context.xml
+# @param catalina_base
+#   Specifies the root of the Tomcat installation.
 #
-# Parameters
-# @param catalina_base is the base directory for the Tomcat installation.
-
-
-
 define tomcat::config::context (
   $catalina_base = undef,
 ) {

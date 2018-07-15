@@ -1,19 +1,20 @@
-# Definition: tomcat::config::context::valve
+# @summary Specifies Valve elements in `${catalina_base}/conf/context.xml`
 #
-# Configure Resource elements in $CATALINA_BASE/conf/context.xml
+# @param ensure
+#   Specifies whether you are trying to add or remove the Valve element.
+# @param resource_name
+#   The name of the Resource to be created, relative to the java:comp/env context. Default: `$name`
+# @param name
+#   `$resource_name`
+# @param resource_type
+#   The fully qualified Java class name expected by the web application when it performs a lookup for this resource. Required to create the resource.
+# @param catalina_base
+#   Specifies the root of the Tomcat installation. Default: `$tomcat::catalina_home`
+# @param additional_attributes
+#   Specifies any further attributes to add to the Valve. Valid options: a hash of '< attribute >' => '< value >' pairs. `{}`.
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
 #
-# Parameters:
-# - $catalina_base is the base directory for the Tomcat installation.
-# - $ensure specifies whether you are trying to add or remove the
-#   Resource element. Valid values are 'true', 'false', 'present', and
-#   'absent'. Defaults to 'present'.
-# - $resource_name is the name of the Resource to be created, relative to
-#   the java:comp/env context.
-# - $type is the fully qualified Java class name expected by the web application
-#   when it performs a lookup for this resource
-# - An optional hash of $additional_attributes to add to the Resource. Should
-#   be of the format 'attribute' => 'value'.
-# - An optional array of $attributes_to_remove from the Connector.
 define tomcat::config::context::valve (
   Enum['present','absent'] $ensure = 'present',
   $resource_name                   = $name,

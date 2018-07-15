@@ -1,15 +1,20 @@
-# Definition: tomcat::config::server::resourcelink
+# @summary Configure a ResourceLink element in the designated xml config.
 #
-# Configure a ResourceLink element in the designated xml config.
+# @param ensure
+#   specifies whether you are trying to add or remove the ResourceLink element.
+# @param catalina_base
+#   Specifies the root of the Tomcat installation. `$tomcat::catalina_home`.
+# @param resourcelink_name
+#   The name of the ResourceLink to be created, relative to the `java:comp/env` context. `$name`.
+# @param name
+#   `$resourcelink_name`
+# @param resourcelink_type
+#   The fully qualified Java class name expected by the web application when it performs a lookup for this resource link.
+# @param additional_attributes
+#   Specifies any additional attributes to add to the Valve. Should be a hash of the format 'attribute' => 'value'. Optional
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
 #
-# Parameters:
-# @param ensure specifies whether you are trying to add or remove the
-#        ResourceLink element. Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param catalina_base is the base directory for the Tomcat instance.
-# @param resourcelink_name is the name of the resource link to be created, relative
-#        to the java:comp/env context. Defaults to $name
-# @param resourcelink_type is the fully qualified Java class name expected by the web
-#        application when it performs a lookup for this resource link. Required
 define tomcat::config::context::resourcelink (
   Enum['present','absent'] $ensure = 'present',
   $catalina_base                   = $::tomcat::catalina_home,
