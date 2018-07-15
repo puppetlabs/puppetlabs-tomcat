@@ -1,24 +1,25 @@
-# Definition tomcat::config::server::tomcat_users
+# @summary Configures roles and users in $CATALINA_BASE/conf/tomcat-users.xml or any other specified file
 #
-# Configures roles and users in $CATALINA_BASE/conf/tomcat-users.xml
-# or any other specified file
-#
-# Parameters:
-# @param catalina_base is the base directory for the Tomcat installation
-# @param element specifies the element type. Valid values are 'user' or 'role'.
-#        Defaults to 'user'.
-# @param element_name sets the 'username' or 'rolename'. Depends on the $element.
-#        Defaults to $name.
-# @param ensure specifies whether you are trying to add or remove the element.
-#        Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param file The path to the file to manage. Must be fully qualified.
-#        Defaults to $CATALINA_BASE/conf/tomcat-users.xml.
-# @param manage_file Set to true for managing the file. It sets file permission,
-#        owner, group and create a basic tomcat-users XML if file does not exist yet.
-# @param owner specifies the owner of the file if $manage_file is true. Default: $tomcat::user
-# @param group specifies the group of the file if $manage_file is true. Default: $tomcat::group
-# @param password specifies the password for a user ($element = 'user').
-# @param roles specifies the roles for a user ($element = 'user').
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path. 
+# @param element
+#   Specifies the type of element to manage.
+# @param element_name
+#   Sets the element's username (or rolename, if `element` is set to 'role'). Valid options: a string. `$name`.
+# @param ensure
+#   Determines whether the specified XML element should exist in the configuration file.
+# @param file
+#   Specifies the configuration file to manage. Valid options: a string containing a fully-qualified path.
+# @param manage_file
+#   Specifies whether to create the specified configuration file if it doesn't exist. Uses Puppet's native [file](https://docs.puppetlabs.com/references/latest/type.html#file) with default parameters.
+# @param owner
+#   Specifies the owner of the configuration file. `$::tomcat::user`.
+# @param group
+#   Specifies the group of the configuration file. `$::tomcat::group`.
+# @param password
+#   Specifies a password for user elements. Valid options: a string.
+# @param roles
+#   Specifies one or more roles. Only valid if `element` is set to 'role' or 'user'. Valid options: an array of strings.
 #
 define tomcat::config::server::tomcat_users (
   $catalina_base                   = $::tomcat::catalina_home,

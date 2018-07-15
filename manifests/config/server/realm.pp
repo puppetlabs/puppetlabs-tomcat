@@ -1,26 +1,30 @@
-# Definition: tomcat::config::server::realm
+# @summary Configure Realm elements in $CATALINA_BASE/conf/server.xml
 #
-# Configure Realm elements in $CATALINA_BASE/conf/server.xml
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation. 
+# @param class_name
+#   Specifies the Java class name of a Realm implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/realm.html#Common_Attributes). Valid options: a string containing a Java class name. `name` passed in your defined type.
+# @param name
+#   `$class_name`
+# @param realm_ensure
+#   Specifies whether the Realm element should exist in the configuration file.
+# @param parent_service
+#   Specifies which Service element this Realm element should nest under. Valid options: a string containing the name attribute of the Service.
+# @param parent_engine
+#   Specifies which Engine element this Realm should nest under. Valid options: a string containing the name attribute of the Engine.
+# @param parent_host
+#   Specifies which Host element this Realm should nest under. Valid options: a string containing the name attribute of the Host.
+# @param parent_realm
+#   Specifies which Realm element this Realm should nest under. Valid options: a string containing the className attribute of the Realm element.
+# @param additional_attributes
+#   Specifies any further attributes to add to the Realm element. Valid options: a hash of '< attribute >' => '< value >' pairs.
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+# @param purge_realms
+#   Specifies whether to purge any unmanaged Realm elements from the configuration file.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 #
-# Parameters:
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param class_name is the Java class name of the Realm implementation to use.
-# @param realm_ensure specifies whether you are adding or removing a
-#        Realm element. Valid values are 'present', and 'absent'. Defaults to 'present'.
-# @param parent_service is the `name` attribute for the Service element this Realm
-#        should be nested beneath. Defaults to 'Catalina'.
-# @param parent_engine is the `name` attribute for the Engine element this Realm
-#        should be nested beneath. Defaults to 'Catalina'.
-# @param parent_host is the `name` attribute for the Host element this Realm
-#        should be nested beneath.
-# @param parent_realm is the `name` attribute for the Realm element this Realm
-#        should be nested beneath.
-# @param additional_attributes An optional hash of additional attributes to add to the Realm.
-#        Should be of the format 'attribute' => 'value'.
-# @param attributes_to_remove An optional array of attributes to remove from the Realm.
-# @param purge_realms Specifies whether to purge any unmanaged realm elements
-#        from the configuration file by default.
-# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::realm (
   $catalina_base                                          = undef,
   $class_name                                             = $name,

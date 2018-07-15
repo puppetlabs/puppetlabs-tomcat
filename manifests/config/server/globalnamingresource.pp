@@ -1,22 +1,20 @@
-# Definition: tomcat::config::server::globalnamingresource
+# @summary Configure GlobalNamingResources Resource elements in $CATALINA_BASE/conf/server.xml
 #
-# Configure GlobalNamingResources Resource elements in $CATALINA_BASE/conf/server.xml
+# @param catalina_base
+#   Specifies the base directory of the Tomcat instance. Valid options: a string containing an absolute path.
+# @param resource_name
+#   Optionally override the globalnamingresource name that is normally taken from the Puppet resource's `$name`.
+# @param type
+#   Specifies the type of element to create Valid options: `Resource`, `Environment` or any other valid node.
+# @param ensure
+#   Determines whether the specified XML element should exist in the configuration file.
+# @param additional_attributes
+#   Specifies any further attributes to add to the Host. Valid options: a hash of '< attribute >' => '< value >' pairs.
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 #
-# Parameters:
-# @param ensure Determines whether the specified XML element should exist in
-#        the configuration file.
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param resource_ensure specifies whether you are trying to add or remove the
-#        Resource element. Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param resource_name An optional resource name that replaces the $name from the resource.
-# @param type An optional string containing the type of the element. Used verbatim
-#        to create a <GlobalNamingResources><${type} /></GlobalNamingResources>
-#        node. Should be used for "Environment" entries, for example.
-# @param additional_attributes An optional hash of additional attributes to add
-#        to the Resource. Should be of the format 'attribute' => 'value'.
-# @param attributes_to_remove An optional array of attributes to remove from
-#        the Resource.
-# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::globalnamingresource (
   $catalina_base                   = $::tomcat::catalina_home,
   $resource_name                   = undef,
