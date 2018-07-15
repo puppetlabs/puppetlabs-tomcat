@@ -1,5 +1,7 @@
-## manage the catalina.properties file
-# private
+# @summary Manage the catalina.properties file
+#
+# @api private
+#
 define tomcat::config::properties (
   $catalina_base,
   $catalina_home,
