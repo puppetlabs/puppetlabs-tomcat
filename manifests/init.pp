@@ -1,32 +1,28 @@
-# == Class: tomcat
-#
-# Class to manage installation and configuration of Tomcat.
-#
-# === Parameters
+# @summary Class to manage installation and configuration of Tomcat.  
 #
 # @param catalina_home
-#   The base directory for the Tomcat installation. Default: /opt/apache-tomcat
-#
+#   Specifies the default root directory of the Tomcat installation. Valid options: a string containing an absolute path.
 # @param user
-#   The user to run Tomcat as. Default: tomcat
-#
+#   Specifies a default user to run Tomcat as. Valid options: a string containing a valid username.
 # @param group
-#   The group to run Tomcat as. Default: tomcat
-#
-# @param manage_user
-#   Boolean specifying whether or not to manage the user. Defaults to true.
-#
+#   Specifies a default group to run Tomcat as. Valid options: a string containing a valid group name.
+# @param install_from_source
+#   No longer available in the base class. Please use install_from_source on a specific tomcat::install declaration instead.
 # @param purge_connectors
-#   Boolean specifying whether to purge all Connector elements from server.xml. Defaults to false.
-#
+#   Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file by default.
 # @param purge_realms
-#   Boolean specifying whether to purge all Realm elements from server.xml. Defaults to false.
-#
+#   Specifies whether to purge any unmanaged realm elements from the configuration file by default. If two realms are defined for a specific server config only use `purge_realms` for the first realm and ensure the realms enforce a strict order between each other.
+# @param manage_user
+#   Determines whether defined types should default to creating the specified user, if it doesn't exist. Uses Puppet's native [user](https://docs.puppetlabs.com/references/latest/type.html#user) with default parameters.
 # @param manage_group
-#   Boolean specifying whether or not to manage the group. Defaults to true.
-#
+#   Determines whether defined types should default to creating the specified group, if it doesn't exist. Uses Puppet's native [group](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters.
+# @param manage_home
+#   Specifies the default value of `manage_home` for all `tomcat::instance` instances.
+# @param manage_base
+#   Specifies the default value of `manage_base` for all `tomcat::install` instances.
 # @param manage_properties
-#   Boolean specifying whether or not to manage the catalina.properties file. Defaults to true.
+#   Specifies the default value of `manage_properties` for all `tomcat::instance` instances.
+#
 class tomcat (
   $catalina_home             = '/opt/apache-tomcat',
   $user                      = 'tomcat',
