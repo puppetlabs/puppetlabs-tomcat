@@ -1,4 +1,7 @@
-# private
+# @summary
+#
+# @api private
+#
 define tomcat::instance::dependencies (
   $catalina_home,
   $catalina_base,
