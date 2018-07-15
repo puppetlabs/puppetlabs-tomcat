@@ -33,7 +33,14 @@
 # @param manage_copy_from_home
 #   Specifies whether to copy the initial config files from `catalina_home` to `catalina_base`. Valid options: Boolean. `true`.
 # @param copy_from_home_list
-#   Specifies the full path of config files to copy from `catalina_home` to `catalina_base` for an instance (disabled via `manage_copy_from_home` Boolean). Valid options: array of strings containing path + filename. [ '${_catalina_base}/conf/catalina.policy','${_catalina_base}/conf/context.xml','${_catalina_base}/conf/logging.properties','${_catalina_base}/conf/server.xml','${_catalina_base}/conf/web.xml',]
+#   Specifies the full path of config files to copy from `catalina_home` to `catalina_base` for an instance (disabled via `manage_copy_from_home` Boolean). Valid options: array of strings containing path + filename.
+#   ```
+#   [ '${_catalina_base}/conf/catalina.policy',
+#     '${_catalina_base}/conf/context.xml',
+#     '${_catalina_base}/conf/logging.properties',
+#     '${_catalina_base}/conf/server.xml',
+#     '${_catalina_base}/conf/web.xml']
+#   ```
 # @param copy_from_home_mode
 #   Specifies the file mode when copying the initial config files from `catalina_home` to `catalina_base`. Valid options: a string containing a standard Linux mode.
 # @param install_from_source

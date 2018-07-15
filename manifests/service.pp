@@ -1,31 +1,36 @@
-# Definition: tomcat::service
+# @summary Service management for Tomcat.
 #
-# Service management for Tomcat.
+# @param catalina_home
+#   Specifies the root directory of the Tomcat installation. Valid options: a string containing an absolute path.
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path.
+# @param use_jsvc
+#   Specifies whether to use Jsvc for service management. If both `use_jsvc` and `use_init` are set to `false`, tomcat uses the following commands for service management.
+#   ```
+#   $CATALINA_HOME/bin/catalina.sh start
+#   $CATALINA_HOME/bin/catalina.sh stop
+#   ```
+# @param use_init
+#   Specifies whether to use a package-provided init script for service management.
+# @param java_home
+#   Specifies where Java is installed. Only applies if `use_jsvc` is set to `true`. Valid options: a string containing an absolute path.
+# @param service_ensure
+#   Specifies whether the Tomcat service should be running. Maps to the `ensure` parameter of Puppet's native [service](https://docs.puppetlabs.com/references/latest/type.html#service). Valid options: 'running', 'stopped', `true`, `false`.
+# @param service_enable
+#   Specifies whether to enable the Tomcat service at boot. Only valid if `use_init` is set to `true`. `true`, if `use_init` is set to `true` and `service_ensure` is set to 'running' or `true`.
+# @param service_name
+#    Specifies the name of the Tomcat service. Valid options: a string.
+# @param start_command
+#   Designates a command to start the service. Valid options: a string. `use_init` and `use_jsvc`.
+# @param stop_command
+#   Designates a command to stop the service. Valid options: a string. `use_init` and `use_jsvc`.
+# @param status_command
+#   Designates a command to get the status of the service. Valid options: a string. `use_init` and `use_jsvc`.
+# @param user
+#   The user of the jsvc process when `use_init => true`
+# @param wait_timeout
+#   The wait timeout set in the jsvc init script when `use_init => true` and `use_jsvc => true`
 #
-# Parameters:
-# @param catalina_home is the root of the Tomcat installation.
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param use_jsvc Whether or not to use jsvc for service management. Boolean defaulting to
-#        false. If both $use_jsvc and $use_init are false,
-#        $CATALINA_BASE/bin/catalina.sh start and $CATALIN/A_BASE/bin/catalina.sh
-#        stop are used for service management.
-# @param use_init Whether or not to use init for service management. Boolean defaulting to
-#        false. If both $use_jsvc and $use_init are false,
-#        $CATALINA_BASE/bin/catalina.sh start and $CATALINA_BASE/bin/catalina.sh
-#        stop are used for service management.
-# @param java_home If using jsvc, optionally set java_home.  Has no affect unless
-#        $use_jsvc = true.
-# @param service_ensure is passed on to the service resource.
-# @param service_enable specifies whether the tomcat service should be enabled on
-#        on boot. Valid options are `true` or `false`. Defaults to `undef`, will be
-#        programmatically set to `true` if $use_init is true AND
-#        $service_ensure == 'running'
-# @param service_name The name to use for the packaged init script
-# @param start_command The start command to use for the service
-# @param stop_command The stop command to use for the service
-# @param status_command The status command to use for the service
-# @param user is the user of the jsvc process.
-# @param wait_timeout is the wait timeout set in the init script. Defaults to 10.
 define tomcat::service (
   $catalina_home                    = undef,
   $catalina_base                    = undef,
