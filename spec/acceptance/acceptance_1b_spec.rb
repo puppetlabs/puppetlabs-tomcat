@@ -15,7 +15,7 @@ describe 'Acceptance case one', unless: stop_test do
       class{'gcc':}
 
       if $::osfamily == 'Debian' {
-        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '9'  {
+        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '18.04' or $::operatingsystemmajrelease == '9'  {
           $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
         } else {
           $java_home = "/usr/lib/jvm/java-7-openjdk-${::architecture}"
@@ -128,7 +128,7 @@ describe 'Acceptance case one', unless: stop_test do
   context 'Stop tomcat with verification!!!' do
     pp = <<-MANIFEST
       if $::osfamily == 'Debian' {
-        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '9'  {
+        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '18.04' or $::operatingsystemmajrelease == '9'  {
           $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
         } else {
           $java_home = "/usr/lib/jvm/java-7-openjdk-${::architecture}"
@@ -159,7 +159,7 @@ describe 'Acceptance case one', unless: stop_test do
   context 'Start Tomcat with verification' do
     pp = <<-MANIFEST
       if $::osfamily == 'Debian' {
-        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '9'  {
+        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '18.04' or $::operatingsystemmajrelease == '9'  {
           $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
         } else {
           $java_home = "/usr/lib/jvm/java-7-openjdk-${::architecture}"
@@ -210,7 +210,7 @@ describe 'Acceptance case one', unless: stop_test do
   context 'remove the connector with verification' do
     pp = <<-MANIFEST
       if $::osfamily == 'Debian' {
-        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '9'  {
+        if $::operatingsystemmajrelease == '16.04' or $::operatingsystemmajrelease == '18.04' or $::operatingsystemmajrelease == '9'  {
           $java_home = "/usr/lib/jvm/java-8-openjdk-${::architecture}"
         } else {
           $java_home = "/usr/lib/jvm/java-7-openjdk-${::architecture}"
