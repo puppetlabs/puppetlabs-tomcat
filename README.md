@@ -1911,7 +1911,9 @@ Default value: 'tomcat'.
 
 ## Limitations
 
-This module only supports Tomcat installations on Unix-like systems.  The `tomcat::config::server*` defined types require Augeas version 1.0.0 or newer.
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-tomcat/blob/master/metadata.json)
+
+The `tomcat::config::server*` defined types require Augeas version 1.0.0 or newer.
 
 ### Multiple Instances
 
