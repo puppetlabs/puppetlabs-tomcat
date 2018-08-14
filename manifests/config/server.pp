@@ -1,18 +1,22 @@
-# Definition: tomcat::config::server
+# @summary Configure attributes for the Server element in $CATALINA_BASE/conf/server.xml
 #
-# Configure attributes for the Server element in $CATALINA_BASE/conf/server.xml
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
+# @param class_name
+#   Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) in the configuration file. Valid options: a string containing a Java class name.
+# @param class_name_ensure
+#   Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) should exist in the configuration file.
+# @param address
+#   Specifies a TCP/IP address on which to listen for the shutdown command. Maps to the [address XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string.
+# @param address_ensure
+#   Specifies whether the [address XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) should exist in the configuration file.
+# @param port
+#   Specifies a port on which to listen for the designated shutdown command. Maps to the [port XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string containing a port number.
+# @param shutdown
+#   Designates a command that shuts down Tomcat when the command is received through the specified address and port. Maps to the [shutdown XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 #
-# Parameters
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param class_name is the optional className attribute.
-# @param class_name_ensure specifies whether you are trying to set or remove the
-#        className attribute. Valid values are 'present' or 'absent'. Defaults to 'present'.
-# @param address is the optional address attribute.
-# @param address_ensure specifies whether you are trying to set of remove the
-#        address attribute. Valid values are 'present' or 'absent'. Defaults to 'present'.
-# @param port The port to wait for shutdown commands on.
-# @param shutdown The shutdown command that must be sent to $port.
-# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server (
   $catalina_base                              = undef,
   $class_name                                 = undef,

@@ -1,6 +1,6 @@
-# Definition: tomcat::instance::copy_from_home
+# @summary Private define to copy a conf file from catalina_home to catalina_base
 #
-# Private define to copy a conf file from catalina_home to catalina_base
+# @api private
 #
 define tomcat::instance::copy_from_home (
   $catalina_home,

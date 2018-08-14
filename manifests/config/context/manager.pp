@@ -1,18 +1,18 @@
-# Definition: tomcat::config::context::manager
+# @summary Configure Manager elements in $CATALINA_BASE/conf/context.xml
 #
-# Configure Manager elements in $CATALINA_BASE/conf/context.xml
+# @param ensure
+#   specifies whether you are trying to add or remove the Manager element.
+# @param catalina_base
+#   Specifies the root of the Tomcat installation.
+# @param manager_classname
+#   The name of the Manager to be created. `$name`.
+# @param name
+#   `$manager_classname`
+# @param additional_attributes
+#   Specifies any additional attributes to add to the Manager. Should be a hash of the format 'attribute' => 'value'. Optional
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
 #
-# Parameters:
-# - $catalina_base is the base directory for the Tomcat installation.
-# - $ensure specifies whether you are trying to add or remove the
-#   Manager element. Valid values are 'present' and 'absent'. Defaults to 'present'.
-# - $manager_name is the name of the Manager to be created, relative to
-#   the java:comp/env context.
-# - $type is the fully qualified Java class name expected by the web application
-#   when it performs a lookup for this manager
-# - An optional hash of $additional_attributes to add to the Manager. Should
-#   be of the format 'attribute' => 'value'.
-# - An optional array of $attributes_to_remove from the Manager.
 define tomcat::config::context::manager (
   Enum['present','absent'] $ensure = 'present',
   $catalina_base                   = $::tomcat::catalina_home,

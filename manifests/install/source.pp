@@ -1,14 +1,7 @@
-# Definition: tomcat::install::source
+# @summary Private define to install Tomcat from source.
 #
-# Private define to install Tomcat from source.
+# @api private
 #
-# Parameters:
-# - $catalina_home is the root of the Tomcat installation.
-# - The $source_url to install from.
-# - $source_strip_first_dir is a boolean specifying whether or not to strip
-#   the first directory when unpacking the source tarball. Defaults to true
-#   when installing from source on non-Solaris systems. Requires puppet/archive
-#   > 0.4.0
 define tomcat::install::source (
   $catalina_home,
   $manage_home,

@@ -1,30 +1,26 @@
-# Definition: tomcat::war
+# @summary Manage deployment of WAR files.
 #
-# Manage deployment of WAR files.
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path. `$::tomcat::catalina_home`.
+# @param app_base
+#   Specifies where to deploy the WAR. Cannot be used in combination with `deployment_path`. Valid options: a string containing a path relative to `$CATALINA_BASE`. `app_base`, Puppet deploys the WAR to your specified `deployment_path`. If you don't specify that either, the WAR deploys to `${catalina_base}/webapps`.
+# @param deployment_path
+#   Specifies where to deploy the WAR. Cannot be used in combination with `app_base`. Valid options: a string containing an absolute path. `deployment_path`, Puppet deploys the WAR to your specified `app_base`. If you don't specify that either, the WAR deploys to `${catalina_base}/webapps`.
+# @param war_ensure
+#   Specifies whether the WAR should exist.
+# @param war_name
+#   Specifies the name of the WAR. Valid options: a string containing a filename that ends in '.war'. `name` passed in your defined type.
+# @param war_purge
+#   Specifies whether to purge the exploded WAR directory. Only applicable when `war_ensure` is set to 'absent' or `false`.
+# @param war_source
+#    Specifies the source to deploy the WAR from. Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
+# @param allow_insecure
+#   Specifies if HTTPS errors should be ignored when downloading the war tarball.
+# @param user
+#   The 'owner' of the tomcat war file. 
+# @param group
+#   The 'group' owner of the tomcat war file. 
 #
-# Parameters:
-# @param catalina_base is the base directory for the Tomcat installation
-# @param app_base is the path relative to $catalina_base to deploy the WAR to.
-#        Defaults to 'webapps'.
-# @param deployment_path Optional. Only one of $app_base and $deployment_path
-#        can be specified.
-# @param war_ensure specifies whether you are trying to add or remove the WAR.
-#        Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param war_name Optional. Defaults to $name.
-# @param war_purge is a boolean specifying whether or not to purge the exploded WAR
-#        directory. Defaults to true. Only applicable when $war_ensure is 'absent'
-#        or 'false'. Note: if tomcat is running and autodeploy is on, setting
-#        $war_purge to false won't stop tomcat from auto-undeploying exploded WARs.
-# @param war_source is the source to deploy the WAR from. Currently supports
-#        http(s)://, puppet://, and ftp:// paths. $war_source must be specified
-#        unless $war_ensure is set to 'false' or 'absent'.
-# @param allow_insecure Specifies if HTTPS errors should be ignored when
-#        downloading the war tarball. Valid options: `true` and `false`.
-#        Defaults to `false`.
-# @param user specifies the user of the tomcat war file.
-#        Defaults to 'tomcat'.
-# @param group specifies the user group of the tomcat war file.
-#        Defaults to 'tomcat'.
 define tomcat::war(
   $catalina_base                       = undef,
   $app_base                            = undef,

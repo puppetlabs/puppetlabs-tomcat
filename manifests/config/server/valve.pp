@@ -1,24 +1,24 @@
-# Definition tomcat::config::server::valve
+# @summary Configure a Valve element in $CATALINA_BASE/conf/server.xml
 #
-# Configure a Valve element in $CATALINA_BASE/conf/server.xml
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path. `$::tomcat::catalina_home`.
+# @param class_name
+#   Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Access_Logging/Attributes). Valid options: a string containing a Java class name.
+# @param parent_host
+#   Specifies which virtual host the Valve should nest under. Valid options: a string containing the name of a Host element.
+# @param parent_service
+#   Specifies which Service element the Valve should nest under. Valid options: a string containing the name of a Service element.
+# @param parent_context
+#   Specifies which Context element the Valve should nest under. Valid options: a string containing the name of a Context element (matching the docbase attribute).
+# @param valve_ensure
+#   Specifies whether the Valve should exist in the configuration file. Maps to the  [Valve XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Introduction).
+# @param additional_attributes
+#   Specifies any further attributes to add to the Valve. Valid options: a hash of '< attribute >' => '< value >' pairs.
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 #
-# Parameters:
-# @param catalina_base is the root of the Tomcat installation
-# @param class_name is the className attribute. If not specified, defaults to $name.
-# @param parent_host is the Host element this Valve should be nested beneath. If not
-#        specified, the Valve will be nested beneath the Engine under
-#        $parent_service.
-# @param parent_context is the Context element this Valve should be nested beneath 
-#        under the host element. If not specified, the Valve will be nested beneath
-#        the parent host
-# @param parent_service is the Service element this Valve should be nested beneath.
-#        Defaults to 'Catalina'.
-# @param valve_ensure specifies whether you are trying to add or remove the Vavle
-#        element. Valid values are 'present' or 'absent'. Defaults to 'present'.
-# @param additional_attributes An optional hash of additional attributes to add to the Valve. Should be of
-#        the format 'attribute' => 'value'.
-# @param attributes_to_remove An optional array of attributes to remove from the Valve.
-# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::valve (
   $catalina_base                         = undef,
   $class_name                            = undef,

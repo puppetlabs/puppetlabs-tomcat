@@ -1,24 +1,24 @@
-# Definition: tomcat::config::server::listener
+# @summary Configure Listener elements in $CATALINA_BASE/conf/server.xml
 #
-# Configure Listener elements in $CATALINA_BASE/conf/server.xml
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path.
+# @param listener_ensure
+#   Specifies whether the [Listener XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html) should exist in the configuration file.
+# @param class_name
+#   Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html#Common_Attributes) of a Listener Element. Valid options: a string containing a Java class name. `$name`.
+# @param parent_service
+#   Specifies which Service element the Listener should nest under. Only valid if `parent_engine` or `parent_host` is specified. Valid options: a string containing the name attribute of the Service.
+# @param parent_engine
+#   Specifies which Engine element this Listener should nest under. Valid options: a string containing the name attribute of the Engine.
+# @param parent_host
+#   Specifies which Host element this Listener should nest under. Valid options: a string containing the name attribute of the Host.
+# @param additional_attributes
+#   Specifies any further attributes to add to the Listener. Valid options: a hash of '< attribute >' => '< value >' pairs.
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 #
-# Parameters:
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param listener_ensure specifies whether you are trying to add or remove the
-#   Listener element. Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param class_name is the Java class name of the implementation to use.
-#   Defaults to $name.
-# @param parent_service is the Service element this Listener should be nested 
-#   beneath. Only valid if $parent_host or $parent_engine is specified. Defaults
-#   to 'Catalina' if $parent_host or $parent_engine was specified.
-# @param parent_engine is the `name` attribute to the Engine element this Listener
-#   should be nested beneath.
-# @param parent_host is the `name` attribute to the Engine element this Listener
-#   should be nested beneath.
-# @param additional_attributes An optional hash of additional attributes to add to the Listener. Should
-#   be of the format 'attribute' => 'value'.
-# @param attributes_to_remove An optional array of attributes to remove from the Listener.
-# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::listener (
   $catalina_base                            = $::tomcat::catalina_home,
   Enum['present','absent'] $listener_ensure = 'present',

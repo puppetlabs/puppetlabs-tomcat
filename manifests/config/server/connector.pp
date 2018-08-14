@@ -1,22 +1,26 @@
-# Definition: tomcat::config::server::connector
+# @summary Configure Connector elements in $CATALINA_BASE/conf/server.xml
 #
-# Configure Connector elements in $CATALINA_BASE/conf/server.xml
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
+# @param connector_ensure
+#   Specifies whether the [Connector XML element](http://tomcat.apache.org/tomcat-8.0-doc/connectors.html) should exist in the configuration file.
+# @param port
+#    Sets a TCP port on which to create a server socket. Maps to the [port XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes). Valid options: a string.
+# @param protocol
+#   Specifies a protocol to use for handling incoming traffic. Maps to the [protocol XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes). Valid options: a string. `$name`.
+# @param name
+#   `$protocol`
+# @param parent_service
+#   Specifies which Service element the Connector should nest under. Valid options: a string containing the name attribute of the Service.
+# @param additional_attributes
+#   Specifies any further attributes to add to the Connector. Valid options: a hash of '< attribute >' => '< value >' pairs.
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+# @param purge_connectors
+#   Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 #
-# Parameters:
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param connector_ensure specifies whether you are trying to add or remove the
-#   Connector element. Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param port This attribute is required unless $connector_ensure is set to false.
-# @param protocol Defaults to $name when not specified.
-# @param parent_service The Service element which this Connector should be nested
-#        beneath. Defaults to 'Catalina'.
-# @param additional_attributes An optional hash of additional attributes to add to the Connector. Should
-#   be of the format 'attribute' => 'value'.
-# @param attributes_to_remove An optional array of attributes to remove from the Connector.
-# @param purge_connectors Specifies whether to purge any unmanaged Connector
-#        elements that match defined protocol but have a different port from the
-#        configuration file.
-# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::connector (
   $catalina_base                             = undef,
   Enum['present','absent'] $connector_ensure = 'present',

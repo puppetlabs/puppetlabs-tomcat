@@ -1,39 +1,61 @@
-# Definition: tomcat::instance
+# @summary This define installs an instance of Tomcat.
 #
-# This define installs an instance of Tomcat.
+# @param catalina_home
+#   Specifies the directory where the Apache Tomcat software is installed by a `tomcat::install` resource. Valid options: a string containing an absolute path. 
+# @param catalina_base
+#   Specifies the `$CATALINA_BASE` of the Tomcat instance where logs, configuration files, and the 'webapps' directory are managed. For single-instance installs, this is the same as the `catalina_home` parameter Valid options: a string containing an absolute path. `$catalina_home`.
+# @param user
+#   Specifies the owner of the instance directories and files. `$::tomcat::user`.
+# @param group
+#   Specifies the group of the instance directories and files. `$::tomcat::group`.
+# @param manage_user
+#   Specifies whether the user should be managed by this module or not. `$::tomcat::manage_user`.
+# @param manage_group
+#   Specifies whether the group should be managed by this module or not. `$::tomcat::manage_group`.
+# @param manage_service
+#   Specifies whether a `tomcat::service` corresponding to this instance should be declared. Valid options: Boolean `true` (multi-instance installs), `false` ()single-instance installs).
+# @param manage_base
+#   Specifies whether the directory of catalina_base should be managed by Puppet. This might not be preferable in network filesystem environments. `true`.
+# @param manage_properties
+#   Specifies whether the `catalina.properties` file is created and managed. If `true`, custom modifications to this file will be overwritten during runs Valid options: Boolean `true`.
+# @param java_home
+#   Specifies the java home to be used when declaring a `tomcat::service` instance. See [tomcat::service](# tomcatservice)
+# @param use_jsvc
+#   Specifies whether jsvc should be used when declaring a `tomcat::service` instance. 
+# @param use_init
+#   Specifies whether an init script should be managed when declaring a `tomcat::service` instance. See [tomcat::service](# tomcatservice)
+# @param manage_dirs
+#   Determines whether subdirectories for `catalina_base` should be managed as part of tomcat::instance. The default directories are listed in `dir_list`. Valid options: Boolean.
+# @param dir_list
+#   Specifies the subdirectories under `catalina_base` to be managed for an instance (disabled via `manage_dirs` Boolean). Valid options: an array of strings, each being a relative subdirectory to `catalina_base`. `['bin','conf','lib','logs','temp','webapps','work']`.
+# @param dir_mode
+#   Specifies a mode for the managed subdirectories under `catalina_base` for an instance (as specified in `dir_list` and disabled via `manage_dirs` Boolean). Valid option: a string containing a standard Linux mode. 
+# @param manage_copy_from_home
+#   Specifies whether to copy the initial config files from `catalina_home` to `catalina_base`. Valid options: Boolean. `true`.
+# @param copy_from_home_list
+#   Specifies the full path of config files to copy from `catalina_home` to `catalina_base` for an instance (disabled via `manage_copy_from_home` Boolean). Valid options: array of strings containing path + filename.
+#   ```
+#   [ '${_catalina_base}/conf/catalina.policy',
+#     '${_catalina_base}/conf/context.xml',
+#     '${_catalina_base}/conf/logging.properties',
+#     '${_catalina_base}/conf/server.xml',
+#     '${_catalina_base}/conf/web.xml']
+#   ```
+# @param copy_from_home_mode
+#   Specifies the file mode when copying the initial config files from `catalina_home` to `catalina_base`. Valid options: a string containing a standard Linux mode.
+# @param install_from_source
+#   Specifies whether or not the instance should be installed from source.
+# @param source_url
+#   URL to install from.
+# @param source_strip_first_dir
+#   Whether or not to strip the first directory when unpacking the source tarball. Defaults to true when installing from source. Requires puppet/archive.
+# @param package_ensure
+#   Ensure for the package resource when installing from package.
+# @param package_name
+#   Name of package when installing from package.
+# @param package_options
+#   Extra options to pass to the package resource.
 #
-# Parameters:
-# - $catalina_home is the root of the Tomcat installation. This parameter only
-#   affects the instance when $install_from_source is true. Default:
-#   $tomcat::catalina_home
-# - $catalina_base is the base directory for the Tomcat instance if different
-#   from $catalina_home. This parameter only affects the instance when
-#   $install_from_source is true. Default: $catalina_home
-# - $install_from_source is a boolean specifying whether or not to install from
-#   source. Defaults to true.
-# - The $source_url to install from. Required if $install_from_source is true.
-# - $source_strip_first_dir is a boolean specifying whether or not to strip
-#   the first directory when unpacking the source tarball. Defaults to true
-#   when installing from source. Requires puppet/archive
-# - $package_ensure when installing from package, what the ensure should be set
-#   to in the package resource.
-# - $package_name is the name of the package you want to install. Required if
-#   $install_from_source is false.
-# - $package_options to pass extra options to the package resource.
-# - $user is the owner of the tomcat home and base. Default: $tomcat::user
-# - $group is the group of the tomcat home and base. Default: $tomcat::group
-# - $manage_dirs is whether to manage sub-directories under $catalina_base. Default: true
-# - $dir_list is an array of sub-directories to manage under $catalina_base.
-#   Disable vai $manage_dirs. Default: ['bin','conf','lib','logs','temp','webapps','work']
-# - $dir_mode is the mode to use for sub-directories under $catalina_base. Default: '2770'
-# - $manage_copy_from_home is whether to copy initial files from $catalina_home
-#    to $catalina_base. Default: true
-# - $copy_from_home_list is an optional custom list of files to copy from $catalina_home
-#    to $catalina_base.  Supports log4j.
-#    Default: catalina.policy, context.xml, logging.properties, server.xml, web.xml
-# - $copy_from_home_mode is the mode to use when copying initial files from $catalina_home
-#    to $catalina_base. Defaults to '0660'
-
 define tomcat::instance (
   $catalina_home          = undef,
   $catalina_base          = undef,

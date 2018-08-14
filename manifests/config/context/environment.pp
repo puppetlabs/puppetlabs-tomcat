@@ -1,24 +1,26 @@
-# Definition: tomcat::config::context::environment
+# @summary Configure Environment elements in $CATALINA_BASE/conf/context.xml
 #
-# Configure Environment elements in $CATALINA_BASE/conf/context.xml
+# @param ensure
+#   Specifies whether you are trying to add or remove the Environment element Valid options: 'present', 'absent'. 
+# @param catalina_base
+#   Specifies the root of the Tomcat installation. 
+# @param environment_name
+#   The name of the Environment Entry to be created, relative to the `java:comp/env` context. `$name`.
+# @param name
+#   `$environment_name`
+# @param type
+#   The fully qualified Java class name expected by the web application for this environment entry. Required to create the environment entry.
+# @param value
+#   The value that will be presented to the application when requested from the JNDI context. Required to create the environment entry.
+# @param description
+#   The description is an an optional string for a human-readable description of this environment entry.
+# @param override
+#   An optional string or Boolean to specify if you do not want an `<env-entry>` for the same environment entry name to override the value specified here (set it to `false`). By default, overrides are allowed.
+# @param additional_attributes
+#   Specifies any additional attributes to add to the Environment. Should be a hash of the format 'attribute' => 'value'.
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
 #
-# Parameters:
-# @param ensure specifies whether you are trying to add or remove the
-#        Environment element. Valid values are 'present', and 'absent'. Defaults to 'present'.
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param environment_name is the name of the Environment to be created,
-#        relative to the java:comp/env context.
-# @param type is the fully qualified Java class name expected by the web
-#        application for this environment entry.
-# @param value that will be presented to the application when requested from
-#        the JNDI context.
-# @param description is an optional string for a human-readable description
-#        of this environment entry.
-# @param override should be false if you do not want an <env-entry> for
-#        the same environment entry name to override the value specified here.
-# @param additional_attributes optional hash to add to the Environment. Should
-#        be of the format 'attribute' => 'value'.
-# @param attributes_to_remove optional array to remove attributes from the Environment.
 define tomcat::config::context::environment (
   Enum['present','absent'] $ensure    = 'present',
   Stdlib::Absolutepath $catalina_base = $::tomcat::catalina_home,

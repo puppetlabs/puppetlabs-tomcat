@@ -1,29 +1,32 @@
-# Definition: tomcat::config::server::engine
+# @summary Configure Engine elements in $CATALINA_BASE/conf/server.xml
 #
-# Configure Engine elements in $CATALINA_BASE/conf/server.xml
+# @param default_host
+#   Specifies a host to handle any requests directed to hostnames that exist on the server but are not defined in this configuration file. Maps to the [defaultHost XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) of the Engine. Valid options: a string containing a hostname.
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
+# @param background_processor_delay
+#   Determines the delay between invoking the backgroundProcess method on this engine and its child containers. Maps to the [backgroundProcessorDelay XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: an integer, in seconds. `undef`.
+# @param background_processor_delay_ensure
+#   Specifies whether the [backgroundProcessorDelay XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
+# @param class_name
+#   Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: a string containing a Java class name.
+# @param class_name_ensure
+#   Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
+# @param engine_name
+#   Specifies the logical name of the Engine, used in log and error messages. Maps to the [name XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: a string. `name` passed in your defined type.
+# @param jvm_route
+#   Specifies an identifier to enable session affinity in load balancing. Maps to the [jvmRoute XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: string.
+# @param jvm_route_ensure
+#   Specifies whether the [jvmRoute XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
+# @param parent_service
+#   Specifies which Service element the Engine should nest under. Valid options: a string containing the name attribute of the Service.
+# @param start_stop_threads
+#   Sets how many threads the Engine should use to start child Host elements in parallel. Maps to the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: a string.
+# @param start_stop_threads_ensure
+#   Specifies whether the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 #
-# Parameters:
-# @param default_host is the defaultHost attribute for the Engine. This parameter is
-#        required.
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param background_processor_delay is the optional backgroundProcessorDelay
-#        attribute.
-# @param background_processor_delay_ensure specifies whether you are trying to add
-#        or remove the backgroundProcessorDelay attribute. Valid values are
-#        'present' and 'absent'. Defaults to 'present'.
-# @param class_name is the optional className attribute.
-# @param class_name_ensure specifies whether you are trying to add or remove the
-#        className attribute. Valid values are 'present', and 'absent'. Defaults to 'present'.
-# @param engine_name is the name attribute. Defaults to $name.
-# @param jvm_route is the optional jvmRoute attribute.
-# @param jvm_route_ensure specifies whether you are trying to add or remove the
-#        jvmRoute attribute. Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param parent_service is the Service element this Engine should be nested beneath.
-#        Defaults to 'Catalina'.
-# @param start_stop_threads is the optional startStopThreads attribute
-# @param start_stop_threads_ensure specifies whether you are trying to add or remove
-#        the startStopThreads attribute. Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::engine (
   $default_host,
   $catalina_base                                              = undef,

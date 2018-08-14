@@ -1,16 +1,30 @@
-# Definition tomcat::setenv::entry
+# @summary This define adds an entry to the setenv.sh script.
 #
-# This define adds an entry to the setenv.sh script.
+# @param value
+#   Provides the value(s) of the managed parameter. Valid options: a string or an array. If passing an array, separate values with a single space.
+# @param ensure
+#   Determines whether the fragment should exist in the configuration file. Valid options: 'present', 'absent'. 
+# @param catalina_home
+#   Root of the Tomcat installation.
+# @param config_file
+#   Specifies the configuration file to edit. Valid options: a string containing an absolute path. 
+# @param param
+#   Specifies a parameter to manage. Valid options: a string. `name` passed in your defined type.
+# @param name
+#   `$param`
+# @param quote_char
+#   Specifies a character to include before and after the specified value. Valid options: a string (usually a single or double quote). 
+# @param order
+#   Determines the ordering of your parameters in the configuration file (parameters with lower `order` values appear first.) Valid options: an integer or a string containing an integer. `10`.
+# @param addto
 #
-# Parameters:
-# @param value is the value of the parameter you're setting
-# @param ensure whether the fragment should be present or absent.
-# @param catalina_home is the root of the Tomcat installation.
-# @param config_file is the path to the config file to edit
-# @param param is the parameter you're setting. Defaults to $name.
-# @param quote_char is the optional character to quote the value with.
-# @param order is the optional order to the param in the file. Defaults to 10
-# @param doexport is the optional prefix before the variable.
+# @param doexport
+#   Specifies if you want to append export to the entry. Valid options: Boolean
+# @param user
+#   Specifies the owner of the config file. `$::tomcat::user`.
+# @param group
+#   Specifies the group of the config file. `$::tomcat::group`.
+#
 define tomcat::setenv::entry (
   $value,
   $ensure        = 'present',

@@ -1,17 +1,16 @@
-# Definition: tomcat::config::server::service
+# @summary Configure a Service element nested in the Server element in $CATALINA_BASE/conf/server.xml
 #
-# Configure a Service element nested in the Server element in
-# $CATALINA_BASE/conf/server.xml
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path.
+# @param class_name
+#   Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes). Valid options: a string containing a Java class name.
+# @param class_name_ensure
+#   Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes) should exist in the configuration file.
+# @param service_ensure
+#   Specifies whether the [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) should exist in the configuration file.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 #
-# Parameters:
-# @param catalina_base is the root of the Tomcat installation.
-# @param class_name is the optional className attribute
-# @param class_name_ensure specifies whether you are trying to set or remove the
-#        className attribute. Valid values are 'present' or 'absent'. Defaults to 'present'.
-# @param service_ensure specifies whether you are trying to add or remove the
-#        service element. Valid values are 'present' or 'absent'.
-#        Defaults to 'present'.
-# @param server_config Specifies a server.xml file to manage.
 define tomcat::config::server::service (
   $catalina_base                              = undef,
   $class_name                                 = undef,

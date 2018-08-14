@@ -1,25 +1,24 @@
-# Definition: tomcat::config::server::host
+# @summary Configure Host elements in $CATALINA_BASE/conf/server.xml
 #
-# Configure Host elements in $CATALINA_BASE/conf/server.xml
+# @param app_base
+#    Specifies the Application Base directory for the virtual host. Maps to the [appBase XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes). Valid options: a string.
+# @param catalina_base
+#   Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
+# @param host_ensure
+#   Specifies whether the virtual host (the [Host XML element](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Introduction)) should exist in the configuration file.
+# @param host_name
+#   Specifies the network name of the virtual host, as registered on your DNS server. Maps to the [name XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes). Valid options: a string.
+# @param parent_service
+#   Specifies which Service element the Host should nest under. Valid options: a string containing the name attribute of the Service.
+# @param additional_attributes
+#   Specifies any further attributes to add to the Host. Valid options: a hash of '< attribute >' => '< value >' pairs.
+# @param attributes_to_remove
+#   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+# @param server_config
+#   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
+# @param aliases
+#   Optional array that specifies the list of [Host Name Aliases](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Host_Name_Aliases) for this particular Host.  If omitted, any currently-defined Aliases will not be altered.  If present, the list Aliases  will be set to exactly match the contents of this array.  Thus, for example, an empty array can be used to explicitly force there to be no Aliases for the Host.
 #
-# Parameters:
-# @param app_base is the appBase attribute for the Host. This parameter is required
-#        unless $host_ensure is set to 'false' or 'absent'.
-# @param catalina_base is the base directory for the Tomcat installation.
-# @param host_ensure specifies whether you are trying to add or remove the Host
-#        element. Valid values are 'present' and 'absent'. Defaults to 'present'.
-# @param host_name is the name attribute for the Host. Defaults to $name.
-# @param parent_service is the Service element this Host should be nested beneath.
-#        Defaults to 'Catalina'
-# @param additional_attributes An optional hash of additional attributes to add
-#        to the Host. Should be of the format 'attribute' => 'value'.
-# @param attributes_to_remove An optional array of attributes to remove from the Host.
-# @param server_config Specifies a server.xml file to manage.
-# @param aliases is an optional array of aliases for the Host.  If omitted, the
-#        set of Alias elements within the Host element will not be altered.
-#        Otherwise, the set of Alias elements will be set to exactly match the
-#        contents of this array.  An empty array can be used to ensure that there
-#        are no Alias elements within the Host element.
 define tomcat::config::server::host (
   $app_base                                     = undef,
   Optional[Stdlib::Absolutepath] $catalina_base = undef,
