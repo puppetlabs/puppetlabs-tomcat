@@ -1,24 +1,22 @@
-# Definition: tomcat::config::context::parameter
+# @summary Configure Parameter elements in $CATALINA_BASE/conf/context.xml
 #
-# Configure parameter elements in $CATALINA_BASE/conf/context.xml
+# @param ensure
+#   Specifies whether you are trying to add or remove the Parameter element Valid options: 'present', 'absent'. 
+# @param catalina_base
+#   Specifies the root of the Tomcat installation.
+# @param parameter_name
+#   The name of the Parameter entry to be created, relative to the `java:comp/env` context. `$name`.
+# @param value
+#   The value that will be presented to the application when requested from the JNDI context.
+# @param description
+#   The description is an an optional string for a human-readable description of this parameter entry.
+# @param override
+#   An optional string or Boolean to specify if you do not want an `<env-entry>` for the same parameter entry name to override the value
+#   specified here (set it to `false`). By default, overrides are allowed.
 #
-# Parameters:
-# - $ensure specifies whether you are trying to add or remove the
-#   parameter element. Valid values are 'true', 'false', 'present', and
-#   'absent'. Defaults to 'present'.
-# - $catalina_base is the base directory for the Tomcat installation.
-# - $parameter_name is the name of the parameter to be created, relative to
-#   the java:comp/env context.
-# - $type is the fully qualified Java class name expected by the web application
-#   for this parameter entry.
-# - $value that will be presented to the container.
-# - $description is an optional string for a human-readable description
-#   of this parameter entry.
-# - Set $override to false if you do not want a <parameter> for
-#   the same parameter entry name to override the value specified here.
 define tomcat::config::context::parameter (
-  Optional[String]                            $value = undef,
-  Variant[Enum['present', 'absent'], Boolean] $ensure        = 'present',
+  Optional[String]                            $value          = undef,
+  Variant[Enum['present', 'absent'], Boolean] $ensure         = 'present',
   Pattern[/^(\/[^\/ ]*)+\/?$/]                $catalina_base  = $::tomcat::catalina_home,
   String                                      $parameter_name = $name,
   Optional[String]                            $description    = undef,
@@ -42,8 +40,9 @@ define tomcat::config::context::parameter (
     $set_name  = "set ${base_path}/#attribute/name ${parameter_name}"
     $set_value = "set ${base_path}/#attribute/value ${value}"
 
-    if type($override) == Boolean {
-      $set_override = "set ${base_path}/#attribute/override ${override}"
+    if $override != undef {
+      $_override = bool2str($override)
+      $set_override = "set ${base_path}/#attribute/override ${_override}"
     } else {
       $set_override = "rm ${base_path}/#attribute/override"
     }

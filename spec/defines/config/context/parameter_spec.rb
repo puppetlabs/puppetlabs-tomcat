@@ -7,20 +7,23 @@ describe 'tomcat::config::context::parameter', type: :define do
   let :facts do
     {
       osfamily: 'Debian',
-      augeasversion: '1.0.0'
+      augeasversion: '1.0.0',
     }
   end
+
   let :title do
     'maxExemptions'
   end
+
   context 'Add Parameter' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         parameter_name: 'maxExemptions',
-        value: '10'
+        value: '10',
       }
     end
+
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens'    => 'Xml.lns',
@@ -30,7 +33,7 @@ describe 'tomcat::config::context::parameter', type: :define do
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/value 10',
           'rm Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/override',
           'rm Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/description',
-        ]
+        ],
       )
     }
   end
@@ -42,13 +45,14 @@ describe 'tomcat::config::context::parameter', type: :define do
         ensure: 'absent',
       }
     end
+
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens'    => 'Xml.lns',
         'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
           'rm Context/Parameter[#attribute/name=\'maxExemptions\']',
-        ]
+        ],
       )
     }
   end
@@ -60,6 +64,7 @@ describe 'tomcat::config::context::parameter', type: :define do
         value: '10',
       }
     end
+
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens'    => 'Xml.lns',
@@ -69,7 +74,7 @@ describe 'tomcat::config::context::parameter', type: :define do
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/value 10',
           'rm Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/override',
           'rm Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/description',
-        ]
+        ],
       )
     }
   end
@@ -82,6 +87,7 @@ describe 'tomcat::config::context::parameter', type: :define do
         override: true,
       }
     end
+
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens'    => 'Xml.lns',
@@ -91,7 +97,7 @@ describe 'tomcat::config::context::parameter', type: :define do
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/value 10',
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/override true',
           'rm Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/description',
-        ]
+        ],
       )
     }
   end
@@ -104,6 +110,7 @@ describe 'tomcat::config::context::parameter', type: :define do
         description: 'foo bar',
       }
     end
+
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens'    => 'Xml.lns',
@@ -113,7 +120,7 @@ describe 'tomcat::config::context::parameter', type: :define do
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/value 10',
           'rm Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/override',
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/description \'foo bar\'',
-        ]
+        ],
       )
     }
   end
