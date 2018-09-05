@@ -87,7 +87,8 @@ RSpec.configure do |c|
   # Configure all nodes in nodeset
   c.before :suite do
     hosts.each do |host|
-      on host, puppet('module', 'install', 'puppetlabs-java'), acceptable_exit_codes: [0, 1]
+      # Without the below '-v' and '-f' Java defaults to 1.3.0 due to an unknown dependency.
+      on host, puppet('module', 'install', 'puppetlabs-java -v 3.0.0 -f'), acceptable_exit_codes: [0, 1]
       on host, puppet('module', 'install', 'puppetlabs-gcc'), acceptable_exit_codes: [0, 1]
       if fact('osfamily') == 'RedHat'
         on host, 'yum install -y nss'
