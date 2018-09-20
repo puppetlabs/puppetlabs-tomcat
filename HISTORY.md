@@ -97,7 +97,7 @@ This release adds support for internationalization of the module. It also contai
 ### Fixed
 - (MODULES-4003) Adds a 'require => Tomcat::Install[$name]' to the ensure_resource function.
 - (MODULES-4003) Removes logic that checks to see if catalina_base and catalina_home are the same.
-- (MODULES-1986) Added newline to the inline template assigned to $_content.
+- (MODULES-1986) Added newline to the inline template assigned to $\_content.
 - (MODULES-3224) Added mode attribute to concat resource that sets the executable bit for all permission levels.
 - Fix for fixtures.yml, was pointing to nanliu-staging instead of puppet-staging.
 - Fix duplicate resources in host/realm/valve.
