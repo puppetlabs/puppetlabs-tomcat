@@ -87,8 +87,14 @@ RSpec.configure do |c|
   # Configure all nodes in nodeset
   c.before :suite do
     hosts.each do |host|
+      puppet_version = (on host, 'puppet --version').output.strip
       on host, puppet('module', 'install', 'puppetlabs-java'), acceptable_exit_codes: [0, 1]
       on host, puppet('module', 'install', 'puppetlabs-gcc'), acceptable_exit_codes: [0, 1]
+      if Gem::Version.new(puppet_version) == Gem::Version.new('6.0.0')
+        on host, puppet('module', 'install', 'puppetlabs-augeas_core'), acceptable_exit_codes: [0, 1]
+      elsif Gem::Version.new(puppet_version) > Gem::Version.new('6.0.0')
+        fail('We no longer need to install puppetlabs-augeas_core, please remove this from spec_helper_acceptance.') # rubocop:disable Style/SignalException
+      end
       if fact('osfamily') == 'RedHat'
         on host, 'yum install -y nss'
       end
