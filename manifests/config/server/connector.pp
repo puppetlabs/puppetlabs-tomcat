@@ -20,6 +20,8 @@
 #   Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file.
 # @param server_config
 #   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::connector (
   $catalina_base                             = undef,
@@ -31,6 +33,7 @@ define tomcat::config::server::connector (
   Array $attributes_to_remove                = [],
   Optional[Boolean] $purge_connectors        = undef,
   $server_config                             = undef,
+  Boolean $show_diff                         = true,
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -98,8 +101,9 @@ define tomcat::config::server::connector (
   }
 
   augeas { "server-${_catalina_base}-${parent_service}-connector-${port}":
-    lens    => 'Xml.lns',
-    incl    => $_server_config,
-    changes => $changes,
+    lens      => 'Xml.lns',
+    incl      => $_server_config,
+    changes   => $changes,
+    show_diff => $show_diff,
   }
 }

@@ -20,6 +20,8 @@
 #   Specifies any additional attributes to add to the Environment. Should be a hash of the format 'attribute' => 'value'.
 # @param attributes_to_remove
 #   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::context::environment (
   Enum['present','absent'] $ensure    = 'present',
@@ -31,6 +33,7 @@ define tomcat::config::context::environment (
   Optional[Boolean] $override         = undef,
   Hash $additional_attributes         = {},
   Array $attributes_to_remove         = [],
+  Boolean $show_diff                  = true,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -90,8 +93,9 @@ define tomcat::config::context::environment (
   }
 
   augeas { "context-${catalina_base}-environment-${name}":
-    lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/context.xml",
-    changes => $changes,
+    lens      => 'Xml.lns',
+    incl      => "${catalina_base}/conf/context.xml",
+    changes   => $changes,
+    show_diff => $show_diff,
   }
 }

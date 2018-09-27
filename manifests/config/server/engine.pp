@@ -26,6 +26,8 @@
 #   Specifies whether the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 # @param server_config
 #   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::engine (
   $default_host,
@@ -41,6 +43,7 @@ define tomcat::config::server::engine (
   $start_stop_threads                                         = undef,
   Enum['present','absent'] $start_stop_threads_ensure         = 'present',
   $server_config                                              = undef,
+  Boolean $show_diff                                          = true,
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -109,8 +112,9 @@ define tomcat::config::server::engine (
   ])
 
   augeas { "${_catalina_base}-${parent_service}-engine":
-    lens    => 'Xml.lns',
-    incl    => $_server_config,
-    changes => $changes,
+    lens      => 'Xml.lns',
+    incl      => $_server_config,
+    changes   => $changes,
+    show_diff => $show_diff,
   }
 }
