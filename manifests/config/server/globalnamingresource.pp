@@ -64,16 +64,16 @@ define tomcat::config::server::globalnamingresource (
       $set_additional_attributes,
       $rm_attributes_to_remove,
     ]))
-  }
 
-  # (MODULES-3353) This should use $set_name in $changes like
-  # t:config::context::resource and others instead of an additional augeas
-  # resource
-  augeas { "server-${catalina_base}-globalresource-${name}-definition":
-    lens    => 'Xml.lns',
-    incl    => $_server_config,
-    changes => "set ${base_path}/#attribute/name '${_resource_name}'",
-    before  => Augeas["server-${catalina_base}-globalresource-${name}"],
+    # (MODULES-3353) This should use $set_name in $changes like
+    # t:config::context::resource and others instead of an additional augeas
+    # resource
+    augeas { "server-${catalina_base}-globalresource-${name}-definition":
+      lens    => 'Xml.lns',
+      incl    => $_server_config,
+      changes => "set ${base_path}/#attribute/name '${_resource_name}'",
+      before  => Augeas["server-${catalina_base}-globalresource-${name}"],
+    }
   }
 
   augeas { "server-${catalina_base}-globalresource-${name}":
