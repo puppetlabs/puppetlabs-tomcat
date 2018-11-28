@@ -192,7 +192,7 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 
 ## Reference
 
-See [REFERENCE.md] for all Reference information.
+See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-tomcat/blob/master/REFERENCE.md)
 
 ## Limitations
 
