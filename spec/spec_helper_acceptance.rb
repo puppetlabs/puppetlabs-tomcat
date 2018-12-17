@@ -68,12 +68,8 @@ confine_8_array = [
   (fact('osfamily') == 'Suse'           &&  fact('operatingsystemmajrelease') == '11'),
 ]
 # puppetlabs-gcc doesn't work on Suse
-confine_gcc_array = [
-  (fact('osfamily') == 'Suse'           &&  fact('operatingsystemmajrelease') == '11'),
-  (fact('osfamily') == 'Suse'           &&  fact('operatingsystemmajrelease') == '12'),
-]
 SKIP_TOMCAT_8 = confine_8_array.any?
-SKIP_GCC = confine_gcc_array.any?
+SKIP_GCC = (fact('osfamily') == 'Suse')
 
 RSpec.configure do |c|
   c.filter_run focus: true
