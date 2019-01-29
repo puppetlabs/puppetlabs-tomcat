@@ -1,4 +1,4 @@
-# @summary Configure Parameter elements in $CATALINA_BASE/conf/context.xml
+# @summary Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
 #
 # @param ensure
 #   Specifies whether you are trying to add or remove the Parameter element Valid options: 'present', 'absent'. 
@@ -9,9 +9,9 @@
 # @param value
 #   The value that will be presented to the application when requested from the JNDI context.
 # @param description
-#   The description is an an optional string for a human-readable description of this parameter entry.
+#   The description is an an optional string for a human-readable description of this Parameter entry.
 # @param override
-#   An optional string or Boolean to specify if you do not want an `<env-entry>` for the same parameter entry name to override the value
+#   An optional string or Boolean to specify whether you want an `<env-entry>` for the same Parameter entry name to override the value
 #   specified here (set it to `false`). By default, overrides are allowed.
 #
 define tomcat::config::context::parameter (
