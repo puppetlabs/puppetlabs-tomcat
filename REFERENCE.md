@@ -14,7 +14,7 @@ _Public Defined types_
 * [`tomcat::config::context`](#tomcatconfigcontext): Configure attributes for the Context element in $CATALINA_BASE/conf/context.xml
 * [`tomcat::config::context::environment`](#tomcatconfigcontextenvironment): Configure Environment elements in $CATALINA_BASE/conf/context.xml
 * [`tomcat::config::context::manager`](#tomcatconfigcontextmanager): Configure Manager elements in $CATALINA_BASE/conf/context.xml
-* [`tomcat::config::context::parameter`](#tomcatconfigcontextparameter): Configure Parameter elements in $CATALINA_BASE/conf/context.xml
+* [`tomcat::config::context::parameter`](#tomcatconfigcontextparameter): Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
 * [`tomcat::config::context::resource`](#tomcatconfigcontextresource): Configure Resource elements in $CATALINA_BASE/conf/context.xml
 * [`tomcat::config::context::resourcelink`](#tomcatconfigcontextresourcelink): Configure a ResourceLink element in the designated xml config.
 * [`tomcat::config::context::valve`](#tomcatconfigcontextvalve): Specifies Valve elements in `${catalina_base}/conf/context.xml`
@@ -298,7 +298,7 @@ Default value: []
 
 ### tomcat::config::context::parameter
 
-Configure Parameter elements in $CATALINA_BASE/conf/context.xml
+Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
 
 #### Parameters
 
@@ -340,7 +340,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-The description is an an optional string for a human-readable description of this parameter entry.
+The description is an an optional string for a human-readable description of this Parameter entry.
 
 Default value: `undef`
 
@@ -348,7 +348,7 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-An optional string or Boolean to specify if you do not want an `<env-entry>` for the same parameter entry name to override the value
+An optional string or Boolean to specify whether you want an `<env-entry>` for the same Parameter entry name to override the value
 specified here (set it to `false`). By default, overrides are allowed.
 
 Default value: `undef`
