@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [2.5.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/2.5.0) (2019-01-29)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.4.0...2.5.0)
+
+### Added
+
+- \(MODULES-8147\) - Add SLES 15 support [\#328](https://github.com/puppetlabs/puppetlabs-tomcat/pull/328) ([eimlav](https://github.com/eimlav))
+- Add context parameter type \(re-submit \#205\) [\#317](https://github.com/puppetlabs/puppetlabs-tomcat/pull/317) ([joshbeard](https://github.com/joshbeard))
+
+### Fixed
+
+- \(maint\) - Ubuntu 18.04 issues fix [\#333](https://github.com/puppetlabs/puppetlabs-tomcat/pull/333) ([david22swan](https://github.com/david22swan))
+- pdksync - \(FM-7655\) Fix rubygems-update for ruby \< 2.3 [\#330](https://github.com/puppetlabs/puppetlabs-tomcat/pull/330) ([tphoney](https://github.com/tphoney))
+- \[MODULES-7547\] Update globalnamingresource class, and add tests [\#305](https://github.com/puppetlabs/puppetlabs-tomcat/pull/305) ([jplindquist](https://github.com/jplindquist))
+
 ## [2.4.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/2.4.0) (2018-10-03)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.3.0...2.4.0)

@@ -14,6 +14,7 @@ _Public Defined types_
 * [`tomcat::config::context`](#tomcatconfigcontext): Configure attributes for the Context element in $CATALINA_BASE/conf/context.xml
 * [`tomcat::config::context::environment`](#tomcatconfigcontextenvironment): Configure Environment elements in $CATALINA_BASE/conf/context.xml
 * [`tomcat::config::context::manager`](#tomcatconfigcontextmanager): Configure Manager elements in $CATALINA_BASE/conf/context.xml
+* [`tomcat::config::context::parameter`](#tomcatconfigcontextparameter): Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
 * [`tomcat::config::context::resource`](#tomcatconfigcontextresource): Configure Resource elements in $CATALINA_BASE/conf/context.xml
 * [`tomcat::config::context::resourcelink`](#tomcatconfigcontextresourcelink): Configure a ResourceLink element in the designated xml config.
 * [`tomcat::config::context::valve`](#tomcatconfigcontextvalve): Specifies Valve elements in `${catalina_base}/conf/context.xml`
@@ -294,6 +295,63 @@ Data type: `Array`
 Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
 
 Default value: []
+
+### tomcat::config::context::parameter
+
+Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
+
+#### Parameters
+
+The following parameters are available in the `tomcat::config::context::parameter` defined type.
+
+##### `ensure`
+
+Data type: `Variant[Enum['present', 'absent'], Boolean]`
+
+Specifies whether you are trying to add or remove the Parameter element Valid options: 'present', 'absent'.
+
+Default value: 'present'
+
+##### `catalina_base`
+
+Data type: `Pattern[/^(\/[^\/ ]*)+\/?$/]`
+
+Specifies the root of the Tomcat installation.
+
+Default value: $::tomcat::catalina_home
+
+##### `parameter_name`
+
+Data type: `String`
+
+The name of the Parameter entry to be created, relative to the `java:comp/env` context. `$name`.
+
+Default value: $name
+
+##### `value`
+
+Data type: `Optional[String]`
+
+The value that will be presented to the application when requested from the JNDI context.
+
+Default value: `undef`
+
+##### `description`
+
+Data type: `Optional[String]`
+
+The description is an an optional string for a human-readable description of this Parameter entry.
+
+Default value: `undef`
+
+##### `override`
+
+Data type: `Optional[Boolean]`
+
+An optional string or Boolean to specify whether you want an `<env-entry>` for the same Parameter entry name to override the value
+specified here (set it to `false`). By default, overrides are allowed.
+
+Default value: `undef`
 
 ### tomcat::config::context::resource
 
