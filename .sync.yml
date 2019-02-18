@@ -1,4 +1,7 @@
 ---
+.gitlab-ci.yml:
+  unmanaged: true
+
 .travis.yml:
   docker_sets:
     - set: docker/centos-7
@@ -8,6 +11,9 @@
   secure: ""
   branches:
     - release
+
+appveyor.yml:
+  delete: true
 
 Gemfile:
   required:
@@ -28,8 +34,6 @@ Gemfile:
         ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018'
         condition: "Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')"
 
-appveyor.yml:
-  delete: true
-
-.gitlab-ci.yml:
-  unmanaged: true
+spec/spec_helper.rb:
+  mock_with: ':rspec'
+  coverage_report: true
