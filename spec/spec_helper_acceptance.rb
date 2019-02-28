@@ -29,7 +29,7 @@ end
 def latest_daemon_version(tomcat_version)
   require 'net/http'
   build_value = tomcat_version.match(%r{(\d+)\.(\d+)\.(\d+)})
-  uri = "http://svn.apache.org/repos/asf/tomcat/tc#{build_value[1]}.#{build_value[2]}.x/tags/TOMCAT_#{build_value[1]}_#{build_value[2]}_#{build_value[3]}/build.properties.default"
+  uri = "http://svn.apache.org/repos/asf/tomcat/archive/tc#{build_value[1]}.#{build_value[2]}.x/tags/TOMCAT_#{build_value[1]}_#{build_value[2]}_#{build_value[3]}/build.properties.default"
   page = Net::HTTP.get(URI(uri))
   latest_version = page.match(%r{(?:commons-daemon.version=)(\d.\d.\d)})[1]
   latest_version
