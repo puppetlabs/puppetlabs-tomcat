@@ -150,8 +150,7 @@ describe 'Two different installations with two instances each of Tomcat 7 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      idempotent_apply(default, pp, {})
     end
     # test the war
     it 'tomcat7-first should have war deployed by default', retry: 5, retry_wait: 10 do

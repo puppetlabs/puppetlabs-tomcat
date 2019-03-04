@@ -111,7 +111,7 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
       }
     MANIFEST
     it 'is idempotent' do
-      apply_manifest(pp_two, catch_changes: true)
+      idempotent_apply(default, pp_two, {})
     end
   end
 end

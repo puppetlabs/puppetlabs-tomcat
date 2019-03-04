@@ -116,8 +116,7 @@ describe 'Acceptance case one', unless: stop_test do
           value => $java_home,
         }
       MANIFEST
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      idempotent_apply(default, pp, {})
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
       shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
