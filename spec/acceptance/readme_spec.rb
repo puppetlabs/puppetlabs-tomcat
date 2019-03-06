@@ -8,7 +8,6 @@ confine_array = [
   (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '18.04'),
   (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
   (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '8'),
-  fact('osfamily') == 'Suse',
 ]
 
 stop_test = false
@@ -32,8 +31,7 @@ describe 'README examples', unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      idempotent_apply(default, pp, {})
       shell('sleep 15')
     end
     it 'has the server running on port 8080' do

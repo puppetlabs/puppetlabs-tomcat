@@ -54,8 +54,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      idempotent_apply(default, pp, {})
     end
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
       shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
