@@ -23,7 +23,7 @@ default_fact_files.each do |f|
   next unless File.exist?(f) && File.readable?(f) && File.size?(f)
 
   begin
-    default_facts.merge!(YAML.safe_load(File.read(f)))
+    default_facts.merge!(YAML.safe_load(File.read(f), [], [], true))
   rescue => e
     RSpec.configuration.reporter.message "WARNING: Unable to load #{f}: #{e}"
   end
@@ -46,35 +46,6 @@ def ensure_module_defined(module_name)
   module_name.split('::').reduce(Object) do |last_module, next_module|
     last_module.const_set(next_module, Module.new) unless last_module.const_defined?(next_module, false)
     last_module.const_get(next_module, false)
-  end
-end
-
-if ENV['COVERAGE'] == 'yes'
-  require 'simplecov'
-  require 'simplecov-console'
-  require 'codecov'
-
-  SimpleCov.formatters = [
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::Console,
-    SimpleCov::Formatter::Codecov,
-  ]
-  SimpleCov.start do
-    track_files 'lib/**/*.rb'
-
-    add_filter '/spec'
-
-    # do not track vendored files
-    add_filter '/vendor'
-    add_filter '/.vendor'
-
-    # do not track gitignored files
-    # this adds about 4 seconds to the coverage check
-    # this could definitely be optimized
-    add_filter do |f|
-      # system returns true if exit status is 0, which with git-check-ignore means file is ignored
-      system("git check-ignore --quiet #{f.filename}")
-    end
   end
 end
 
