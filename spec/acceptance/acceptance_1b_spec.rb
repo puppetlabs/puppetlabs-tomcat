@@ -39,27 +39,27 @@ describe 'Acceptance case one', unless: stop_test do
             cleanup      => false,
             path         => "/opt/apache-tomcat/bin/commons-daemon-native.tar.gz",
             extract_path => "/opt/apache-tomcat/bin",
-            creates      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src",
+            creates      => "/opt/apache-tomcat/bin/commons-daemon-1.1.0-native-src",
           }
           -> exec { 'configure jsvc':
             command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",
-            creates  => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix/Makefile",
-            cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix",
-            path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix",
+            creates  => "/opt/apache-tomcat/bin/commons-daemon-1.1.0-native-src/unix/Makefile",
+            cwd      => "/opt/apache-tomcat/bin/commons-daemon-1.1.0-native-src/unix",
+            path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-1.1.0-native-src/unix",
             require  => [ Class['gcc'], Class['java'] ],
             provider => shell,
           }
           -> exec { 'make jsvc':
             command  => 'make',
-            creates  => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix/jsvc",
-            cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix",
-            path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix",
+            creates  => "/opt/apache-tomcat/bin/commons-daemon-1.1.0-native-src/unix/jsvc",
+            cwd      => "/opt/apache-tomcat/bin/commons-daemon-1.1.0-native-src/unix",
+            path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-1.1.0-native-src/unix",
             provider => shell,
           }
           -> file { 'jsvc':
             ensure => link,
             path   => "/opt/apache-tomcat/bin/jsvc",
-            target => "/opt/apache-tomcat/bin/commons-daemon-#{LATEST_DAEMON_8}-native-src/unix/jsvc",
+            target => "/opt/apache-tomcat/bin/commons-daemon-1.1.0-native-src/unix/jsvc",
           }
         }
 
@@ -187,7 +187,7 @@ describe 'Acceptance case one', unless: stop_test do
     end
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
       shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
-        r.stdout.should eq('')
+        r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
       end
     end
   end
