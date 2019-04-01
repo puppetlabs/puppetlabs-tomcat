@@ -58,7 +58,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     end
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
       shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
-        r.stdout.should eq('')
+        r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
       end
     end
     it 'is serving a JSP page from the war', retry: 5, retry_wait: 10 do
@@ -97,7 +97,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     end
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
       shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
-        r.stdout.should eq('')
+        r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
       end
     end
   end
@@ -115,7 +115,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     end
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
       shell('curl --retry 10 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp', acceptable_exit_codes: 0) do |r|
-        r.stdout.should eq('')
+        r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
       end
     end
   end
