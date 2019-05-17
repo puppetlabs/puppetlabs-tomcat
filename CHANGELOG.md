@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v3.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v3.0.0) (2019-05-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.5.0...v3.0.0)
+
+### Changed
+
+- pdksync - \(MODULES-8444\) - Raise lower Puppet bound [\#347](https://github.com/puppetlabs/puppetlabs-tomcat/pull/347) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- \(MODULES-8817\) - Update to account for loss of SVN Tomcat archive [\#344](https://github.com/puppetlabs/puppetlabs-tomcat/pull/344) ([david22swan](https://github.com/david22swan))
+
 ## [2.5.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/2.5.0) (2019-01-29)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.4.0...2.5.0)
