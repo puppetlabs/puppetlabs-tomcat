@@ -16,6 +16,8 @@
 #   Designates a command that shuts down Tomcat when the command is received through the specified address and port. Maps to the [shutdown XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string.
 # @param server_config
 #   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server (
   $catalina_base                              = undef,
@@ -26,6 +28,7 @@ define tomcat::config::server (
   $port                                       = undef,
   $shutdown                                   = undef,
   $server_config                              = undef,
+  Boolean $show_diff                          = true,
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -73,9 +76,10 @@ define tomcat::config::server (
 
   if ! empty($changes) {
     augeas { "server-${_catalina_base}":
-      lens    => 'Xml.lns',
-      incl    => $_server_config,
-      changes => $changes,
+      lens      => 'Xml.lns',
+      incl      => $_server_config,
+      changes   => $changes,
+      show_diff => $show_diff,
     }
   }
 }

@@ -20,6 +20,8 @@
 #   Specifies a password for user elements. Valid options: a string.
 # @param roles
 #   Specifies one or more roles. Only valid if `element` is set to 'role' or 'user'. Valid options: an array of strings.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::tomcat_users (
   $catalina_base                   = $::tomcat::catalina_home,
@@ -32,6 +34,7 @@ define tomcat::config::server::tomcat_users (
   $group                           = undef,
   $password                        = undef,
   Array $roles                     = [],
+  Boolean $show_diff               = true,
 ) {
 
   if versioncmp($::augeasversion, '1.0.0') < 0 {
@@ -98,9 +101,10 @@ define tomcat::config::server::tomcat_users (
   $changes = delete_undef_values([$remove_entry, $add_entry, $add_password, $add_roles])
 
   augeas { "${catalina_base}-tomcat_users-${element}-${_element_name}-${name}":
-    lens    => 'Xml.lns',
-    incl    => $_file,
-    changes => $changes,
+    lens      => 'Xml.lns',
+    incl      => $_file,
+    changes   => $changes,
+    show_diff => $show_diff,
   }
 
 }

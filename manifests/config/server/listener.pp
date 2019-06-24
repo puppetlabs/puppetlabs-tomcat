@@ -18,6 +18,8 @@
 #   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
 # @param server_config
 #   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::listener (
   $catalina_base                            = $::tomcat::catalina_home,
@@ -29,6 +31,7 @@ define tomcat::config::server::listener (
   Hash $additional_attributes               = {},
   Array $attributes_to_remove               = [],
   $server_config                            = undef,
+  Boolean $show_diff                        = true,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -89,8 +92,9 @@ define tomcat::config::server::listener (
   }
 
   augeas { "${catalina_base}-${_parent_service}-${parent_engine}-${parent_host}-listener-${name}":
-    lens    => 'Xml.lns',
-    incl    => $_server_config,
-    changes => $augeaschanges,
+    lens      => 'Xml.lns',
+    incl      => $_server_config,
+    changes   => $augeaschanges,
+    show_diff => $show_diff,
   }
 }

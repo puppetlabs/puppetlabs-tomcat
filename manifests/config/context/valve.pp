@@ -14,6 +14,8 @@
 #   Specifies any further attributes to add to the Valve. Valid options: a hash of '< attribute >' => '< value >' pairs. `{}`.
 # @param attributes_to_remove
 #   Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::context::valve (
   Enum['present','absent'] $ensure = 'present',
@@ -22,6 +24,7 @@ define tomcat::config::context::valve (
   $catalina_base                   = $::tomcat::catalina_home,
   Hash $additional_attributes      = {},
   Array $attributes_to_remove      = [],
+  Boolean $show_diff               = true,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -67,8 +70,9 @@ define tomcat::config::context::valve (
   }
 
   augeas { "context-${catalina_base}-valve-${name}":
-    lens    => 'Xml.lns',
-    incl    => "${catalina_base}/conf/context.xml",
-    changes => $changes,
+    lens      => 'Xml.lns',
+    incl      => "${catalina_base}/conf/context.xml",
+    changes   => $changes,
+    show_diff => $show_diff,
   }
 }

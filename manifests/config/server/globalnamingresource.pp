@@ -14,6 +14,8 @@
 #   Specifies an array of attributes to remove from the element. Valid options: an array of strings.
 # @param server_config
 #   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::globalnamingresource (
   $catalina_base                   = $::tomcat::catalina_home,
@@ -23,6 +25,7 @@ define tomcat::config::server::globalnamingresource (
   Hash $additional_attributes      = {},
   Array $attributes_to_remove      = [],
   $server_config                   = undef,
+  Boolean $show_diff               = true,
 ) {
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
@@ -69,16 +72,18 @@ define tomcat::config::server::globalnamingresource (
     # t:config::context::resource and others instead of an additional augeas
     # resource
     augeas { "server-${catalina_base}-globalresource-${name}-definition":
-      lens    => 'Xml.lns',
-      incl    => $_server_config,
-      changes => "set ${base_path}/#attribute/name '${_resource_name}'",
-      before  => Augeas["server-${catalina_base}-globalresource-${name}"],
+      lens      => 'Xml.lns',
+      incl      => $_server_config,
+      changes   => "set ${base_path}/#attribute/name '${_resource_name}'",
+      before    => Augeas["server-${catalina_base}-globalresource-${name}"],
+      show_diff => $show_diff,
     }
   }
 
   augeas { "server-${catalina_base}-globalresource-${name}":
-    lens    => 'Xml.lns',
-    incl    => $_server_config,
-    changes => $changes,
+    lens      => 'Xml.lns',
+    incl      => $_server_config,
+    changes   => $changes,
+    show_diff => $show_diff,
   }
 }

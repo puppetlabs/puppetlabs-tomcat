@@ -10,6 +10,8 @@
 #   Specifies whether the [Service element](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Introduction) should exist in the configuration file.
 # @param server_config
 #   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::service (
   $catalina_base                              = undef,
@@ -17,6 +19,7 @@ define tomcat::config::server::service (
   Enum['present','absent'] $class_name_ensure = 'present',
   Enum['present','absent'] $service_ensure    = 'present',
   $server_config                              = undef,
+  Boolean $show_diff                          = true,
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -48,9 +51,10 @@ define tomcat::config::server::service (
 
   if ! empty($changes) {
     augeas { "server-${_catalina_base}-service-${name}":
-      lens    => 'Xml.lns',
-      incl    => $_server_config,
-      changes => $changes,
+      lens      => 'Xml.lns',
+      incl      => $_server_config,
+      changes   => $changes,
+      show_diff => $show_diff,
     }
   }
 }

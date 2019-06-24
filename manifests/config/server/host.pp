@@ -18,6 +18,8 @@
 #   Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 # @param aliases
 #   Optional array that specifies the list of [Host Name Aliases](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Host_Name_Aliases) for this particular Host.  If omitted, any currently-defined Aliases will not be altered.  If present, the list Aliases  will be set to exactly match the contents of this array.  Thus, for example, an empty array can be used to explicitly force there to be no Aliases for the Host.
+# @param show_diff
+#   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::host (
   $app_base                                     = undef,
@@ -29,6 +31,7 @@ define tomcat::config::server::host (
   Array $attributes_to_remove                   = [],
   Optional[String] $server_config               = undef,
   Optional[Array] $aliases                      = undef,
+  Boolean $show_diff                            = true,
 ) {
   include ::tomcat
   $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
@@ -92,8 +95,9 @@ define tomcat::config::server::host (
   }
 
   augeas { "${_catalina_base}-${parent_service}-host-${name}":
-    lens    => 'Xml.lns',
-    incl    => $_server_config,
-    changes => $changes,
+    lens      => 'Xml.lns',
+    incl      => $_server_config,
+    changes   => $changes,
+    show_diff => $show_diff,
   }
 }
