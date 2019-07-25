@@ -1,16 +1,16 @@
 require 'spec_helper_acceptance'
 
-stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| fact('osfamily') == up } || SKIP_TOMCAT_8)
+stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| os[:family] == up } || SKIP_TOMCAT_8)
 
 describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
   after :all do
-    shell('pkill -f tomcat', acceptable_exit_codes: [0, 1])
-    shell('rm -rf /opt/tomcat*', acceptable_exit_codes: [0, 1])
-    shell('rm -rf /opt/apache-tomcat*', acceptable_exit_codes: [0, 1])
+    run_shell('pkill -f tomcat', expect_failures: true)
+    run_shell('rm -rf /opt/tomcat*', expect_failures: true)
+    run_shell('rm -rf /opt/apache-tomcat*', expect_failures: true)
   end
 
   before :all do
-    shell("curl --retry 10 --retry-delay 15 -k -o /tmp/sample.war '#{SAMPLE_WAR}'", acceptable_exit_codes: 0)
+    run_shell("curl --retry 10 --retry-delay 15 -k -o /tmp/sample.war '#{SAMPLE_WAR}'")
   end
 
   context 'Initial install Tomcat and verification' do
@@ -54,15 +54,15 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      idempotent_apply(default, pp, {})
+      idempotent_apply(pp)
     end
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
+      run_shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
         r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
       end
     end
     it 'is serving a JSP page from the war', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp') do |r|
+      run_shell('curl --retry 10 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp') do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
@@ -80,7 +80,9 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is not serving a page on port 8180', retry: 5, retry_wait: 10 do
-      shell('curl localhost:8180', acceptable_exit_codes: 7)
+      run_shell('curl localhost:8180', expect_failures: true) do |r|
+        expect(r.exit_code).to eq 7
+      end
     end
   end
 
@@ -96,7 +98,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
+      run_shell('curl --retry 10 --retry-delay 15 localhost:8180') do |r|
         r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
       end
     end
@@ -114,7 +116,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp', acceptable_exit_codes: 0) do |r|
+      run_shell('curl --retry 10 --retry-delay 15 localhost:8180/tomcat8-sample/hello.jsp') do |r|
         r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
       end
     end
@@ -137,7 +139,9 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is not able to serve pages over port 8180', retry: 5, retry_wait: 10 do
-      shell('curl localhost:8180', acceptable_exit_codes: 7)
+      run_shell('curl localhost:8180', expect_failures: true) do |r|
+        expect(r.exit_code).to eq 7
+      end
     end
   end
 
@@ -155,7 +159,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'shoud have a service named FooBar and a class names FooBar' do
-      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         r.stdout.should match(%r{<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><\/Service>})
       end
     end
@@ -172,7 +176,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'has changed the conf.xml file' do
-      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         r.stdout.should match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve"><\/Valve>})
       end
     end
@@ -190,7 +194,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'has changed the conf.xml file' do
-      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         r.stdout.should_not match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve"><\/Valve>})
       end
     end
@@ -212,7 +216,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     it 'has changed the conf.xml file #5' do
       # validation
       v = '<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><Engine name="org.apache.catalina.core.StandardEngine" defaultHost="localhost" backgroundProcessorDelay="5" startStopThreads="3"><\/Engine>' # rubocop:disable Metrics/LineLength
-      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         r.stdout.should match(%r{#{v}})
       end
     end
@@ -231,7 +235,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     it 'has changed the conf.xml file #999' do
       # validation
       v = '<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><Engine name="org.apache.catalina.core.StandardEngine" defaultHost="localhost" backgroundProcessorDelay="999" startStopThreads="555"><\/Engine>' # rubocop:disable Metrics/LineLength
-      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         r.stdout.should match(%r{#{v}})
       end
     end
@@ -255,7 +259,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     # validation
     matches = ['<Host name="hulk-smash".*appBase="/opt/apache-tomcat8/tomcat8/webapps".*></Host>', '<Host name="hulk-smash".*astrological_sign="scorpio".*></Host>', '<Host name="hulk-smash".*favorite-beer="PBR".*></Host>'] # rubocop:disable Metrics/LineLength
     it 'has changed the conf.xml file #joined' do
-      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         matches.each do |m|
           r.stdout.should match(%r{#{m}})
         end
@@ -280,7 +284,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     it 'has changed the conf.xml file #seperated' do
       # validation
       v = '<Host name="hulk-smash" appBase="/opt/apache-tomcat8/tomcat8/webapps" astrological_sign="scorpio"><\/Host>'
-      shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         r.stdout.should match(%r{#{v}})
       end
     end
@@ -297,7 +301,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'has changed the context.xml file' do
-      shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
         r.stdout.should match(%r{<Environment name="testEnvVar" type="java.lang.String" value="a value with a space"><\/Environment>})
       end
     end

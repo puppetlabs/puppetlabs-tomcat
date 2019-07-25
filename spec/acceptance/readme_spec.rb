@@ -1,23 +1,13 @@
 require 'spec_helper_acceptance'
 
-# fact based two stage confine
-
-# confine array
-confine_array = [
-  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '16.04'),
-  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '18.04'),
-  (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
-  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '8'),
-]
-
 stop_test = false
-stop_test = true if UNSUPPORTED_PLATFORMS.any? { |up| fact('osfamily') == up } || confine_array.any?
+stop_test = true if UNSUPPORTED_PLATFORMS.any? { |up| os[:family] == up }
 
 describe 'README examples', unless: stop_test do
   after :all do
-    shell('pkill -f tomcat', acceptable_exit_codes: [0, 1])
-    shell('rm -rf /opt/tomcat*', acceptable_exit_codes: [0, 1])
-    shell('rm -rf /opt/apache-tomcat*', acceptable_exit_codes: [0, 1])
+    run_shell('pkill -f tomcat', expect_failures: true)
+    run_shell('rm -rf /opt/tomcat*', expect_failures: true)
+    run_shell('rm -rf /opt/apache-tomcat*', expect_failures: true)
   end
 
   context 'Beginning with Tomcat' do
@@ -31,11 +21,11 @@ describe 'README examples', unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      idempotent_apply(default, pp, {})
-      shell('sleep 15')
+      idempotent_apply(pp)
+      run_shell('sleep 15')
     end
     it 'has the server running on port 8080' do
-      shell('curl localhost:8080', acceptable_exit_codes: 0) do |r|
+      run_shell('curl localhost:8080') do |r|
         r.stdout.should match(%r{Apache Tomcat})
       end
     end
@@ -100,10 +90,12 @@ describe 'README examples', unless: stop_test do
     MANIFEST
     it 'applies the manifest without error' do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
-      shell('sleep 15')
+      run_shell('sleep 15')
     end
     it 'is not serving a page on port 80' do
-      shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 7)
+      run_shell('curl localhost:80/war_one/hello.jsp', expect_failures: true) do |r|
+        expect(r.exit_code).to eq 7
+      end
     end
   end
 end
