@@ -61,8 +61,14 @@ UNSUPPORTED_PLATFORMS = ['windows', 'solaris', 'darwin'].freeze
 # Tomcat 7 needs java 1.6 or newer
 SKIP_TOMCAT_7 = false
 
+confine_8_array = [
+  (os[:family] =~ %r{debian|ubuntu}     &&  (os[:release] == '16.04' || os[:release] == '8')),
+  (os[:family] =~ %r{redhat}            &&  os[:release] =~ %r{5}),
+  (os[:family] =~ %r{suse}              &&  os[:release] =~ %r{11}),
+]
+
 # Tomcat 8 needs java 1.7 or newer
-SKIP_TOMCAT_8 = false
+SKIP_TOMCAT_8 = confine_8_array.any?
 
 # puppetlabs-gcc doesn't work on Suse
 SKIP_GCC = (os[:family] == 'suse')

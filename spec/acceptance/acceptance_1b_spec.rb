@@ -13,7 +13,7 @@ describe 'Acceptance case one', unless: stop_test do
     if os[:family] =~ %r{debian|ubuntu}
       if os[:release] == '18.04'
         '"/usr/lib/jvm/java-11-openjdk-${::architecture}"'
-      elsif os[:release] == '16.04' || os[:release] == '9'
+      elsif os[:release] == '16.04' || os[:release] =~ %r{9}
         '"/usr/lib/jvm/java-8-openjdk-${::architecture}"'
       else
         '"/usr/lib/jvm/java-7-openjdk-${::architecture}"'

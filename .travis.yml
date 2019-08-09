@@ -68,10 +68,24 @@ matrix:
     -
       bundler_args:
       dist: trusty
-      env: PLATFORMS=el7_puppet6
+      env: PLATFORMS=centos7_puppet6
       rvm: 2.5.1
       before_script:
-      - bundle exec rake 'litmus:provision_list[travis_el7]'
+      - bundle exec rake 'litmus:provision_list[travis_centos7]'
+      - bundle exec rake 'litmus:install_agent'
+      - bundle exec rake litmus:install_module
+      script:
+      - bundle exec rake litmus:acceptance:parallel
+      services: docker
+      sudo: required
+      stage: acceptance
+    -
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=oraclelinux7_puppet6
+      rvm: 2.5.1
+      before_script:
+      - bundle exec rake 'litmus:provision_list[travis_oracle7]'
       - bundle exec rake 'litmus:install_agent'
       - bundle exec rake litmus:install_module
       script:

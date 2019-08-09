@@ -8,6 +8,12 @@ travis_ubuntu:
 travis_debian:
   provisioner: docker
   images: ['waffleimage/debian8']
-travis_el7:
+travis_centos7:
   provisioner: docker
   images: ['waffleimage/centos7']
+travis_oracle7:
+  provisioner: docker
+  images: ['waffleimage/oraclelinux7']
+release_checks:
+  provisioner: vmpooler
+  images: ['redhat-6-x86_64', 'redhat-7-x86_64', 'centos-6-x86_64', 'centos-7-x86_64', 'oracle-6-x86_64', 'scientific-6-x86_64', 'scientific-7-x86_64', 'debian-8-x86_64', 'debian-9-x86_64',  'ubuntu-1404-x86_64', 'ubuntu-1604-x86_64', 'ubuntu-1804-x86_64']
