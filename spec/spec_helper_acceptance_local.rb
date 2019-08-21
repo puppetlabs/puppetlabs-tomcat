@@ -14,7 +14,7 @@ RSpec.configure do |c|
     run_shell('puppet module install puppetlabs-java')
     if os[:family] == 'redhat'
       run_shell('yum update -y')
-      run_shell('yum install -y crontabs tar wget openssl sysvinit-tools iproute which initscripts nss')
+      run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss')
     elsif os[:family] == 'ubuntu'
       run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
       run_shell('apt-get update && apt-get install -y net-tools wget && locale-gen en_US.UTF-8', expect_failures: true)
