@@ -13,6 +13,25 @@ RSpec.configure do |c|
     run_shell('puppet module install puppetlabs-gcc')
     run_shell('puppet module install puppetlabs-java')
     if os[:family] == 'redhat'
+      run_shell('puppet module install stahnma/epel')
+      pp = <<-PUPPETCODE
+      # needed by tests
+      package { 'curl':
+        ensure   => 'latest',
+      }
+      if $::osfamily == 'RedHat' {
+        if $::operatingsystemmajrelease == '5' {
+          class { 'epel':
+            epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
+            epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
+          }
+        } else {
+          class { 'epel': }
+        }
+      }
+      PUPPETCODE
+      apply_manifest(pp)
+
       run_shell('yum update -y')
       run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss')
     elsif os[:family] == 'ubuntu'
@@ -60,15 +79,3 @@ UNSUPPORTED_PLATFORMS = ['windows', 'solaris', 'darwin'].freeze
 
 # Tomcat 7 needs java 1.6 or newer
 SKIP_TOMCAT_7 = false
-
-confine_8_array = [
-  (os[:family] =~ %r{debian|ubuntu}     &&  (os[:release] == '16.04' || os[:release] == '8')),
-  (os[:family] =~ %r{redhat}            &&  os[:release] =~ %r{5}),
-  (os[:family] =~ %r{suse}              &&  os[:release] =~ %r{11}),
-]
-
-# Tomcat 8 needs java 1.7 or newer
-SKIP_TOMCAT_8 = confine_8_array.any?
-
-# puppetlabs-gcc doesn't work on Suse
-SKIP_GCC = (os[:family] == 'suse')

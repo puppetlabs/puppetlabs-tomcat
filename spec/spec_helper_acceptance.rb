@@ -57,3 +57,14 @@ else
     Specinfra.configuration.winrm = winrm
   end
 end
+
+confine_8_array = [
+  (os[:family] =~ %r{redhat}            &&  os[:release] =~ %r{5}),
+  (os[:family] =~ %r{suse}              &&  os[:release] =~ %r{11}),
+]
+
+# Tomcat 8 needs java 1.7 or newer
+SKIP_TOMCAT_8 = confine_8_array.any?
+
+# puppetlabs-gcc doesn't work on Suse
+SKIP_GCC = (os[:family] == 'suse')
