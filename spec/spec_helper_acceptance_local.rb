@@ -65,7 +65,9 @@ TOMCAT7_RECENT_VERSION = ENV['TOMCAT7_RECENT_VERSION'] || latest7
 TOMCAT7_RECENT_SOURCE = latest7
 puts "TOMCAT7_RECENT_SOURCE is #{TOMCAT7_RECENT_SOURCE.inspect}"
 TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
-TOMCAT8_RECENT_SOURCE = latest8
+# TOMCAT8_RECENT_SOURCE = latest8
+# TODO: Uncomment for latest version when 8.5.45 dependencies are fixed
+TOMCAT8_RECENT_SOURCE = 'http://apache.javapipe.com/tomcat/tomcat-8/v8.5.43/bin/apache-tomcat-8.5.43.tar.gz'.freeze
 puts "TOMCAT8_RECENT_SOURCE is #{TOMCAT8_RECENT_SOURCE.inspect}"
 TOMCAT9_RECENT_VERSION = ENV['TOMCAT9_RECENT_VERSION'] || latest9
 TOMCAT9_RECENT_SOURCE = latest9
