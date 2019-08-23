@@ -58,6 +58,7 @@ def latest_tomcat_tarball_url(version)
 end
 
 latest7 = latest_tomcat_tarball_url('7')
+# TODO: Using 8.5.39 until 8.5.45 is replaced
 # latest8 = latest_tomcat_tarball_url('8')
 latest9 = latest_tomcat_tarball_url('9')
 
