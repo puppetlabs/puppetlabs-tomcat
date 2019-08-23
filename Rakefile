@@ -4,7 +4,6 @@ require 'puppet-syntax/tasks/puppet-syntax'
 require 'puppet_blacksmith/rake_tasks' if Bundler.rubygems.find_name('puppet-blacksmith').any?
 require 'github_changelog_generator/task' if Bundler.rubygems.find_name('github_changelog_generator').any?
 require 'puppet-strings/tasks' if Bundler.rubygems.find_name('puppet-strings').any?
-require 'puppet_litmus/rake_tasks' if Bundler.rubygems.find_name('puppet-litmus').any?
 
 def changelog_user
   return unless Rake.application.top_level_tasks.include? "changelog"
@@ -16,8 +15,17 @@ end
 
 def changelog_project
   return unless Rake.application.top_level_tasks.include? "changelog"
-  returnVal = nil || JSON.load(File.read('metadata.json'))['source'].match(%r{.*/([^/]*)})[1]
-  raise "unable to find the changelog_project in .sync.yml or the name in metadata.json" if returnVal.nil?
+
+  returnVal = nil
+  returnVal ||= begin
+    metadata_source = JSON.load(File.read('metadata.json'))['source']
+    metadata_source_match = metadata_source && metadata_source.match(%r{.*\/([^\/]*?)(?:\.git)?\Z})
+
+    metadata_source_match && metadata_source_match[1]
+  end
+
+  raise "unable to find the changelog_project in .sync.yml or calculate it from the source in metadata.json" if returnVal.nil?
+
   puts "GitHubChangelogGenerator project:#{returnVal}"
   returnVal
 end

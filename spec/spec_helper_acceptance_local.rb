@@ -12,7 +12,7 @@ RSpec.configure do |c|
   c.before :suite do
     run_shell('puppet module install puppetlabs-gcc')
     run_shell('puppet module install puppetlabs-java')
-    if os[:family] == 'redhat'
+    if os[:family] == 'redhat' && os[:release].to_i != 8
       run_shell('puppet module install stahnma/epel')
       pp = <<-PUPPETCODE
       # needed by tests
@@ -58,20 +58,23 @@ def latest_tomcat_tarball_url(version)
 end
 
 latest7 = latest_tomcat_tarball_url('7')
-latest8 = latest_tomcat_tarball_url('8')
+# latest8 = latest_tomcat_tarball_url('8')
 latest9 = latest_tomcat_tarball_url('9')
 
 TOMCAT7_RECENT_VERSION = ENV['TOMCAT7_RECENT_VERSION'] || latest7
 TOMCAT7_RECENT_SOURCE = latest7
 puts "TOMCAT7_RECENT_SOURCE is #{TOMCAT7_RECENT_SOURCE.inspect}"
-TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
+
+# TODO: Using 8.5.39 until 8.5.45 is replaced
+TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || '8.5.39'
 # TOMCAT8_RECENT_SOURCE = latest8
-# TODO: Uncomment for latest version when 8.5.45 dependencies are fixed
-TOMCAT8_RECENT_SOURCE = 'http://apache.javapipe.com/tomcat/tomcat-8/v8.5.43/bin/apache-tomcat-8.5.43.tar.gz'.freeze
+TOMCAT8_RECENT_SOURCE = 'http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz'.freeze
 puts "TOMCAT8_RECENT_SOURCE is #{TOMCAT8_RECENT_SOURCE.inspect}"
+
 TOMCAT9_RECENT_VERSION = ENV['TOMCAT9_RECENT_VERSION'] || latest9
 TOMCAT9_RECENT_SOURCE = latest9
 puts "TOMCAT9_RECENT_SOURCE is #{TOMCAT9_RECENT_SOURCE.inspect}"
+
 TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '7.0.85'
 # Please note that these URLs are http and therefore insecure. To remedy this you can change them to https, although some additional work may be required to match the required protocols of the server.
 TOMCAT_LEGACY_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-7/v#{TOMCAT_LEGACY_VERSION}/bin/apache-tomcat-#{TOMCAT_LEGACY_VERSION}.tar.gz".freeze
@@ -81,3 +84,14 @@ UNSUPPORTED_PLATFORMS = ['windows', 'solaris', 'darwin'].freeze
 
 # Tomcat 7 needs java 1.6 or newer
 SKIP_TOMCAT_7 = false
+
+confine_8_array = [
+  (os[:family] =~ %r{redhat}            &&  os[:release] =~ %r{5}),
+  (os[:family] =~ %r{suse}              &&  os[:release] =~ %r{11}),
+]
+
+# Tomcat 8 needs java 1.7 or newer
+SKIP_TOMCAT_8 = confine_8_array.any?
+
+# puppetlabs-gcc doesn't work on Suse
+SKIP_GCC = (os[:family] == 'suse')
