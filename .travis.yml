@@ -27,7 +27,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=debian_puppet5
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_debian]'
       - bundle exec rake 'litmus:install_agent[puppet5]'
@@ -41,7 +41,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=debian_puppet6
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_debian]'
       - bundle exec rake 'litmus:install_agent[puppet6]'
@@ -55,7 +55,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=ubuntu_puppet5
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_ubuntu]'
       - bundle exec rake 'litmus:install_agent[puppet5]'
@@ -69,7 +69,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=ubuntu_puppet6
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_ubuntu]'
       - bundle exec rake 'litmus:install_agent[puppet6]'
@@ -83,7 +83,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=el6_puppet5
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_el6]'
       - bundle exec rake 'litmus:install_agent[puppet5]'
@@ -97,7 +97,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=el6_puppet6
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_el6]'
       - bundle exec rake 'litmus:install_agent'
@@ -111,7 +111,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=el7_puppet5
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_el7]'
       - bundle exec rake 'litmus:install_agent[puppet5]'
@@ -125,7 +125,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=el7_puppet6
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_el7]'
       - bundle exec rake 'litmus:install_agent'
