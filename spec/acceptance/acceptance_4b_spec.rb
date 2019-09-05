@@ -1,16 +1,16 @@
 require 'spec_helper_acceptance'
 
-stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| fact('osfamily') == up } || SKIP_TOMCAT_8)
+stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| os[:family] == up } || SKIP_TOMCAT_8)
 
 describe 'Use two realms within a configuration', docker: true, unless: stop_test do
   after :all do
-    shell('pkill -f tomcat', acceptable_exit_codes: [0, 1])
-    shell('rm -rf /opt/tomcat*', acceptable_exit_codes: [0, 1])
-    shell('rm -rf /opt/apache-tomcat*', acceptable_exit_codes: [0, 1])
+    run_shell('pkill -f tomcat', expect_failures: true)
+    run_shell('rm -rf /opt/tomcat*', expect_failures: true)
+    run_shell('rm -rf /opt/apache-tomcat*', expect_failures: true)
   end
 
   before :all do
-    shell("curl --retry 10 --retry-delay 15 -k -o /tmp/sample.war '#{SAMPLE_WAR}'", acceptable_exit_codes: 0)
+    run_shell("curl --retry 10 --retry-delay 15 -k -o /tmp/sample.war '#{SAMPLE_WAR}'")
   end
 
   context 'Initial install Tomcat and verification' do
@@ -78,7 +78,7 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
       apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'contains two realms in config file', retry: 5, retry_wait: 10 do
-      shell('cat /opt/apache-tomcat40/conf/server.xml', acceptable_exit_codes: 0) do |r|
+      run_shell('cat /opt/apache-tomcat40/conf/server.xml') do |r|
         r.stdout.should match(%r{<Realm puppetName="org.apache.catalina.realm.MyRealm1" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm1" otherAttribute="more stuff"><\/Realm>})
         r.stdout.should match(%r{<Realm puppetName="org.apache.catalina.realm.MyRealm2" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm2" otherAttribute="more stuff"><\/Realm>})
       end
@@ -111,7 +111,7 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
       }
     MANIFEST
     it 'is idempotent' do
-      idempotent_apply(default, pp_two, {})
+      idempotent_apply(pp_two)
     end
   end
 end

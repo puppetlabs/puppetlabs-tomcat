@@ -1,24 +1,24 @@
 require 'spec_helper_acceptance'
 
-stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| fact('osfamily') == up } || SKIP_TOMCAT_8 || SKIP_GCC)
+stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| os[:family] == up } || SKIP_TOMCAT_8 || SKIP_GCC)
 
 describe 'Acceptance case one', unless: stop_test do
   after :all do
-    shell('pkill -f tomcat', acceptable_exit_codes: [0, 1])
-    shell('rm -rf /opt/tomcat*', acceptable_exit_codes: [0, 1])
-    shell('rm -rf /opt/apache-tomcat*', acceptable_exit_codes: [0, 1])
+    run_shell('pkill -f tomcat', expect_failures: true)
+    run_shell('rm -rf /opt/tomcat*', expect_failures: true)
+    run_shell('rm -rf /opt/apache-tomcat*', expect_failures: true)
   end
 
   let :java_home do
-    if fact('osfamily') == 'Debian'
-      if fact('operatingsystemmajrelease') == '18.04'
+    if os[:family] =~ %r{debian|ubuntu}
+      if os[:release] == '18.04'
         '"/usr/lib/jvm/java-11-openjdk-${::architecture}"'
-      elsif fact('operatingsystemmajrelease') == '16.04' || fact('operatingsystemmajrelease') == '9'
+      elsif os[:release] == '16.04' || os[:release] =~ %r{9}
         '"/usr/lib/jvm/java-8-openjdk-${::architecture}"'
       else
         '"/usr/lib/jvm/java-7-openjdk-${::architecture}"'
       end
-    elsif fact('osfamily') == 'RedHat'
+    elsif os[:family] =~ %r{redhat}
       '"/etc/alternatives/java_sdk"'
     else
       'undef'
@@ -116,15 +116,15 @@ describe 'Acceptance case one', unless: stop_test do
           value => $java_home,
         }
       MANIFEST
-      idempotent_apply(default, pp, {})
+      idempotent_apply(pp)
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp') do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
     it 'is serving a page on port 8080', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:8080/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      run_shell('curl --retry 10 --retry-delay 15 localhost:8080/war_one/hello.jsp') do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
@@ -144,10 +144,12 @@ describe 'Acceptance case one', unless: stop_test do
           user           => 'tomcat8',
         }
       MANIFEST
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      apply_manifest(pp)
     end
     it 'is not serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 7)
+      run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp', expect_failures: true) do |r|
+        expect(r.exit_code).to eq 7
+      end
     end
   end
 
@@ -168,7 +170,7 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp') do |r|
         r.stdout.should match(%r{Sample Application JSP Page})
       end
     end
@@ -186,7 +188,7 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
-      shell('curl localhost:80/war_one/hello.jsp', acceptable_exit_codes: 0) do |r|
+      run_shell('curl localhost:80/war_one/hello.jsp') do |r|
         r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
       end
     end
@@ -215,7 +217,9 @@ describe 'Acceptance case one', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     it 'is not able to serve pages over port 80', retry: 5, retry_wait: 10 do
-      shell('curl --retry 10 --retry-delay 15 localhost:80', acceptable_exit_codes: 7)
+      run_shell('curl --retry 10 --retry-delay 15 localhost:80', expect_failures: true) do |r|
+        expect(r.exit_code).to eq 7
+      end
     end
   end
 end

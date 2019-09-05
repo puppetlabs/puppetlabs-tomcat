@@ -1,96 +1,82 @@
-require 'beaker-pe'
-require 'beaker-puppet'
-require 'beaker-rspec/spec_helper'
-require 'beaker-rspec/helpers/serverspec'
-require 'beaker/puppet_install_helper'
-require 'beaker/module_install_helper'
-require 'rspec/retry'
+# frozen_string_literal: true
 
-run_puppet_install_helper
-configure_type_defaults_on(hosts)
-install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ %r{pe}i
-install_module_on(hosts)
-install_module_dependencies_on(hosts)
+require 'serverspec'
+require 'puppet_litmus'
+require 'spec_helper_acceptance_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_acceptance_local.rb'))
+include PuppetLitmus
 
-def latest_tomcat_tarball_url(version)
-  require 'net/http'
-  page = Net::HTTP.get(URI("http://tomcat.apache.org/download-#{version}0.cgi"))
-
-  url = ((match = page.match(%r{https?://.*?apache-tomcat-(.{4,9}).tar.gz})) && match[0])
-  return url if url
-
-  mirror_url = ((match = page.match(%r{<strong>(https?://.*?)/</strong>})) && match[1])
-  page = Net::HTTP.get(URI("#{mirror_url}/tomcat/tomcat-#{version}/"))
-  latest_version = ((match = page.match(%r{href="v(.{4,9})/"})) && match[1])
-
-  "#{mirror_url}/tomcat/tomcat-#{version}/v#{latest_version}/bin/apache-tomcat-#{latest_version}.tar.gz"
-end
-
-latest7 = latest_tomcat_tarball_url('7')
-latest8 = latest_tomcat_tarball_url('8')
-latest9 = latest_tomcat_tarball_url('9')
-
-TOMCAT7_RECENT_VERSION = ENV['TOMCAT7_RECENT_VERSION'] || latest7
-TOMCAT7_RECENT_SOURCE = latest7
-puts "TOMCAT7_RECENT_SOURCE is #{TOMCAT7_RECENT_SOURCE.inspect}"
-TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
-TOMCAT8_RECENT_SOURCE = latest8
-puts "TOMCAT8_RECENT_SOURCE is #{TOMCAT8_RECENT_SOURCE.inspect}"
-TOMCAT9_RECENT_VERSION = ENV['TOMCAT9_RECENT_VERSION'] || latest9
-TOMCAT9_RECENT_SOURCE = latest9
-puts "TOMCAT9_RECENT_SOURCE is #{TOMCAT9_RECENT_SOURCE.inspect}"
-TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '7.0.85'
-# Please note that these URLs are http and therefore insecure. To remedy this you can change them to https, although some additional work may be required to match the required protocols of the server.
-TOMCAT_LEGACY_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-7/v#{TOMCAT_LEGACY_VERSION}/bin/apache-tomcat-#{TOMCAT_LEGACY_VERSION}.tar.gz".freeze
-SAMPLE_WAR = 'http://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'.freeze
-
-UNSUPPORTED_PLATFORMS = ['windows', 'Solaris', 'Darwin'].freeze
-
-# Tomcat 7 needs java 1.6 or newer
-SKIP_TOMCAT_7 = false
-
-# Tomcat 8 needs java 1.7 or newer
-confine_8_array = [
-  (fact('operatingsystem') == 'Ubuntu'  &&  fact('operatingsystemrelease') == '16.04'),
-  (fact('osfamily') == 'RedHat'         &&  fact('operatingsystemmajrelease') == '5'),
-  (fact('operatingsystem') == 'Debian'  &&  fact('operatingsystemmajrelease') == '8'),
-  (fact('osfamily') == 'Suse'           &&  fact('operatingsystemmajrelease') == '11'),
-]
-# puppetlabs-gcc doesn't work on Suse
-SKIP_TOMCAT_8 = confine_8_array.any?
-SKIP_GCC = (fact('osfamily') == 'Suse')
-
-def idempotent_apply(hosts, manifest, opts = {}, &block)
-  block_on hosts, opts do |host|
-    file_path = host.tmpfile('apply_manifest.pp')
-    create_remote_file(host, file_path, manifest + "\n")
-
-    puppet_apply_opts = { :verbose => nil, 'detailed-exitcodes' => nil }
-    on_options = { acceptable_exit_codes: [0, 2] }
-    on host, puppet('apply', file_path, puppet_apply_opts), on_options, &block
-    puppet_apply_opts2 = { :verbose => nil, 'detailed-exitcodes' => nil }
-    on_options2 = { acceptable_exit_codes: [0] }
-    on host, puppet('apply', file_path, puppet_apply_opts2), on_options2, &block
+if ENV['TARGET_HOST'].nil? || ENV['TARGET_HOST'] == 'localhost'
+  puts 'Running tests against this machine !'
+  if Gem.win_platform?
+    set :backend, :cmd
+  else
+    set :backend, :exec
   end
-end
+else
+  # load inventory
+  inventory_hash = inventory_hash_from_inventory_file
+  node_config = config_from_node(inventory_hash, ENV['TARGET_HOST'])
 
-RSpec.configure do |c|
-  c.filter_run focus: true
-  c.run_all_when_everything_filtered = true
-  c.verbose_retry = true
-  c.display_try_failure_messages = true
+  if target_in_group(inventory_hash, ENV['TARGET_HOST'], 'docker_nodes')
+    host = ENV['TARGET_HOST']
+    set :backend, :docker
+    set :docker_container, host
+  elsif target_in_group(inventory_hash, ENV['TARGET_HOST'], 'ssh_nodes')
+    set :backend, :ssh
+    options = Net::SSH::Config.for(host)
+    options[:user] = node_config.dig('ssh', 'user') unless node_config.dig('ssh', 'user').nil?
+    options[:port] = node_config.dig('ssh', 'port') unless node_config.dig('ssh', 'port').nil?
+    options[:keys] = node_config.dig('ssh', 'private-key') unless node_config.dig('ssh', 'private-key').nil?
+    options[:password] = node_config.dig('ssh', 'password') unless node_config.dig('ssh', 'password').nil?
+    # Support both net-ssh 4 and 5.
+    # rubocop:disable Metrics/BlockNesting
+    options[:verify_host_key] = if node_config.dig('ssh', 'host-key-check').nil?
+                                  # Fall back to SSH behavior. This variable will only be set in net-ssh 5.3+.
+                                  if @strict_host_key_checking.nil? || @strict_host_key_checking
+                                    Net::SSH::Verifiers::Always.new
+                                  else
+                                    # SSH's behavior with StrictHostKeyChecking=no: adds new keys to known_hosts.
+                                    # If known_hosts points to /dev/null, then equivalent to :never where it
+                                    # accepts any key beacuse they're all new.
+                                    Net::SSH::Verifiers::AcceptNewOrLocalTunnel.new
+                                  end
+                                elsif node_config.dig('ssh', 'host-key-check')
+                                  if defined?(Net::SSH::Verifiers::Always)
+                                    Net::SSH::Verifiers::Always.new
+                                  else
+                                    Net::SSH::Verifiers::Secure.new
+                                  end
+                                elsif defined?(Net::SSH::Verifiers::Never)
+                                  Net::SSH::Verifiers::Never.new
+                                else
+                                  Net::SSH::Verifiers::Null.new
+                                end
+    # rubocop:enable Metrics/BlockNesting
+    host = if ENV['TARGET_HOST'].include?(':')
+             ENV['TARGET_HOST'].split(':').first
+           else
+             ENV['TARGET_HOST']
+           end
+    set :host,        options[:host_name] || host
+    set :ssh_options, options
+    set :request_pty, true
+  elsif target_in_group(inventory_hash, ENV['TARGET_HOST'], 'winrm_nodes')
+    require 'winrm'
 
-  # Readable test descriptions
-  c.formatter = :documentation
+    set :backend, :winrm
+    set :os, family: 'windows'
+    user = node_config.dig('winrm', 'user') unless node_config.dig('winrm', 'user').nil?
+    pass = node_config.dig('winrm', 'password') unless node_config.dig('winrm', 'password').nil?
+    endpoint = "http://#{ENV['TARGET_HOST']}:5985/wsman"
 
-  # Configure all nodes in nodeset
-  c.before :suite do
-    hosts.each do |host|
-      on host, puppet('module', 'install', 'puppetlabs-java'), acceptable_exit_codes: [0, 1]
-      on host, puppet('module', 'install', 'puppetlabs-gcc'), acceptable_exit_codes: [0, 1]
-      if fact('osfamily') == 'RedHat'
-        on host, 'yum install -y nss'
-      end
-    end
+    opts = {
+      user: user,
+      password: pass,
+      endpoint: endpoint,
+      operation_timeout: 300,
+    }
+
+    winrm = WinRM::Connection.new opts
+    Specinfra.configuration.winrm = winrm
   end
 end
