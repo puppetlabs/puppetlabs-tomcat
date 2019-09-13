@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v3.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v3.1.0) (2019-09-13)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v3.0.0...v3.1.0)
+
+### Added
+
+- FM-8413 add support on Debian10 [\#361](https://github.com/puppetlabs/puppetlabs-tomcat/pull/361) ([lionce](https://github.com/lionce))
+- \(FM-8232\) Convert to litmus [\#360](https://github.com/puppetlabs/puppetlabs-tomcat/pull/360) ([tphoney](https://github.com/tphoney))
+- FM-8050 - add redhat8 support [\#354](https://github.com/puppetlabs/puppetlabs-tomcat/pull/354) ([lionce](https://github.com/lionce))
+
+### Fixed
+
+- add show diff to all augeas calls [\#322](https://github.com/puppetlabs/puppetlabs-tomcat/pull/322) ([johmicd](https://github.com/johmicd))
+
 ## [v3.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v3.0.0) (2019-05-17)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.5.0...v3.0.0)
