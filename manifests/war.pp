@@ -62,7 +62,7 @@ define tomcat::war(
     $_deployment_path = "${_catalina_base}/${_app_base}"
   }
 
-  if $war_ensure =~ /^(absent|false)$/ {
+  if $war_ensure == 'absent' {
     file { "${_deployment_path}/${_war_name}":
       ensure => absent,
       force  => false,

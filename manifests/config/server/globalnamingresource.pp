@@ -49,7 +49,7 @@ define tomcat::config::server::globalnamingresource (
     $_server_config = "${catalina_base}/conf/server.xml"
   }
 
-  if $ensure =~ /^(absent|false)$/ {
+  if $ensure == 'absent' {
     $changes = "rm ${base_path}"
   } else {
     if ! empty($additional_attributes) {

@@ -35,7 +35,7 @@ define tomcat::config::context::manager (
 
   $base_path = "Context/Manager[#attribute/className='${_manager_classname}']"
 
-  if $ensure =~ /^(absent|false)$/ {
+  if $ensure == 'absent' {
     $changes = "rm ${base_path}"
   } else {
     $set_name = "set ${base_path}/#attribute/className '${_manager_classname}'"

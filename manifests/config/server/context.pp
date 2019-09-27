@@ -79,7 +79,7 @@ define tomcat::config::server::context (
   }
   # lint:endignore
 
-  if $context_ensure =~ /^(absent|false)$/ {
+  if $context_ensure == 'absent' {
     $augeaschanges = "rm ${path}"
   } else {
     $context = "set ${path}/#attribute/docBase ${_doc_base}"
