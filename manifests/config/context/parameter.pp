@@ -16,7 +16,7 @@
 #
 define tomcat::config::context::parameter (
   Optional[String]                            $value          = undef,
-  Variant[Enum['present', 'absent'], Boolean] $ensure         = 'present',
+  Enum['present', 'absent']                   $ensure         = 'present',
   Pattern[/^(\/[^\/ ]*)+\/?$/]                $catalina_base  = $::tomcat::catalina_home,
   String                                      $parameter_name = $name,
   Optional[String]                            $description    = undef,
@@ -28,7 +28,7 @@ define tomcat::config::context::parameter (
 
   $base_path = "Context/Parameter[#attribute/name='${parameter_name}']"
 
-  if $ensure =~ /^(absent|false)$/ {
+  if $ensure == 'absent' {
     $changes = "rm ${base_path}"
   }
   else {
