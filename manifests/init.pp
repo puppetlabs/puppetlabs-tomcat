@@ -6,8 +6,6 @@
 #   Specifies a default user to run Tomcat as. Valid options: a string containing a valid username.
 # @param group
 #   Specifies a default group to run Tomcat as. Valid options: a string containing a valid group name.
-# @param install_from_source
-#   No longer available in the base class. Please use install_from_source on a specific tomcat::install declaration instead.
 # @param purge_connectors
 #   Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file by default.
 # @param purge_realms
@@ -27,7 +25,6 @@ class tomcat (
   $catalina_home             = '/opt/apache-tomcat',
   $user                      = 'tomcat',
   $group                     = 'tomcat',
-  $install_from_source       = undef,
   Boolean $purge_connectors  = false,
   Boolean $purge_realms      = false,
   Boolean $manage_user       = true,
@@ -37,9 +34,6 @@ class tomcat (
   Boolean $manage_properties = true,
 ) {
 
-  if $install_from_source {
-    fail('install_from_source is no longer available in the base class. Please use install_from_source on a specific tomcat::install declaration instead.') # lint:ignore:140chars
-  }
   case $::osfamily {
     'windows','Solaris','Darwin': {
       fail("Unsupported osfamily: ${::osfamily}")

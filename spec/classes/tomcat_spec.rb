@@ -9,7 +9,6 @@ describe 'tomcat', type: :class do
     end
     let :params do
       {
-        install_from_source: false,
       }
     end
 
