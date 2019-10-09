@@ -32,7 +32,7 @@ define tomcat::config::context::resourcelink (
 
   $base_path = "Context/ResourceLink[#attribute/name='${resourcelink_name}']"
 
-  if $ensure =~ /^(absent|false)$/ {
+  if $ensure == 'absent' {
     $augeaschanges = "rm ${base_path}"
   } else {
     $set_name = "set ${base_path}/#attribute/name ${resourcelink_name}"

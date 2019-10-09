@@ -55,7 +55,7 @@ define tomcat::config::server::connector (
     $__purge_connectors = undef
   }
 
-  if $_purge_connectors and ($connector_ensure =~ /^(absent|false)$/) {
+  if $_purge_connectors and ($connector_ensure == 'absent') {
     fail('$connector_ensure must be set to \'true\' or \'present\' to use $purge_connectors')
   }
 
@@ -65,7 +65,7 @@ define tomcat::config::server::connector (
     $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
-  if $connector_ensure =~ /^(absent|false)$/ {
+  if $connector_ensure == 'absent' {
     if ! $port {
       $base_path = "${path}/Connector[#attribute/protocol='${protocol}']"
     } else {
@@ -74,7 +74,7 @@ define tomcat::config::server::connector (
     $changes = "rm ${base_path}"
   } else {
     if ! $port {
-      fail('$port must be specified unless $connector_ensure is set to \'absent\' or \'false\'')
+      fail('$port must be specified unless $connector_ensure is set to \'absent\'')
     }
 
     $base_path = "${path}/Connector[#attribute/port='${port}']"

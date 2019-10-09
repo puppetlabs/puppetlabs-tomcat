@@ -35,10 +35,10 @@ define tomcat::config::server::service (
     $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
-  if $service_ensure =~ /^(absent|false)$/ {
+  if $service_ensure == 'absent' {
     $changes = "rm Server/Service[#attribute/name='${name}']"
   } else {
-    if $class_name_ensure =~ /^(absent|false)$/ {
+    if $class_name_ensure == 'absent' {
       $_class_name = "rm Server/Service[#attribute/name='${name}']/#attribute/className"
     } elsif $class_name {
       $_class_name = "set Server/Service[#attribute/name='${name}']/#attribute/className ${class_name}"

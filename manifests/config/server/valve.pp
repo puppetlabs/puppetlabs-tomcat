@@ -65,7 +65,7 @@ define tomcat::config::server::valve (
     $_server_config = "${_catalina_base}/conf/server.xml"
   }
 
-  if $valve_ensure =~ /^(absent|false)$/ {
+  if $valve_ensure == 'absent' {
     $changes = "rm ${base_path}"
   } else {
     $_class_name_change = "set ${base_path}/#attribute/className ${_class_name}"

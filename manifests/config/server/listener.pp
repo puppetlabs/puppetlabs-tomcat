@@ -71,7 +71,7 @@ define tomcat::config::server::listener (
     $_server_config = "${catalina_base}/conf/server.xml"
   }
 
-  if $listener_ensure =~ /^(absent|false)$/ {
+  if $listener_ensure == 'absent' {
     $augeaschanges = "rm ${path}"
   } else {
     $listener = "set ${path}/#attribute/className ${_class_name}"

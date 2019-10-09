@@ -30,7 +30,7 @@
 define tomcat::config::server::realm (
   $catalina_base                                          = undef,
   $class_name                                             = $name,
-  Variant[Enum['present','absent'],Boolean] $realm_ensure = 'present',
+  Enum['present','absent'] $realm_ensure                  = 'present',
   $parent_service                                         = 'Catalina',
   $parent_engine                                          = 'Catalina',
   $parent_host                                            = undef,
@@ -50,7 +50,7 @@ define tomcat::config::server::realm (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
-  if $_purge_realms and ($realm_ensure =~ /^(absent|false)$/) {
+  if $_purge_realms and ($realm_ensure == 'absent') {
     fail('$realm_ensure must be set to \'present\' to use $purge_realms')
   }
 
@@ -96,7 +96,7 @@ define tomcat::config::server::realm (
   # match.
   $path_expression = "#attribute/puppetName='${name}' or (count(#attribute/puppetName)=0 and #attribute/className='${class_name}')"
 
-  if $realm_ensure =~ /^(absent|false)$/ {
+  if $realm_ensure == 'absent' {
     $changes = "rm ${path}[${path_expression}]"
   } else {
 

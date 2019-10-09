@@ -81,7 +81,7 @@ define tomcat::config::server::tomcat_users (
 
   $path = "tomcat-users/${element}[#attribute/${element_identifier}='${_element_name}']"
 
-  if $ensure =~ /^(absent|false)$/ {
+  if $ensure == 'absent' {
     $add_entry = undef
     $remove_entry = "rm ${path}"
     $add_password = undef

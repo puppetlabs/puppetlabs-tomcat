@@ -41,7 +41,7 @@ define tomcat::config::context::environment (
 
   $base_path = "Context/Environment[#attribute/name='${environment_name}']"
 
-  if $ensure =~ /^(absent|false)$/ {
+  if $ensure == 'absent' {
     $changes = "rm ${base_path}"
   } else {
     if empty($type) {
