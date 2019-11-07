@@ -36,9 +36,11 @@ RSpec.configure do |c|
       run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss')
     elsif os[:family] == 'ubuntu'
       run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
-      run_shell('apt-get update && apt-get install -y net-tools wget && locale-gen en_US.UTF-8', expect_failures: true)
+      run_shell('apt-get update', expect_failures: true)
+      run_shell('DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools curl wget', expect_failures: true)
+      run_shell('locale-gen en_US.UTF-8', expect_failures: true)
     elsif os[:family] == 'debian'
-      run_shell('apt-get update && apt-get install -y net-tools wget locales strace lsof && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen', expect_failures: true)
+      run_shell('apt-get update && apt-get install -y net-tools curl wget locales strace lsof && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen', expect_failures: true)
     end
   end
 end

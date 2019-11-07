@@ -54,10 +54,10 @@ matrix:
     -
       bundler_args:
       dist: trusty
-      env: PLATFORMS=ubuntu_puppet5
+      env: PLATFORMS=ubuntu16_puppet5
       rvm: 2.5.3
       before_script:
-      - bundle exec rake 'litmus:provision_list[travis_ubuntu]'
+      - bundle exec rake 'litmus:provision_list[travis_ubuntu16]'
       - bundle exec rake 'litmus:install_agent[puppet5]'
       - bundle exec rake litmus:install_module
       script:
@@ -68,10 +68,38 @@ matrix:
     -
       bundler_args:
       dist: trusty
-      env: PLATFORMS=ubuntu_puppet6
+      env: PLATFORMS=ubuntu18_puppet5
       rvm: 2.5.3
       before_script:
-      - bundle exec rake 'litmus:provision_list[travis_ubuntu]'
+      - bundle exec rake 'litmus:provision_list[travis_ubuntu18]'
+      - bundle exec rake 'litmus:install_agent[puppet5]'
+      - bundle exec rake litmus:install_module
+      script:
+      - bundle exec rake litmus:acceptance:parallel
+      services: docker
+      sudo: required
+      stage: acceptance
+    -
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=ubuntu16_puppet6
+      rvm: 2.5.3
+      before_script:
+      - bundle exec rake 'litmus:provision_list[travis_ubuntu16]'
+      - bundle exec rake 'litmus:install_agent[puppet6]'
+      - bundle exec rake litmus:install_module
+      script:
+      - bundle exec rake litmus:acceptance:parallel
+      services: docker
+      sudo: required
+      stage: acceptance
+    -
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=ubuntu18_puppet6
+      rvm: 2.5.3
+      before_script:
+      - bundle exec rake 'litmus:provision_list[travis_ubuntu18]'
       - bundle exec rake 'litmus:install_agent[puppet6]'
       - bundle exec rake litmus:install_module
       script:
