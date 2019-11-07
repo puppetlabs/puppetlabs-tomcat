@@ -2,9 +2,12 @@
 default:
   provisioner: docker
   images: ['waffleimage/centos7']
-travis_ubuntu:
+travis_ubuntu16:
   provisioner: docker
-  images: ['waffleimage/ubuntu16.04','waffleimage/ubuntu18.04']
+  images: ['waffleimage/ubuntu16.04']
+travis_ubuntu18:
+  provisioner: docker
+  images: ['waffleimage/ubuntu18.04']
 travis_debian:
   provisioner: docker
   images: ['waffleimage/debian8', 'waffleimage/debian9']
