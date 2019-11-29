@@ -1,5 +1,4 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
-gem 'pdk', git: 'https://github.com/puppetlabs/pdk.git', branch: 'master'
 
 def location_for(place_or_version, fake_version = nil)
   git_url_regex = %r{\A(?<url>(https?|git)[:@][^#]*)(#(?<branch>.*))?}
@@ -16,7 +15,6 @@ end
 
 ruby_version_segments = Gem::Version.new(RUBY_VERSION.dup).segments
 minor_version = ruby_version_segments[0..1].join('.')
-
 
 group :development do
   gem "fast_gettext", '1.1.0',                                   require: false if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.1.0')

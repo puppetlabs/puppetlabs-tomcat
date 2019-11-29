@@ -9,7 +9,7 @@ before_install:
   - gem --version
   - bundle -v
 script:
-  - 'bundle exec rake $CHECK'
+  - 'SIMPLECOV=yes bundle exec rake $CHECK'
 bundler_args: --without system_tests
 rvm:
   - 2.5.3
@@ -25,7 +25,6 @@ matrix:
   include:
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=debian_puppet5
       rvm: 2.5.3
       before_script:
@@ -39,7 +38,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=debian_puppet6
       rvm: 2.5.3
       before_script:
@@ -53,7 +51,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=ubuntu16_puppet5
       rvm: 2.5.3
       before_script:
@@ -67,7 +64,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=ubuntu18_puppet5
       rvm: 2.5.3
       before_script:
@@ -81,7 +77,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=ubuntu16_puppet6
       rvm: 2.5.3
       before_script:
@@ -95,7 +90,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=ubuntu18_puppet6
       rvm: 2.5.3
       before_script:
@@ -109,7 +103,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=el6_puppet5
       rvm: 2.5.3
       before_script:
@@ -123,7 +116,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=el6_puppet6
       rvm: 2.5.3
       before_script:
@@ -137,7 +129,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=el7_puppet5
       rvm: 2.5.3
       before_script:
@@ -151,7 +142,6 @@ matrix:
       stage: acceptance
     -
       bundler_args:
-      dist: trusty
       env: PLATFORMS=el7_puppet6
       rvm: 2.5.3
       before_script:
