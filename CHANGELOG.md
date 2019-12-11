@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.0.0) (2019-12-11)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v3.1.0...v4.0.0)
+
+### Changed
+
+- \(MAINT\) Make ensurable enums consistent [\#367](https://github.com/puppetlabs/puppetlabs-tomcat/pull/367) ([smortex](https://github.com/smortex))
+
+### Added
+
+- \(FM-8699\) - Addition of Support for CentOS 8 [\#374](https://github.com/puppetlabs/puppetlabs-tomcat/pull/374) ([david22swan](https://github.com/david22swan))
+- Add Resources support [\#368](https://github.com/puppetlabs/puppetlabs-tomcat/pull/368) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- Completely remove tomcat::install\_from\_source [\#366](https://github.com/puppetlabs/puppetlabs-tomcat/pull/366) ([smortex](https://github.com/smortex))
+
 ## [v3.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v3.1.0) (2019-09-13)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v3.0.0...v3.1.0)
@@ -10,7 +27,6 @@ All notable changes to this project will be documented in this file. The format 
 
 - FM-8413 add support on Debian10 [\#361](https://github.com/puppetlabs/puppetlabs-tomcat/pull/361) ([lionce](https://github.com/lionce))
 - \(FM-8232\) Convert to litmus [\#360](https://github.com/puppetlabs/puppetlabs-tomcat/pull/360) ([tphoney](https://github.com/tphoney))
-- FM-8050 - add redhat8 support [\#354](https://github.com/puppetlabs/puppetlabs-tomcat/pull/354) ([lionce](https://github.com/lionce))
 
 ### Fixed
 
@@ -23,6 +39,10 @@ All notable changes to this project will be documented in this file. The format 
 ### Changed
 
 - pdksync - \(MODULES-8444\) - Raise lower Puppet bound [\#347](https://github.com/puppetlabs/puppetlabs-tomcat/pull/347) ([david22swan](https://github.com/david22swan))
+
+### Added
+
+- FM-8050 - add redhat8 support [\#354](https://github.com/puppetlabs/puppetlabs-tomcat/pull/354) ([lionce](https://github.com/lionce))
 
 ### Fixed
 

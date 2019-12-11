@@ -27,6 +27,7 @@ _Public Defined types_
 * [`tomcat::config::server::host`](#tomcatconfigserverhost): Configure Host elements in $CATALINA_BASE/conf/server.xml
 * [`tomcat::config::server::listener`](#tomcatconfigserverlistener): Configure Listener elements in $CATALINA_BASE/conf/server.xml
 * [`tomcat::config::server::realm`](#tomcatconfigserverrealm): Configure Realm elements in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::resources`](#tomcatconfigserverresources): Configure Resources elements in $CATALINA_BASE/conf/server.xml
 * [`tomcat::config::server::service`](#tomcatconfigserverservice): Configure a Service element nested in the Server element in $CATALINA_BASE/conf/server.xml
 * [`tomcat::config::server::tomcat_users`](#tomcatconfigservertomcat_users): Configures roles and users in $CATALINA_BASE/conf/tomcat-users.xml or any other specified file
 * [`tomcat::config::server::valve`](#tomcatconfigservervalve): Configure a Valve element in $CATALINA_BASE/conf/server.xml
@@ -77,14 +78,6 @@ Data type: `Any`
 Specifies a default group to run Tomcat as. Valid options: a string containing a valid group name.
 
 Default value: 'tomcat'
-
-##### `install_from_source`
-
-Data type: `Any`
-
-No longer available in the base class. Please use install_from_source on a specific tomcat::install declaration instead.
-
-Default value: `undef`
 
 ##### `purge_connectors`
 
@@ -159,6 +152,14 @@ Data type: `Any`
 Specifies the root of the Tomcat installation.
 
 Default value: `undef`
+
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
 
 ### tomcat::config::context::environment
 
@@ -244,6 +245,14 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: []
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::context::manager
 
 Configure Manager elements in $CATALINA_BASE/conf/context.xml
@@ -296,6 +305,14 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: []
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::context::parameter
 
 Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
@@ -306,7 +323,7 @@ The following parameters are available in the `tomcat::config::context::paramete
 
 ##### `ensure`
 
-Data type: `Variant[Enum['present', 'absent'], Boolean]`
+Data type: `Enum['present', 'absent']`
 
 Specifies whether you are trying to add or remove the Parameter element Valid options: 'present', 'absent'.
 
@@ -413,6 +430,14 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: []
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::context::resourcelink
 
 Configure a ResourceLink element in the designated xml config.
@@ -473,6 +498,14 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: []
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::context::valve
 
 Specifies Valve elements in `${catalina_base}/conf/context.xml`
@@ -532,6 +565,14 @@ Data type: `Array`
 Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
 
 Default value: []
+
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
 
 ### tomcat::config::properties::property
 
@@ -633,6 +674,14 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 
 Default value: `undef`
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::server::connector
 
 Configure Connector elements in $CATALINA_BASE/conf/server.xml
@@ -717,6 +766,14 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 
 Default value: `undef`
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::server::context
 
 Configure a Context element in $CATALINA_BASE/conf/server.xml
@@ -796,6 +853,14 @@ Data type: `Any`
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
 Default value: `undef`
+
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
 
 ### tomcat::config::server::engine
 
@@ -907,6 +972,14 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 
 Default value: `undef`
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::server::globalnamingresource
 
 Configure GlobalNamingResources Resource elements in $CATALINA_BASE/conf/server.xml
@@ -970,6 +1043,14 @@ Data type: `Any`
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
 Default value: `undef`
+
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
 
 ### tomcat::config::server::host
 
@@ -1051,6 +1132,14 @@ Optional array that specifies the list of [Host Name Aliases](http://tomcat.apac
 
 Default value: `undef`
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::server::listener
 
 Configure Listener elements in $CATALINA_BASE/conf/server.xml
@@ -1131,6 +1220,14 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 
 Default value: `undef`
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::server::realm
 
 Configure Realm elements in $CATALINA_BASE/conf/server.xml
@@ -1161,7 +1258,7 @@ Default value: $name
 
 ##### `realm_ensure`
 
-Data type: `Variant[Enum['present','absent'],Boolean]`
+Data type: `Enum['present','absent']`
 
 Specifies whether the Realm element should exist in the configuration file.
 
@@ -1231,6 +1328,102 @@ Specifies a server.xml file to manage. Valid options: a string containing an abs
 
 Default value: `undef`
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
+### tomcat::config::server::resources
+
+Configure Resources elements in $CATALINA_BASE/conf/server.xml
+
+#### Parameters
+
+The following parameters are available in the `tomcat::config::server::resources` defined type.
+
+##### `catalina_base`
+
+Data type: `Optional[String]`
+
+Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
+
+Default value: `undef`
+
+##### `resources_ensure`
+
+Data type: `Enum['present','absent']`
+
+Specifies whether the resources ([The Resources Component](https://tomcat.apache.org/tomcat-8.0-doc/config/resources.html#Introduction)) should exist in the configuration file.
+
+Default value: 'present'
+
+##### `parent_service`
+
+Data type: `Optional[String]`
+
+Specifies which Service element the Host should nest under. Valid options: a string containing the name attribute of the Service.
+
+Default value: `undef`
+
+##### `parent_engine`
+
+Data type: `Optional[String]`
+
+Specifies which Engine element the Context should nest under. Only valid if `parent_host` is specified. Valid options: a string containing the name attribute of the Engine.
+
+Default value: `undef`
+
+##### `parent_host`
+
+Data type: `Optional[String]`
+
+Specifies which Host element the Context should nest under. Valid options: a string containing the name attribute of the Host.
+
+Default value: `undef`
+
+##### `parent_context`
+
+Data type: `Optional[String]`
+
+Specifies which Context element the Context should nest under. Valid options: a string containing the name attribute of the Context.
+
+Default value: `undef`
+
+##### `additional_attributes`
+
+Data type: `Hash`
+
+Specifies any further attributes to add to the Host. Valid options: a hash of '< attribute >' => '< value >' pairs.
+
+Default value: {}
+
+##### `attributes_to_remove`
+
+Data type: `Array[String]`
+
+Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+
+Default value: []
+
+##### `server_config`
+
+Data type: `Optional[String]`
+
+Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
+
+Default value: `undef`
+
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::server::service
 
 Configure a Service element nested in the Server element in $CATALINA_BASE/conf/server.xml
@@ -1278,6 +1471,14 @@ Data type: `Any`
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
 Default value: `undef`
+
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
 
 ### tomcat::config::server::tomcat_users
 
@@ -1367,6 +1568,14 @@ Specifies one or more roles. Only valid if `element` is set to 'role' or 'user'.
 
 Default value: []
 
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
+
 ### tomcat::config::server::valve
 
 Configure a Valve element in $CATALINA_BASE/conf/server.xml
@@ -1446,6 +1655,14 @@ Data type: `Any`
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
 Default value: `undef`
+
+##### `show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: `true`
 
 ### tomcat::install
 
