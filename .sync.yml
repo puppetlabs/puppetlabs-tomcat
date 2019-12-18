@@ -6,9 +6,6 @@
 .gitlab-ci.yml:
   unmanaged: true
 
-.travis.yml:
-  unmanaged: true
-
 appveyor.yml:
   delete: true
 
