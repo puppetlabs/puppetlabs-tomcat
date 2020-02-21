@@ -20,3 +20,20 @@ Gemfile:
 spec/spec_helper.rb:
   mock_with: ":rspec"
   coverage_report: true
+'.travis.yml':
+  deploy_to_forge:
+    enabled: false
+  branches:
+    - release
+  user: puppet
+  secure: ''
+  use_litmus: true
+  litmus:
+    provision_list:
+      - travis_deb
+      - travis_ub
+      - travis_el6
+      - travis_el7
+      - ---travis_el
+  simplecov: true
+
