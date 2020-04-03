@@ -41,7 +41,7 @@ describe 'tomcat::config::server::valve', type: :define do
       }
     end
 
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     changes = [
       'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/className foo',
       'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/suffix \'.txt\'',
@@ -50,7 +50,7 @@ describe 'tomcat::config::server::valve', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/foo',
       'rm Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'foo\']/#attribute/bar',
     ]
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-org.apache.catalina.AccessLog').with(
         'lens'    => 'Xml.lns',
