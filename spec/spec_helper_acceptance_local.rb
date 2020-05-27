@@ -1,4 +1,11 @@
 require 'rspec/retry'
+require 'singleton'
+require 'serverspec'
+
+class LitmusHelper
+  include Singleton
+  include PuppetLitmus
+end
 
 RSpec.configure do |c|
   c.filter_run focus: true
@@ -10,10 +17,10 @@ RSpec.configure do |c|
   c.formatter = :documentation
 
   c.before :suite do
-    run_shell('puppet module install puppetlabs-gcc')
-    run_shell('puppet module install puppetlabs-java')
+    LitmusHelper.instance.run_shell('puppet module install puppetlabs-gcc')
+    LitmusHelper.instance.run_shell('puppet module install puppetlabs-java')
     if os[:family] == 'redhat' && os[:release].to_i != 8
-      run_shell('puppet module install stahnma/epel')
+      LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
       pp = <<-PUPPETCODE
       # needed by tests
       package { 'curl':
@@ -30,17 +37,17 @@ RSpec.configure do |c|
         }
       }
       PUPPETCODE
-      apply_manifest(pp)
+      LitmusHelper.instance.apply_manifest(pp)
 
-      run_shell('yum update -y')
-      run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss')
+      LitmusHelper.instance.run_shell('yum update -y')
+      LitmusHelper.instance.run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss')
     elsif os[:family] == 'ubuntu'
-      run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
-      run_shell('apt-get update', expect_failures: true)
-      run_shell('DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools curl wget', expect_failures: true)
-      run_shell('locale-gen en_US.UTF-8', expect_failures: true)
+      LitmusHelper.instance.run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
+      LitmusHelper.instance.run_shell('apt-get update', expect_failures: true)
+      LitmusHelper.instance.run_shell('DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools curl wget', expect_failures: true)
+      LitmusHelper.instance.run_shell('locale-gen en_US.UTF-8', expect_failures: true)
     elsif os[:family] == 'debian'
-      run_shell('apt-get update && apt-get install -y net-tools curl wget locales strace lsof && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen', expect_failures: true)
+      LitmusHelper.instance.run_shell('apt-get update && apt-get install -y net-tools curl wget locales strace lsof && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen', expect_failures: true)
     end
   end
 end
