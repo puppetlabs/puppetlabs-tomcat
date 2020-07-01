@@ -141,7 +141,7 @@ define tomcat::service (
     $_hasrestart   = true
     $_start        = $start_command
     $_stop         = $stop_command
-    $_status       = undef
+    $_status       = $status_command
     $_provider     = undef
   } else {
     $_service_name = "tomcat-${name}"
