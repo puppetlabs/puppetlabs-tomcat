@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.2.0) (2020-08-24)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.1.0...v4.2.0)
+
+### Added
+
+- pdksync - \(IAC-973\) - Update travis/appveyor to run on new default branch `main` [\#405](https://github.com/puppetlabs/puppetlabs-tomcat/pull/405) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- Increase puppetlabs/concat lower bound [\#404](https://github.com/puppetlabs/puppetlabs-tomcat/pull/404) ([bFekete](https://github.com/bFekete))
+
 ## [v4.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.1.0) (2020-07-07)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.0.0...v4.1.0)
@@ -9,6 +21,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - \(IAC-746\) - Add ubuntu 20.04 support [\#399](https://github.com/puppetlabs/puppetlabs-tomcat/pull/399) ([david22swan](https://github.com/david22swan))
+- Add Resources support [\#368](https://github.com/puppetlabs/puppetlabs-tomcat/pull/368) ([smortex](https://github.com/smortex))
 
 ### Fixed
 
@@ -25,7 +38,6 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - \(FM-8699\) - Addition of Support for CentOS 8 [\#374](https://github.com/puppetlabs/puppetlabs-tomcat/pull/374) ([david22swan](https://github.com/david22swan))
-- Add Resources support [\#368](https://github.com/puppetlabs/puppetlabs-tomcat/pull/368) ([smortex](https://github.com/smortex))
 
 ### Fixed
 
@@ -39,6 +51,7 @@ All notable changes to this project will be documented in this file. The format 
 
 - FM-8413 add support on Debian10 [\#361](https://github.com/puppetlabs/puppetlabs-tomcat/pull/361) ([lionce](https://github.com/lionce))
 - \(FM-8232\) Convert to litmus [\#360](https://github.com/puppetlabs/puppetlabs-tomcat/pull/360) ([tphoney](https://github.com/tphoney))
+- FM-8050 - add redhat8 support [\#354](https://github.com/puppetlabs/puppetlabs-tomcat/pull/354) ([lionce](https://github.com/lionce))
 
 ### Fixed
 
@@ -51,10 +64,6 @@ All notable changes to this project will be documented in this file. The format 
 ### Changed
 
 - pdksync - \(MODULES-8444\) - Raise lower Puppet bound [\#347](https://github.com/puppetlabs/puppetlabs-tomcat/pull/347) ([david22swan](https://github.com/david22swan))
-
-### Added
-
-- FM-8050 - add redhat8 support [\#354](https://github.com/puppetlabs/puppetlabs-tomcat/pull/354) ([lionce](https://github.com/lionce))
 
 ### Fixed
 
