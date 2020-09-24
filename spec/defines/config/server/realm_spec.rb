@@ -93,6 +93,7 @@ describe 'tomcat::config::server::realm', type: :define do
 
     # rubocop:disable Metrics/LineLength
     changes = [
+      'rm //Realm//Realm//Realm',
       'rm //Realm//Realm',
       'rm //Context//Realm',
       'rm //Host//Realm',
@@ -350,6 +351,42 @@ describe 'tomcat::config::server::realm', type: :define do
         'changes' => changes,
       )
     }
+  end
+  context 'Add Realm with $parent_realm only - multiple parents' do
+    let :title do
+      'org.apache.catalina.realm.JNDIRealm'
+    end
+    let :params do
+      {
+        catalina_base: '/opt/apache-tomcat/test',
+        parent_realm: 'org.apache.catalina.realm.LockOutRealm,org.apache.catalina.realm.CombinedRealm',
+        realm_ensure: 'present',
+        additional_attributes: {
+          'connectionURL' => 'ldap://localhost',
+          'roleName'      => 'cn',
+          'roleSearch'    => 'member={0}',
+          'spaces'        => 'foo bar',
+        },
+      }
+    end
+
+    # rubocop:disable Metrics/LineLength
+    changes = [
+      "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.CombinedRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'org.apache.catalina.realm.JNDIRealm'",
+      "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.CombinedRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/className 'org.apache.catalina.realm.JNDIRealm'",
+      "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.CombinedRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/connectionURL 'ldap://localhost'",
+      "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.CombinedRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/roleName 'cn'",
+      "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.CombinedRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/roleSearch 'member={0}'",
+      "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/className='org.apache.catalina.realm.LockOutRealm']/Realm[#attribute/className='org.apache.catalina.realm.CombinedRealm']/Realm[#attribute/puppetName='org.apache.catalina.realm.JNDIRealm' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/spaces 'foo bar'",
+    ]
+    it {
+      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina--org.apache.catalina.realm.LockOutRealm,org.apache.catalina.realm.CombinedRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
+        'changes' => changes,
+      )
+    }
+    # rubocop:enable Metrics/LineLength
   end
   context 'Failing Tests' do
     context 'Bad realm_ensure' do

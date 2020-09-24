@@ -34,7 +34,7 @@ define tomcat::config::server::realm (
   $parent_service                                         = 'Catalina',
   $parent_engine                                          = 'Catalina',
   $parent_host                                            = undef,
-  $parent_realm                                           = undef,
+  $parent_realm                                           = undef, # if more than 2 levels of nested realms, specify and separate by comma
   Hash $additional_attributes                             = {},
   Array $attributes_to_remove                             = [],
   Optional[Boolean] $purge_realms                         = undef,
@@ -58,6 +58,7 @@ define tomcat::config::server::realm (
     # Perform deletions in reverse depth order as workaround for
     # https://github.com/hercules-team/augeas/issues/319
     $__purge_realms = [
+      'rm //Realm//Realm//Realm',
       'rm //Realm//Realm',
       'rm //Context//Realm',
       'rm //Host//Realm',
@@ -79,7 +80,12 @@ define tomcat::config::server::realm (
 
   # The Realm could also be nested under another Realm element if the parent realm is a CombinedRealm.
   if $parent_realm {
-    $path = "${host_path}/Realm[#attribute/className='${parent_realm}']/Realm"
+    $realm_array = split($parent_realm, ',')
+    # iterate through array of parents realms and create a string containing the full path to the last parent realm
+    $_path = $realm_array.reduce('') |$memo, $value| {
+      "${memo}/Realm[#attribute/className='${value}']"
+    }
+    $path = "${host_path}${_path}/Realm" # _path is prefixed with a /
   } else {
     $path = "${host_path}/Realm"
   }
