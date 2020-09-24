@@ -2,12 +2,15 @@
 #
 # @param ensure
 #   Specifies whether you are trying to add or remove the Resource element.
+# @param type
+#   The type of resource element. EX: Resource, PreResource, PostResource, etc
 # @param resource_name
 #   The name of the Resource to be created, relative to the `java:comp/env` context. `$name`.
 # @param name
 #   `$resource_name`
 # @param resource_type
-#   The fully qualified Java class name expected by the web application when it performs a lookup for this resource. Required to create the resource.
+#   The fully qualified Java class name expected by the web application when it performs a lookup for this resource.
+#   Required to create the resource.
 # @param catalina_base
 #   Specifies the root of the Tomcat installation. 
 # @param additional_attributes
@@ -19,8 +22,10 @@
 #
 define tomcat::config::context::resource (
   Enum['present','absent'] $ensure = 'present',
+  String $type                     = 'Resource',
   $resource_name                   = $name,
   $resource_type                   = undef,
+  $parent_resources_name           = undef,
   $catalina_base                   = $::tomcat::catalina_home,
   Hash $additional_attributes      = {},
   Array $attributes_to_remove      = [],
@@ -36,7 +41,12 @@ define tomcat::config::context::resource (
     $_resource_name = $name
   }
 
-  $base_path = "Context/Resource[#attribute/name='${_resource_name}']"
+  $_resource_path = "${type}[#attribute/name='${_resource_name}']"
+  if $parent_resources_name {
+    $base_path = "Context/Resources[#attribute/puppetName='${parent_resources_name}']/${_resource_path}"
+  } else {
+    $base_path = "Context/${_resource_path}"
+  }
 
   if $ensure == 'absent' {
     $changes = "rm ${base_path}"

@@ -68,4 +68,83 @@ describe 'tomcat::config::context::resource', type: :define do
       )
     }
   end
+  context 'Add PostResource' do
+    let :params do
+      {
+        catalina_base: '/opt/apache-tomcat/test',
+        resource_type: 'net.sourceforge.jtds.jdbcx.JtdsDataSource',
+        type: 'PostResource',
+        additional_attributes: {
+          'auth'            => 'Container',
+          'closeMethod'     => 'closeMethod',
+          'validationQuery' => 'getdate()',
+          'description'     => 'description',
+          'scope'           => 'Shareable',
+          'singleton'       => 'true',
+        },
+        attributes_to_remove: [
+          'foobar',
+        ],
+      }
+    end
+
+    changes = [
+      'set Context/PostResource[#attribute/name=\'jdbc\']/#attribute/name jdbc',
+      'set Context/PostResource[#attribute/name=\'jdbc\']/#attribute/type net.sourceforge.jtds.jdbcx.JtdsDataSource',
+      'set Context/PostResource[#attribute/name=\'jdbc\']/#attribute/auth \'Container\'',
+      'set Context/PostResource[#attribute/name=\'jdbc\']/#attribute/closeMethod \'closeMethod\'',
+      'set Context/PostResource[#attribute/name=\'jdbc\']/#attribute/validationQuery \'getdate()\'',
+      'set Context/PostResource[#attribute/name=\'jdbc\']/#attribute/description \'description\'',
+      'set Context/PostResource[#attribute/name=\'jdbc\']/#attribute/scope \'Shareable\'',
+      'set Context/PostResource[#attribute/name=\'jdbc\']/#attribute/singleton \'true\'',
+      'rm Context/PostResource[#attribute/name=\'jdbc\']/#attribute/foobar',
+    ]
+    it {
+      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/context.xml',
+        'changes' => changes,
+      )
+    }
+  end
+  context 'Add PreResource with parent' do
+    let :params do
+      {
+        catalina_base: '/opt/apache-tomcat/test',
+        resource_type: 'net.sourceforge.jtds.jdbcx.JtdsDataSource',
+        type: 'PreResource',
+        parent_resources_name: 'Resources',
+        additional_attributes: {
+          'auth'            => 'Container',
+          'closeMethod'     => 'closeMethod',
+          'validationQuery' => 'getdate()',
+          'description'     => 'description',
+          'scope'           => 'Shareable',
+          'singleton'       => 'true',
+        },
+        attributes_to_remove: [
+          'foobar',
+        ],
+      }
+    end
+
+    changes = [
+      'set Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/name jdbc',
+      'set Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/type net.sourceforge.jtds.jdbcx.JtdsDataSource',
+      'set Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/auth \'Container\'',
+      'set Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/closeMethod \'closeMethod\'',
+      'set Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/validationQuery \'getdate()\'',
+      'set Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/description \'description\'',
+      'set Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/scope \'Shareable\'',
+      'set Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/singleton \'true\'',
+      'rm Context/Resources[#attribute/puppetName=\'Resources\']/PreResource[#attribute/name=\'jdbc\']/#attribute/foobar',
+    ]
+    it {
+      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/context.xml',
+        'changes' => changes,
+      )
+    }
+  end
 end
