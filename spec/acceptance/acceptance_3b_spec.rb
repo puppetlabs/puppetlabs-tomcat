@@ -306,4 +306,19 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       end
     end
   end
+  context 'add a context valve' do
+    pp = <<-MANIFEST
+      tomcat::config::context::valve { 'org.apache.catalina.valves.rewrite.RewriteValve':
+        catalina_base => '/opt/apache-tomcat8/tomcat8',
+      }
+    MANIFEST
+    it 'applies the manifest without error' do
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+    end
+    it 'has changed the context.xml file' do
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
+        r.stdout.should match(%r{<Valve className="org.apache.catalina.valves.rewrite.RewriteValve"><\/Valve>})
+      end
+    end
+  end
 end
