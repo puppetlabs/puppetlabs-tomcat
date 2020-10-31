@@ -185,7 +185,7 @@ describe 'tomcat::config::server::connector', type: :define do
       it do
         expect {
           catalogue
-        }.to raise_error(Puppet::Error)
+        }.to raise_error(Puppet::Error, %r{port must be specified})
       end
     end
     context 'old augeas' do
