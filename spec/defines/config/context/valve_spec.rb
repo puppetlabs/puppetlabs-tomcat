@@ -26,9 +26,8 @@ describe 'tomcat::config::context::valve', type: :define do
     end
 
     changes = [
-      'set Context/Valve[#attribute/name=\'valve\']/#attribute/name valve',
-      'set Context/Valve[#attribute/name=\'valve\']/#attribute/className org.apache.catalina.valves.rewrite.RewriteValve',
-      'rm Context/Valve[#attribute/name=\'valve\']/#attribute/foobar',
+      'set Context/Valve[#attribute/className=\'org.apache.catalina.valves.rewrite.RewriteValve\']/#attribute/className org.apache.catalina.valves.rewrite.RewriteValve',
+      'rm Context/Valve[#attribute/className=\'org.apache.catalina.valves.rewrite.RewriteValve\']/#attribute/foobar',
     ]
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/test-valve-valve').with(
@@ -42,6 +41,7 @@ describe 'tomcat::config::context::valve', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
+        resource_type: 'org.apache.catalina.valves.rewrite.RewriteValve',
         ensure: 'absent',
       }
     end
@@ -50,7 +50,7 @@ describe 'tomcat::config::context::valve', type: :define do
       is_expected.to contain_augeas('context-/opt/apache-tomcat/test-valve-valve').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
-        'changes' => ['rm Context/Valve[#attribute/name=\'valve\']'],
+        'changes' => ['rm Context/Valve[#attribute/className=\'org.apache.catalina.valves.rewrite.RewriteValve\']'],
       )
     }
   end
