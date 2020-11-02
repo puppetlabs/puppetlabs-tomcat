@@ -31,7 +31,7 @@ describe 'README examples', unless: stop_test do
     end
     it 'has the server running on port 8080' do
       run_shell('curl localhost:8080') do |r|
-        r.stdout.should match(%r{Apache Tomcat})
+        expect(r.stdout).to match(%r{Apache Tomcat})
       end
     end
   end
