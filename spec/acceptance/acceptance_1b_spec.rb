@@ -120,12 +120,12 @@ describe 'Acceptance case one', unless: stop_test do
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp') do |r|
-        r.stdout.should match(%r{Sample Application JSP Page})
+        expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
     it 'is serving a page on port 8080', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8080/war_one/hello.jsp') do |r|
-        r.stdout.should match(%r{Sample Application JSP Page})
+        expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
   end
@@ -171,7 +171,7 @@ describe 'Acceptance case one', unless: stop_test do
     end
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp') do |r|
-        r.stdout.should match(%r{Sample Application JSP Page})
+        expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
   end
@@ -189,7 +189,7 @@ describe 'Acceptance case one', unless: stop_test do
     end
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
       run_shell('curl localhost:80/war_one/hello.jsp') do |r|
-        r.stdout.should match(%r{The origin server did not find a current representation for the target resource})
+        expect(r.stdout).to match(%r{The origin server did not find a current representation for the target resource})
       end
     end
   end
