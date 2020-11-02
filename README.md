@@ -23,7 +23,6 @@ The tomcat module lets you use Puppet to install, deploy, and configure Tomcat w
 
 ## Module Description
 
-Tomcat is a Java web service provider. The tomcat module lets you use Puppet to install Tomcat, manage its configuration file, and deploy web apps to it. It supports multiple instances of Tomcat spanning multiple versions.
 
 ## Setup
 
