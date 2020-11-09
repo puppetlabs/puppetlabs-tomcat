@@ -306,4 +306,116 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       end
     end
   end
+  context 'add a context valve' do
+    pp = <<-MANIFEST
+      tomcat::config::context::valve { 'testValve':
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
+        class_name            => 'org.apache.catalina.valves.AccessLogValve',
+        additional_attributes => {
+          prefix  => 'localhost_access_log',
+          suffix  => '.txt',
+          pattern =>'common'
+        },
+      }
+    MANIFEST
+    it 'applies the manifest without error' do
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+    end
+    it 'has changed the context.xml file' do
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*><\/Valve>})
+      end
+    end
+  end
+  context 'add multiple context valves with the same class_name' do
+    pp = <<-MANIFEST
+      tomcat::config::context::valve { 'testValve':
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
+        class_name            => 'org.apache.catalina.valves.AccessLogValve',
+        uniqueness_attributes => [
+          'prefix',
+          'suffix',
+        ],
+        additional_attributes => {
+          prefix  => 'localhost_access_log',
+          suffix  => '.txt',
+          pattern =>'common'
+        },
+      }
+      tomcat::config::context::valve { 'testValve2':
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
+        class_name            => 'org.apache.catalina.valves.AccessLogValve',
+        uniqueness_attributes => [
+          'prefix',
+          'suffix',
+        ],
+        additional_attributes => {
+          prefix  => 'localhost_access_log_rare',
+          suffix  => '.txt',
+          pattern =>'common'
+        },
+      }
+    MANIFEST
+    it 'applies the manifest without error' do
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+    end
+    it 'has changed the context.xml file' do
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*prefix="localhost_access_log".*><\/Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*prefix="localhost_access_log_rare".*><\/Valve>})
+      end
+    end
+  end
+  context 'add a context valve with legacy attributes' do
+    pp = <<-MANIFEST
+      tomcat::config::context::valve { 'testValve':
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
+        resource_type         => 'org.apache.catalina.valves.AccessLogValve',
+        additional_attributes => {
+          prefix  => 'localhost_access_log',
+          suffix  => '.txt',
+          pattern =>'common'
+        },
+      }
+    MANIFEST
+    it 'applies the manifest without error' do
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+    end
+    it 'has changed the context.xml file' do
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve".*><\/Valve>})
+      end
+    end
+  end
+  context 'add multiple context valves with legacy attributes' do
+    pp = <<-MANIFEST
+      tomcat::config::context::valve { 'testValve':
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
+        resource_type         => 'org.apache.catalina.valves.AccessLogValve',
+        additional_attributes => {
+          prefix  => 'localhost_access_log',
+          suffix  => '.txt',
+          pattern =>'common'
+        },
+      }
+      tomcat::config::context::valve { 'testValve2':
+        catalina_base         => '/opt/apache-tomcat8/tomcat8',
+        resource_type         => 'org.apache.catalina.valves.AccessLogValve',
+        additional_attributes => {
+          prefix  => 'localhost_access_log_rare',
+          suffix  => '.txt',
+          pattern =>'common'
+        },
+      }
+    MANIFEST
+    it 'applies the manifest without error' do
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+    end
+    it 'has changed the context.xml file' do
+      run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve".*><\/Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve2".*><\/Valve>})
+      end
+    end
+  end
 end
