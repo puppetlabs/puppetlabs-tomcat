@@ -105,6 +105,3 @@ confine_8_array = [
 
 # Tomcat 8 needs java 1.7 or newer
 SKIP_TOMCAT_8 = confine_8_array.any?
-
-# puppetlabs-gcc doesn't work on Suse
-SKIP_GCC = (os[:family] == 'suse')
