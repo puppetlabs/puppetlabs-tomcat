@@ -1,5 +1,7 @@
 require 'spec_helper_acceptance'
 
+# puppetlabs-gcc doesn't work on sles
+SKIP_GCC = (os[:family] == 'sles')
 stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| os[:family] == up } || SKIP_TOMCAT_8 || SKIP_GCC)
 
 describe 'Acceptance case one', unless: stop_test do
