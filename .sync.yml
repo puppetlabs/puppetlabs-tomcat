@@ -47,3 +47,7 @@ spec/spec_helper.rb:
       secure: l/MKqMgGSmyUUVfGyJnNA23atn1komaEvl3GsFz3e4MJsmLW4eOqFbszrcbQafrT3WdClYUmv1GaJT1OJTsXfV5kHL5TUp2Q7R372mtYYlyP13b0AqyDoQX9DyrGpo6oA5NDvQG4ygL1wxEhoqHohAWyjusG9Z5/duiO57K6Ls0=
 
 
+.gitpod.Dockerfile:
+  unmanaged: false
+.gitpod.yml:
+  unmanaged: false
