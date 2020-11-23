@@ -79,8 +79,12 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
     end
     it 'contains two realms in config file', retry: 5, retry_wait: 10 do
       run_shell('cat /opt/apache-tomcat40/conf/server.xml') do |r|
-        r.stdout.should match(%r{<Realm puppetName="org.apache.catalina.realm.MyRealm1" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm1" otherAttribute="more stuff"><\/Realm>})
-        r.stdout.should match(%r{<Realm puppetName="org.apache.catalina.realm.MyRealm2" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm2" otherAttribute="more stuff"><\/Realm>})
+        expect(r.stdout).to match(
+          %r{<Realm puppetName="org.apache.catalina.realm.MyRealm1" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm1" otherAttribute="more stuff"><\/Realm>},
+        )
+        expect(r.stdout).to match(
+          %r{<Realm puppetName="org.apache.catalina.realm.MyRealm2" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm2" otherAttribute="more stuff"><\/Realm>},
+        )
       end
     end
     pp_two = <<-MANIFEST

@@ -70,18 +70,15 @@ def latest_tomcat_tarball_url(version)
 end
 
 latest7 = latest_tomcat_tarball_url('7')
-# TODO: Using 8.5.39 until 8.5.45 is replaced
-# latest8 = latest_tomcat_tarball_url('8')
+latest8 = latest_tomcat_tarball_url('8')
 latest9 = latest_tomcat_tarball_url('9')
 
 TOMCAT7_RECENT_VERSION = ENV['TOMCAT7_RECENT_VERSION'] || latest7
 TOMCAT7_RECENT_SOURCE = latest7
 puts "TOMCAT7_RECENT_SOURCE is #{TOMCAT7_RECENT_SOURCE.inspect}"
 
-# TODO: Using 8.5.39 until 8.5.45 is replaced
-TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || '8.5.39'
-# TOMCAT8_RECENT_SOURCE = latest8
-TOMCAT8_RECENT_SOURCE = 'http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz'.freeze
+TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
+TOMCAT8_RECENT_SOURCE = latest8
 puts "TOMCAT8_RECENT_SOURCE is #{TOMCAT8_RECENT_SOURCE.inspect}"
 
 TOMCAT9_RECENT_VERSION = ENV['TOMCAT9_RECENT_VERSION'] || latest9
