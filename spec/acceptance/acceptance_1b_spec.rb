@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 # puppetlabs-gcc doesn't work on sles
@@ -12,7 +14,7 @@ describe 'Acceptance case one', unless: stop_test do
   end
 
   let :java_home do
-    if os[:family] =~ %r{debian|ubuntu}
+    if os[:family].match?(%r{debian|ubuntu})
       if os[:release] == '20.04' || os[:release] == '18.04' || os[:release] =~ %r{10}
         '"/usr/lib/jvm/java-11-openjdk-${::architecture}"'
       elsif os[:release] == '16.04' || os[:release] =~ %r{9}
@@ -20,7 +22,7 @@ describe 'Acceptance case one', unless: stop_test do
       else
         '"/usr/lib/jvm/java-7-openjdk-${::architecture}"'
       end
-    elsif os[:family] =~ %r{redhat}
+    elsif os[:family].match?(%r{redhat})
       '"/etc/alternatives/java_sdk"'
     else
       'undef'
