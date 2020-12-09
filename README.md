@@ -192,11 +192,11 @@ Puppet removes any existing Connectors or Realms and leaves only the ones you've
 
 ## Reference
 
-See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-tomcat/blob/master/REFERENCE.md)
+See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-tomcat/blob/main/REFERENCE.md)
 
 ## Limitations
 
-For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-tomcat/blob/master/metadata.json)
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-tomcat/blob/main/metadata.json)
 
 The `tomcat::config::server*` defined types require Augeas version 1.0.0 or newer.
 
