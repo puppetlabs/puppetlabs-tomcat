@@ -527,19 +527,29 @@ Default value: `'present'`
 
 Data type: `Any`
 
-The name of the Resource to be created, relative to the java:comp/env context. Default: `$name`
+Deprecated! Use `uniqueness_attributes`.
+The name of the Resource to be created. Default: `$name` if `resource_type` is used.
+Using this parameter will add an extra `name` attribute on the `valve` element.
+As Tomcat allows multiple valves of the same className, this parameter has been used to create
+unique representations of each element.
+Adding a `name` attribute to a valve produces a warning in tomcat during load.
 
-Default value: `$name`
-
-##### `name`
-
-`$resource_name`
+Default value: ``undef``
 
 ##### `resource_type`
 
 Data type: `Any`
 
-The fully qualified Java class name expected by the web application when it performs a lookup for this resource. Required to create the resource.
+Deprecated! Use `class_name`
+Java class name of the implementation to use.
+
+Default value: ``undef``
+
+##### `class_name`
+
+Data type: `Any`
+
+Java class name of the implementation to use. Default: `$name` if `resource_type` is not used.
 
 Default value: ``undef``
 
@@ -564,6 +574,14 @@ Default value: `{}`
 Data type: `Array`
 
 Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
+
+Default value: `[]`
+
+##### `uniqueness_attributes`
+
+Data type: `Array`
+
+Specifies an array of attribute names that Puppet use to uniquely idetify valves. Valid options: an array of strings. `['className']`.
 
 Default value: `[]`
 
@@ -1646,6 +1664,14 @@ Default value: `{}`
 Data type: `Array`
 
 Specifies an array of attributes to remove from the element. Valid options: an array of strings.
+
+Default value: `[]`
+
+##### `uniqueness_attributes`
+
+Data type: `Array`
+
+Specifies an array of attribute names that Pupet use to uniquely idetify valves. Valid options: an array of strings. `['className']`.
 
 Default value: `[]`
 
