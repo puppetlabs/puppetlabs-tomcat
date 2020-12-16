@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.3.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.3.0) (2020-12-14)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.2.0...v4.3.0)
+
+### Added
+
+- pdksync - \(feat\) - Add support for Puppet 7 [\#422](https://github.com/puppetlabs/puppetlabs-tomcat/pull/422) ([daianamezdrea](https://github.com/daianamezdrea))
+- Refactor valve types [\#415](https://github.com/puppetlabs/puppetlabs-tomcat/pull/415) ([h-haaks](https://github.com/h-haaks))
+
+### Fixed
+
+- \(IAC-1236\) Adding SLES OSs for release\_checks [\#417](https://github.com/puppetlabs/puppetlabs-tomcat/pull/417) ([pmcmaw](https://github.com/pmcmaw))
+- \(IAC-1214\) - Move SKIP\_GCC to test file [\#416](https://github.com/puppetlabs/puppetlabs-tomcat/pull/416) ([pmcmaw](https://github.com/pmcmaw))
+
 ## [v4.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.2.0) (2020-08-24)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.1.0...v4.2.0)
@@ -21,7 +35,6 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - \(IAC-746\) - Add ubuntu 20.04 support [\#399](https://github.com/puppetlabs/puppetlabs-tomcat/pull/399) ([david22swan](https://github.com/david22swan))
-- Add Resources support [\#368](https://github.com/puppetlabs/puppetlabs-tomcat/pull/368) ([smortex](https://github.com/smortex))
 
 ### Fixed
 
@@ -38,6 +51,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - \(FM-8699\) - Addition of Support for CentOS 8 [\#374](https://github.com/puppetlabs/puppetlabs-tomcat/pull/374) ([david22swan](https://github.com/david22swan))
+- Add Resources support [\#368](https://github.com/puppetlabs/puppetlabs-tomcat/pull/368) ([smortex](https://github.com/smortex))
 
 ### Fixed
 
