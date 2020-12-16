@@ -217,7 +217,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     end
     it 'has changed the conf.xml file #5' do
       # validation
-      v = '<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><Engine name="org.apache.catalina.core.StandardEngine" defaultHost="localhost" backgroundProcessorDelay="5" startStopThreads="3"><\/Engine>' # rubocop:disable Metrics/LineLength
+      v = '<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><Engine name="org.apache.catalina.core.StandardEngine" defaultHost="localhost" backgroundProcessorDelay="5" startStopThreads="3"><\/Engine>' # rubocop:disable Layout/LineLength
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         expect(r.stdout).to match(%r{#{v}})
       end
@@ -236,7 +236,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
     end
     it 'has changed the conf.xml file #999' do
       # validation
-      v = '<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><Engine name="org.apache.catalina.core.StandardEngine" defaultHost="localhost" backgroundProcessorDelay="999" startStopThreads="555"><\/Engine>' # rubocop:disable Metrics/LineLength
+      v = '<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><Engine name="org.apache.catalina.core.StandardEngine" defaultHost="localhost" backgroundProcessorDelay="999" startStopThreads="555"><\/Engine>' # rubocop:disable Layout/LineLength
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         expect(r.stdout).to match(%r{#{v}})
       end
@@ -259,7 +259,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
     # validation
-    matches = ['<Host name="hulk-smash".*appBase="/opt/apache-tomcat8/tomcat8/webapps".*></Host>', '<Host name="hulk-smash".*astrological_sign="scorpio".*></Host>', '<Host name="hulk-smash".*favorite-beer="PBR".*></Host>'] # rubocop:disable Metrics/LineLength
+    matches = ['<Host name="hulk-smash".*appBase="/opt/apache-tomcat8/tomcat8/webapps".*></Host>', '<Host name="hulk-smash".*astrological_sign="scorpio".*></Host>', '<Host name="hulk-smash".*favorite-beer="PBR".*></Host>'] # rubocop:disable Layout/LineLength
     it 'has changed the conf.xml file #joined' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
         matches.each do |m|
