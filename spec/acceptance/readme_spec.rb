@@ -6,9 +6,7 @@ confine_array = [
   (os[:family] =~ %r{debian|ubuntu} &&  (os[:release] == '16.04' || os[:release] == '18.04' || os[:release] == '8')),
   (os[:family].include?('redhat')   &&  os[:release].start_with?('5')),
 ]
-
-stop_test = false
-stop_test = true if UNSUPPORTED_PLATFORMS.any? { |up| os[:family] == up } || confine_array.any?
+stop_test = confine_array.any?
 
 describe 'README examples', unless: stop_test do
   after :all do
