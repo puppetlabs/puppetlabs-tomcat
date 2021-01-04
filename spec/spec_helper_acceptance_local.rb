@@ -98,8 +98,8 @@ UNSUPPORTED_PLATFORMS = ['windows', 'solaris', 'darwin'].freeze
 SKIP_TOMCAT_7 = false
 
 confine_8_array = [
-  (os[:family] =~ %r{redhat}            &&  os[:release] =~ %r{5}),
-  (os[:family] =~ %r{suse}              &&  os[:release] =~ %r{11}),
+  (os[:family].include?('redhat') &&  os[:release].start_with?('5')),
+  (os[:family].include?('suse')   &&  os[:release].start_with?('11')),
 ]
 
 # Tomcat 8 needs java 1.7 or newer

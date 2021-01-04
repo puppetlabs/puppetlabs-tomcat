@@ -15,14 +15,14 @@ describe 'Acceptance case one', unless: stop_test do
 
   let :java_home do
     if os[:family].match?(%r{debian|ubuntu})
-      if os[:release] == '20.04' || os[:release] == '18.04' || os[:release] =~ %r{10}
+      if os[:release] == '20.04' || os[:release] == '18.04' || os[:release].start_with?('10')
         '"/usr/lib/jvm/java-11-openjdk-${::architecture}"'
-      elsif os[:release] == '16.04' || os[:release] =~ %r{9}
+      elsif os[:release] == '16.04' || os[:release].start_with?('9')
         '"/usr/lib/jvm/java-8-openjdk-${::architecture}"'
       else
         '"/usr/lib/jvm/java-7-openjdk-${::architecture}"'
       end
-    elsif os[:family].match?(%r{redhat})
+    elsif os[:family].include?('redhat')
       '"/etc/alternatives/java_sdk"'
     else
       'undef'
