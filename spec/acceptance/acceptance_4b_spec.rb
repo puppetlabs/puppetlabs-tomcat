@@ -2,7 +2,7 @@
 
 require 'spec_helper_acceptance'
 
-stop_test = (UNSUPPORTED_PLATFORMS.any? { |up| os[:family] == up } || SKIP_TOMCAT_8)
+stop_test = SKIP_TOMCAT_8
 
 describe 'Use two realms within a configuration', docker: true, unless: stop_test do
   after :all do

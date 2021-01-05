@@ -36,7 +36,7 @@ describe 'tomcat::config::server::context', type: :define do
     end
 
     changes = [
-      'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war', # rubocop:disable Metrics/LineLength
+      'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war', # rubocop:disable Layout/LineLength
       'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/path \'/myapp\'',
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/foobar',
     ]
@@ -66,8 +66,8 @@ describe 'tomcat::config::server::context', type: :define do
     end
 
     changes = [
-      'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'exampleapp.war\']/#attribute/docBase exampleapp.war', # rubocop:disable Metrics/LineLength
-      'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'exampleapp.war\']/#attribute/path \'/exampleapp\'', # rubocop:disable Metrics/LineLength
+      'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'exampleapp.war\']/#attribute/docBase exampleapp.war', # rubocop:disable Layout/LineLength
+      'set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'exampleapp.war\']/#attribute/path \'/exampleapp\'', # rubocop:disable Layout/LineLength
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'exampleapp.war\']/#attribute/foobar',
     ]
     it {

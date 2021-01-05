@@ -108,7 +108,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     it do
       is_expected.to contain_file('/opt/apache-tomcat/test/conf/users.xml').with('ensure' => 'file', 'owner' => 'tomcat', 'group' => 'tomcat',
                                                                                  'mode' => '0640', 'replace' => false,
-                                                                                 'content' => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>').that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]') # rubocop:disable Metrics/LineLength
+                                                                                 'content' => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>').that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]') # rubocop:disable Layout/LineLength
     end
   end
   context 'Remove User' do

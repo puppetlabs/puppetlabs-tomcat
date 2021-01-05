@@ -57,7 +57,7 @@ describe 'tomcat::config::server::valve', type: :define do
         }
       end
 
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       changes = [
         'defnode valve Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'/var/www/foo\']/Valve[#attribute/className=\'org.apache.catalina.valves.AccessLogValve\'][#attribute/prefix=\'localhost_access_log\'][#attribute/suffix=\'.txt\'] \'\'',
         'set $valve/#attribute/className \'org.apache.catalina.valves.AccessLogValve\'',
@@ -67,7 +67,7 @@ describe 'tomcat::config::server::valve', type: :define do
         'rm $valve/#attribute/foo',
         'rm $valve/#attribute/bar',
       ]
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
       it {
         is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-valve').with(
           'lens'    => 'Xml.lns',

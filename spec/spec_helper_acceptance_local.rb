@@ -92,14 +92,9 @@ TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '7.0.85'
 TOMCAT_LEGACY_SOURCE = "http://archive.apache.org/dist/tomcat/tomcat-7/v#{TOMCAT_LEGACY_VERSION}/bin/apache-tomcat-#{TOMCAT_LEGACY_VERSION}.tar.gz"
 SAMPLE_WAR = 'http://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'
 
-UNSUPPORTED_PLATFORMS = ['windows', 'solaris', 'darwin'].freeze
-
-# Tomcat 7 needs java 1.6 or newer
-SKIP_TOMCAT_7 = false
-
 confine_8_array = [
-  (os[:family] =~ %r{redhat}            &&  os[:release] =~ %r{5}),
-  (os[:family] =~ %r{suse}              &&  os[:release] =~ %r{11}),
+  (os[:family].include?('redhat') &&  os[:release].start_with?('5')),
+  (os[:family].include?('suse')   &&  os[:release].start_with?('11')),
 ]
 
 # Tomcat 8 needs java 1.7 or newer
