@@ -31,11 +31,6 @@ spec/spec_helper.rb:
         - puppet6
         provision_list:
         - travis_ub_6
-    - collection:
-        puppet_collection:
-        - puppet5
-        provision_list:
-        - travis_ub_5
   simplecov: true
   notifications:
     slack:
