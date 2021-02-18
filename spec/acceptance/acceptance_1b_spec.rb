@@ -43,27 +43,27 @@ describe 'Acceptance case one', unless: stop_test do
             cleanup      => false,
             path         => "/opt/apache-tomcat/bin/commons-daemon-native.tar.gz",
             extract_path => "/opt/apache-tomcat/bin",
-            creates      => "/opt/apache-tomcat/bin/commons-daemon-1.2.3-native-src",
+            creates      => "/opt/apache-tomcat/bin/commons-daemon-1.2.4-native-src",
           }
           -> exec { 'configure jsvc':
             command  => "JAVA_HOME=${java_home} configure --with-java=${java_home}",
-            creates  => "/opt/apache-tomcat/bin/commons-daemon-1.2.3-native-src/unix/Makefile",
-            cwd      => "/opt/apache-tomcat/bin/commons-daemon-1.2.3-native-src/unix",
-            path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-1.2.3-native-src/unix",
+            creates  => "/opt/apache-tomcat/bin/commons-daemon-1.2.4-native-src/unix/Makefile",
+            cwd      => "/opt/apache-tomcat/bin/commons-daemon-1.2.4-native-src/unix",
+            path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-1.2.4-native-src/unix",
             require  => [ Class['gcc'], Class['java'] ],
             provider => shell,
           }
           -> exec { 'make jsvc':
             command  => 'make',
-            creates  => "/opt/apache-tomcat/bin/commons-daemon-1.2.3-native-src/unix/jsvc",
-            cwd      => "/opt/apache-tomcat/bin/commons-daemon-1.2.3-native-src/unix",
-            path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-1.2.3-native-src/unix",
+            creates  => "/opt/apache-tomcat/bin/commons-daemon-1.2.4-native-src/unix/jsvc",
+            cwd      => "/opt/apache-tomcat/bin/commons-daemon-1.2.4-native-src/unix",
+            path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-1.2.4-native-src/unix",
             provider => shell,
           }
           -> file { 'jsvc':
             ensure => link,
             path   => "/opt/apache-tomcat/bin/jsvc",
-            target => "/opt/apache-tomcat/bin/commons-daemon-1.2.3-native-src/unix/jsvc",
+            target => "/opt/apache-tomcat/bin/commons-daemon-1.2.4-native-src/unix/jsvc",
           }
         }
 
