@@ -72,7 +72,6 @@
     {
       "operatingsystem": "SLES",
       "operatingsystemrelease": [
-        "11",
         "12",
         "15"
       ]
