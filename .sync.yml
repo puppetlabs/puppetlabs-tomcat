@@ -23,7 +23,13 @@
   notifications:
     slack:
       secure: l/MKqMgGSmyUUVfGyJnNA23atn1komaEvl3GsFz3e4MJsmLW4eOqFbszrcbQafrT3WdClYUmv1GaJT1OJTsXfV5kHL5TUp2Q7R372mtYYlyP13b0AqyDoQX9DyrGpo6oA5NDvQG4ygL1wxEhoqHohAWyjusG9Z5/duiO57K6Ls0=
-
+  Gemfile:
+  optional:
+    ":development":
+    - gem: rspec-retry
+      version: '= 0.4.5'
+      platforms: ruby
+      
 .gitpod.Dockerfile:
   unmanaged: false
 .gitpod.yml:
