@@ -439,4 +439,20 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/webapps') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/work') }
   end
+  context 'manage service init with service_name' do
+    let :facts do
+      default_facts
+    end
+    let :params do
+      {
+        source_url: 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
+        manage_service: true,
+        use_jsvc: false,
+        use_init: true,
+        service_name: 'tomcat-default',
+      }
+    end
+
+    it { is_expected.to contain_service('tomcat-default') }
+  end
 end

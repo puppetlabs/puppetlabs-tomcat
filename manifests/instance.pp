@@ -43,6 +43,8 @@
 #   ```
 # @param copy_from_home_mode
 #   Specifies the file mode when copying the initial config files from `catalina_home` to `catalina_base`. Valid options: a string containing a standard Linux mode.
+# @param service_name
+#   Name of the service when managing the service
 # @param install_from_source
 #   Specifies whether or not the instance should be installed from source.
 # @param source_url
@@ -75,6 +77,7 @@ define tomcat::instance (
   $manage_copy_from_home  = true,
   $copy_from_home_list    = undef,
   $copy_from_home_mode    = '0660',
+  $service_name           = undef,
 
   #used for single installs. Deprecated.
   $install_from_source    = undef,
@@ -203,6 +206,7 @@ define tomcat::instance (
   }
   if $_manage_service {
     tomcat::service { $name:
+      service_name  => $service_name,
       catalina_home => $_catalina_home,
       catalina_base => $_catalina_base,
       java_home     => $java_home,
