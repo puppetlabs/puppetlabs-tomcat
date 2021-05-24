@@ -2074,6 +2074,7 @@ The following parameters are available in the `tomcat::instance` defined type:
 * [`manage_copy_from_home`](#manage_copy_from_home)
 * [`copy_from_home_list`](#copy_from_home_list)
 * [`copy_from_home_mode`](#copy_from_home_mode)
+* [`service_name`](#service_name)
 * [`install_from_source`](#install_from_source)
 * [`source_url`](#source_url)
 * [`source_strip_first_dir`](#source_strip_first_dir)
@@ -2231,6 +2232,14 @@ Data type: `Any`
 Specifies the file mode when copying the initial config files from `catalina_home` to `catalina_base`. Valid options: a string containing a standard Linux mode.
 
 Default value: `'0660'`
+
+##### <a name="service_name"></a>`service_name`
+
+Data type: `Any`
+
+Name of the service when managing the service
+
+Default value: ``undef``
 
 ##### <a name="install_from_source"></a>`install_from_source`
 

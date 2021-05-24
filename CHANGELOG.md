@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v5.1.0) (2021-05-24)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v5.0.0...v5.1.0)
+
+### Added
+
+- Add service\_name parameter to tomcat::instance [\#446](https://github.com/puppetlabs/puppetlabs-tomcat/pull/446) ([treydock](https://github.com/treydock))
+
+### Fixed
+
+- \(MODULES-10644\) Document source upgrade process [\#443](https://github.com/puppetlabs/puppetlabs-tomcat/pull/443) ([binford2k](https://github.com/binford2k))
+
 ## [v5.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v5.0.0) (2021-02-27)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.3.0...v5.0.0)
