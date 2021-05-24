@@ -46,3 +46,4 @@ Gemfile:
     - gem: rspec-retry
       version: '= 0.4.5'
       platforms: ruby
+    - gem: github_changelog_generator
