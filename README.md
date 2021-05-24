@@ -115,20 +115,20 @@ tomcat::config::server::connector { 'tomcat7-ajp':
 
 ### I want to upgrade the version of Tomcat to use
 
-See information about running multiple versions above. Instead of upgrading in-place, install a second version to a new directory and then point the `catalina_home` of your instance to it. This gives you the ability to validate and rollback if needed. After validation, you may remove the older instance if you'd like.
+See information about running multiple versions above. Instead of upgrading in-place, install a second version to a new directory and then point the `catalina_home` of your instance to it. This gives you the ability to validate and rollback if needed. After validation, you may remove the older instance if you'd like. The links can be updated in order to match programmer preferences:
 
 ```puppet
 class { 'java': }
 
 tomcat::install { '/opt/tomcat/9.0.24':
-  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-9/v9.0.24/bin/apache-tomcat-9.0.24.tar.gz'
+  source_url => 'https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.24/bin/apache-tomcat-9.0.24.tar.gz'
 }
 tomcat::install { '/opt/tomcat/9.0.44':
-  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-9/v9.0.44/bin/apache-tomcat-9.0.44.tar.gz'
+  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-9/v9.0.46/bin/apache-tomcat-9.0.46.tar.gz'
 }
 tomcat::instance { 'my_tomcat_app':
 # catalina_home => '/opt/tomcat/9.0.24',
-  catalina_home => '/opt/tomcat/9.0.44',
+  catalina_home => '/opt/tomcat/9.0.46',
   catalina_base => '/opt/my_tomcat_app',
 }
 ```
