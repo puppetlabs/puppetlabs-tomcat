@@ -18,6 +18,9 @@
   unmanaged: false
 .appveyor.yml:
   delete: true
+.puppet-lint.rc:
+  extra_disabled_lint_checks:
+    - 140chars-check
 .travis.yml:
   delete: true
 changelog_since_tag: 'v5.0.0'
