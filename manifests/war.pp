@@ -28,6 +28,7 @@ define tomcat::war(
   Enum['present','absent'] $war_ensure = 'present',
   $war_name                            = undef,
   Boolean $war_purge                   = true,
+  Boolean $webapps_remove              = false,
   $war_source                          = undef,
   Boolean $allow_insecure              = false,
   $user                                = 'tomcat',
@@ -67,7 +68,7 @@ define tomcat::war(
       ensure => absent,
       force  => false,
     }
-    if $war_purge {
+    if $war_purge or $webapps_remove {
       $war_dir_name = regsubst($_war_name, '\.war$', '')
       if $war_dir_name != '' {
         file { "${_deployment_path}/${war_dir_name}":

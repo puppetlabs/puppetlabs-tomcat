@@ -196,6 +196,9 @@ describe 'Acceptance case one', unless: stop_test do
         expect(r.stdout).to match(%r{The origin server did not find a current representation for the target resource})
       end
     end
+    it 'removes war and all related files' do
+      expect(run_shell('test -d /opt/apache-tomcat/tomac8-jsvc/webapps/war_one', expect_failures: true).exit_code).to eq(1)
+    end
   end
 
   context 'remove the connector with verification' do
