@@ -1,7 +1,7 @@
 # @summary Configures roles and users in $CATALINA_BASE/conf/tomcat-users.xml or any other specified file
 #
 # @param catalina_base
-#   Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path. 
+#   Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path.
 # @param element
 #   Specifies the type of element to manage.
 # @param element_name
@@ -32,7 +32,7 @@ define tomcat::config::server::tomcat_users (
   Boolean $manage_file             = true,
   $owner                           = undef,
   $group                           = undef,
-  $password                        = undef,
+  Optional[Variant[String, Sensitive[String]]] $password = undef,
   Array $roles                     = [],
   Boolean $show_diff               = true,
 ) {
@@ -41,6 +41,7 @@ define tomcat::config::server::tomcat_users (
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
+  $password_unsensitive = if $password =~ Sensitive { $password.unwrap } else { $password }
   $_owner = pick($owner, $::tomcat::user)
   $_group = pick($group, $::tomcat::group)
 
@@ -90,7 +91,7 @@ define tomcat::config::server::tomcat_users (
     $add_entry = "set ${path}/#attribute/${element_identifier} '${_element_name}'"
     $remove_entry = undef
     if $element == 'user' {
-      $add_password = "set ${path}/#attribute/password '${password}'"
+      $add_password = "set ${path}/#attribute/password '${password_unsensitive}'"
       $add_roles = join(["set ${path}/#attribute/roles '",join($roles, ','),"'"])
     } else {
       $add_password = undef

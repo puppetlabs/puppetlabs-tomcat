@@ -38,6 +38,9 @@
   unmanaged: false
 .github/workflows/release.yml:
   unmanaged: false
+.puppet-lint.rc:
+  extra_disabled_lint_checks:
+    - 140chars-check
 .travis.yml:
   delete: true
 Gemfile:
