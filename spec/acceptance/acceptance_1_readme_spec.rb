@@ -64,34 +64,6 @@ describe 'README examples', unless: stop_test do
           'redirectPort' => '8443'
         },
       }
-
-      tomcat::install { '/opt/tomcat7':
-        source_url => '#{TOMCAT7_RECENT_SOURCE}',
-      }
-      tomcat::instance { 'tomcat7':
-        catalina_home => '/opt/tomcat7',
-      }
-      # Change tomcat 7's server and HTTP/AJP connectors
-      tomcat::config::server { 'tomcat7':
-        catalina_base => '/opt/tomcat7',
-        port          => '8105',
-      }
-      tomcat::config::server::connector { 'tomcat7-http':
-        catalina_base         => '/opt/tomcat7',
-        port                  => '8180',
-        protocol              => 'HTTP/1.1',
-        additional_attributes => {
-          'redirectPort' => '8543'
-        },
-      }
-      tomcat::config::server::connector { 'tomcat7-ajp':
-        catalina_base         => '/opt/tomcat7',
-        port                  => '8109',
-        protocol              => 'AJP/1.3',
-        additional_attributes => {
-          'redirectPort' => '8543'
-        },
-      }
     MANIFEST
     it 'applies the manifest without error' do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
