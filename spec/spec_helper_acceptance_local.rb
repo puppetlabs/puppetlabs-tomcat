@@ -59,10 +59,6 @@ end
 
 def latest_tomcat_tarball_url(version)
   require 'net/http'
-  # require 'pry'
-  
-  # binding.pry
-  
   page = Net::HTTP.get(URI("https://tomcat.apache.org/download-#{version}0.cgi"))
 
   url = ((match = page.match(%r{https?://.*?apache-tomcat-(.{4,9}).tar.gz})) && match[0])
