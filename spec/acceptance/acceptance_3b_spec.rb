@@ -12,8 +12,6 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
   end
 
   before :all do
-    require 'pry'
-    binding.pry
     run_shell("curl --retry 10 --retry-delay 15 -k -o /tmp/sample.war '#{SAMPLE_WAR}'")
   end
 
