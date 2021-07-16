@@ -155,7 +155,7 @@ jobs:
         echo STEP_START=$(date +%s) >> $GITHUB_ENV
         echo ::endgroup::
   
-  - name: Start SSH session
+    - name: Start SSH session
       uses: luchihoratiu/debug-via-ssh@main
       with:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
