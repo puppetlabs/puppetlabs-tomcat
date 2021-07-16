@@ -59,7 +59,7 @@ end
 
 def latest_tomcat_tarball_url(version)
   require 'net/http'
-  page = Net::HTTP.get(URI("http://tomcat.apache.org/download-#{version}0.cgi"))
+  page = Net::HTTP.get(URI("https://tomcat.apache.org/download-#{version}0.cgi"))
 
   url = ((match = page.match(%r{https?://.*?apache-tomcat-(.{4,9}).tar.gz})) && match[0])
   return url if url
@@ -86,7 +86,7 @@ TOMCAT9_RECENT_VERSION = ENV['TOMCAT9_RECENT_VERSION'] || latest9
 TOMCAT9_RECENT_SOURCE = latest9
 puts "TOMCAT9_RECENT_SOURCE is #{TOMCAT9_RECENT_SOURCE.inspect}"
 
-SAMPLE_WAR = 'http://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'
+SAMPLE_WAR = 'https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'
 
 confine_8_array = [
   (os[:family].include?('redhat') &&  os[:release].start_with?('5')),
