@@ -41,7 +41,7 @@ describe 'README examples', unless: stop_test do
       class { 'java': }
 
       tomcat::install { '/opt/tomcat9':
-        source_url => '#{TOMCAT9_RECENT_SOURCE}'
+        source_url => '#{TOMCAT9_RECENT_SOURCE}',
       }
       tomcat::instance { 'tomcat9-first':
         catalina_home => '/opt/tomcat9',
@@ -100,6 +100,31 @@ describe 'README examples', unless: stop_test do
     it 'is not serving a page on port 80' do
       run_shell('curl localhost:80/war_one/hello.jsp', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7
+      end
+    end
+  end
+
+  describe 'remove webapps built-in files' do
+    after :each do
+      run_shell('pkill -f tomcat', expect_failures: true)
+      run_shell('rm -rf /opt/tomcat*', expect_failures: true)
+      run_shell('rm -rf /opt/apache-tomcat*', expect_failures: true)
+    end
+    { '7' => TOMCAT7_RECENT_SOURCE, '8' => TOMCAT8_RECENT_SOURCE, '9' => TOMCAT9_RECENT_SOURCE }.each do |key, value|
+      context "when tomcat #{key} is installed remove_default_webapps => ['docs', 'examples']" do
+        install_tomcat = <<-MANIFEST
+        tomcat::install { '/opt/tomcat#{key}':
+          source_url => '#{value}',
+          remove_default_webapps => ['docs', 'examples'],
+        }
+        MANIFEST
+        it 'webapps should not contain the removed folder' do
+          apply_manifest(install_tomcat, catch_failures: true)
+          run_shell("ls -l /opt/tomcat#{key}/webapps") do |r|
+            expect(r.stdout).not_to include('docs')
+            expect(r.stdout).not_to include('examples')
+          end
+        end
       end
     end
   end
