@@ -5,7 +5,7 @@ class { '::java': }
 
 tomcat::instance { 'mycat':
   catalina_base => '/opt/apache-tomcat/mycat',
-  source_url    => 'https://downloads.apache.org/tomcat/tomcat-8/v8.5.69/bin/apache-tomcat-8.5.69-deployer.tar.gz',
+  source_url    => 'https://downloads.apache.org/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53-deployer.tar.gz',
 }
 -> tomcat::config::server::context { 'mycat-test':
   catalina_base         => '/opt/apache-tomcat/mycat',

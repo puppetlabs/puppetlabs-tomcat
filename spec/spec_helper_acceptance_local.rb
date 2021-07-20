@@ -73,7 +73,6 @@ end
 
 latest8 = latest_tomcat_tarball_url('8')
 latest9 = latest_tomcat_tarball_url('9')
-TOMCAT_LEGACY_VERSION = ENV['TOMCAT_LEGACY_VERSION'] || '7.0.85'
 # Please note that these URLs are http and therefore insecure. To remedy this you can change them to https, although some additional work may be required to match the required protocols of the server.
 TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
 TOMCAT8_RECENT_SOURCE = latest8
