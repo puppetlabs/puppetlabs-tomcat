@@ -41,7 +41,7 @@ The simplest way to get Tomcat up and running with the tomcat module is to insta
 
 ```puppet
 tomcat::install { '/opt/tomcat':
-  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.x/bin/apache-tomcat-7.0.x.tar.gz',
+  source_url => 'https://www-us.apache.org/dist/tomcat/tomcat-8/v8.0.x/bin/apache-tomcat-8.0.x.tar.gz',
 }
 tomcat::instance { 'default':
   catalina_home => '/opt/tomcat',
@@ -82,33 +82,6 @@ tomcat::config::server::connector { 'tomcat9-second-http':
   },
 }
 
-tomcat::install { '/opt/tomcat7':
-  source_url => 'http://www-eu.apache.org/dist/tomcat/tomcat-7/v7.0.x/bin/apache-tomcat-7.0.x.tar.gz',
-}
-tomcat::instance { 'tomcat7':
-  catalina_home => '/opt/tomcat7',
-}
-# Change tomcat 7's server and HTTP/AJP connectors
-tomcat::config::server { 'tomcat7':
-  catalina_base => '/opt/tomcat7',
-  port          => '8105',
-}
-tomcat::config::server::connector { 'tomcat7-http':
-  catalina_base         => '/opt/tomcat7',
-  port                  => '8180',
-  protocol              => 'HTTP/1.1',
-  additional_attributes => {
-    'redirectPort' => '8543'
-  },
-}
-tomcat::config::server::connector { 'tomcat7-ajp':
-  catalina_base         => '/opt/tomcat7',
-  port                  => '8109',
-  protocol              => 'AJP/1.3',
-  additional_attributes => {
-    'redirectPort' => '8543'
-  },
-}
 ```
 
 > Note: look up the correct version you want to install on the [version list](http://tomcat.apache.org/whichversion.html).
