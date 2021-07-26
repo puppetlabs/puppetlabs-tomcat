@@ -1769,7 +1769,7 @@ Default value: ``undef``
 
 ##### <a name="password"></a>`password`
 
-Data type: `Any`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 Specifies a password for user elements. Valid options: a string.
 
@@ -1923,6 +1923,7 @@ The following parameters are available in the `tomcat::install` defined type:
 * [`package_ensure`](#package_ensure)
 * [`package_name`](#package_name)
 * [`package_options`](#package_options)
+* [`remove_default_webapps`](#remove_default_webapps)
 
 ##### <a name="catalina_home"></a>`catalina_home`
 
@@ -2045,6 +2046,14 @@ Default value: ``undef``
 Data type: `Any`
 
 Specify additional options to use on the generated package resource. See the documentation of the [package](https://docs.puppetlabs.com/references/latest/type.html#package-attribute-install_options) for possible values.
+
+Default value: ``undef``
+
+##### <a name="remove_default_webapps"></a>`remove_default_webapps`
+
+Data type: `Optional[Array[String]]`
+
+
 
 Default value: ``undef``
 

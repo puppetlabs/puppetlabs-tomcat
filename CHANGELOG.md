@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v6.0.0) (2021-07-26)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v5.1.0...v6.0.0)
+
+### Changed
+
+- \[IAC-1690\] - Remove tomcat7 as is EOL [\#459](https://github.com/puppetlabs/puppetlabs-tomcat/pull/459) ([daianamezdrea](https://github.com/daianamezdrea))
+
+### Added
+
+- \(MODULES-9520\) Allow removal of webapps [\#456](https://github.com/puppetlabs/puppetlabs-tomcat/pull/456) ([daianamezdrea](https://github.com/daianamezdrea))
+- Accept Datatype Sensitive for Secrets [\#454](https://github.com/puppetlabs/puppetlabs-tomcat/pull/454) ([cocker-cc](https://github.com/cocker-cc))
+
+### Fixed
+
+- \[MODULES-9781\] - Add examples for catalina attributes and properties [\#453](https://github.com/puppetlabs/puppetlabs-tomcat/pull/453) ([daianamezdrea](https://github.com/daianamezdrea))
+
 ## [v5.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v5.1.0) (2021-05-24)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v5.0.0...v5.1.0)
