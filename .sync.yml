@@ -1,28 +1,6 @@
 ---
 ".gitlab-ci.yml":
-  deploy_to_forge:
-    enabled: false
-  branches:
-    - release
-  user: puppet
-  secure: ''
-  use_litmus: true
-  litmus:
-    provision_list:
-    - ---travis_el
-    - travis_deb
-    - travis_el7
-    - travis_el8
-    complex:
-    - collection:
-        puppet_collection:
-        - puppet6
-        provision_list:
-        - travis_ub_6
-  simplecov: true
-  notifications:
-    slack:
-      secure: l/MKqMgGSmyUUVfGyJnNA23atn1komaEvl3GsFz3e4MJsmLW4eOqFbszrcbQafrT3WdClYUmv1GaJT1OJTsXfV5kHL5TUp2Q7R372mtYYlyP13b0AqyDoQX9DyrGpo6oA5NDvQG4ygL1wxEhoqHohAWyjusG9Z5/duiO57K6Ls0=
+  delete: true
 .gitpod.Dockerfile:
   unmanaged: false
 .gitpod.yml:
@@ -38,11 +16,14 @@
   unmanaged: false
 .github/workflows/release.yml:
   unmanaged: false
+.appveyor.yml:
+  delete: true
 .puppet-lint.rc:
   extra_disabled_lint_checks:
     - 140chars-check
 .travis.yml:
   delete: true
+changelog_since_tag: 'v5.0.0'
 Gemfile:
   optional:
     ":development":

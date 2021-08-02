@@ -1,3 +1,129 @@
+## [v5.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v5.0.0) (2021-02-27)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.3.0...v5.0.0)
+
+### Changed
+
+- pdksync - Remove Puppet 5 from testing and bump minimal version to 6.0.0 [\#431](https://github.com/puppetlabs/puppetlabs-tomcat/pull/431) ([carabasdaniel](https://github.com/carabasdaniel))
+
+## [v4.3.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.3.0) (2020-12-14)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.2.0...v4.3.0)
+
+### Added
+
+- pdksync - \(feat\) - Add support for Puppet 7 [\#422](https://github.com/puppetlabs/puppetlabs-tomcat/pull/422) ([daianamezdrea](https://github.com/daianamezdrea))
+- Refactor valve types [\#415](https://github.com/puppetlabs/puppetlabs-tomcat/pull/415) ([h-haaks](https://github.com/h-haaks))
+
+### Fixed
+
+- \(IAC-1236\) Adding SLES OSs for release\_checks [\#417](https://github.com/puppetlabs/puppetlabs-tomcat/pull/417) ([pmcmaw](https://github.com/pmcmaw))
+- \(IAC-1214\) - Move SKIP\_GCC to test file [\#416](https://github.com/puppetlabs/puppetlabs-tomcat/pull/416) ([pmcmaw](https://github.com/pmcmaw))
+
+## [v4.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.2.0) (2020-08-24)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.1.0...v4.2.0)
+
+### Added
+
+- pdksync - \(IAC-973\) - Update travis/appveyor to run on new default branch `main` [\#405](https://github.com/puppetlabs/puppetlabs-tomcat/pull/405) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- Increase puppetlabs/concat lower bound [\#404](https://github.com/puppetlabs/puppetlabs-tomcat/pull/404) ([bFekete](https://github.com/bFekete))
+
+## [v4.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.1.0) (2020-07-07)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.0.0...v4.1.0)
+
+### Added
+
+- \(IAC-746\) - Add ubuntu 20.04 support [\#399](https://github.com/puppetlabs/puppetlabs-tomcat/pull/399) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- Allow override status\_command in case of use\_init [\#400](https://github.com/puppetlabs/puppetlabs-tomcat/pull/400) ([leroyguillaume](https://github.com/leroyguillaume))
+
+## [v4.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.0.0) (2019-12-11)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v3.1.0...v4.0.0)
+
+### Changed
+
+- \(MAINT\) Make ensurable enums consistent [\#367](https://github.com/puppetlabs/puppetlabs-tomcat/pull/367) ([smortex](https://github.com/smortex))
+
+### Added
+
+- \(FM-8699\) - Addition of Support for CentOS 8 [\#374](https://github.com/puppetlabs/puppetlabs-tomcat/pull/374) ([david22swan](https://github.com/david22swan))
+- Add Resources support [\#368](https://github.com/puppetlabs/puppetlabs-tomcat/pull/368) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- Completely remove tomcat::install\_from\_source [\#366](https://github.com/puppetlabs/puppetlabs-tomcat/pull/366) ([smortex](https://github.com/smortex))
+
+## [v3.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v3.1.0) (2019-09-13)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v3.0.0...v3.1.0)
+
+### Added
+
+- FM-8413 add support on Debian10 [\#361](https://github.com/puppetlabs/puppetlabs-tomcat/pull/361) ([lionce](https://github.com/lionce))
+- \(FM-8232\) Convert to litmus [\#360](https://github.com/puppetlabs/puppetlabs-tomcat/pull/360) ([tphoney](https://github.com/tphoney))
+- FM-8050 - add redhat8 support [\#354](https://github.com/puppetlabs/puppetlabs-tomcat/pull/354) ([lionce](https://github.com/lionce))
+
+### Fixed
+
+- add show diff to all augeas calls [\#322](https://github.com/puppetlabs/puppetlabs-tomcat/pull/322) ([johmicd](https://github.com/johmicd))
+
+## [v3.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v3.0.0) (2019-05-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.5.0...v3.0.0)
+
+### Changed
+
+- pdksync - \(MODULES-8444\) - Raise lower Puppet bound [\#347](https://github.com/puppetlabs/puppetlabs-tomcat/pull/347) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- \(MODULES-8817\) - Update to account for loss of SVN Tomcat archive [\#344](https://github.com/puppetlabs/puppetlabs-tomcat/pull/344) ([david22swan](https://github.com/david22swan))
+
+## [2.5.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/2.5.0) (2019-01-29)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.4.0...2.5.0)
+
+### Added
+
+- \(MODULES-8147\) - Add SLES 15 support [\#328](https://github.com/puppetlabs/puppetlabs-tomcat/pull/328) ([eimlav](https://github.com/eimlav))
+- Add context parameter type \(re-submit \#205\) [\#317](https://github.com/puppetlabs/puppetlabs-tomcat/pull/317) ([joshbeard](https://github.com/joshbeard))
+
+### Fixed
+
+- \(maint\) - Ubuntu 18.04 issues fix [\#333](https://github.com/puppetlabs/puppetlabs-tomcat/pull/333) ([david22swan](https://github.com/david22swan))
+- pdksync - \(FM-7655\) Fix rubygems-update for ruby \< 2.3 [\#330](https://github.com/puppetlabs/puppetlabs-tomcat/pull/330) ([tphoney](https://github.com/tphoney))
+- \[MODULES-7547\] Update globalnamingresource class, and add tests [\#305](https://github.com/puppetlabs/puppetlabs-tomcat/pull/305) ([jplindquist](https://github.com/jplindquist))
+
+## [2.4.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/2.4.0) (2018-10-03)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.3.0...2.4.0)
+
+### Added
+
+- pdksync - \(FM-7392\) - Puppet 6 Testing Changes [\#321](https://github.com/puppetlabs/puppetlabs-tomcat/pull/321) ([pmcmaw](https://github.com/pmcmaw))
+- pdksync - \(MODULES-7658\) use beaker4 in puppet-module-gems [\#315](https://github.com/puppetlabs/puppetlabs-tomcat/pull/315) ([tphoney](https://github.com/tphoney))
+- \(FM-7239\) - Addition of support for Ubuntu 18.04 [\#306](https://github.com/puppetlabs/puppetlabs-tomcat/pull/306) ([david22swan](https://github.com/david22swan))
+- adding wait\_timeout var for init [\#303](https://github.com/puppetlabs/puppetlabs-tomcat/pull/303) ([ackiejoe](https://github.com/ackiejoe))
+- \[FM-7050\] Addition of support for Debian 9 on Tomcat [\#300](https://github.com/puppetlabs/puppetlabs-tomcat/pull/300) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- pdksync - \(MODULES-6805\) metadata.json shows support for puppet 6 [\#319](https://github.com/puppetlabs/puppetlabs-tomcat/pull/319) ([tphoney](https://github.com/tphoney))
+- pdksync - \(MODULES-7705\) - Bumping stdlib dependency from \< 5.0.0 to \< 6.0.0 [\#314](https://github.com/puppetlabs/puppetlabs-tomcat/pull/314) ([pmcmaw](https://github.com/pmcmaw))
+- \(MODULES-7633\) - Update README Limitations section [\#307](https://github.com/puppetlabs/puppetlabs-tomcat/pull/307) ([eimlav](https://github.com/eimlav))
+- \(maint\) Double retry count to workaround slow startups [\#301](https://github.com/puppetlabs/puppetlabs-tomcat/pull/301) ([hunner](https://github.com/hunner))
+- \[FM-6967\] Removal of unsupported OS from tomcat [\#299](https://github.com/puppetlabs/puppetlabs-tomcat/pull/299) ([david22swan](https://github.com/david22swan))
+- Add rspec retry gem to sync file [\#295](https://github.com/puppetlabs/puppetlabs-tomcat/pull/295) ([HelenCampbell](https://github.com/HelenCampbell))
+- \#puppethack work if resource title contains spaces [\#287](https://github.com/puppetlabs/puppetlabs-tomcat/pull/287) ([rheijkoop](https://github.com/rheijkoop))
+
 ## 2.3.0
 ### Summary
 A release that introduced the module to the PDK through conversion. Also a dependancy bump on the archive module along with a small fix.
