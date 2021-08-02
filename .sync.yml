@@ -31,3 +31,5 @@ Gemfile:
       version: '= 0.4.5'
       platforms: ruby
     - gem: github_changelog_generator
+      git: 'https://github.com/sheenaajay/github-changelog-generator'
+      ref: 'rateapilimit'
