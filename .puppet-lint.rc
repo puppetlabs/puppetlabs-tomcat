@@ -1,1 +1,2 @@
 --relative
+--ignore-paths=examples/*

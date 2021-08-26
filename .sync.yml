@@ -24,6 +24,9 @@
 .travis.yml:
   delete: true
 changelog_since_tag: 'v5.0.0'
+Rakefile:
+  linter_exclusions:
+    - examples/*
 Gemfile:
   optional:
     ":development":
