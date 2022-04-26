@@ -27,7 +27,6 @@ define tomcat::config::context (
       incl      => "${_catalina_base}/conf/context.xml",
       changes   => $changes,
       show_diff => $show_diff,
-
     }
   }
 }

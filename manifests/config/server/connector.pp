@@ -92,11 +92,11 @@ define tomcat::config::server::connector (
     }
 
     $changes = delete_undef_values(flatten([
-      $__purge_connectors,
-      $_port,
-      $_protocol_change,
-      $_additional_attributes,
-      $_attributes_to_remove,
+          $__purge_connectors,
+          $_port,
+          $_protocol_change,
+          $_additional_attributes,
+          $_attributes_to_remove,
     ]))
   }
 

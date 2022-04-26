@@ -82,13 +82,13 @@ define tomcat::config::context::environment (
     }
 
     $changes = delete_undef_values(flatten([
-      $set_name,
-      $set_type,
-      $set_value,
-      $set_override,
-      $set_description,
-      $set_additional_attributes,
-      $rm_attributes_to_remove,
+          $set_name,
+          $set_type,
+          $set_value,
+          $set_override,
+          $set_description,
+          $set_additional_attributes,
+          $rm_attributes_to_remove,
     ]))
   }
 

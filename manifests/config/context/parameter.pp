@@ -32,7 +32,6 @@ define tomcat::config::context::parameter (
     $changes = "rm ${base_path}"
   }
   else {
-
     if empty($value) {
       fail('$value must be specified')
     }
@@ -54,10 +53,10 @@ define tomcat::config::context::parameter (
     }
 
     $changes = delete_undef_values(flatten([
-      $set_name,
-      $set_value,
-      $set_override,
-      $set_description,
+          $set_name,
+          $set_value,
+          $set_override,
+          $set_description,
     ]))
   }
 

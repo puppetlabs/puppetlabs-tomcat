@@ -85,7 +85,7 @@ define tomcat::config::server::resources (
   } else {
     $_container = [
       "set ${parent} ''",
-      "set ${path} #empty"
+      "set ${path} #empty",
     ]
 
     if ! empty($additional_attributes) {

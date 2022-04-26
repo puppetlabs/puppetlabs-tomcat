@@ -64,8 +64,8 @@ define tomcat::config::server::globalnamingresource (
     }
 
     $changes = delete_undef_values(flatten([
-      $set_additional_attributes,
-      $rm_attributes_to_remove,
+          $set_additional_attributes,
+          $rm_attributes_to_remove,
     ]))
 
     # (MODULES-3353) This should use $set_name in $changes like

@@ -33,11 +33,12 @@ class tomcat (
   Boolean $manage_base       = true,
   Boolean $manage_properties = true,
 ) {
-
   case $::osfamily {
     'windows','Solaris','Darwin': {
       fail("Unsupported osfamily: ${::osfamily}")
     }
-    default: { }
+    default: {
+      # Empty
+    }
   }
 }

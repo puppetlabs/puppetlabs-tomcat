@@ -103,12 +103,12 @@ define tomcat::config::server::engine (
   }
 
   $changes = delete_undef_values([
-    $_name_change,
-    $_default_host,
-    $_background_processor_delay,
-    $_class_name,
-    $_jvm_route,
-    $_start_stop_threads,
+      $_name_change,
+      $_default_host,
+      $_background_processor_delay,
+      $_class_name,
+      $_jvm_route,
+      $_start_stop_threads,
   ])
 
   augeas { "${_catalina_base}-${parent_service}-engine":

@@ -60,12 +60,11 @@ define tomcat::config::context::resource (
       $rm_attributes_to_remove = undef
     }
 
-
     $changes = delete_undef_values(flatten([
-      $set_name,
-      $set_type,
-      $set_additional_attributes,
-      $rm_attributes_to_remove,
+          $set_name,
+          $set_type,
+          $set_additional_attributes,
+          $rm_attributes_to_remove,
     ]))
   }
 
