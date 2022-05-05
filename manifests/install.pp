@@ -50,7 +50,6 @@ define tomcat::install (
   $manage_home                    = undef,
   Optional[Array[String]] $remove_default_webapps     = undef,
 
-
   # package options
   $package_ensure                 = undef,
   $package_name                   = undef,
@@ -67,13 +66,13 @@ define tomcat::install (
   if $install_from_source {
     if $_manage_user {
       ensure_resource('user', $_user, {
-        ensure => present,
-        gid    => $_group,
+          ensure => present,
+          gid    => $_group,
       })
     }
     if $_manage_group {
       ensure_resource('group', $_group, {
-        ensure => present,
+          ensure => present,
       })
     }
     tomcat::install::source { $name:
@@ -96,7 +95,7 @@ define tomcat::install (
 
   if $remove_default_webapps {
     $remove_default_webapps.each |$folder| {
-      file{"remove ${folder}" :
+      file { "remove ${folder}" :
         ensure  => absent,
         path    => "${catalina_home}/webapps/${folder}",
         recurse => true,
@@ -105,7 +104,7 @@ define tomcat::install (
         require => $install_from_source ? {
           true    => Resource['tomcat::install::source', $name],
           default => Resource['tomcat::install::package', $package_name]
-        }
+        },
       }
     }
   }

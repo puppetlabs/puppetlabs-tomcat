@@ -36,7 +36,6 @@ define tomcat::config::server::tomcat_users (
   Array $roles                     = [],
   Boolean $show_diff               = true,
 ) {
-
   if versioncmp($::augeasversion, '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
@@ -69,13 +68,13 @@ define tomcat::config::server::tomcat_users (
 
   if $manage_file {
     ensure_resource('file', $_file, {
-      ensure  => file,
-      path    => $_file,
-      replace => false,
-      content => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>',
-      owner   => $_owner,
-      group   => $_group,
-      mode    => '0640',
+        ensure  => file,
+        path    => $_file,
+        replace => false,
+        content => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>',
+        owner   => $_owner,
+        group   => $_group,
+        mode    => '0640',
     })
     File[$_file] -> Augeas["${catalina_base}-tomcat_users-${element}-${_element_name}-${name}"]
   }
@@ -107,5 +106,4 @@ define tomcat::config::server::tomcat_users (
     changes   => $changes,
     show_diff => $show_diff,
   }
-
 }

@@ -60,7 +60,7 @@ define tomcat::config::server::valve (
     $_uniqueness_attributes = $uniqueness_attributes
   }
 
-  $attributes = {'className' => $_class_name} + $additional_attributes
+  $attributes = { 'className' => $_class_name } + $additional_attributes
 
   $augeas_filter = $_uniqueness_attributes.map |$attr| {
     "[#attribute/${attr}='${attributes[$attr]}']"
@@ -100,9 +100,9 @@ define tomcat::config::server::valve (
     }
 
     $changes = delete_undef_values(flatten([
-      $defnode_valve,
-      $set_attributes,
-      $rm_attributes,
+          $defnode_valve,
+          $set_attributes,
+          $rm_attributes,
     ]))
   }
 

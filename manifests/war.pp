@@ -21,7 +21,7 @@
 # @param group
 #   The 'group' owner of the tomcat war file. 
 #
-define tomcat::war(
+define tomcat::war (
   $catalina_base                       = undef,
   $app_base                            = undef,
   $deployment_path                     = undef,

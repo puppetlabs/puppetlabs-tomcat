@@ -122,9 +122,9 @@ define tomcat::instance (
     # it must exist. tomcat::install::source will take care of creating base.
     if $_catalina_base != $_catalina_home and $_manage_base {
       ensure_resource('file',$_catalina_home, {
-        ensure => directory,
-        owner  => $_user,
-        group  => $_group,
+          ensure => directory,
+          owner  => $_user,
+          group  => $_group,
       })
     }
     # XXX This is for backwards compatibility. Declare a tomcat install, but install
@@ -148,13 +148,13 @@ define tomcat::instance (
     if $_catalina_home != $_catalina_base {
       if $_manage_user {
         ensure_resource('user', $_user, {
-          ensure => present,
-          gid    => $_group,
+            ensure => present,
+            gid    => $_group,
         })
       }
       if $_manage_group {
         ensure_resource('group', $_group, {
-          ensure => present,
+            ensure => present,
         })
       }
 

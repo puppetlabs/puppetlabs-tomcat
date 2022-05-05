@@ -31,6 +31,14 @@ Rakefile:
     - bundle/**/*.pp
     - pkg/**/*.pp
     - spec/**/*.pp
+  extra_disabled_lint_checks:
+    - parameter_types
+    - parameter_documentation
+    - topscope_variable
+    - top_scope_facts
+    - relative_classname_inclusion
+    - legacy_facts
+    - selector_inside_resource
 Gemfile:
   optional:
     ":development":

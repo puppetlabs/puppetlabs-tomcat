@@ -43,7 +43,7 @@ define tomcat::config::context::manager (
     if ! empty($additional_attributes) {
       $set_additional_attributes =
         suffix(prefix(join_keys_to_values($additional_attributes, " '"),
-          "set ${base_path}/#attribute/"), "'")
+      "set ${base_path}/#attribute/"), "'")
     } else {
       $set_additional_attributes = undef
     }
@@ -55,9 +55,9 @@ define tomcat::config::context::manager (
     }
 
     $changes = delete_undef_values(flatten([
-      $set_name,
-      $set_additional_attributes,
-      $rm_attributes_to_remove,
+          $set_name,
+          $set_additional_attributes,
+          $rm_attributes_to_remove,
     ]))
   }
 
