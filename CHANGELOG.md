@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v6.2.0) (2022-05-16)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v6.1.0...v6.2.0)
+
+### Added
+
+- Update puppet-archive dependency [\#477](https://github.com/puppetlabs/puppetlabs-tomcat/pull/477) ([h4l](https://github.com/h4l))
+- pdksync - \(IAC-1753\) - Add Support for AlmaLinux 8 [\#476](https://github.com/puppetlabs/puppetlabs-tomcat/pull/476) ([david22swan](https://github.com/david22swan))
+- pdksync - \(IAC-1751\) - Add Support for Rocky 8 [\#475](https://github.com/puppetlabs/puppetlabs-tomcat/pull/475) ([david22swan](https://github.com/david22swan))
+- pdksync - \(MAINT\) - Add Labeller and Stale GHA Workflows [\#481](https://github.com/puppetlabs/puppetlabs-tomcat/pull/481) ([chelnak](https://github.com/chelnak))
+
+### Fixed
+
+- pdk - \(MAINT\) - Update PDK [\#488](https://github.com/puppetlabs/puppetlabs-tomcat/pull/488) ([david22swan](https://github.com/david22swan))
+- pdksync - \(MAINT\) - Update Labeller Trigger [\#486](https://github.com/puppetlabs/puppetlabs-tomcat/pull/486) ([chelnak](https://github.com/chelnak))
+- pdksync - \(GH-C&T-7\) - Remove code specific to unsupported OSs [\#482](https://github.com/puppetlabs/puppetlabs-tomcat/pull/482) ([david22swan](https://github.com/david22swan))
+- pdksync - \(GH-iac-334\) Remove Support for Ubuntu 14.04/16.04 [\#480](https://github.com/puppetlabs/puppetlabs-tomcat/pull/480) ([david22swan](https://github.com/david22swan))
+- pdksync - \(IAC-1787\) Remove Support for CentOS 6 [\#478](https://github.com/puppetlabs/puppetlabs-tomcat/pull/478) ([david22swan](https://github.com/david22swan))
+- pdksync - \(IAC-1598\) - Remove Support for Debian 8 [\#474](https://github.com/puppetlabs/puppetlabs-tomcat/pull/474) ([david22swan](https://github.com/david22swan))
+
 ## [v6.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v6.1.0) (2021-08-31)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v6.0.0...v6.1.0)
