@@ -18,6 +18,7 @@
 * [`tomcat::config::context::parameter`](#tomcatconfigcontextparameter): Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
 * [`tomcat::config::context::resource`](#tomcatconfigcontextresource): Configure Resource elements in $CATALINA_BASE/conf/context.xml
 * [`tomcat::config::context::resourcelink`](#tomcatconfigcontextresourcelink): Configure a ResourceLink element in the designated xml config.
+* [`tomcat::config::context::resources`](#tomcatconfigcontextresources): Configure Resources elements in $CATALINA_BASE/conf/context.xml
 * [`tomcat::config::context::valve`](#tomcatconfigcontextvalve): Specifies Valve elements in `${catalina_base}/conf/context.xml`
 * [`tomcat::config::properties::property`](#tomcatconfigpropertiesproperty): Manage additional entries for the properties file, typically catalina.properties
 * [`tomcat::config::server`](#tomcatconfigserver): Configure attributes for the Server element in $CATALINA_BASE/conf/server.xml
@@ -541,6 +542,83 @@ Data type: `Any`
 The fully qualified Java class name expected by the web application when it performs a lookup for this resource link.
 
 Default value: ``undef``
+
+##### <a name="additional_attributes"></a>`additional_attributes`
+
+Data type: `Hash`
+
+Specifies any additional attributes to add to the Valve. Should be a hash of the format 'attribute' => 'value'. Optional
+
+Default value: `{}`
+
+##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+
+Data type: `Array`
+
+Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
+
+Default value: `[]`
+
+##### <a name="show_diff"></a>`show_diff`
+
+Data type: `Boolean`
+
+Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
+
+Default value: ``true``
+
+### <a name="tomcatconfigcontextresources"></a>`tomcat::config::context::resources`
+
+Configure Resources elements in $CATALINA_BASE/conf/context.xml
+
+#### Parameters
+
+The following parameters are available in the `tomcat::config::context::resources` defined type:
+
+* [`ensure`](#ensure)
+* [`resources_name`](#resources_name)
+* [`name`](#name)
+* [`resources_type`](#resources_type)
+* [`catalina_base`](#catalina_base)
+* [`additional_attributes`](#additional_attributes)
+* [`attributes_to_remove`](#attributes_to_remove)
+* [`show_diff`](#show_diff)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Enum['present','absent']`
+
+Specifies whether you are trying to add or remove the Resources element.
+
+Default value: `'present'`
+
+##### <a name="resources_name"></a>`resources_name`
+
+Data type: `Any`
+
+The name of the Resources to be created, relative to the `java:comp/env` context. `$name`.
+
+Default value: `$name`
+
+##### <a name="name"></a>`name`
+
+`$resources_name`
+
+##### <a name="resources_type"></a>`resources_type`
+
+Data type: `Any`
+
+The fully qualified Java class name expected by the web application when it performs a lookup for this resources. Required to create the resource.
+
+Default value: ``undef``
+
+##### <a name="catalina_base"></a>`catalina_base`
+
+Data type: `Any`
+
+Specifies the root of the Tomcat installation.
+
+Default value: `$::tomcat::catalina_home`
 
 ##### <a name="additional_attributes"></a>`additional_attributes`
 
