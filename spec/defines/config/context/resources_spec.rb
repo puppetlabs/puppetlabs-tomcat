@@ -13,14 +13,13 @@ describe 'tomcat::config::context::resources', type: :define do
     }
   end
   let :title do
-    'jdbc'
+    'attributes'
   end
 
   context 'Add Resources' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        resources_type: 'net.sourceforge.jtds.jdbcx.JtdsDataSource',
         additional_attributes: {
           'cachingAllowed'  => 'true',
           'cacheMaxSize'    => '100000',
@@ -32,20 +31,19 @@ describe 'tomcat::config::context::resources', type: :define do
     end
 
     changes = [
-      'set Context/Resources[#attribute/name=\'jdbc\']/#attribute/name jdbc',
-      'set Context/Resources[#attribute/name=\'jdbc\']/#attribute/type net.sourceforge.jtds.jdbcx.JtdsDataSource',
-      'set Context/Resources[#attribute/name=\'jdbc\']/#attribute/cachingAllowed \'true\'',
-      'set Context/Resources[#attribute/name=\'jdbc\']/#attribute/cacheMaxSize \'100000\'',
-      'rm Context/Resources[#attribute/name=\'jdbc\']/#attribute/foobar',
+      'set Context/Resources[#attribute]/#attribute/cachingAllowed \'true\'',
+      'set Context/Resources[#attribute]/#attribute/cacheMaxSize \'100000\'',
+      'rm Context/Resources[#attribute]/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resources-jdbc').with(
+      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resources-attributes').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Remove Resources' do
     let :params do
       {
@@ -55,10 +53,10 @@ describe 'tomcat::config::context::resources', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resources-jdbc').with(
+      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resources-attributes').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
-        'changes' => ['rm Context/Resources[#attribute/name=\'jdbc\']'],
+        'changes' => ['rm Context/Resources[#attribute]'],
       )
     }
   end
