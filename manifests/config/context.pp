@@ -29,7 +29,7 @@ define tomcat::config::context (
     $set_additional_attributes = suffix(prefix(join_keys_to_values($additional_attributes, " '"), "set ${base_path}/#attribute/"), "'")
 
     # Extra augeas to add atttibutes if there are currently no attrributes in <Context> element
-    augeas{ "context-add_attribute_${_catalina_base}":
+    augeas { "context-add_attribute_${_catalina_base}":
       incl    => "${catalina_base}/conf/context.xml",
       lens    => 'Xml.lns',
       context => "/files/${catalina_base}/conf/context.xml",
@@ -62,5 +62,3 @@ define tomcat::config::context (
     }
   }
 }
-
-
