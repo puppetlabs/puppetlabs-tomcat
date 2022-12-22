@@ -32,6 +32,32 @@ describe 'tomcat::config::context', type: :define do
     }
   end
 
+  context 'Add Attribute' do
+    let :params do
+      {
+        catalina_base: '/opt/apache-tomcat/test',
+        additional_attributes: {
+          'crossContext'    => 'true',
+        },
+        attributes_to_remove: [
+          'foobar',
+        ],
+      }
+    end
+
+    changes = [
+      'set Context/WatchedResource/#text "WEB-INF/web.xml"',
+      'set Context/#attribute/crossContext \'true\'',
+      'rm Context/#attribute/foobar',
+    ]
+    it {
+      is_expected.to contain_augeas('context-/opt/apache-tomcat/test').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/context.xml',
+        'changes' => changes,
+      )
+    }
+  end
   describe 'failing tests' do
     context 'old augeas' do
       let :facts do
