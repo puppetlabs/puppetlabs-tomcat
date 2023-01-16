@@ -37,7 +37,7 @@ describe 'tomcat::config::context', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         additional_attributes: {
-          'crossContext'    => 'true',
+          'crossContext' => 'true',
         },
         attributes_to_remove: [
           'foobar',
