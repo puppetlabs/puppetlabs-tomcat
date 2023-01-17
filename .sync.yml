@@ -46,3 +46,4 @@ Gemfile:
       version: '= 0.4.5'
       platforms: ruby
     - gem: github_changelog_generator
+      version: '= 1.15.2'
