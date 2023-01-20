@@ -8,7 +8,7 @@ describe 'tomcat::service', type: :define do
   end
   let :facts do
     {
-      osfamily: 'Debian',
+      os: { family: 'Debian' },
     }
   end
   let :title do

@@ -87,17 +87,17 @@ define tomcat::instance (
   $package_name           = undef,
   $package_options        = undef,
 ) {
-  include ::tomcat
-  $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
+  include tomcat
+  $_catalina_home = pick($catalina_home, $tomcat::catalina_home)
   $_catalina_base = pick($catalina_base, $_catalina_home) #default to home
   tag(sha1($_catalina_home))
   tag(sha1($_catalina_base))
-  $_user = pick($user, $::tomcat::user)
-  $_group = pick($group, $::tomcat::group)
-  $_manage_user = pick($manage_user, $::tomcat::manage_user)
-  $_manage_group = pick($manage_group, $::tomcat::manage_group)
-  $_manage_base = pick($manage_base, $::tomcat::manage_base)
-  $_manage_properties = pick($manage_properties, $::tomcat::manage_properties)
+  $_user = pick($user, $tomcat::user)
+  $_group = pick($group, $tomcat::group)
+  $_manage_user = pick($manage_user, $tomcat::manage_user)
+  $_manage_group = pick($manage_group, $tomcat::manage_group)
+  $_manage_base = pick($manage_base, $tomcat::manage_base)
+  $_manage_properties = pick($manage_properties, $tomcat::manage_properties)
 
   if $source_url and $install_from_source == undef {
     # XXX Backwards compatibility mode enabled; install_from_source used to default

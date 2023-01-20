@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'tomcat' do
   let :facts do
     {
-      osfamily: 'Debian',
+      os: { family: 'Debian' },
     }
   end
 

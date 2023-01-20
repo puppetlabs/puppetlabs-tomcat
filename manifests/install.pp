@@ -55,12 +55,12 @@ define tomcat::install (
   $package_name                   = undef,
   $package_options                = undef,
 ) {
-  include ::tomcat
-  $_user = pick($user, $::tomcat::user)
-  $_group = pick($group, $::tomcat::group)
-  $_manage_user = pick($manage_user, $::tomcat::manage_user)
-  $_manage_group = pick($manage_group, $::tomcat::manage_group)
-  $_manage_home = pick($manage_home, $::tomcat::manage_home)
+  include tomcat
+  $_user = pick($user, $tomcat::user)
+  $_group = pick($group, $tomcat::group)
+  $_manage_user = pick($manage_user, $tomcat::manage_user)
+  $_manage_group = pick($manage_group, $tomcat::manage_group)
+  $_manage_home = pick($manage_home, $tomcat::manage_home)
   tag(sha1($catalina_home))
 
   if $install_from_source {

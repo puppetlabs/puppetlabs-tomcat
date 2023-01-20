@@ -46,8 +46,8 @@ define tomcat::service (
   $user                             = undef,
   Integer $wait_timeout             = 10,
 ) {
-  include ::tomcat
-  $_user = pick($user, $::tomcat::user)
+  include tomcat
+  $_user = pick($user, $tomcat::user)
   # XXX Backwards compatibility: If the user declares a base but not a home, we
   # assume they are in compatibility mode
   if $catalina_base {

@@ -21,12 +21,12 @@ define tomcat::config::context::resource (
   Enum['present','absent'] $ensure = 'present',
   $resource_name                   = $name,
   $resource_type                   = undef,
-  $catalina_base                   = $::tomcat::catalina_home,
+  $catalina_base                   = $tomcat::catalina_home,
   Hash $additional_attributes      = {},
   Array $attributes_to_remove      = [],
   Boolean $show_diff               = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

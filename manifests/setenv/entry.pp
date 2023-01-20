@@ -38,10 +38,10 @@ define tomcat::setenv::entry (
   $user          = undef,
   $group         = undef,
 ) {
-  include ::tomcat
-  $_user = pick($user, $::tomcat::user)
-  $_group = pick($group, $::tomcat::group)
-  $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
+  include tomcat
+  $_user = pick($user, $tomcat::user)
+  $_group = pick($group, $tomcat::group)
+  $_catalina_home = pick($catalina_home, $tomcat::catalina_home)
   $home_sha = sha1($_catalina_home)
   tag($home_sha)
 

@@ -33,8 +33,8 @@ define tomcat::war (
   $user                                = 'tomcat',
   $group                               = 'tomcat',
 ) {
-  include ::tomcat
-  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  include tomcat
+  $_catalina_base = pick($catalina_base, $tomcat::catalina_home)
   tag(sha1($_catalina_base))
 
   if $app_base and $deployment_path {

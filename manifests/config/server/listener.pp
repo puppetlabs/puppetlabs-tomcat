@@ -22,7 +22,7 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::listener (
-  $catalina_base                            = $::tomcat::catalina_home,
+  $catalina_base                            = $tomcat::catalina_home,
   Enum['present','absent'] $listener_ensure = 'present',
   $class_name                               = undef,
   $parent_service                           = undef,
@@ -33,7 +33,7 @@ define tomcat::config::server::listener (
   $server_config                            = undef,
   Boolean $show_diff                        = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
