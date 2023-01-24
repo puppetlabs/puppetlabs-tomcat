@@ -32,28 +32,30 @@
 #    Specifies the package to install. Valid options: a string containing a valid package name.
 # @param package_options
 #    Specify additional options to use on the generated package resource. See the documentation of the [package](https://docs.puppetlabs.com/references/latest/type.html#package-attribute-install_options) for possible values.
+# @param remove_default_webapps
+#    Specifies the default webapps to be removed.
 #
 define tomcat::install (
-  $catalina_home                  = $name,
-  Boolean $install_from_source    = true,
+  String[1] $catalina_home                                   = $name,
+  Boolean $install_from_source                               = true,
 
   # source options
-  $source_url                     = undef,
-  Boolean $source_strip_first_dir = true,
-  $proxy_type                     = undef,
-  $proxy_server                   = undef,
-  $allow_insecure                 = false,
-  $user                           = undef,
-  $group                          = undef,
-  $manage_user                    = undef,
-  $manage_group                   = undef,
-  $manage_home                    = undef,
-  Optional[Array[String]] $remove_default_webapps     = undef,
+  Optional[String[1]] $source_url                            = undef,
+  Boolean $source_strip_first_dir                            = true,
+  Optional[Enum['none', 'http', 'https', 'ftp']] $proxy_type = undef,
+  Optional[String[1]] $proxy_server                          = undef,
+  Boolean $allow_insecure                                    = false,
+  Optional[String[1]] $user                                  = undef,
+  Optional[String[1]] $group                                 = undef,
+  Optional[Boolean]   $manage_user                           = undef,
+  Optional[Boolean]   $manage_group                          = undef,
+  Optional[Boolean] $manage_home                             = undef,
+  Optional[Array[String[1]]] $remove_default_webapps         = undef,
 
   # package options
-  $package_ensure                 = undef,
-  $package_name                   = undef,
-  $package_options                = undef,
+  Optional[Boolean]          $package_ensure   = undef,
+  Optional[String[1]]        $package_name     = undef,
+  Optional[Array[String[1]]] $package_options  = undef,
 ) {
   include tomcat
   $_user = pick($user, $tomcat::user)
@@ -95,16 +97,18 @@ define tomcat::install (
 
   if $remove_default_webapps {
     $remove_default_webapps.each |$folder| {
+      $require_value = $install_from_source? {
+        true    => Resource['tomcat::install::source', $name],
+        default => Resource['tomcat::install::package', $package_name]
+      }
+
       file { "remove ${folder}" :
         ensure  => absent,
         path    => "${catalina_home}/webapps/${folder}",
         recurse => true,
         purge   => true,
         force   => true,
-        require => $install_from_source ? {
-          true    => Resource['tomcat::install::source', $name],
-          default => Resource['tomcat::install::package', $package_name]
-        },
+        require => $require_value,
       }
     }
   }

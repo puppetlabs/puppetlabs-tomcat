@@ -18,14 +18,14 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::globalnamingresource (
-  $catalina_base                   = $tomcat::catalina_home,
-  $resource_name                   = undef,
-  $type                            = 'Resource',
-  Enum['present','absent'] $ensure = 'present',
-  Hash $additional_attributes      = {},
-  Array $attributes_to_remove      = [],
-  $server_config                   = undef,
-  Boolean $show_diff               = true,
+  String $catalina_base               = $tomcat::catalina_home,
+  Optional[String[1]] $resource_name  = undef,
+  String $type                        = 'Resource',
+  Enum['present','absent'] $ensure    = 'present',
+  Hash $additional_attributes         = {},
+  Array $attributes_to_remove         = [],
+  Optional[String[1]] $server_config  = undef,
+  Boolean $show_diff                  = true,
 ) {
   if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')

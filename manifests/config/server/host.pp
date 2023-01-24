@@ -22,14 +22,14 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::host (
-  $app_base                                     = undef,
+  Optional[String[1]] $app_base                 = undef,
   Optional[Stdlib::Absolutepath] $catalina_base = undef,
   Enum['present','absent'] $host_ensure         = 'present',
-  $host_name                                    = undef,
+  Optional[String[1]] $host_name                = undef,
   String $parent_service                        = 'Catalina',
   Hash $additional_attributes                   = {},
   Array $attributes_to_remove                   = [],
-  Optional[String] $server_config               = undef,
+  Optional[String[1]] $server_config            = undef,
   Optional[Array] $aliases                      = undef,
   Boolean $show_diff                            = true,
 ) {

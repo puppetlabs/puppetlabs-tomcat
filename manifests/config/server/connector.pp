@@ -24,15 +24,15 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::connector (
-  $catalina_base                             = undef,
+  Optional[String[1]] $catalina_base         = undef,
   Enum['present','absent'] $connector_ensure = 'present',
-  $port                                      = undef,
-  $protocol                                  = $name,
-  $parent_service                            = 'Catalina',
+  Optional[String[1]] $port                  = undef,
+  String $protocol                           = $name,
+  String $parent_service                     = 'Catalina',
   Hash $additional_attributes                = {},
   Array $attributes_to_remove                = [],
   Optional[Boolean] $purge_connectors        = undef,
-  $server_config                             = undef,
+  Optional[String[1]] $server_config         = undef,
   Boolean $show_diff                         = true,
 ) {
   include tomcat

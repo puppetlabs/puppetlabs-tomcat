@@ -3,9 +3,9 @@
 # @api private
 #
 define tomcat::install::package (
-  $package_ensure,
-  $package_options,
-  $package_name = $name,
+  String[1] $package_name = $name,
+  Optional[String[1]] $package_ensure = undef,
+  Optional[Array[String[1]]] $package_options = undef,
 ) {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")

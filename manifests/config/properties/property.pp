@@ -8,9 +8,9 @@
 #   The name of the property. `$name`.
 #
 define tomcat::config::properties::property (
-  $catalina_base,
-  $value,
-  $property = $name,
+  String    $catalina_base,
+  String[1] $value,
+  String    $property = $name,
 ) {
   concat::fragment { "${catalina_base}/conf/catalina.properties property ${property}":
     target  => "${catalina_base}/conf/catalina.properties",

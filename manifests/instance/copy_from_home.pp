@@ -3,10 +3,10 @@
 # @api private
 #
 define tomcat::instance::copy_from_home (
-  $catalina_home,
-  $user,
-  $group,
-  $mode,
+  String[1] $catalina_home,
+  String[1] $user,
+  String[1] $group,
+  String[1] $mode,
 ) {
   tag(sha1($catalina_home))
   $filename = basename($name)

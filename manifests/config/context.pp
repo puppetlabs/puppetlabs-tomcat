@@ -6,8 +6,8 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::context (
-  $catalina_base     = undef,
-  Boolean $show_diff = true,
+  Optional[String[1]] $catalina_base  = undef,
+  Boolean             $show_diff      = true,
 ) {
   include tomcat
   $_catalina_base = pick($catalina_base, $tomcat::catalina_home)

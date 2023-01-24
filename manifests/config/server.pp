@@ -20,14 +20,14 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server (
-  $catalina_base                              = undef,
-  $class_name                                 = undef,
+  Optional[String[1]] $catalina_base          = undef,
+  Optional[String[1]] $class_name             = undef,
   Enum['present','absent'] $class_name_ensure = 'present',
-  $address                                    = undef,
+  Optional[String[1]] $address                = undef,
   Enum['present','absent'] $address_ensure    = 'present',
-  $port                                       = undef,
-  $shutdown                                   = undef,
-  $server_config                              = undef,
+  Optional[String[1]] $port                   = undef,
+  Optional[String[1]] $shutdown               = undef,
+  Optional[String[1]] $server_config          = undef,
   Boolean $show_diff                          = true,
 ) {
   include tomcat

@@ -31,9 +31,6 @@ Rakefile:
     - bundle/**/*.pp
     - pkg/**/*.pp
     - spec/**/*.pp
-  extra_disabled_lint_checks:
-    - parameter_types
-    - parameter_documentation
 Gemfile:
   optional:
     ":development":

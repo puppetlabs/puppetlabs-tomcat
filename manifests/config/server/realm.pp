@@ -28,18 +28,18 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::realm (
-  $catalina_base                                          = undef,
-  $class_name                                             = $name,
-  Enum['present','absent'] $realm_ensure                  = 'present',
-  $parent_service                                         = 'Catalina',
-  $parent_engine                                          = 'Catalina',
-  $parent_host                                            = undef,
-  $parent_realm                                           = undef,
-  Hash $additional_attributes                             = {},
-  Array $attributes_to_remove                             = [],
-  Optional[Boolean] $purge_realms                         = undef,
-  $server_config                                          = undef,
-  Boolean $show_diff                                      = true,
+  Optional[String[1]] $catalina_base      = undef,
+  String $class_name                      = $name,
+  Enum['present','absent'] $realm_ensure  = 'present',
+  String $parent_service                  = 'Catalina',
+  String $parent_engine                   = 'Catalina',
+  Optional[String[1]] $parent_host        = undef,
+  Optional[String[1]] $parent_realm       = undef,
+  Hash $additional_attributes             = {},
+  Array $attributes_to_remove             = [],
+  Optional[Boolean] $purge_realms         = undef,
+  Optional[String[1]] $server_config      = undef,
+  Boolean $show_diff                      = true,
 ) {
   include tomcat
   $_catalina_base = pick($catalina_base, $tomcat::catalina_home)

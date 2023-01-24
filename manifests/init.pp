@@ -22,9 +22,9 @@
 #   Specifies the default value of `manage_properties` for all `tomcat::instance` instances.
 #
 class tomcat (
-  $catalina_home             = '/opt/apache-tomcat',
-  $user                      = 'tomcat',
-  $group                     = 'tomcat',
+  String $catalina_home      = '/opt/apache-tomcat',
+  String[1] $user            = 'tomcat',
+  String[1] $group           = 'tomcat',
   Boolean $purge_connectors  = false,
   Boolean $purge_realms      = false,
   Boolean $manage_user       = true,

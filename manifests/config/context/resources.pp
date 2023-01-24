@@ -13,7 +13,7 @@
 #
 define tomcat::config::context::resources (
   Enum['present','absent'] $ensure = 'present',
-  $catalina_base                   = $tomcat::catalina_home,
+  String $catalina_base            = $tomcat::catalina_home,
   Hash $additional_attributes      = {},
   Array $attributes_to_remove      = [],
   Boolean $show_diff               = true,
