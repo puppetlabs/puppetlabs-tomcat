@@ -27,7 +27,7 @@ describe 'Acceptance case one', unless: stop_test do
     end
   end
 
-  let(:daemon_version) { '1.3.2' }
+  let(:daemon_version) { '1.3.3' }
 
   context 'Initial install Tomcat and verification' do
     it 'applies the manifest without error' do
