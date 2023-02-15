@@ -16,9 +16,9 @@ describe 'Acceptance case one', unless: stop_test do
   let :java_home do
     if os[:family].match?(%r{debian|ubuntu})
       if os[:release].start_with?('9')
-        '"/usr/lib/jvm/java-8-openjdk-${::architecture}"'
+        '"/usr/lib/jvm/java-8-openjdk-${facts[\'os\'][\'architecture\']}"'
       else
-        '"/usr/lib/jvm/java-11-openjdk-${::architecture}"'
+        '"/usr/lib/jvm/java-11-openjdk-${facts[\'os\'][\'architecture\']}"'
       end
     elsif os[:family].include?('redhat')
       '"/etc/alternatives/java_sdk"'
