@@ -33,9 +33,9 @@ class tomcat (
   Boolean $manage_base       = true,
   Boolean $manage_properties = true,
 ) {
-  case $::osfamily {
+  case $facts['os']['family'] {
     'windows','Solaris','Darwin': {
-      fail("Unsupported osfamily: ${::osfamily}")
+      fail("Unsupported os family: ${facts['os']['family']}")
     }
     default: {
       # Empty

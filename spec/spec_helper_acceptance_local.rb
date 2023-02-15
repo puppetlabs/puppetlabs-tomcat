@@ -28,7 +28,7 @@ RSpec.configure do |c|
       package { 'curl':
         ensure   => 'latest',
       }
-      if $::osfamily == 'RedHat' {
+      if $facts['os']['family'] == 'RedHat' {
         if $::operatingsystemmajrelease == '5' {
           class { 'epel':
             epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",

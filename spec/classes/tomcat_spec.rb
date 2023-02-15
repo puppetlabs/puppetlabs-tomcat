@@ -6,7 +6,9 @@ describe 'tomcat', type: :class do
   context 'not installing from source' do
     let :facts do
       {
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+        },
       }
     end
     let :params do
@@ -20,7 +22,9 @@ describe 'tomcat', type: :class do
   context 'not managing user/group' do
     let :facts do
       {
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+        },
       }
     end
     let :params do
@@ -37,7 +41,9 @@ describe 'tomcat', type: :class do
   context 'with invalid $manage_user' do
     let :facts do
       {
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+        },
       }
     end
     let :params do
@@ -56,40 +62,46 @@ describe 'tomcat', type: :class do
   context 'on windows' do
     let :facts do
       {
-        osfamily: 'windows',
+        os: {
+          family: 'windows',
+        },
       }
     end
 
     it do
       expect {
         catalogue
-      }.to raise_error(Puppet::Error, %r{Unsupported osfamily})
+      }.to raise_error(Puppet::Error, %r{Unsupported os family})
     end
   end
   context 'on Solaris' do
     let :facts do
       {
-        osfamily: 'Solaris',
+        os: {
+          family: 'Solaris',
+        },
       }
     end
 
     it do
       expect {
         catalogue
-      }.to raise_error(Puppet::Error, %r{Unsupported osfamily})
+      }.to raise_error(Puppet::Error, %r{Unsupported os family})
     end
   end
   context 'on OSX' do
     let :facts do
       {
-        osfamily: 'Darwin',
+        os: {
+          family: 'Darwin',
+        },
       }
     end
 
     it do
       expect {
         catalogue
-      }.to raise_error(Puppet::Error, %r{Unsupported osfamily})
+      }.to raise_error(Puppet::Error, %r{Unsupported os family})
     end
   end
 end

@@ -8,7 +8,9 @@ describe 'tomcat::setenv::entry', type: :define do
   end
   let :facts do
     {
-      osfamily: 'Debian',
+      os: {
+        family: 'Debian',
+      },
       concat_basedir: '/tmp',
       id: 'root',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',

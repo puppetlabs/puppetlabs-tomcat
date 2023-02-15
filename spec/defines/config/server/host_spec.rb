@@ -8,7 +8,9 @@ describe 'tomcat::config::server::host', type: :define do
   end
   let :facts do
     {
-      osfamily: 'Debian',
+      os: {
+        family: 'Debian',
+      },
       augeas: {
         version: '1.0.0',
       },
@@ -165,7 +167,9 @@ describe 'tomcat::config::server::host', type: :define do
     context 'old augeas' do
       let :facts do
         {
-          osfamily: 'Debian',
+          os: {
+            family: 'Debian',
+          },
           augeas: {
             version: '0.10.0',
           },
