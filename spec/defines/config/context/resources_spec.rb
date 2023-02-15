@@ -9,7 +9,9 @@ describe 'tomcat::config::context::resources', type: :define do
   let :facts do
     {
       osfamily: 'Debian',
-      augeasversion: '1.0.0',
+      augeas: {
+        version: '1.0.0',
+      },
     }
   end
   let :title do

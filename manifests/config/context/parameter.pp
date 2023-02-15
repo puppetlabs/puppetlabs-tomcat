@@ -22,7 +22,7 @@ define tomcat::config::context::parameter (
   Optional[String]                            $description    = undef,
   Optional[Boolean]                           $override       = undef,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

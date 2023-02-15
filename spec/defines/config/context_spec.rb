@@ -9,7 +9,9 @@ describe 'tomcat::config::context', type: :define do
   let :facts do
     {
       osfamily: 'Debian',
-      augeasversion: '1.0.0',
+      augeas: {
+        version: '1.0.0',
+      },
     }
   end
   let :title do
@@ -37,7 +39,9 @@ describe 'tomcat::config::context', type: :define do
       let :facts do
         {
           osfamily: 'Debian',
-          augeasversion: '0.10.0',
+          augeas: {
+            version: '0.10.0',
+          },
         }
       end
 

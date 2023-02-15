@@ -27,7 +27,7 @@ define tomcat::config::server::globalnamingresource (
   $server_config                   = undef,
   Boolean $show_diff               = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

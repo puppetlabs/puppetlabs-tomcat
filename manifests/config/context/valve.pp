@@ -36,7 +36,7 @@ define tomcat::config::context::valve (
   Array $uniqueness_attributes     = [],
   Boolean $show_diff               = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Valve configurations require Augeas >= 1.0.0')
   }
 

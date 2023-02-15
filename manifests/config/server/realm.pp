@@ -46,7 +46,7 @@ define tomcat::config::server::realm (
   tag(sha1($_catalina_base))
   $_purge_realms = pick($purge_realms, $::tomcat::purge_realms)
 
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
