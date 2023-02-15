@@ -29,10 +29,10 @@ RSpec.configure do |c|
         ensure   => 'latest',
       }
       if $facts['os']['family'] == 'RedHat' {
-        if $::operatingsystemmajrelease == '5' {
+        if $facts['os']['release']['major'] == '5' {
           class { 'epel':
-            epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
-            epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
+            epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${facts['os']['release']['major']}-\\$basearch/RPMS.all",
+            epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${facts['os']['release']['major']}-\\$basearch/RPMS.all",
           }
         } else {
           class { 'epel': }
