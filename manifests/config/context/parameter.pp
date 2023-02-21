@@ -17,8 +17,8 @@
 define tomcat::config::context::parameter (
   Optional[String[1]]          $value          = undef,
   Enum['present', 'absent']    $ensure         = 'present',
-  Pattern[/^(\/[^\/ ]*)+\/?$/] $catalina_base  = $tomcat::catalina_home,
-  String                       $parameter_name = $name,
+  Stdlib::Absolutepath         $catalina_base  = $tomcat::catalina_home,
+  String[1]                    $parameter_name = $name,
   Optional[String[1]]          $description    = undef,
   Optional[Boolean]            $override       = undef,
 ) {

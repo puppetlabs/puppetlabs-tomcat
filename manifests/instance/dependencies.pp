@@ -3,8 +3,8 @@
 # @api private
 #
 define tomcat::instance::dependencies (
-  String[1] $catalina_home,
-  String[1] $catalina_base,
+  String[1]            $catalina_home,
+  Stdlib::Absolutepath $catalina_base,
 ) {
   $home_sha = sha1($catalina_home)
   $base_sha = sha1($catalina_base)

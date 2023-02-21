@@ -60,7 +60,7 @@
 #
 define tomcat::instance (
   Optional[String[1]]                             $catalina_home          = undef,
-  Optional[String[1]]                             $catalina_base          = undef,
+  Optional[Stdlib::Absolutepath]                  $catalina_base          = undef,
   Optional[String[1]]                             $user                   = undef,
   Optional[String[1]]                             $group                  = undef,
   Optional[Boolean]                               $manage_user            = undef,

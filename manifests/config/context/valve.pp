@@ -30,7 +30,7 @@ define tomcat::config::context::valve (
   Optional[String[1]] $resource_name  = undef,
   Optional[String[1]] $resource_type  = undef,
   Optional[String[1]] $class_name     = undef,
-  String $catalina_base               = $tomcat::catalina_home,
+  Stdlib::Absolutepath $catalina_base = $tomcat::catalina_home,
   Hash $additional_attributes         = {},
   Array $attributes_to_remove         = [],
   Array $uniqueness_attributes        = [],

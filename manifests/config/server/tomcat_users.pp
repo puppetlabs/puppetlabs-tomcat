@@ -24,7 +24,7 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::tomcat_users (
-  String $catalina_base                                   = $tomcat::catalina_home,
+  Stdlib::Absolutepath $catalina_base                     = $tomcat::catalina_home,
   Enum['user','role'] $element                            = 'user',
   Optional[String[1]] $element_name                       = undef,
   Enum['present','absent'] $ensure                        = present,

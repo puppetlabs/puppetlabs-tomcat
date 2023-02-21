@@ -29,7 +29,7 @@
 #
 define tomcat::config::server::realm (
   Optional[String[1]] $catalina_base      = undef,
-  String $class_name                      = $name,
+  String[1] $class_name                   = $name,
   Enum['present','absent'] $realm_ensure  = 'present',
   String $parent_service                  = 'Catalina',
   String $parent_engine                   = 'Catalina',

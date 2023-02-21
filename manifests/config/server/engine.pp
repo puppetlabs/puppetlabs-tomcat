@@ -31,8 +31,8 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::engine (
-  String $default_host,
-  Optional[String[1]] $catalina_base                                = undef,
+  String[1] $default_host,
+  Optional[Stdlib::Absolutepath] $catalina_base                     = undef,
   Optional[Variant[Integer, String[1]]] $background_processor_delay = undef,
   Enum['present','absent'] $background_processor_delay_ensure       = 'present',
   Optional[String[1]] $class_name                                   = undef,
@@ -40,7 +40,7 @@ define tomcat::config::server::engine (
   Optional[String[1]] $engine_name                                  = undef,
   Optional[String[1]] $jvm_route                                    = undef,
   Enum['present','absent'] $jvm_route_ensure                        = 'present',
-  String $parent_service                                            = 'Catalina',
+  String[1] $parent_service                                         = 'Catalina',
   Optional[Variant[String[1], Integer]] $start_stop_threads         = undef,
   Enum['present','absent'] $start_stop_threads_ensure               = 'present',
   Optional[String[1]] $server_config                                = undef,

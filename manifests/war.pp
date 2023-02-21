@@ -22,16 +22,16 @@
 #   The 'group' owner of the tomcat war file. 
 #
 define tomcat::war (
-  Optional[String[1]] $catalina_base    = undef,
-  Optional[String[1]] $app_base         = undef,
-  Optional[String[1]] $deployment_path  = undef,
-  Enum['present','absent'] $war_ensure  = 'present',
-  Optional[String[1]] $war_name         = undef,
-  Boolean $war_purge                    = true,
-  Optional[String[1]] $war_source       = undef,
-  Boolean $allow_insecure               = false,
-  String[1] $user                       = 'tomcat',
-  String[1] $group                      = 'tomcat',
+  Optional[Stdlib::Absolutepath] $catalina_base   = undef,
+  Optional[String[1]]            $app_base        = undef,
+  Optional[String[1]]            $deployment_path = undef,
+  Enum['present','absent']       $war_ensure      = 'present',
+  Optional[String[1]]            $war_name        = undef,
+  Boolean                        $war_purge       = true,
+  Optional[String[1]]            $war_source      = undef,
+  Boolean                        $allow_insecure  = false,
+  String[1]                      $user            = 'tomcat',
+  String[1]                      $group           = 'tomcat',
 ) {
   include tomcat
   $_catalina_base = pick($catalina_base, $tomcat::catalina_home)

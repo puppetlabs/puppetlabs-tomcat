@@ -18,9 +18,9 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::globalnamingresource (
-  String $catalina_base               = $tomcat::catalina_home,
+  Stdlib::Absolutepath $catalina_base = $tomcat::catalina_home,
   Optional[String[1]] $resource_name  = undef,
-  String $type                        = 'Resource',
+  String[1] $type                     = 'Resource',
   Enum['present','absent'] $ensure    = 'present',
   Hash $additional_attributes         = {},
   Array $attributes_to_remove         = [],

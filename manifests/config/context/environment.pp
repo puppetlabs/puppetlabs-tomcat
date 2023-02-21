@@ -26,7 +26,7 @@
 define tomcat::config::context::environment (
   Enum['present','absent'] $ensure    = 'present',
   Stdlib::Absolutepath $catalina_base = $tomcat::catalina_home,
-  String $environment_name            = $name,
+  String[1] $environment_name         = $name,
   Optional[String[1]] $type           = undef,
   Optional[String[1]] $value          = undef,
   Optional[String[1]] $description    = undef,

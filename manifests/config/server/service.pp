@@ -14,12 +14,12 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::service (
-  Optional[String[1]] $catalina_base          = undef,
-  Optional[String[1]] $class_name             = undef,
-  Enum['present','absent'] $class_name_ensure = 'present',
-  Enum['present','absent'] $service_ensure    = 'present',
-  Optional[String[1]] $server_config          = undef,
-  Boolean $show_diff                          = true,
+  Optional[Stdlib::Absolutepath] $catalina_base     = undef,
+  Optional[String[1]]            $class_name        = undef,
+  Enum['present','absent']       $class_name_ensure = 'present',
+  Enum['present','absent']       $service_ensure    = 'present',
+  Optional[String[1]]            $server_config     = undef,
+  Boolean                        $show_diff         = true,
 ) {
   include tomcat
   $_catalina_base = pick($catalina_base, $tomcat::catalina_home)

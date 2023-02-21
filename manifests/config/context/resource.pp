@@ -19,9 +19,9 @@
 #
 define tomcat::config::context::resource (
   Enum['present','absent'] $ensure    = 'present',
-  String $resource_name               = $name,
+  String[1] $resource_name            = $name,
   Optional[String[1]] $resource_type  = undef,
-  String $catalina_base               = $tomcat::catalina_home,
+  Stdlib::Absolutepath $catalina_base = $tomcat::catalina_home,
   Hash $additional_attributes         = {},
   Array $attributes_to_remove         = [],
   Boolean $show_diff                  = true,

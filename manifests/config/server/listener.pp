@@ -22,7 +22,7 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::listener (
-  String $catalina_base                     = $tomcat::catalina_home,
+  Stdlib::Absolutepath $catalina_base       = $tomcat::catalina_home,
   Enum['present','absent'] $listener_ensure = 'present',
   Optional[String[1]] $class_name           = undef,
   Optional[String[1]] $parent_service       = undef,

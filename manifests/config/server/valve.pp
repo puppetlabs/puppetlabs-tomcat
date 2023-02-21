@@ -24,17 +24,17 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::valve (
-  Optional[String[1]] $catalina_base     = undef,
-  Optional[String[1]] $class_name        = undef,
-  Optional[String[1]] $parent_host       = undef,
-  String $parent_service                 = 'Catalina',
-  Optional[String[1]] $parent_context    = undef,
-  Enum['present','absent'] $valve_ensure = 'present',
-  Hash $additional_attributes            = {},
-  Array $attributes_to_remove            = [],
-  Array $uniqueness_attributes           = [],
-  Optional[String[1]] $server_config     = undef,
-  Boolean $show_diff                     = true,
+  Optional[Stdlib::Absolutepath] $catalina_base         = undef,
+  Optional[String[1]]            $class_name            = undef,
+  Optional[String[1]]            $parent_host           = undef,
+  String                         $parent_service        = 'Catalina',
+  Optional[String[1]]            $parent_context        = undef,
+  Enum['present','absent']       $valve_ensure          = 'present',
+  Hash                           $additional_attributes = {},
+  Array                          $attributes_to_remove  = [],
+  Array                          $uniqueness_attributes = [],
+  Optional[String[1]]            $server_config         = undef,
+  Boolean                        $show_diff             = true,
 ) {
   include tomcat
   $_catalina_base = pick($catalina_base, $tomcat::catalina_home)
