@@ -22,9 +22,9 @@
 #   Specifies the default value of `manage_properties` for all `tomcat::instance` instances.
 #
 class tomcat (
-  $catalina_home             = '/opt/apache-tomcat',
-  $user                      = 'tomcat',
-  $group                     = 'tomcat',
+  String $catalina_home      = '/opt/apache-tomcat',
+  String[1] $user            = 'tomcat',
+  String[1] $group           = 'tomcat',
   Boolean $purge_connectors  = false,
   Boolean $purge_realms      = false,
   Boolean $manage_user       = true,
@@ -33,9 +33,9 @@ class tomcat (
   Boolean $manage_base       = true,
   Boolean $manage_properties = true,
 ) {
-  case $::osfamily {
+  case $facts['os']['family'] {
     'windows','Solaris','Darwin': {
-      fail("Unsupported osfamily: ${::osfamily}")
+      fail("Unsupported osfamily: ${facts['os']['family']}")
     }
     default: {
       # Empty

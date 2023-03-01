@@ -24,25 +24,25 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::tomcat_users (
-  $catalina_base                   = $::tomcat::catalina_home,
-  Enum['user','role'] $element     = 'user',
-  $element_name                    = undef,
-  Enum['present','absent'] $ensure = present,
-  $file                            = undef,
-  Boolean $manage_file             = true,
-  $owner                           = undef,
-  $group                           = undef,
-  Optional[Variant[String, Sensitive[String]]] $password = undef,
-  Array $roles                     = [],
-  Boolean $show_diff               = true,
+  Stdlib::Absolutepath $catalina_base                     = $tomcat::catalina_home,
+  Enum['user','role'] $element                            = 'user',
+  Optional[String[1]] $element_name                       = undef,
+  Enum['present','absent'] $ensure                        = present,
+  Optional[String[1]] $file                               = undef,
+  Boolean $manage_file                                    = true,
+  Optional[String[1]] $owner                              = undef,
+  Optional[String[1]] $group                              = undef,
+  Optional[Variant[String, Sensitive[String]]] $password  = undef,
+  Array $roles                                            = [],
+  Boolean $show_diff                                      = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
   $password_unsensitive = if $password =~ Sensitive { $password.unwrap } else { $password }
-  $_owner = pick($owner, $::tomcat::user)
-  $_group = pick($group, $::tomcat::group)
+  $_owner = pick($owner, $tomcat::user)
+  $_group = pick($group, $tomcat::group)
 
   if $element == 'role' and ( $password or ! empty($roles) ) {
     warning('$password and $roles are useless when $element is set to \'role\'')

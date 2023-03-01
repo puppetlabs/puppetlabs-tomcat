@@ -6,7 +6,7 @@ describe 'tomcat', type: :class do
   context 'not installing from source' do
     let :facts do
       {
-        osfamily: 'Debian',
+        os: { family: 'Debian' },
       }
     end
     let :params do
@@ -20,7 +20,7 @@ describe 'tomcat', type: :class do
   context 'not managing user/group' do
     let :facts do
       {
-        osfamily: 'Debian',
+        os: { family: 'Debian' },
       }
     end
     let :params do
@@ -37,7 +37,7 @@ describe 'tomcat', type: :class do
   context 'with invalid $manage_user' do
     let :facts do
       {
-        osfamily: 'Debian',
+        os: { family: 'Debian' },
       }
     end
     let :params do
@@ -56,7 +56,7 @@ describe 'tomcat', type: :class do
   context 'on windows' do
     let :facts do
       {
-        osfamily: 'windows',
+        os: { family: 'windows' },
       }
     end
 
@@ -69,7 +69,7 @@ describe 'tomcat', type: :class do
   context 'on Solaris' do
     let :facts do
       {
-        osfamily: 'Solaris',
+        os: { family: 'Solaris' },
       }
     end
 
@@ -82,7 +82,7 @@ describe 'tomcat', type: :class do
   context 'on OSX' do
     let :facts do
       {
-        osfamily: 'Darwin',
+        os: { family: 'Darwin' },
       }
     end
 

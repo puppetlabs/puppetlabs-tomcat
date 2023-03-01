@@ -15,14 +15,14 @@
 #   specified here (set it to `false`). By default, overrides are allowed.
 #
 define tomcat::config::context::parameter (
-  Optional[String]                            $value          = undef,
-  Enum['present', 'absent']                   $ensure         = 'present',
-  Pattern[/^(\/[^\/ ]*)+\/?$/]                $catalina_base  = $::tomcat::catalina_home,
-  String                                      $parameter_name = $name,
-  Optional[String]                            $description    = undef,
-  Optional[Boolean]                           $override       = undef,
+  Optional[String[1]]          $value          = undef,
+  Enum['present', 'absent']    $ensure         = 'present',
+  Stdlib::Absolutepath         $catalina_base  = $tomcat::catalina_home,
+  String[1]                    $parameter_name = $name,
+  Optional[String[1]]          $description    = undef,
+  Optional[Boolean]            $override       = undef,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

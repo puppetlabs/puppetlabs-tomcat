@@ -8,8 +8,8 @@ describe 'tomcat::config::server::globalnamingresource', type: :define do
   end
   let :facts do
     {
-      osfamily: 'Debian',
-      augeasversion: '1.0.0',
+      os: { family: 'Debian' },
+      augeas: { version: '1.0.0' },
     }
   end
   let :title do

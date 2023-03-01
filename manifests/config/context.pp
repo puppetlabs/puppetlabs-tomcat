@@ -10,16 +10,16 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::context (
-  $catalina_base               = undef,
-  Hash $additional_attributes  = {},
-  Array $attributes_to_remove  = [],
-  Boolean $show_diff           = true,
+  Optional[Stdlib::Absolutepath] $catalina_base          = undef,
+  Hash                           $additional_attributes  = {},
+  Array                          $attributes_to_remove   = [],
+  Boolean                        $show_diff              = true,
 ) {
-  include ::tomcat
-  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  include tomcat
+  $_catalina_base = pick($catalina_base, $tomcat::catalina_home)
   tag(sha1($_catalina_base))
 
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

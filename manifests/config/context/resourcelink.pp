@@ -18,15 +18,15 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::context::resourcelink (
-  Enum['present','absent'] $ensure = 'present',
-  $catalina_base                   = $::tomcat::catalina_home,
-  $resourcelink_name               = $name,
-  $resourcelink_type               = undef,
-  Hash $additional_attributes      = {},
-  Array $attributes_to_remove      = [],
-  Boolean $show_diff               = true,
+  Enum['present','absent'] $ensure                = 'present',
+  Stdlib::Absolutepath     $catalina_base         = $tomcat::catalina_home,
+  String[1]                $resourcelink_name     = $name,
+  Optional[String[1]]      $resourcelink_type     = undef,
+  Hash                     $additional_attributes = {},
+  Array                    $attributes_to_remove  = [],
+  Boolean                  $show_diff             = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Context configurations require Augeas >= 1.0.0')
   }
 

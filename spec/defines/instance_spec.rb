@@ -8,7 +8,7 @@ describe 'tomcat::instance', type: :define do
   end
   let :default_facts do
     {
-      osfamily: 'Debian',
+      os: { family: 'Debian' },
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     }
   end

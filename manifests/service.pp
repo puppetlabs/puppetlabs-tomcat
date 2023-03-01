@@ -32,22 +32,22 @@
 #   The wait timeout set in the jsvc init script when `use_init => true` and `use_jsvc => true`
 #
 define tomcat::service (
-  $catalina_home                    = undef,
-  $catalina_base                    = undef,
-  Boolean $use_jsvc                 = false,
-  Boolean $use_init                 = false,
-  $java_home                        = undef,
-  $service_ensure                   = running,
-  Optional[Boolean] $service_enable = undef,
-  $service_name                     = undef,
-  $start_command                    = undef,
-  $stop_command                     = undef,
-  $status_command                   = undef,
-  $user                             = undef,
-  Integer $wait_timeout             = 10,
+  Optional[String[1]]                         $catalina_home   = undef,
+  Optional[Stdlib::Absolutepath]              $catalina_base   = undef,
+  Boolean                                     $use_jsvc        = false,
+  Boolean                                     $use_init        = false,
+  Optional[String[1]]                         $java_home       = undef,
+  Enum['running', 'stopped', 'true', 'false'] $service_ensure  = running,
+  Optional[Boolean]                           $service_enable  = undef,
+  Optional[String[1]]                         $service_name    = undef,
+  Optional[String[1]]                         $start_command   = undef,
+  Optional[String[1]]                         $stop_command    = undef,
+  Optional[String[1]]                         $status_command  = undef,
+  Optional[String[1]]                         $user            = undef,
+  Integer                                     $wait_timeout    = 10,
 ) {
-  include ::tomcat
-  $_user = pick($user, $::tomcat::user)
+  include tomcat
+  $_user = pick($user, $tomcat::user)
   # XXX Backwards compatibility: If the user declares a base but not a home, we
   # assume they are in compatibility mode
   if $catalina_base {

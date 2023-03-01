@@ -24,23 +24,23 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::valve (
-  $catalina_base                         = undef,
-  $class_name                            = undef,
-  $parent_host                           = undef,
-  $parent_service                        = 'Catalina',
-  $parent_context                        = undef,
-  Enum['present','absent'] $valve_ensure = 'present',
-  Hash $additional_attributes            = {},
-  Array $attributes_to_remove            = [],
-  Array $uniqueness_attributes           = [],
-  $server_config                         = undef,
-  Boolean $show_diff                     = true,
+  Optional[Stdlib::Absolutepath] $catalina_base         = undef,
+  Optional[String[1]]            $class_name            = undef,
+  Optional[String[1]]            $parent_host           = undef,
+  String                         $parent_service        = 'Catalina',
+  Optional[String[1]]            $parent_context        = undef,
+  Enum['present','absent']       $valve_ensure          = 'present',
+  Hash                           $additional_attributes = {},
+  Array                          $attributes_to_remove  = [],
+  Array                          $uniqueness_attributes = [],
+  Optional[String[1]]            $server_config         = undef,
+  Boolean                        $show_diff             = true,
 ) {
-  include ::tomcat
-  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  include tomcat
+  $_catalina_base = pick($catalina_base, $tomcat::catalina_home)
   tag(sha1($_catalina_base))
 
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Valve configurations require Augeas >= 1.0.0')
   }
 

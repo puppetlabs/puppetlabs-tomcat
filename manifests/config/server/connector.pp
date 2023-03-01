@@ -24,22 +24,22 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::connector (
-  $catalina_base                             = undef,
+  Optional[String[1]] $catalina_base         = undef,
   Enum['present','absent'] $connector_ensure = 'present',
-  $port                                      = undef,
-  $protocol                                  = $name,
-  $parent_service                            = 'Catalina',
+  Optional[String[1]] $port                  = undef,
+  String[1] $protocol                        = $name,
+  String[1] $parent_service                  = 'Catalina',
   Hash $additional_attributes                = {},
   Array $attributes_to_remove                = [],
   Optional[Boolean] $purge_connectors        = undef,
-  $server_config                             = undef,
+  Optional[String[1]] $server_config         = undef,
   Boolean $show_diff                         = true,
 ) {
-  include ::tomcat
-  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  include tomcat
+  $_catalina_base = pick($catalina_base, $tomcat::catalina_home)
   tag(sha1($_catalina_base))
-  $_purge_connectors = pick($purge_connectors, $::tomcat::purge_connectors)
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  $_purge_connectors = pick($purge_connectors, $tomcat::purge_connectors)
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
