@@ -8,8 +8,8 @@ describe 'tomcat::config::server::context', type: :define do
   end
   let :facts do
     {
-      osfamily: 'Debian',
-      augeasversion: '1.0.0',
+      os: { family: 'Debian' },
+      augeas: { version: '1.0.0' },
     }
   end
   let :title do
@@ -195,8 +195,8 @@ describe 'tomcat::config::server::context', type: :define do
     context 'old augeas' do
       let :facts do
         {
-          osfamily: 'Debian',
-          augeasversion: '0.10.0',
+          os: { family: 'Debian' },
+          augeas: { version: '0.10.0' },
         }
       end
 

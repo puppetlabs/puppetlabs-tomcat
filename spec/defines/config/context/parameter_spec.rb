@@ -8,8 +8,8 @@ describe 'tomcat::config::context::parameter', type: :define do
   end
   let :facts do
     {
-      osfamily: 'Debian',
-      augeasversion: '1.0.0',
+      os: { family: 'Debian' },
+      augeas: { version: '1.0.0' },
     }
   end
 

@@ -22,18 +22,18 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::listener (
-  $catalina_base                            = $::tomcat::catalina_home,
+  Stdlib::Absolutepath $catalina_base       = $tomcat::catalina_home,
   Enum['present','absent'] $listener_ensure = 'present',
-  $class_name                               = undef,
-  $parent_service                           = undef,
-  $parent_engine                            = undef,
-  $parent_host                              = undef,
+  Optional[String[1]] $class_name           = undef,
+  Optional[String[1]] $parent_service       = undef,
+  Optional[String[1]] $parent_engine        = undef,
+  Optional[String[1]] $parent_host          = undef,
   Hash $additional_attributes               = {},
   Array $attributes_to_remove               = [],
-  $server_config                            = undef,
+  Optional[String[1]] $server_config        = undef,
   Boolean $show_diff                        = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

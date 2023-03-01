@@ -27,16 +27,16 @@
 #
 define tomcat::config::context::valve (
   Enum['present','absent'] $ensure = 'present',
-  $resource_name                   = undef,
-  $resource_type                   = undef,
-  $class_name                      = undef,
-  $catalina_base                   = $::tomcat::catalina_home,
-  Hash $additional_attributes      = {},
-  Array $attributes_to_remove      = [],
-  Array $uniqueness_attributes     = [],
-  Boolean $show_diff               = true,
+  Optional[String[1]] $resource_name  = undef,
+  Optional[String[1]] $resource_type  = undef,
+  Optional[String[1]] $class_name     = undef,
+  Stdlib::Absolutepath $catalina_base = $tomcat::catalina_home,
+  Hash $additional_attributes         = {},
+  Array $attributes_to_remove         = [],
+  Array $uniqueness_attributes        = [],
+  Boolean $show_diff                  = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Valve configurations require Augeas >= 1.0.0')
   }
 

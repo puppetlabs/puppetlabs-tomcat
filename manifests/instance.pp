@@ -59,45 +59,45 @@
 #   Extra options to pass to the package resource.
 #
 define tomcat::instance (
-  $catalina_home          = undef,
-  $catalina_base          = undef,
-  $user                   = undef,
-  $group                  = undef,
-  $manage_user            = undef,
-  $manage_group           = undef,
-  $manage_service         = undef,
-  $manage_base            = undef,
-  $manage_properties      = undef,
-  $java_home              = undef,
-  $use_jsvc               = undef,
-  $use_init               = undef,
-  $manage_dirs            = true,
-  $dir_list               = ['bin','conf','lib','logs','temp','webapps','work'],
-  $dir_mode               = '2770',
-  $manage_copy_from_home  = true,
-  $copy_from_home_list    = undef,
-  $copy_from_home_mode    = '0660',
-  $service_name           = undef,
+  Optional[String[1]]                             $catalina_home          = undef,
+  Optional[Stdlib::Absolutepath]                  $catalina_base          = undef,
+  Optional[String[1]]                             $user                   = undef,
+  Optional[String[1]]                             $group                  = undef,
+  Optional[Boolean]                               $manage_user            = undef,
+  Optional[Boolean]                               $manage_group           = undef,
+  Optional[Boolean]                               $manage_service         = undef,
+  Optional[Boolean]                               $manage_base            = undef,
+  Optional[Boolean]                               $manage_properties      = undef,
+  Optional[String[1]]                             $java_home              = undef,
+  Optional[Boolean]                               $use_jsvc               = undef,
+  Optional[Boolean]                               $use_init               = undef,
+  Boolean                                         $manage_dirs            = true,
+  Array[String[1]]                                $dir_list               = ['bin','conf','lib','logs','temp','webapps','work'],
+  String[1]                                       $dir_mode               = '2770',
+  Boolean                                         $manage_copy_from_home  = true,
+  Optional[Variant[Array[String[1]], String[1]]]  $copy_from_home_list    = undef,
+  String[1]                                       $copy_from_home_mode    = '0660',
+  Optional[String[1]]                             $service_name           = undef,
 
   #used for single installs. Deprecated.
-  $install_from_source    = undef,
-  $source_url             = undef,
-  $source_strip_first_dir = undef,
-  $package_ensure         = undef,
-  $package_name           = undef,
-  $package_options        = undef,
+  Optional[Boolean]          $install_from_source    = undef,
+  Optional[String[1]]        $source_url             = undef,
+  Optional[Boolean]          $source_strip_first_dir = undef,
+  Optional[Boolean]          $package_ensure         = undef,
+  Optional[String[1]]        $package_name           = undef,
+  Optional[Array[String[1]]] $package_options        = undef,
 ) {
-  include ::tomcat
-  $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
+  include tomcat
+  $_catalina_home = pick($catalina_home, $tomcat::catalina_home)
   $_catalina_base = pick($catalina_base, $_catalina_home) #default to home
   tag(sha1($_catalina_home))
   tag(sha1($_catalina_base))
-  $_user = pick($user, $::tomcat::user)
-  $_group = pick($group, $::tomcat::group)
-  $_manage_user = pick($manage_user, $::tomcat::manage_user)
-  $_manage_group = pick($manage_group, $::tomcat::manage_group)
-  $_manage_base = pick($manage_base, $::tomcat::manage_base)
-  $_manage_properties = pick($manage_properties, $::tomcat::manage_properties)
+  $_user = pick($user, $tomcat::user)
+  $_group = pick($group, $tomcat::group)
+  $_manage_user = pick($manage_user, $tomcat::manage_user)
+  $_manage_group = pick($manage_group, $tomcat::manage_group)
+  $_manage_base = pick($manage_base, $tomcat::manage_base)
+  $_manage_properties = pick($manage_properties, $tomcat::manage_properties)
 
   if $source_url and $install_from_source == undef {
     # XXX Backwards compatibility mode enabled; install_from_source used to default

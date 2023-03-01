@@ -1,7 +1,7 @@
 # This code fragment will install the tomcat package from EPEL and start the service
 #
-class { '::tomcat': }
-class { '::epel': }
+class { 'tomcat': }
+class { 'epel': }
 -> tomcat::instance { 'default':
   install_from_source => false,
   package_name        => 'tomcat',

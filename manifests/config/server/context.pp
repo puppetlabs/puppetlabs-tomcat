@@ -22,22 +22,22 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::context (
-  $catalina_base                           = undef,
-  Enum['present','absent'] $context_ensure = 'present',
-  $doc_base                                = undef,
-  $parent_service                          = undef,
-  $parent_engine                           = undef,
-  $parent_host                             = undef,
-  Hash $additional_attributes              = {},
-  Array $attributes_to_remove              = [],
-  $server_config                           = undef,
-  Boolean $show_diff                       = true,
+  Optional[Stdlib::Absolutepath] $catalina_base         = undef,
+  Enum['present','absent']       $context_ensure        = 'present',
+  Optional[String[1]]            $doc_base              = undef,
+  Optional[String[1]]            $parent_service        = undef,
+  Optional[String[1]]            $parent_engine         = undef,
+  Optional[String[1]]            $parent_host           = undef,
+  Hash                           $additional_attributes = {},
+  Array                          $attributes_to_remove  = [],
+  Optional[String[1]]            $server_config         = undef,
+  Boolean                        $show_diff             = true,
 ) {
-  include ::tomcat
-  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  include tomcat
+  $_catalina_base = pick($catalina_base, $tomcat::catalina_home)
   tag(sha1($_catalina_base))
 
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 
