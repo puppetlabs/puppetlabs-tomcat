@@ -25,17 +25,17 @@
 #
 define tomcat::config::context::environment (
   Enum['present','absent'] $ensure    = 'present',
-  Stdlib::Absolutepath $catalina_base = $::tomcat::catalina_home,
-  String $environment_name            = $name,
-  Optional[String] $type              = undef,
-  Optional[String] $value             = undef,
-  Optional[String] $description       = undef,
+  Stdlib::Absolutepath $catalina_base = $tomcat::catalina_home,
+  String[1] $environment_name         = $name,
+  Optional[String[1]] $type           = undef,
+  Optional[String[1]] $value          = undef,
+  Optional[String[1]] $description    = undef,
   Optional[Boolean] $override         = undef,
   Hash $additional_attributes         = {},
   Array $attributes_to_remove         = [],
   Boolean $show_diff                  = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

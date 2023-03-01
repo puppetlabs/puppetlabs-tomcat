@@ -1,5 +1,5 @@
-class { '::tomcat': }
-class { '::java': }
+class { 'tomcat': }
+class { 'java': }
 
 tomcat::instance { 'tomcat8':
   catalina_base => '/opt/apache-tomcat/tomcat8',

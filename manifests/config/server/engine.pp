@@ -21,7 +21,8 @@
 # @param parent_service
 #   Specifies which Service element the Engine should nest under. Valid options: a string containing the name attribute of the Service.
 # @param start_stop_threads
-#   Sets how many threads the Engine should use to start child Host elements in parallel. Maps to the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: a string.
+#   Sets how many threads the Engine should use to start child Host elements in parallel. Maps to the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). 
+#   Valid options: a string or an integer. Warning: Future versions of the module will deprecate Strings as a valid value and allow only Integers.
 # @param start_stop_threads_ensure
 #   Specifies whether the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) should exist in the configuration file.
 # @param server_config
@@ -30,26 +31,26 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::engine (
-  $default_host,
-  $catalina_base                                              = undef,
-  $background_processor_delay                                 = undef,
-  Enum['present','absent'] $background_processor_delay_ensure = 'present',
-  $class_name                                                 = undef,
-  Enum['present','absent'] $class_name_ensure                 = 'present',
-  $engine_name                                                = undef,
-  $jvm_route                                                  = undef,
-  Enum['present','absent'] $jvm_route_ensure                  = 'present',
-  $parent_service                                             = 'Catalina',
-  $start_stop_threads                                         = undef,
-  Enum['present','absent'] $start_stop_threads_ensure         = 'present',
-  $server_config                                              = undef,
-  Boolean $show_diff                                          = true,
+  String[1] $default_host,
+  Optional[Stdlib::Absolutepath] $catalina_base                     = undef,
+  Optional[Variant[Integer, String[1]]] $background_processor_delay = undef,
+  Enum['present','absent'] $background_processor_delay_ensure       = 'present',
+  Optional[String[1]] $class_name                                   = undef,
+  Enum['present','absent'] $class_name_ensure                       = 'present',
+  Optional[String[1]] $engine_name                                  = undef,
+  Optional[String[1]] $jvm_route                                    = undef,
+  Enum['present','absent'] $jvm_route_ensure                        = 'present',
+  String[1] $parent_service                                         = 'Catalina',
+  Optional[Variant[String[1], Integer]] $start_stop_threads         = undef,
+  Enum['present','absent'] $start_stop_threads_ensure               = 'present',
+  Optional[String[1]] $server_config                                = undef,
+  Boolean $show_diff                                                = true,
 ) {
-  include ::tomcat
-  $_catalina_base = pick($catalina_base, $::tomcat::catalina_home)
+  include tomcat
+  $_catalina_base = pick($catalina_base, $tomcat::catalina_home)
   tag(sha1($_catalina_base))
 
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

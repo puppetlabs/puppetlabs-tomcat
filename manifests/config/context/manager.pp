@@ -16,14 +16,14 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::context::manager (
-  Enum['present','absent'] $ensure = 'present',
-  $catalina_base                   = $::tomcat::catalina_home,
-  $manager_classname               = $name,
-  Hash $additional_attributes      = {},
-  Array $attributes_to_remove      = [],
-  Boolean $show_diff               = true,
+  Enum['present','absent'] $ensure                = 'present',
+  Stdlib::Absolutepath     $catalina_base         = $tomcat::catalina_home,
+  String[1]                $manager_classname     = $name,
+  Hash                     $additional_attributes = {},
+  Array                    $attributes_to_remove  = [],
+  Boolean                  $show_diff             = true,
 ) {
-  if versioncmp($::augeasversion, '1.0.0') < 0 {
+  if versioncmp($facts['augeas']['version'], '1.0.0') < 0 {
     fail('Server configurations require Augeas >= 1.0.0')
   }
 

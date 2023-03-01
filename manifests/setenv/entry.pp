@@ -26,22 +26,22 @@
 #   Specifies the group of the config file. `$::tomcat::group`.
 #
 define tomcat::setenv::entry (
-  $value,
-  $ensure        = 'present',
-  $catalina_home = undef,
-  $config_file   = undef,
-  $param         = $name,
-  $quote_char    = undef,
-  $order         = '10',
-  $addto         = undef,
-  $doexport      = true,
-  $user          = undef,
-  $group         = undef,
+  Variant[String[1], Array[String[1]]]  $value,
+  Enum['present', 'absent']             $ensure = 'present',
+  Optional[String[1]]                   $catalina_home = undef,
+  Optional[String[1]]                   $config_file   = undef,
+  String[1]                             $param         = $name,
+  Optional[String[1]]                   $quote_char    = undef,
+  Variant[String[1], Integer]           $order         = '10',
+  Optional[String[1]]                   $addto         = undef,
+  Boolean                               $doexport      = true,
+  Optional[String[1]]                   $user          = undef,
+  Optional[String[1]]                   $group         = undef,
 ) {
-  include ::tomcat
-  $_user = pick($user, $::tomcat::user)
-  $_group = pick($group, $::tomcat::group)
-  $_catalina_home = pick($catalina_home, $::tomcat::catalina_home)
+  include tomcat
+  $_user = pick($user, $tomcat::user)
+  $_group = pick($group, $tomcat::group)
+  $_catalina_home = pick($catalina_home, $tomcat::catalina_home)
   $home_sha = sha1($_catalina_home)
   tag($home_sha)
 

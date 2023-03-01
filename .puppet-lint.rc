@@ -1,9 +1,2 @@
 --relative
---no-parameter_types-check
---no-parameter_documentation-check
---no-topscope_variable-check
---no-top_scope_facts-check
---no-relative_classname_inclusion-check
---no-legacy_facts-check
---no-selector_inside_resource-check
 --ignore-paths=examples/*.pp,vendor/**/*.pp,bundle/**/*.pp,pkg/**/*.pp,spec/**/*.pp

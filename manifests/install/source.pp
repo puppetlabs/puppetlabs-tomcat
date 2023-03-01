@@ -3,15 +3,15 @@
 # @api private
 #
 define tomcat::install::source (
-  $catalina_home,
-  $manage_home,
-  $source_url,
-  $source_strip_first_dir,
-  $group,
-  $allow_insecure = false,
-  $user = 'root',
-  $proxy_type   = undef,
-  $proxy_server = undef,
+  String[1] $catalina_home,
+  Boolean   $manage_home,
+  String[1]  $source_url,
+  Boolean   $source_strip_first_dir,
+  String[1] $group,
+  Boolean   $allow_insecure                                   = false,
+  String[1] $user                                             = 'root',
+  Optional[Enum['none', 'http', 'https', 'ftp']] $proxy_type  = undef,
+  Optional[String[1]] $proxy_server                           = undef,
 ) {
   tag(sha1($catalina_home))
 
