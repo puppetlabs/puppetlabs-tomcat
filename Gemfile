@@ -26,7 +26,7 @@ group :development do
   gem "rspec-puppet-facts", '~> 2.0',              require: false
   gem "codecov", '~> 0.2',                         require: false
   gem "dependency_checker", '~> 0.2',              require: false
-  gem "parallel_tests", '= 3.12.1',                require: false
+  gem "parallel_tests", '~> 3.4',                  require: false
   gem "pry", '~> 0.10',                            require: false
   gem "simplecov-console", '~> 0.5',               require: false
   gem "puppet-debugger", '~> 1.0',                 require: false
