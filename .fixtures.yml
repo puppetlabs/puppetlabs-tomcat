@@ -5,7 +5,9 @@ fixtures:
     archive: "https://github.com/voxpupuli/puppet-archive.git"
     augeas_core: "https://github.com/puppetlabs/puppetlabs-augeas_core.git"
     facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
-    puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
+    puppet_agent:
+      repo: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
+      ref: v4.12.1
     provision: 'https://github.com/puppetlabs/provision.git'
 
   symlinks:
