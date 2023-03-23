@@ -53,7 +53,7 @@ define tomcat::install (
   Optional[Array[String[1]]] $remove_default_webapps         = undef,
 
   # package options
-  Optional[Boolean]          $package_ensure   = undef,
+  Optional[String[1]]        $package_ensure   = undef,
   Optional[String[1]]        $package_name     = undef,
   Optional[Array[String[1]]] $package_options  = undef,
 ) {

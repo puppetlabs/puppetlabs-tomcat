@@ -2101,7 +2101,7 @@ Default value: `undef`
 
 ##### <a name="-tomcat--install--package_ensure"></a>`package_ensure`
 
-Data type: `Optional[Boolean]`
+Data type: `Optional[String[1]]`
 
 Determines whether the specified package should be installed. Only valid if `install_from_source` is set to `false`. Maps to the `ensure` parameter of Puppet's native [package](https://docs.puppetlabs.com/references/latest/type.html#package).
 
@@ -2350,7 +2350,7 @@ Default value: `undef`
 
 ##### <a name="-tomcat--instance--package_ensure"></a>`package_ensure`
 
-Data type: `Optional[Boolean]`
+Data type: `Optional[String[1]]`
 
 Ensure for the package resource when installing from package.
 
