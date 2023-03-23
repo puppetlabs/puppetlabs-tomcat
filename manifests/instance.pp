@@ -83,7 +83,7 @@ define tomcat::instance (
   Optional[Boolean]          $install_from_source    = undef,
   Optional[String[1]]        $source_url             = undef,
   Optional[Boolean]          $source_strip_first_dir = undef,
-  Optional[Boolean]          $package_ensure         = undef,
+  Optional[String[1]]        $package_ensure         = undef,
   Optional[String[1]]        $package_name           = undef,
   Optional[Array[String[1]]] $package_options        = undef,
 ) {
