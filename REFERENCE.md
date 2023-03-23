@@ -12,32 +12,32 @@
 
 #### Public Defined types
 
-* [`tomcat::config::context`](#tomcatconfigcontext): Configure attributes for the Context element in $CATALINA_BASE/conf/context.xml
-* [`tomcat::config::context::environment`](#tomcatconfigcontextenvironment): Configure Environment elements in $CATALINA_BASE/conf/context.xml
-* [`tomcat::config::context::manager`](#tomcatconfigcontextmanager): Configure Manager elements in $CATALINA_BASE/conf/context.xml
-* [`tomcat::config::context::parameter`](#tomcatconfigcontextparameter): Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
-* [`tomcat::config::context::resource`](#tomcatconfigcontextresource): Configure Resource elements in $CATALINA_BASE/conf/context.xml
-* [`tomcat::config::context::resourcelink`](#tomcatconfigcontextresourcelink): Configure a ResourceLink element in the designated xml config.
-* [`tomcat::config::context::resources`](#tomcatconfigcontextresources): Configure Resources elements in $CATALINA_BASE/conf/context.xml
-* [`tomcat::config::context::valve`](#tomcatconfigcontextvalve): Specifies Valve elements in `${catalina_base}/conf/context.xml`
-* [`tomcat::config::properties::property`](#tomcatconfigpropertiesproperty): Manage additional entries for the properties file, typically catalina.properties
-* [`tomcat::config::server`](#tomcatconfigserver): Configure attributes for the Server element in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::connector`](#tomcatconfigserverconnector): Configure Connector elements in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::context`](#tomcatconfigservercontext): Configure a Context element in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::engine`](#tomcatconfigserverengine): Configure Engine elements in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::globalnamingresource`](#tomcatconfigserverglobalnamingresource): Configure GlobalNamingResources Resource elements in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::host`](#tomcatconfigserverhost): Configure Host elements in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::listener`](#tomcatconfigserverlistener): Configure Listener elements in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::realm`](#tomcatconfigserverrealm): Configure Realm elements in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::resources`](#tomcatconfigserverresources): Configure Resources elements in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::service`](#tomcatconfigserverservice): Configure a Service element nested in the Server element in $CATALINA_BASE/conf/server.xml
-* [`tomcat::config::server::tomcat_users`](#tomcatconfigservertomcat_users): Configures roles and users in $CATALINA_BASE/conf/tomcat-users.xml or any other specified file
-* [`tomcat::config::server::valve`](#tomcatconfigservervalve): Configure a Valve element in $CATALINA_BASE/conf/server.xml
-* [`tomcat::install`](#tomcatinstall): Configure and manage the tomcat installation
-* [`tomcat::instance`](#tomcatinstance): This define installs an instance of Tomcat.
-* [`tomcat::service`](#tomcatservice): Service management for Tomcat.
-* [`tomcat::setenv::entry`](#tomcatsetenventry): This define adds an entry to the setenv.sh script.
-* [`tomcat::war`](#tomcatwar): Manage deployment of WAR files.
+* [`tomcat::config::context`](#tomcat--config--context): Configure attributes for the Context element in $CATALINA_BASE/conf/context.xml
+* [`tomcat::config::context::environment`](#tomcat--config--context--environment): Configure Environment elements in $CATALINA_BASE/conf/context.xml
+* [`tomcat::config::context::manager`](#tomcat--config--context--manager): Configure Manager elements in $CATALINA_BASE/conf/context.xml
+* [`tomcat::config::context::parameter`](#tomcat--config--context--parameter): Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
+* [`tomcat::config::context::resource`](#tomcat--config--context--resource): Configure Resource elements in $CATALINA_BASE/conf/context.xml
+* [`tomcat::config::context::resourcelink`](#tomcat--config--context--resourcelink): Configure a ResourceLink element in the designated xml config.
+* [`tomcat::config::context::resources`](#tomcat--config--context--resources): Configure Resources elements in $CATALINA_BASE/conf/context.xml
+* [`tomcat::config::context::valve`](#tomcat--config--context--valve): Specifies Valve elements in `${catalina_base}/conf/context.xml`
+* [`tomcat::config::properties::property`](#tomcat--config--properties--property): Manage additional entries for the properties file, typically catalina.properties
+* [`tomcat::config::server`](#tomcat--config--server): Configure attributes for the Server element in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::connector`](#tomcat--config--server--connector): Configure Connector elements in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::context`](#tomcat--config--server--context): Configure a Context element in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::engine`](#tomcat--config--server--engine): Configure Engine elements in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::globalnamingresource`](#tomcat--config--server--globalnamingresource): Configure GlobalNamingResources Resource elements in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::host`](#tomcat--config--server--host): Configure Host elements in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::listener`](#tomcat--config--server--listener): Configure Listener elements in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::realm`](#tomcat--config--server--realm): Configure Realm elements in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::resources`](#tomcat--config--server--resources): Configure Resources elements in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::service`](#tomcat--config--server--service): Configure a Service element nested in the Server element in $CATALINA_BASE/conf/server.xml
+* [`tomcat::config::server::tomcat_users`](#tomcat--config--server--tomcat_users): Configures roles and users in $CATALINA_BASE/conf/tomcat-users.xml or any other specified file
+* [`tomcat::config::server::valve`](#tomcat--config--server--valve): Configure a Valve element in $CATALINA_BASE/conf/server.xml
+* [`tomcat::install`](#tomcat--install): Configure and manage the tomcat installation
+* [`tomcat::instance`](#tomcat--instance): This define installs an instance of Tomcat.
+* [`tomcat::service`](#tomcat--service): Service management for Tomcat.
+* [`tomcat::setenv::entry`](#tomcat--setenv--entry): This define adds an entry to the setenv.sh script.
+* [`tomcat::war`](#tomcat--war): Manage deployment of WAR files.
 
 #### Private Defined types
 
@@ -57,100 +57,100 @@ Class to manage installation and configuration of Tomcat.
 
 The following parameters are available in the `tomcat` class:
 
-* [`catalina_home`](#catalina_home)
-* [`user`](#user)
-* [`group`](#group)
-* [`purge_connectors`](#purge_connectors)
-* [`purge_realms`](#purge_realms)
-* [`manage_user`](#manage_user)
-* [`manage_group`](#manage_group)
-* [`manage_home`](#manage_home)
-* [`manage_base`](#manage_base)
-* [`manage_properties`](#manage_properties)
+* [`catalina_home`](#-tomcat--catalina_home)
+* [`user`](#-tomcat--user)
+* [`group`](#-tomcat--group)
+* [`purge_connectors`](#-tomcat--purge_connectors)
+* [`purge_realms`](#-tomcat--purge_realms)
+* [`manage_user`](#-tomcat--manage_user)
+* [`manage_group`](#-tomcat--manage_group)
+* [`manage_home`](#-tomcat--manage_home)
+* [`manage_base`](#-tomcat--manage_base)
+* [`manage_properties`](#-tomcat--manage_properties)
 
-##### <a name="catalina_home"></a>`catalina_home`
+##### <a name="-tomcat--catalina_home"></a>`catalina_home`
 
-Data type: `Any`
+Data type: `String`
 
 Specifies the default root directory of the Tomcat installation. Valid options: a string containing an absolute path.
 
 Default value: `'/opt/apache-tomcat'`
 
-##### <a name="user"></a>`user`
+##### <a name="-tomcat--user"></a>`user`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies a default user to run Tomcat as. Valid options: a string containing a valid username.
 
 Default value: `'tomcat'`
 
-##### <a name="group"></a>`group`
+##### <a name="-tomcat--group"></a>`group`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies a default group to run Tomcat as. Valid options: a string containing a valid group name.
 
 Default value: `'tomcat'`
 
-##### <a name="purge_connectors"></a>`purge_connectors`
+##### <a name="-tomcat--purge_connectors"></a>`purge_connectors`
 
 Data type: `Boolean`
 
 Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file by default.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="purge_realms"></a>`purge_realms`
+##### <a name="-tomcat--purge_realms"></a>`purge_realms`
 
 Data type: `Boolean`
 
 Specifies whether to purge any unmanaged realm elements from the configuration file by default. If two realms are defined for a specific server config only use `purge_realms` for the first realm and ensure the realms enforce a strict order between each other.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-tomcat--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
 Determines whether defined types should default to creating the specified user, if it doesn't exist. Uses Puppet's native [user](https://docs.puppetlabs.com/references/latest/type.html#user) with default parameters.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-tomcat--manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
 Determines whether defined types should default to creating the specified group, if it doesn't exist. Uses Puppet's native [group](https://docs.puppetlabs.com/references/latest/type.html#group) with default parameters.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_home"></a>`manage_home`
+##### <a name="-tomcat--manage_home"></a>`manage_home`
 
 Data type: `Boolean`
 
 Specifies the default value of `manage_home` for all `tomcat::instance` instances.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_base"></a>`manage_base`
+##### <a name="-tomcat--manage_base"></a>`manage_base`
 
 Data type: `Boolean`
 
 Specifies the default value of `manage_base` for all `tomcat::install` instances.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_properties"></a>`manage_properties`
+##### <a name="-tomcat--manage_properties"></a>`manage_properties`
 
 Data type: `Boolean`
 
 Specifies the default value of `manage_properties` for all `tomcat::instance` instances.
 
-Default value: ``true``
+Default value: `true`
 
 ## Defined types
 
-### <a name="tomcatconfigcontext"></a>`tomcat::config::context`
+### <a name="tomcat--config--context"></a>`tomcat::config::context`
 
 Configure attributes for the Context element in $CATALINA_BASE/conf/context.xml
 
@@ -158,26 +158,44 @@ Configure attributes for the Context element in $CATALINA_BASE/conf/context.xml
 
 The following parameters are available in the `tomcat::config::context` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--context--catalina_base)
+* [`additional_attributes`](#-tomcat--config--context--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--context--attributes_to_remove)
+* [`show_diff`](#-tomcat--config--context--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--context--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the root of the Tomcat installation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--context--additional_attributes"></a>`additional_attributes`
+
+Data type: `Hash`
+
+Specifies any additional attributes to add to the Context. Should be a hash of the format 'attribute' => 'value'. Optional
+
+Default value: `{}`
+
+##### <a name="-tomcat--config--context--attributes_to_remove"></a>`attributes_to_remove`
+
+Data type: `Array`
+
+Specifies an array of attributes to remove from the element. Valid options: an array of strings. `[]`.
+
+Default value: `[]`
+
+##### <a name="-tomcat--config--context--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigcontextenvironment"></a>`tomcat::config::context::environment`
+### <a name="tomcat--config--context--environment"></a>`tomcat::config::context::environment`
 
 Configure Environment elements in $CATALINA_BASE/conf/context.xml
 
@@ -185,19 +203,19 @@ Configure Environment elements in $CATALINA_BASE/conf/context.xml
 
 The following parameters are available in the `tomcat::config::context::environment` defined type:
 
-* [`ensure`](#ensure)
-* [`catalina_base`](#catalina_base)
-* [`environment_name`](#environment_name)
-* [`name`](#name)
-* [`type`](#type)
-* [`value`](#value)
-* [`description`](#description)
-* [`override`](#override)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`show_diff`](#show_diff)
+* [`ensure`](#-tomcat--config--context--environment--ensure)
+* [`catalina_base`](#-tomcat--config--context--environment--catalina_base)
+* [`environment_name`](#-tomcat--config--context--environment--environment_name)
+* [`name`](#-tomcat--config--context--environment--name)
+* [`type`](#-tomcat--config--context--environment--type)
+* [`value`](#-tomcat--config--context--environment--value)
+* [`description`](#-tomcat--config--context--environment--description)
+* [`override`](#-tomcat--config--context--environment--override)
+* [`additional_attributes`](#-tomcat--config--context--environment--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--context--environment--attributes_to_remove)
+* [`show_diff`](#-tomcat--config--context--environment--show_diff)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--context--environment--ensure"></a>`ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -205,59 +223,59 @@ Specifies whether you are trying to add or remove the Environment element Valid 
 
 Default value: `'present'`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--context--environment--catalina_base"></a>`catalina_base`
 
 Data type: `Stdlib::Absolutepath`
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="environment_name"></a>`environment_name`
+##### <a name="-tomcat--config--context--environment--environment_name"></a>`environment_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 The name of the Environment Entry to be created, relative to the `java:comp/env` context. `$name`.
 
 Default value: `$name`
 
-##### <a name="name"></a>`name`
+##### <a name="-tomcat--config--context--environment--name"></a>`name`
 
 `$environment_name`
 
-##### <a name="type"></a>`type`
+##### <a name="-tomcat--config--context--environment--type"></a>`type`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The fully qualified Java class name expected by the web application for this environment entry. Required to create the environment entry.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="value"></a>`value`
+##### <a name="-tomcat--config--context--environment--value"></a>`value`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The value that will be presented to the application when requested from the JNDI context. Required to create the environment entry.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="description"></a>`description`
+##### <a name="-tomcat--config--context--environment--description"></a>`description`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The description is an an optional string for a human-readable description of this environment entry.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="override"></a>`override`
+##### <a name="-tomcat--config--context--environment--override"></a>`override`
 
 Data type: `Optional[Boolean]`
 
 An optional string or Boolean to specify if you do not want an `<env-entry>` for the same environment entry name to override the value specified here (set it to `false`). By default, overrides are allowed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--context--environment--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -265,7 +283,7 @@ Specifies any additional attributes to add to the Environment. Should be a hash 
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--context--environment--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -273,15 +291,15 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--context--environment--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigcontextmanager"></a>`tomcat::config::context::manager`
+### <a name="tomcat--config--context--manager"></a>`tomcat::config::context::manager`
 
 Configure Manager elements in $CATALINA_BASE/conf/context.xml
 
@@ -289,15 +307,15 @@ Configure Manager elements in $CATALINA_BASE/conf/context.xml
 
 The following parameters are available in the `tomcat::config::context::manager` defined type:
 
-* [`ensure`](#ensure)
-* [`catalina_base`](#catalina_base)
-* [`manager_classname`](#manager_classname)
-* [`name`](#name)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`show_diff`](#show_diff)
+* [`ensure`](#-tomcat--config--context--manager--ensure)
+* [`catalina_base`](#-tomcat--config--context--manager--catalina_base)
+* [`manager_classname`](#-tomcat--config--context--manager--manager_classname)
+* [`name`](#-tomcat--config--context--manager--name)
+* [`additional_attributes`](#-tomcat--config--context--manager--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--context--manager--attributes_to_remove)
+* [`show_diff`](#-tomcat--config--context--manager--show_diff)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--context--manager--ensure"></a>`ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -305,27 +323,27 @@ specifies whether you are trying to add or remove the Manager element.
 
 Default value: `'present'`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--context--manager--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="manager_classname"></a>`manager_classname`
+##### <a name="-tomcat--config--context--manager--manager_classname"></a>`manager_classname`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The name of the Manager to be created. `$name`.
 
 Default value: `$name`
 
-##### <a name="name"></a>`name`
+##### <a name="-tomcat--config--context--manager--name"></a>`name`
 
 `$manager_classname`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--context--manager--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -333,7 +351,7 @@ Specifies any additional attributes to add to the Manager. Should be a hash of t
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--context--manager--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -341,15 +359,15 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--context--manager--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigcontextparameter"></a>`tomcat::config::context::parameter`
+### <a name="tomcat--config--context--parameter"></a>`tomcat::config::context::parameter`
 
 Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
 
@@ -357,14 +375,14 @@ Configure Parameter elements in $CATALINA_BASE/conf/context.xml.
 
 The following parameters are available in the `tomcat::config::context::parameter` defined type:
 
-* [`ensure`](#ensure)
-* [`catalina_base`](#catalina_base)
-* [`parameter_name`](#parameter_name)
-* [`value`](#value)
-* [`description`](#description)
-* [`override`](#override)
+* [`ensure`](#-tomcat--config--context--parameter--ensure)
+* [`catalina_base`](#-tomcat--config--context--parameter--catalina_base)
+* [`parameter_name`](#-tomcat--config--context--parameter--parameter_name)
+* [`value`](#-tomcat--config--context--parameter--value)
+* [`description`](#-tomcat--config--context--parameter--description)
+* [`override`](#-tomcat--config--context--parameter--override)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--context--parameter--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -372,48 +390,48 @@ Specifies whether you are trying to add or remove the Parameter element Valid op
 
 Default value: `'present'`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--context--parameter--catalina_base"></a>`catalina_base`
 
-Data type: `Pattern[/^(\/[^\/ ]*)+\/?$/]`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="parameter_name"></a>`parameter_name`
+##### <a name="-tomcat--config--context--parameter--parameter_name"></a>`parameter_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 The name of the Parameter entry to be created, relative to the `java:comp/env` context. `$name`.
 
 Default value: `$name`
 
-##### <a name="value"></a>`value`
+##### <a name="-tomcat--config--context--parameter--value"></a>`value`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The value that will be presented to the application when requested from the JNDI context.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="description"></a>`description`
+##### <a name="-tomcat--config--context--parameter--description"></a>`description`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The description is an an optional string for a human-readable description of this Parameter entry.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="override"></a>`override`
+##### <a name="-tomcat--config--context--parameter--override"></a>`override`
 
 Data type: `Optional[Boolean]`
 
 An optional string or Boolean to specify whether you want an `<env-entry>` for the same Parameter entry name to override the value
 specified here (set it to `false`). By default, overrides are allowed.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="tomcatconfigcontextresource"></a>`tomcat::config::context::resource`
+### <a name="tomcat--config--context--resource"></a>`tomcat::config::context::resource`
 
 Configure Resource elements in $CATALINA_BASE/conf/context.xml
 
@@ -421,16 +439,16 @@ Configure Resource elements in $CATALINA_BASE/conf/context.xml
 
 The following parameters are available in the `tomcat::config::context::resource` defined type:
 
-* [`ensure`](#ensure)
-* [`resource_name`](#resource_name)
-* [`name`](#name)
-* [`resource_type`](#resource_type)
-* [`catalina_base`](#catalina_base)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`show_diff`](#show_diff)
+* [`ensure`](#-tomcat--config--context--resource--ensure)
+* [`resource_name`](#-tomcat--config--context--resource--resource_name)
+* [`name`](#-tomcat--config--context--resource--name)
+* [`resource_type`](#-tomcat--config--context--resource--resource_type)
+* [`catalina_base`](#-tomcat--config--context--resource--catalina_base)
+* [`additional_attributes`](#-tomcat--config--context--resource--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--context--resource--attributes_to_remove)
+* [`show_diff`](#-tomcat--config--context--resource--show_diff)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--context--resource--ensure"></a>`ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -438,35 +456,35 @@ Specifies whether you are trying to add or remove the Resource element.
 
 Default value: `'present'`
 
-##### <a name="resource_name"></a>`resource_name`
+##### <a name="-tomcat--config--context--resource--resource_name"></a>`resource_name`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The name of the Resource to be created, relative to the `java:comp/env` context. `$name`.
 
 Default value: `$name`
 
-##### <a name="name"></a>`name`
+##### <a name="-tomcat--config--context--resource--name"></a>`name`
 
 `$resource_name`
 
-##### <a name="resource_type"></a>`resource_type`
+##### <a name="-tomcat--config--context--resource--resource_type"></a>`resource_type`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 The fully qualified Java class name expected by the web application when it performs a lookup for this resource. Required to create the resource.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--context--resource--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--context--resource--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -474,7 +492,7 @@ Specifies any additional attributes to add to the Valve. Should be a hash of the
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--context--resource--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -482,15 +500,15 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--context--resource--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigcontextresourcelink"></a>`tomcat::config::context::resourcelink`
+### <a name="tomcat--config--context--resourcelink"></a>`tomcat::config::context::resourcelink`
 
 Configure a ResourceLink element in the designated xml config.
 
@@ -498,16 +516,16 @@ Configure a ResourceLink element in the designated xml config.
 
 The following parameters are available in the `tomcat::config::context::resourcelink` defined type:
 
-* [`ensure`](#ensure)
-* [`catalina_base`](#catalina_base)
-* [`resourcelink_name`](#resourcelink_name)
-* [`name`](#name)
-* [`resourcelink_type`](#resourcelink_type)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`show_diff`](#show_diff)
+* [`ensure`](#-tomcat--config--context--resourcelink--ensure)
+* [`catalina_base`](#-tomcat--config--context--resourcelink--catalina_base)
+* [`resourcelink_name`](#-tomcat--config--context--resourcelink--resourcelink_name)
+* [`name`](#-tomcat--config--context--resourcelink--name)
+* [`resourcelink_type`](#-tomcat--config--context--resourcelink--resourcelink_type)
+* [`additional_attributes`](#-tomcat--config--context--resourcelink--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--context--resourcelink--attributes_to_remove)
+* [`show_diff`](#-tomcat--config--context--resourcelink--show_diff)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--context--resourcelink--ensure"></a>`ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -515,35 +533,35 @@ specifies whether you are trying to add or remove the ResourceLink element.
 
 Default value: `'present'`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--context--resourcelink--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the root of the Tomcat installation. `$tomcat::catalina_home`.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="resourcelink_name"></a>`resourcelink_name`
+##### <a name="-tomcat--config--context--resourcelink--resourcelink_name"></a>`resourcelink_name`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The name of the ResourceLink to be created, relative to the `java:comp/env` context. `$name`.
 
 Default value: `$name`
 
-##### <a name="name"></a>`name`
+##### <a name="-tomcat--config--context--resourcelink--name"></a>`name`
 
 `$resourcelink_name`
 
-##### <a name="resourcelink_type"></a>`resourcelink_type`
+##### <a name="-tomcat--config--context--resourcelink--resourcelink_type"></a>`resourcelink_type`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 The fully qualified Java class name expected by the web application when it performs a lookup for this resource link.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--context--resourcelink--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -551,7 +569,7 @@ Specifies any additional attributes to add to the Valve. Should be a hash of the
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--context--resourcelink--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -559,15 +577,15 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--context--resourcelink--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigcontextresources"></a>`tomcat::config::context::resources`
+### <a name="tomcat--config--context--resources"></a>`tomcat::config::context::resources`
 
 Configure Resources elements in $CATALINA_BASE/conf/context.xml
 
@@ -575,16 +593,13 @@ Configure Resources elements in $CATALINA_BASE/conf/context.xml
 
 The following parameters are available in the `tomcat::config::context::resources` defined type:
 
-* [`ensure`](#ensure)
-* [`resources_name`](#resources_name)
-* [`name`](#name)
-* [`resources_type`](#resources_type)
-* [`catalina_base`](#catalina_base)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`show_diff`](#show_diff)
+* [`ensure`](#-tomcat--config--context--resources--ensure)
+* [`catalina_base`](#-tomcat--config--context--resources--catalina_base)
+* [`additional_attributes`](#-tomcat--config--context--resources--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--context--resources--attributes_to_remove)
+* [`show_diff`](#-tomcat--config--context--resources--show_diff)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--context--resources--ensure"></a>`ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -592,35 +607,15 @@ Specifies whether you are trying to add or remove the Resources element.
 
 Default value: `'present'`
 
-##### <a name="resources_name"></a>`resources_name`
+##### <a name="-tomcat--config--context--resources--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
-
-The name of the Resources to be created, relative to the `java:comp/env` context. `$name`.
-
-Default value: `$name`
-
-##### <a name="name"></a>`name`
-
-`$resources_name`
-
-##### <a name="resources_type"></a>`resources_type`
-
-Data type: `Any`
-
-The fully qualified Java class name expected by the web application when it performs a lookup for this resources. Required to create the resource.
-
-Default value: ``undef``
-
-##### <a name="catalina_base"></a>`catalina_base`
-
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the root of the Tomcat installation.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--context--resources--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -628,7 +623,7 @@ Specifies any additional attributes to add to the Valve. Should be a hash of the
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--context--resources--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -636,15 +631,15 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--context--resources--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigcontextvalve"></a>`tomcat::config::context::valve`
+### <a name="tomcat--config--context--valve"></a>`tomcat::config::context::valve`
 
 Specifies Valve elements in `${catalina_base}/conf/context.xml`
 
@@ -652,17 +647,17 @@ Specifies Valve elements in `${catalina_base}/conf/context.xml`
 
 The following parameters are available in the `tomcat::config::context::valve` defined type:
 
-* [`ensure`](#ensure)
-* [`resource_name`](#resource_name)
-* [`resource_type`](#resource_type)
-* [`class_name`](#class_name)
-* [`catalina_base`](#catalina_base)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`uniqueness_attributes`](#uniqueness_attributes)
-* [`show_diff`](#show_diff)
+* [`ensure`](#-tomcat--config--context--valve--ensure)
+* [`resource_name`](#-tomcat--config--context--valve--resource_name)
+* [`resource_type`](#-tomcat--config--context--valve--resource_type)
+* [`class_name`](#-tomcat--config--context--valve--class_name)
+* [`catalina_base`](#-tomcat--config--context--valve--catalina_base)
+* [`additional_attributes`](#-tomcat--config--context--valve--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--context--valve--attributes_to_remove)
+* [`uniqueness_attributes`](#-tomcat--config--context--valve--uniqueness_attributes)
+* [`show_diff`](#-tomcat--config--context--valve--show_diff)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--context--valve--ensure"></a>`ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -670,9 +665,9 @@ Specifies whether you are trying to add or remove the Valve element.
 
 Default value: `'present'`
 
-##### <a name="resource_name"></a>`resource_name`
+##### <a name="-tomcat--config--context--valve--resource_name"></a>`resource_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Deprecated! Use `uniqueness_attributes`.
 The name of the Resource to be created. Default: `$name` if `resource_type` is used.
@@ -681,34 +676,34 @@ As Tomcat allows multiple valves of the same className, this parameter has been 
 unique representations of each element.
 Adding a `name` attribute to a valve produces a warning in tomcat during load.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="resource_type"></a>`resource_type`
+##### <a name="-tomcat--config--context--valve--resource_type"></a>`resource_type`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Deprecated! Use `class_name`
 Java class name of the implementation to use.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="class_name"></a>`class_name`
+##### <a name="-tomcat--config--context--valve--class_name"></a>`class_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Java class name of the implementation to use. Default: `$name` if `resource_type` is not used.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--context--valve--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the root of the Tomcat installation. Default: `$tomcat::catalina_home`
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--context--valve--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -716,7 +711,7 @@ Specifies any further attributes to add to the Valve. Valid options: a hash of '
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--context--valve--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -724,7 +719,7 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="uniqueness_attributes"></a>`uniqueness_attributes`
+##### <a name="-tomcat--config--context--valve--uniqueness_attributes"></a>`uniqueness_attributes`
 
 Data type: `Array`
 
@@ -732,15 +727,15 @@ Specifies an array of attribute names that Puppet use to uniquely idetify valves
 
 Default value: `[]`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--context--valve--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigpropertiesproperty"></a>`tomcat::config::properties::property`
+### <a name="tomcat--config--properties--property"></a>`tomcat::config::properties::property`
 
 Manage additional entries for the properties file, typically catalina.properties
 
@@ -748,31 +743,31 @@ Manage additional entries for the properties file, typically catalina.properties
 
 The following parameters are available in the `tomcat::config::properties::property` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`value`](#value)
-* [`property`](#property)
+* [`catalina_base`](#-tomcat--config--properties--property--catalina_base)
+* [`value`](#-tomcat--config--properties--property--value)
+* [`property`](#-tomcat--config--properties--property--property)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--properties--property--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 The catalina base of the catalina.properties file. The resource will manage the values in `${catalina_base}/conf/catalina.properties` . Required
 
-##### <a name="value"></a>`value`
+##### <a name="-tomcat--config--properties--property--value"></a>`value`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The value of the property. Required
 
-##### <a name="property"></a>`property`
+##### <a name="-tomcat--config--properties--property--property"></a>`property`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The name of the property. `$name`.
 
 Default value: `$name`
 
-### <a name="tomcatconfigserver"></a>`tomcat::config::server`
+### <a name="tomcat--config--server"></a>`tomcat::config::server`
 
 Configure attributes for the Server element in $CATALINA_BASE/conf/server.xml
 
@@ -780,33 +775,33 @@ Configure attributes for the Server element in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`class_name`](#class_name)
-* [`class_name_ensure`](#class_name_ensure)
-* [`address`](#address)
-* [`address_ensure`](#address_ensure)
-* [`port`](#port)
-* [`shutdown`](#shutdown)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--catalina_base)
+* [`class_name`](#-tomcat--config--server--class_name)
+* [`class_name_ensure`](#-tomcat--config--server--class_name_ensure)
+* [`address`](#-tomcat--config--server--address)
+* [`address_ensure`](#-tomcat--config--server--address_ensure)
+* [`port`](#-tomcat--config--server--port)
+* [`shutdown`](#-tomcat--config--server--shutdown)
+* [`server_config`](#-tomcat--config--server--server_config)
+* [`show_diff`](#-tomcat--config--server--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="class_name"></a>`class_name`
+##### <a name="-tomcat--config--server--class_name"></a>`class_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes) in the configuration file. Valid options: a string containing a Java class name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="class_name_ensure"></a>`class_name_ensure`
+##### <a name="-tomcat--config--server--class_name_ensure"></a>`class_name_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -814,15 +809,15 @@ Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-
 
 Default value: `'present'`
 
-##### <a name="address"></a>`address`
+##### <a name="-tomcat--config--server--address"></a>`address`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a TCP/IP address on which to listen for the shutdown command. Maps to the [address XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="address_ensure"></a>`address_ensure`
+##### <a name="-tomcat--config--server--address_ensure"></a>`address_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -830,39 +825,39 @@ Specifies whether the [address XML attribute](http://tomcat.apache.org/tomcat-8.
 
 Default value: `'present'`
 
-##### <a name="port"></a>`port`
+##### <a name="-tomcat--config--server--port"></a>`port`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a port on which to listen for the designated shutdown command. Maps to the [port XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string containing a port number.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="shutdown"></a>`shutdown`
+##### <a name="-tomcat--config--server--shutdown"></a>`shutdown`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Designates a command that shuts down Tomcat when the command is received through the specified address and port. Maps to the [shutdown XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigserverconnector"></a>`tomcat::config::server::connector`
+### <a name="tomcat--config--server--connector"></a>`tomcat::config::server::connector`
 
 Configure Connector elements in $CATALINA_BASE/conf/server.xml
 
@@ -870,27 +865,27 @@ Configure Connector elements in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server::connector` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`connector_ensure`](#connector_ensure)
-* [`port`](#port)
-* [`protocol`](#protocol)
-* [`name`](#name)
-* [`parent_service`](#parent_service)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`purge_connectors`](#purge_connectors)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--connector--catalina_base)
+* [`connector_ensure`](#-tomcat--config--server--connector--connector_ensure)
+* [`port`](#-tomcat--config--server--connector--port)
+* [`protocol`](#-tomcat--config--server--connector--protocol)
+* [`name`](#-tomcat--config--server--connector--name)
+* [`parent_service`](#-tomcat--config--server--connector--parent_service)
+* [`additional_attributes`](#-tomcat--config--server--connector--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--server--connector--attributes_to_remove)
+* [`purge_connectors`](#-tomcat--config--server--connector--purge_connectors)
+* [`server_config`](#-tomcat--config--server--connector--server_config)
+* [`show_diff`](#-tomcat--config--server--connector--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--connector--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="connector_ensure"></a>`connector_ensure`
+##### <a name="-tomcat--config--server--connector--connector_ensure"></a>`connector_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -898,35 +893,35 @@ Specifies whether the [Connector XML element](http://tomcat.apache.org/tomcat-8.
 
 Default value: `'present'`
 
-##### <a name="port"></a>`port`
+##### <a name="-tomcat--config--server--connector--port"></a>`port`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Sets a TCP port on which to create a server socket. Maps to the [port XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes). Valid options: a string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="protocol"></a>`protocol`
+##### <a name="-tomcat--config--server--connector--protocol"></a>`protocol`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies a protocol to use for handling incoming traffic. Maps to the [protocol XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes). Valid options: a string. `$name`.
 
 Default value: `$name`
 
-##### <a name="name"></a>`name`
+##### <a name="-tomcat--config--server--connector--name"></a>`name`
 
 `$protocol`
 
-##### <a name="parent_service"></a>`parent_service`
+##### <a name="-tomcat--config--server--connector--parent_service"></a>`parent_service`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies which Service element the Connector should nest under. Valid options: a string containing the name attribute of the Service.
 
 Default value: `'Catalina'`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--server--connector--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -934,7 +929,7 @@ Specifies any further attributes to add to the Connector. Valid options: a hash 
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--server--connector--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -942,31 +937,31 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="purge_connectors"></a>`purge_connectors`
+##### <a name="-tomcat--config--server--connector--purge_connectors"></a>`purge_connectors`
 
 Data type: `Optional[Boolean]`
 
 Specifies whether to purge any unmanaged Connector elements that match defined protocol but have a different port from the configuration file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--connector--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--connector--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigservercontext"></a>`tomcat::config::server::context`
+### <a name="tomcat--config--server--context"></a>`tomcat::config::server::context`
 
 Configure a Context element in $CATALINA_BASE/conf/server.xml
 
@@ -974,26 +969,26 @@ Configure a Context element in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server::context` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`context_ensure`](#context_ensure)
-* [`doc_base`](#doc_base)
-* [`parent_service`](#parent_service)
-* [`parent_engine`](#parent_engine)
-* [`parent_host`](#parent_host)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--context--catalina_base)
+* [`context_ensure`](#-tomcat--config--server--context--context_ensure)
+* [`doc_base`](#-tomcat--config--server--context--doc_base)
+* [`parent_service`](#-tomcat--config--server--context--parent_service)
+* [`parent_engine`](#-tomcat--config--server--context--parent_engine)
+* [`parent_host`](#-tomcat--config--server--context--parent_host)
+* [`additional_attributes`](#-tomcat--config--server--context--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--server--context--attributes_to_remove)
+* [`server_config`](#-tomcat--config--server--context--server_config)
+* [`show_diff`](#-tomcat--config--server--context--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--context--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="context_ensure"></a>`context_ensure`
+##### <a name="-tomcat--config--server--context--context_ensure"></a>`context_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1001,39 +996,39 @@ Specifies whether the [Context XML element](http://tomcat.apache.org/tomcat-8.0-
 
 Default value: `'present'`
 
-##### <a name="doc_base"></a>`doc_base`
+##### <a name="-tomcat--config--server--context--doc_base"></a>`doc_base`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a Document Base (or Context Root) directory or archive file. Maps to the [docBase XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Common_Attributes). Valid options: a string containing a path (either an absolute path or a path relative to the appBase directory of the owning Host). `$name`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_service"></a>`parent_service`
+##### <a name="-tomcat--config--server--context--parent_service"></a>`parent_service`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Service XML element the Context should nest under. Valid options: a string containing the name attribute of the Service.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_engine"></a>`parent_engine`
+##### <a name="-tomcat--config--server--context--parent_engine"></a>`parent_engine`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Engine element the Context should nest under. Only valid if `parent_host` is specified. Valid options: a string containing the name attribute of the Engine.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_host"></a>`parent_host`
+##### <a name="-tomcat--config--server--context--parent_host"></a>`parent_host`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Host element the Context should nest under. Valid options: a string containing the name attribute of the Host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--server--context--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -1041,7 +1036,7 @@ Specifies any further attributes to add to the Context. Valid options: a hash of
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--server--context--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -1049,23 +1044,23 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--context--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--context--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigserverengine"></a>`tomcat::config::server::engine`
+### <a name="tomcat--config--server--engine"></a>`tomcat::config::server::engine`
 
 Configure Engine elements in $CATALINA_BASE/conf/server.xml
 
@@ -1073,44 +1068,44 @@ Configure Engine elements in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server::engine` defined type:
 
-* [`default_host`](#default_host)
-* [`catalina_base`](#catalina_base)
-* [`background_processor_delay`](#background_processor_delay)
-* [`background_processor_delay_ensure`](#background_processor_delay_ensure)
-* [`class_name`](#class_name)
-* [`class_name_ensure`](#class_name_ensure)
-* [`engine_name`](#engine_name)
-* [`jvm_route`](#jvm_route)
-* [`jvm_route_ensure`](#jvm_route_ensure)
-* [`parent_service`](#parent_service)
-* [`start_stop_threads`](#start_stop_threads)
-* [`start_stop_threads_ensure`](#start_stop_threads_ensure)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`default_host`](#-tomcat--config--server--engine--default_host)
+* [`catalina_base`](#-tomcat--config--server--engine--catalina_base)
+* [`background_processor_delay`](#-tomcat--config--server--engine--background_processor_delay)
+* [`background_processor_delay_ensure`](#-tomcat--config--server--engine--background_processor_delay_ensure)
+* [`class_name`](#-tomcat--config--server--engine--class_name)
+* [`class_name_ensure`](#-tomcat--config--server--engine--class_name_ensure)
+* [`engine_name`](#-tomcat--config--server--engine--engine_name)
+* [`jvm_route`](#-tomcat--config--server--engine--jvm_route)
+* [`jvm_route_ensure`](#-tomcat--config--server--engine--jvm_route_ensure)
+* [`parent_service`](#-tomcat--config--server--engine--parent_service)
+* [`start_stop_threads`](#-tomcat--config--server--engine--start_stop_threads)
+* [`start_stop_threads_ensure`](#-tomcat--config--server--engine--start_stop_threads_ensure)
+* [`server_config`](#-tomcat--config--server--engine--server_config)
+* [`show_diff`](#-tomcat--config--server--engine--show_diff)
 
-##### <a name="default_host"></a>`default_host`
+##### <a name="-tomcat--config--server--engine--default_host"></a>`default_host`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies a host to handle any requests directed to hostnames that exist on the server but are not defined in this configuration file. Maps to the [defaultHost XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes) of the Engine. Valid options: a string containing a hostname.
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--engine--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="background_processor_delay"></a>`background_processor_delay`
+##### <a name="-tomcat--config--server--engine--background_processor_delay"></a>`background_processor_delay`
 
-Data type: `Any`
+Data type: `Optional[Variant[Integer, String[1]]]`
 
 Determines the delay between invoking the backgroundProcess method on this engine and its child containers. Maps to the [backgroundProcessorDelay XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: an integer, in seconds. `undef`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="background_processor_delay_ensure"></a>`background_processor_delay_ensure`
+##### <a name="-tomcat--config--server--engine--background_processor_delay_ensure"></a>`background_processor_delay_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1118,15 +1113,15 @@ Specifies whether the [backgroundProcessorDelay XML attribute](http://tomcat.apa
 
 Default value: `'present'`
 
-##### <a name="class_name"></a>`class_name`
+##### <a name="-tomcat--config--server--engine--class_name"></a>`class_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: a string containing a Java class name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="class_name_ensure"></a>`class_name_ensure`
+##### <a name="-tomcat--config--server--engine--class_name_ensure"></a>`class_name_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1134,23 +1129,23 @@ Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-
 
 Default value: `'present'`
 
-##### <a name="engine_name"></a>`engine_name`
+##### <a name="-tomcat--config--server--engine--engine_name"></a>`engine_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the logical name of the Engine, used in log and error messages. Maps to the [name XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: a string. `name` passed in your defined type.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="jvm_route"></a>`jvm_route`
+##### <a name="-tomcat--config--server--engine--jvm_route"></a>`jvm_route`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies an identifier to enable session affinity in load balancing. Maps to the [jvmRoute XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="jvm_route_ensure"></a>`jvm_route_ensure`
+##### <a name="-tomcat--config--server--engine--jvm_route_ensure"></a>`jvm_route_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1158,23 +1153,24 @@ Specifies whether the [jvmRoute XML attribute](http://tomcat.apache.org/tomcat-8
 
 Default value: `'present'`
 
-##### <a name="parent_service"></a>`parent_service`
+##### <a name="-tomcat--config--server--engine--parent_service"></a>`parent_service`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies which Service element the Engine should nest under. Valid options: a string containing the name attribute of the Service.
 
 Default value: `'Catalina'`
 
-##### <a name="start_stop_threads"></a>`start_stop_threads`
+##### <a name="-tomcat--config--server--engine--start_stop_threads"></a>`start_stop_threads`
 
-Data type: `Any`
+Data type: `Optional[Variant[String[1], Integer]]`
 
-Sets how many threads the Engine should use to start child Host elements in parallel. Maps to the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes). Valid options: a string.
+Sets how many threads the Engine should use to start child Host elements in parallel. Maps to the [startStopThreads XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/engine.html#Common_Attributes).
+Valid options: a string or an integer. Warning: Future versions of the module will deprecate Strings as a valid value and allow only Integers.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="start_stop_threads_ensure"></a>`start_stop_threads_ensure`
+##### <a name="-tomcat--config--server--engine--start_stop_threads_ensure"></a>`start_stop_threads_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1182,23 +1178,23 @@ Specifies whether the [startStopThreads XML attribute](http://tomcat.apache.org/
 
 Default value: `'present'`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--engine--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--engine--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigserverglobalnamingresource"></a>`tomcat::config::server::globalnamingresource`
+### <a name="tomcat--config--server--globalnamingresource"></a>`tomcat::config::server::globalnamingresource`
 
 Configure GlobalNamingResources Resource elements in $CATALINA_BASE/conf/server.xml
 
@@ -1206,40 +1202,40 @@ Configure GlobalNamingResources Resource elements in $CATALINA_BASE/conf/server.
 
 The following parameters are available in the `tomcat::config::server::globalnamingresource` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`resource_name`](#resource_name)
-* [`type`](#type)
-* [`ensure`](#ensure)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--globalnamingresource--catalina_base)
+* [`resource_name`](#-tomcat--config--server--globalnamingresource--resource_name)
+* [`type`](#-tomcat--config--server--globalnamingresource--type)
+* [`ensure`](#-tomcat--config--server--globalnamingresource--ensure)
+* [`additional_attributes`](#-tomcat--config--server--globalnamingresource--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--server--globalnamingresource--attributes_to_remove)
+* [`server_config`](#-tomcat--config--server--globalnamingresource--server_config)
+* [`show_diff`](#-tomcat--config--server--globalnamingresource--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--globalnamingresource--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the base directory of the Tomcat instance. Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="resource_name"></a>`resource_name`
+##### <a name="-tomcat--config--server--globalnamingresource--resource_name"></a>`resource_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Optionally override the globalnamingresource name that is normally taken from the Puppet resource's `$name`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="type"></a>`type`
+##### <a name="-tomcat--config--server--globalnamingresource--type"></a>`type`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies the type of element to create Valid options: `Resource`, `Environment` or any other valid node.
 
 Default value: `'Resource'`
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--server--globalnamingresource--ensure"></a>`ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1247,7 +1243,7 @@ Determines whether the specified XML element should exist in the configuration f
 
 Default value: `'present'`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--server--globalnamingresource--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -1255,7 +1251,7 @@ Specifies any further attributes to add to the Host. Valid options: a hash of '<
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--server--globalnamingresource--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -1263,23 +1259,23 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--globalnamingresource--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--globalnamingresource--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigserverhost"></a>`tomcat::config::server::host`
+### <a name="tomcat--config--server--host"></a>`tomcat::config::server::host`
 
 Configure Host elements in $CATALINA_BASE/conf/server.xml
 
@@ -1287,34 +1283,34 @@ Configure Host elements in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server::host` defined type:
 
-* [`app_base`](#app_base)
-* [`catalina_base`](#catalina_base)
-* [`host_ensure`](#host_ensure)
-* [`host_name`](#host_name)
-* [`parent_service`](#parent_service)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`server_config`](#server_config)
-* [`aliases`](#aliases)
-* [`show_diff`](#show_diff)
+* [`app_base`](#-tomcat--config--server--host--app_base)
+* [`catalina_base`](#-tomcat--config--server--host--catalina_base)
+* [`host_ensure`](#-tomcat--config--server--host--host_ensure)
+* [`host_name`](#-tomcat--config--server--host--host_name)
+* [`parent_service`](#-tomcat--config--server--host--parent_service)
+* [`additional_attributes`](#-tomcat--config--server--host--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--server--host--attributes_to_remove)
+* [`server_config`](#-tomcat--config--server--host--server_config)
+* [`aliases`](#-tomcat--config--server--host--aliases)
+* [`show_diff`](#-tomcat--config--server--host--show_diff)
 
-##### <a name="app_base"></a>`app_base`
+##### <a name="-tomcat--config--server--host--app_base"></a>`app_base`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the Application Base directory for the virtual host. Maps to the [appBase XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes). Valid options: a string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--host--catalina_base"></a>`catalina_base`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="host_ensure"></a>`host_ensure`
+##### <a name="-tomcat--config--server--host--host_ensure"></a>`host_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1322,15 +1318,15 @@ Specifies whether the virtual host (the [Host XML element](http://tomcat.apache.
 
 Default value: `'present'`
 
-##### <a name="host_name"></a>`host_name`
+##### <a name="-tomcat--config--server--host--host_name"></a>`host_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the network name of the virtual host, as registered on your DNS server. Maps to the [name XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Common_Attributes). Valid options: a string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_service"></a>`parent_service`
+##### <a name="-tomcat--config--server--host--parent_service"></a>`parent_service`
 
 Data type: `String`
 
@@ -1338,7 +1334,7 @@ Specifies which Service element the Host should nest under. Valid options: a str
 
 Default value: `'Catalina'`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--server--host--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -1346,7 +1342,7 @@ Specifies any further attributes to add to the Host. Valid options: a hash of '<
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--server--host--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -1354,31 +1350,31 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--host--server_config"></a>`server_config`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="aliases"></a>`aliases`
+##### <a name="-tomcat--config--server--host--aliases"></a>`aliases`
 
 Data type: `Optional[Array]`
 
 Optional array that specifies the list of [Host Name Aliases](http://tomcat.apache.org/tomcat-8.0-doc/config/host.html#Host_Name_Aliases) for this particular Host.  If omitted, any currently-defined Aliases will not be altered.  If present, the list Aliases  will be set to exactly match the contents of this array.  Thus, for example, an empty array can be used to explicitly force there to be no Aliases for the Host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--host--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigserverlistener"></a>`tomcat::config::server::listener`
+### <a name="tomcat--config--server--listener"></a>`tomcat::config::server::listener`
 
 Configure Listener elements in $CATALINA_BASE/conf/server.xml
 
@@ -1386,26 +1382,26 @@ Configure Listener elements in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server::listener` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`listener_ensure`](#listener_ensure)
-* [`class_name`](#class_name)
-* [`parent_service`](#parent_service)
-* [`parent_engine`](#parent_engine)
-* [`parent_host`](#parent_host)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--listener--catalina_base)
+* [`listener_ensure`](#-tomcat--config--server--listener--listener_ensure)
+* [`class_name`](#-tomcat--config--server--listener--class_name)
+* [`parent_service`](#-tomcat--config--server--listener--parent_service)
+* [`parent_engine`](#-tomcat--config--server--listener--parent_engine)
+* [`parent_host`](#-tomcat--config--server--listener--parent_host)
+* [`additional_attributes`](#-tomcat--config--server--listener--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--server--listener--attributes_to_remove)
+* [`server_config`](#-tomcat--config--server--listener--server_config)
+* [`show_diff`](#-tomcat--config--server--listener--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--listener--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="listener_ensure"></a>`listener_ensure`
+##### <a name="-tomcat--config--server--listener--listener_ensure"></a>`listener_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1413,39 +1409,39 @@ Specifies whether the [Listener XML element](http://tomcat.apache.org/tomcat-8.0
 
 Default value: `'present'`
 
-##### <a name="class_name"></a>`class_name`
+##### <a name="-tomcat--config--server--listener--class_name"></a>`class_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/listeners.html#Common_Attributes) of a Listener Element. Valid options: a string containing a Java class name. `$name`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_service"></a>`parent_service`
+##### <a name="-tomcat--config--server--listener--parent_service"></a>`parent_service`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Service element the Listener should nest under. Only valid if `parent_engine` or `parent_host` is specified. Valid options: a string containing the name attribute of the Service.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_engine"></a>`parent_engine`
+##### <a name="-tomcat--config--server--listener--parent_engine"></a>`parent_engine`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Engine element this Listener should nest under. Valid options: a string containing the name attribute of the Engine.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_host"></a>`parent_host`
+##### <a name="-tomcat--config--server--listener--parent_host"></a>`parent_host`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Host element this Listener should nest under. Valid options: a string containing the name attribute of the Host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--server--listener--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -1453,7 +1449,7 @@ Specifies any further attributes to add to the Listener. Valid options: a hash o
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--server--listener--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -1461,23 +1457,23 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--listener--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--listener--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigserverrealm"></a>`tomcat::config::server::realm`
+### <a name="tomcat--config--server--realm"></a>`tomcat::config::server::realm`
 
 Configure Realm elements in $CATALINA_BASE/conf/server.xml
 
@@ -1485,41 +1481,41 @@ Configure Realm elements in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server::realm` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`class_name`](#class_name)
-* [`name`](#name)
-* [`realm_ensure`](#realm_ensure)
-* [`parent_service`](#parent_service)
-* [`parent_engine`](#parent_engine)
-* [`parent_host`](#parent_host)
-* [`parent_realm`](#parent_realm)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`purge_realms`](#purge_realms)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--realm--catalina_base)
+* [`class_name`](#-tomcat--config--server--realm--class_name)
+* [`name`](#-tomcat--config--server--realm--name)
+* [`realm_ensure`](#-tomcat--config--server--realm--realm_ensure)
+* [`parent_service`](#-tomcat--config--server--realm--parent_service)
+* [`parent_engine`](#-tomcat--config--server--realm--parent_engine)
+* [`parent_host`](#-tomcat--config--server--realm--parent_host)
+* [`parent_realm`](#-tomcat--config--server--realm--parent_realm)
+* [`additional_attributes`](#-tomcat--config--server--realm--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--server--realm--attributes_to_remove)
+* [`purge_realms`](#-tomcat--config--server--realm--purge_realms)
+* [`server_config`](#-tomcat--config--server--realm--server_config)
+* [`show_diff`](#-tomcat--config--server--realm--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--realm--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the base directory of the Tomcat installation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="class_name"></a>`class_name`
+##### <a name="-tomcat--config--server--realm--class_name"></a>`class_name`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies the Java class name of a Realm implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/realm.html#Common_Attributes). Valid options: a string containing a Java class name. `name` passed in your defined type.
 
 Default value: `$name`
 
-##### <a name="name"></a>`name`
+##### <a name="-tomcat--config--server--realm--name"></a>`name`
 
 `$class_name`
 
-##### <a name="realm_ensure"></a>`realm_ensure`
+##### <a name="-tomcat--config--server--realm--realm_ensure"></a>`realm_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1527,39 +1523,39 @@ Specifies whether the Realm element should exist in the configuration file.
 
 Default value: `'present'`
 
-##### <a name="parent_service"></a>`parent_service`
+##### <a name="-tomcat--config--server--realm--parent_service"></a>`parent_service`
 
-Data type: `Any`
+Data type: `String`
 
 Specifies which Service element this Realm element should nest under. Valid options: a string containing the name attribute of the Service.
 
 Default value: `'Catalina'`
 
-##### <a name="parent_engine"></a>`parent_engine`
+##### <a name="-tomcat--config--server--realm--parent_engine"></a>`parent_engine`
 
-Data type: `Any`
+Data type: `String`
 
 Specifies which Engine element this Realm should nest under. Valid options: a string containing the name attribute of the Engine.
 
 Default value: `'Catalina'`
 
-##### <a name="parent_host"></a>`parent_host`
+##### <a name="-tomcat--config--server--realm--parent_host"></a>`parent_host`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Host element this Realm should nest under. Valid options: a string containing the name attribute of the Host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_realm"></a>`parent_realm`
+##### <a name="-tomcat--config--server--realm--parent_realm"></a>`parent_realm`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Realm element this Realm should nest under. Valid options: a string containing the className attribute of the Realm element.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--server--realm--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -1567,7 +1563,7 @@ Specifies any further attributes to add to the Realm element. Valid options: a h
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--server--realm--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -1575,31 +1571,31 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="purge_realms"></a>`purge_realms`
+##### <a name="-tomcat--config--server--realm--purge_realms"></a>`purge_realms`
 
 Data type: `Optional[Boolean]`
 
 Specifies whether to purge any unmanaged Realm elements from the configuration file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--realm--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--realm--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigserverresources"></a>`tomcat::config::server::resources`
+### <a name="tomcat--config--server--resources"></a>`tomcat::config::server::resources`
 
 Configure Resources elements in $CATALINA_BASE/conf/server.xml
 
@@ -1607,26 +1603,26 @@ Configure Resources elements in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server::resources` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`resources_ensure`](#resources_ensure)
-* [`parent_service`](#parent_service)
-* [`parent_engine`](#parent_engine)
-* [`parent_host`](#parent_host)
-* [`parent_context`](#parent_context)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--resources--catalina_base)
+* [`resources_ensure`](#-tomcat--config--server--resources--resources_ensure)
+* [`parent_service`](#-tomcat--config--server--resources--parent_service)
+* [`parent_engine`](#-tomcat--config--server--resources--parent_engine)
+* [`parent_host`](#-tomcat--config--server--resources--parent_host)
+* [`parent_context`](#-tomcat--config--server--resources--parent_context)
+* [`additional_attributes`](#-tomcat--config--server--resources--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--server--resources--attributes_to_remove)
+* [`server_config`](#-tomcat--config--server--resources--server_config)
+* [`show_diff`](#-tomcat--config--server--resources--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--resources--catalina_base"></a>`catalina_base`
 
-Data type: `Optional[String]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="resources_ensure"></a>`resources_ensure`
+##### <a name="-tomcat--config--server--resources--resources_ensure"></a>`resources_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1634,39 +1630,39 @@ Specifies whether the resources ([The Resources Component](https://tomcat.apache
 
 Default value: `'present'`
 
-##### <a name="parent_service"></a>`parent_service`
+##### <a name="-tomcat--config--server--resources--parent_service"></a>`parent_service`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Specifies which Service element the Host should nest under. Valid options: a string containing the name attribute of the Service.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_engine"></a>`parent_engine`
+##### <a name="-tomcat--config--server--resources--parent_engine"></a>`parent_engine`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Specifies which Engine element the Context should nest under. Only valid if `parent_host` is specified. Valid options: a string containing the name attribute of the Engine.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_host"></a>`parent_host`
+##### <a name="-tomcat--config--server--resources--parent_host"></a>`parent_host`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Specifies which Host element the Context should nest under. Valid options: a string containing the name attribute of the Host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_context"></a>`parent_context`
+##### <a name="-tomcat--config--server--resources--parent_context"></a>`parent_context`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Specifies which Context element the Context should nest under. Valid options: a string containing the name attribute of the Context.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--server--resources--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -1674,31 +1670,31 @@ Specifies any further attributes to add to the Host. Valid options: a hash of '<
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--server--resources--attributes_to_remove"></a>`attributes_to_remove`
 
-Data type: `Array[String]`
+Data type: `Array[String[1]]`
 
 Specifies an array of attributes to remove from the element. Valid options: an array of strings.
 
 Default value: `[]`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--resources--server_config"></a>`server_config`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--resources--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigserverservice"></a>`tomcat::config::server::service`
+### <a name="tomcat--config--server--service"></a>`tomcat::config::server::service`
 
 Configure a Service element nested in the Server element in $CATALINA_BASE/conf/server.xml
 
@@ -1706,30 +1702,30 @@ Configure a Service element nested in the Server element in $CATALINA_BASE/conf/
 
 The following parameters are available in the `tomcat::config::server::service` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`class_name`](#class_name)
-* [`class_name_ensure`](#class_name_ensure)
-* [`service_ensure`](#service_ensure)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--service--catalina_base)
+* [`class_name`](#-tomcat--config--server--service--class_name)
+* [`class_name_ensure`](#-tomcat--config--server--service--class_name_ensure)
+* [`service_ensure`](#-tomcat--config--server--service--service_ensure)
+* [`server_config`](#-tomcat--config--server--service--server_config)
+* [`show_diff`](#-tomcat--config--server--service--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--service--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="class_name"></a>`class_name`
+##### <a name="-tomcat--config--server--service--class_name"></a>`class_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/service.html#Common_Attributes). Valid options: a string containing a Java class name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="class_name_ensure"></a>`class_name_ensure`
+##### <a name="-tomcat--config--server--service--class_name_ensure"></a>`class_name_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1737,7 +1733,7 @@ Specifies whether the [className XML attribute](http://tomcat.apache.org/tomcat-
 
 Default value: `'present'`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-tomcat--config--server--service--service_ensure"></a>`service_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1745,23 +1741,23 @@ Specifies whether the [Service element](http://tomcat.apache.org/tomcat-8.0-doc/
 
 Default value: `'present'`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--service--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--service--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigservertomcat_users"></a>`tomcat::config::server::tomcat_users`
+### <a name="tomcat--config--server--tomcat_users"></a>`tomcat::config::server::tomcat_users`
 
 Configures roles and users in $CATALINA_BASE/conf/tomcat-users.xml or any other specified file
 
@@ -1769,27 +1765,27 @@ Configures roles and users in $CATALINA_BASE/conf/tomcat-users.xml or any other 
 
 The following parameters are available in the `tomcat::config::server::tomcat_users` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`element`](#element)
-* [`element_name`](#element_name)
-* [`ensure`](#ensure)
-* [`file`](#file)
-* [`manage_file`](#manage_file)
-* [`owner`](#owner)
-* [`group`](#group)
-* [`password`](#password)
-* [`roles`](#roles)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--tomcat_users--catalina_base)
+* [`element`](#-tomcat--config--server--tomcat_users--element)
+* [`element_name`](#-tomcat--config--server--tomcat_users--element_name)
+* [`ensure`](#-tomcat--config--server--tomcat_users--ensure)
+* [`file`](#-tomcat--config--server--tomcat_users--file)
+* [`manage_file`](#-tomcat--config--server--tomcat_users--manage_file)
+* [`owner`](#-tomcat--config--server--tomcat_users--owner)
+* [`group`](#-tomcat--config--server--tomcat_users--group)
+* [`password`](#-tomcat--config--server--tomcat_users--password)
+* [`roles`](#-tomcat--config--server--tomcat_users--roles)
+* [`show_diff`](#-tomcat--config--server--tomcat_users--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--tomcat_users--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path.
 
-Default value: `$::tomcat::catalina_home`
+Default value: `$tomcat::catalina_home`
 
-##### <a name="element"></a>`element`
+##### <a name="-tomcat--config--server--tomcat_users--element"></a>`element`
 
 Data type: `Enum['user','role']`
 
@@ -1797,15 +1793,15 @@ Specifies the type of element to manage.
 
 Default value: `'user'`
 
-##### <a name="element_name"></a>`element_name`
+##### <a name="-tomcat--config--server--tomcat_users--element_name"></a>`element_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Sets the element's username (or rolename, if `element` is set to 'role'). Valid options: a string. `$name`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--config--server--tomcat_users--ensure"></a>`ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1813,47 +1809,47 @@ Determines whether the specified XML element should exist in the configuration f
 
 Default value: `present`
 
-##### <a name="file"></a>`file`
+##### <a name="-tomcat--config--server--tomcat_users--file"></a>`file`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the configuration file to manage. Valid options: a string containing a fully-qualified path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_file"></a>`manage_file`
+##### <a name="-tomcat--config--server--tomcat_users--manage_file"></a>`manage_file`
 
 Data type: `Boolean`
 
 Specifies whether to create the specified configuration file if it doesn't exist. Uses Puppet's native [file](https://docs.puppetlabs.com/references/latest/type.html#file) with default parameters.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="owner"></a>`owner`
+##### <a name="-tomcat--config--server--tomcat_users--owner"></a>`owner`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the owner of the configuration file. `$::tomcat::user`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="group"></a>`group`
+##### <a name="-tomcat--config--server--tomcat_users--group"></a>`group`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the group of the configuration file. `$::tomcat::group`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="password"></a>`password`
+##### <a name="-tomcat--config--server--tomcat_users--password"></a>`password`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 Specifies a password for user elements. Valid options: a string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="roles"></a>`roles`
+##### <a name="-tomcat--config--server--tomcat_users--roles"></a>`roles`
 
 Data type: `Array`
 
@@ -1861,15 +1857,15 @@ Specifies one or more roles. Only valid if `element` is set to 'role' or 'user'.
 
 Default value: `[]`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--tomcat_users--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatconfigservervalve"></a>`tomcat::config::server::valve`
+### <a name="tomcat--config--server--valve"></a>`tomcat::config::server::valve`
 
 Configure a Valve element in $CATALINA_BASE/conf/server.xml
 
@@ -1877,59 +1873,59 @@ Configure a Valve element in $CATALINA_BASE/conf/server.xml
 
 The following parameters are available in the `tomcat::config::server::valve` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`class_name`](#class_name)
-* [`parent_host`](#parent_host)
-* [`parent_service`](#parent_service)
-* [`parent_context`](#parent_context)
-* [`valve_ensure`](#valve_ensure)
-* [`additional_attributes`](#additional_attributes)
-* [`attributes_to_remove`](#attributes_to_remove)
-* [`uniqueness_attributes`](#uniqueness_attributes)
-* [`server_config`](#server_config)
-* [`show_diff`](#show_diff)
+* [`catalina_base`](#-tomcat--config--server--valve--catalina_base)
+* [`class_name`](#-tomcat--config--server--valve--class_name)
+* [`parent_host`](#-tomcat--config--server--valve--parent_host)
+* [`parent_service`](#-tomcat--config--server--valve--parent_service)
+* [`parent_context`](#-tomcat--config--server--valve--parent_context)
+* [`valve_ensure`](#-tomcat--config--server--valve--valve_ensure)
+* [`additional_attributes`](#-tomcat--config--server--valve--additional_attributes)
+* [`attributes_to_remove`](#-tomcat--config--server--valve--attributes_to_remove)
+* [`uniqueness_attributes`](#-tomcat--config--server--valve--uniqueness_attributes)
+* [`server_config`](#-tomcat--config--server--valve--server_config)
+* [`show_diff`](#-tomcat--config--server--valve--show_diff)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--config--server--valve--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path. `$::tomcat::catalina_home`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="class_name"></a>`class_name`
+##### <a name="-tomcat--config--server--valve--class_name"></a>`class_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the Java class name of a server implementation to use. Maps to the [className XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Access_Logging/Attributes). Valid options: a string containing a Java class name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_host"></a>`parent_host`
+##### <a name="-tomcat--config--server--valve--parent_host"></a>`parent_host`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which virtual host the Valve should nest under. Valid options: a string containing the name of a Host element.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parent_service"></a>`parent_service`
+##### <a name="-tomcat--config--server--valve--parent_service"></a>`parent_service`
 
-Data type: `Any`
+Data type: `String`
 
 Specifies which Service element the Valve should nest under. Valid options: a string containing the name of a Service element.
 
 Default value: `'Catalina'`
 
-##### <a name="parent_context"></a>`parent_context`
+##### <a name="-tomcat--config--server--valve--parent_context"></a>`parent_context`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies which Context element the Valve should nest under. Valid options: a string containing the name of a Context element (matching the docbase attribute).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="valve_ensure"></a>`valve_ensure`
+##### <a name="-tomcat--config--server--valve--valve_ensure"></a>`valve_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -1937,7 +1933,7 @@ Specifies whether the Valve should exist in the configuration file. Maps to the 
 
 Default value: `'present'`
 
-##### <a name="additional_attributes"></a>`additional_attributes`
+##### <a name="-tomcat--config--server--valve--additional_attributes"></a>`additional_attributes`
 
 Data type: `Hash`
 
@@ -1945,7 +1941,7 @@ Specifies any further attributes to add to the Valve. Valid options: a hash of '
 
 Default value: `{}`
 
-##### <a name="attributes_to_remove"></a>`attributes_to_remove`
+##### <a name="-tomcat--config--server--valve--attributes_to_remove"></a>`attributes_to_remove`
 
 Data type: `Array`
 
@@ -1953,7 +1949,7 @@ Specifies an array of attributes to remove from the element. Valid options: an a
 
 Default value: `[]`
 
-##### <a name="uniqueness_attributes"></a>`uniqueness_attributes`
+##### <a name="-tomcat--config--server--valve--uniqueness_attributes"></a>`uniqueness_attributes`
 
 Data type: `Array`
 
@@ -1961,23 +1957,23 @@ Specifies an array of attribute names that Pupet use to uniquely idetify valves.
 
 Default value: `[]`
 
-##### <a name="server_config"></a>`server_config`
+##### <a name="-tomcat--config--server--valve--server_config"></a>`server_config`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-tomcat--config--server--valve--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="tomcatinstall"></a>`tomcat::install`
+### <a name="tomcat--install"></a>`tomcat::install`
 
 Configure and manage the tomcat installation
 
@@ -1985,157 +1981,157 @@ Configure and manage the tomcat installation
 
 The following parameters are available in the `tomcat::install` defined type:
 
-* [`catalina_home`](#catalina_home)
-* [`name`](#name)
-* [`install_from_source`](#install_from_source)
-* [`source_url`](#source_url)
-* [`source_strip_first_dir`](#source_strip_first_dir)
-* [`proxy_type`](#proxy_type)
-* [`proxy_server`](#proxy_server)
-* [`allow_insecure`](#allow_insecure)
-* [`user`](#user)
-* [`group`](#group)
-* [`manage_user`](#manage_user)
-* [`manage_group`](#manage_group)
-* [`manage_home`](#manage_home)
-* [`package_ensure`](#package_ensure)
-* [`package_name`](#package_name)
-* [`package_options`](#package_options)
-* [`remove_default_webapps`](#remove_default_webapps)
+* [`catalina_home`](#-tomcat--install--catalina_home)
+* [`name`](#-tomcat--install--name)
+* [`install_from_source`](#-tomcat--install--install_from_source)
+* [`source_url`](#-tomcat--install--source_url)
+* [`source_strip_first_dir`](#-tomcat--install--source_strip_first_dir)
+* [`proxy_type`](#-tomcat--install--proxy_type)
+* [`proxy_server`](#-tomcat--install--proxy_server)
+* [`allow_insecure`](#-tomcat--install--allow_insecure)
+* [`user`](#-tomcat--install--user)
+* [`group`](#-tomcat--install--group)
+* [`manage_user`](#-tomcat--install--manage_user)
+* [`manage_group`](#-tomcat--install--manage_group)
+* [`manage_home`](#-tomcat--install--manage_home)
+* [`package_ensure`](#-tomcat--install--package_ensure)
+* [`package_name`](#-tomcat--install--package_name)
+* [`package_options`](#-tomcat--install--package_options)
+* [`remove_default_webapps`](#-tomcat--install--remove_default_webapps)
 
-##### <a name="catalina_home"></a>`catalina_home`
+##### <a name="-tomcat--install--catalina_home"></a>`catalina_home`
 
-Data type: `Any`
+Data type: `String[1]`
 
 specifies the directory of the Tomcat installation from which the instance should be created. Valid options: a string containing an absolute path.
 
 Default value: `$name`
 
-##### <a name="name"></a>`name`
+##### <a name="-tomcat--install--name"></a>`name`
 
 `$catalina_home`
 
-##### <a name="install_from_source"></a>`install_from_source`
+##### <a name="-tomcat--install--install_from_source"></a>`install_from_source`
 
 Data type: `Boolean`
 
 Specifies whether to install from source or from a package. If set to `true` installation uses the `source_url`, `source_strip_first_dir`, `user`, `group`, `manage_user`, and `manage_group` parameters. If set to `false` installation uses the `package_ensure`, `package_name`, and `package_options` parameters. Valid options: Boolean. `true`.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="source_url"></a>`source_url`
+##### <a name="-tomcat--install--source_url"></a>`source_url`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 In single-instance mode:  Specifies the source URL to install from. Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="source_strip_first_dir"></a>`source_strip_first_dir`
+##### <a name="-tomcat--install--source_strip_first_dir"></a>`source_strip_first_dir`
 
 Data type: `Boolean`
 
 Specifies whether to strip the topmost directory of the tarball when unpacking it. Only valid if `install_from_source` is set to `true`.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="proxy_type"></a>`proxy_type`
+##### <a name="-tomcat--install--proxy_type"></a>`proxy_type`
 
-Data type: `Any`
+Data type: `Optional[Enum['none', 'http', 'https', 'ftp']]`
 
 Specifies the proxy server type used by `proxy_server`. Normally this defaults to the protocol specified in the `proxy_server` URI. `proxy_server`. Valid options: 'none', 'http', 'https', 'ftp'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_server"></a>`proxy_server`
+##### <a name="-tomcat--install--proxy_server"></a>`proxy_server`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a proxy server to use when downloading Tomcat binaries. For example, 'https://example.com:8080'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="allow_insecure"></a>`allow_insecure`
+##### <a name="-tomcat--install--allow_insecure"></a>`allow_insecure`
 
-Data type: `Any`
+Data type: `Boolean`
 
 Specifies if HTTPS errors should be ignored when downloading the source tarball. Valid options: Boolean.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="user"></a>`user`
+##### <a name="-tomcat--install--user"></a>`user`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the owner of the source installation directory. `$::tomcat::user`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="group"></a>`group`
+##### <a name="-tomcat--install--group"></a>`group`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the group of the source installation directory. `$::tomcat::group`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-tomcat--install--manage_user"></a>`manage_user`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether the user should be managed by this module or not. `$::tomcat::manage_user`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-tomcat--install--manage_group"></a>`manage_group`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether the group should be managed by this module or not. `$::tomcat::manage_group`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_home"></a>`manage_home`
+##### <a name="-tomcat--install--manage_home"></a>`manage_home`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether the directory of catalina_home should be managed by puppet. This may not be preferable in network filesystem environments.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-tomcat--install--package_ensure"></a>`package_ensure`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Determines whether the specified package should be installed. Only valid if `install_from_source` is set to `false`. Maps to the `ensure` parameter of Puppet's native [package](https://docs.puppetlabs.com/references/latest/type.html#package).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-tomcat--install--package_name"></a>`package_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the package to install. Valid options: a string containing a valid package name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_options"></a>`package_options`
+##### <a name="-tomcat--install--package_options"></a>`package_options`
 
-Data type: `Any`
+Data type: `Optional[Array[String[1]]]`
 
 Specify additional options to use on the generated package resource. See the documentation of the [package](https://docs.puppetlabs.com/references/latest/type.html#package-attribute-install_options) for possible values.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="remove_default_webapps"></a>`remove_default_webapps`
+##### <a name="-tomcat--install--remove_default_webapps"></a>`remove_default_webapps`
 
-Data type: `Optional[Array[String]]`
+Data type: `Optional[Array[String[1]]]`
 
+Specifies the default webapps to be removed.
 
+Default value: `undef`
 
-Default value: ``undef``
-
-### <a name="tomcatinstance"></a>`tomcat::instance`
+### <a name="tomcat--instance"></a>`tomcat::instance`
 
 This define installs an instance of Tomcat.
 
@@ -2143,163 +2139,163 @@ This define installs an instance of Tomcat.
 
 The following parameters are available in the `tomcat::instance` defined type:
 
-* [`catalina_home`](#catalina_home)
-* [`catalina_base`](#catalina_base)
-* [`user`](#user)
-* [`group`](#group)
-* [`manage_user`](#manage_user)
-* [`manage_group`](#manage_group)
-* [`manage_service`](#manage_service)
-* [`manage_base`](#manage_base)
-* [`manage_properties`](#manage_properties)
-* [`java_home`](#java_home)
-* [`use_jsvc`](#use_jsvc)
-* [`use_init`](#use_init)
-* [`manage_dirs`](#manage_dirs)
-* [`dir_list`](#dir_list)
-* [`dir_mode`](#dir_mode)
-* [`manage_copy_from_home`](#manage_copy_from_home)
-* [`copy_from_home_list`](#copy_from_home_list)
-* [`copy_from_home_mode`](#copy_from_home_mode)
-* [`service_name`](#service_name)
-* [`install_from_source`](#install_from_source)
-* [`source_url`](#source_url)
-* [`source_strip_first_dir`](#source_strip_first_dir)
-* [`package_ensure`](#package_ensure)
-* [`package_name`](#package_name)
-* [`package_options`](#package_options)
+* [`catalina_home`](#-tomcat--instance--catalina_home)
+* [`catalina_base`](#-tomcat--instance--catalina_base)
+* [`user`](#-tomcat--instance--user)
+* [`group`](#-tomcat--instance--group)
+* [`manage_user`](#-tomcat--instance--manage_user)
+* [`manage_group`](#-tomcat--instance--manage_group)
+* [`manage_service`](#-tomcat--instance--manage_service)
+* [`manage_base`](#-tomcat--instance--manage_base)
+* [`manage_properties`](#-tomcat--instance--manage_properties)
+* [`java_home`](#-tomcat--instance--java_home)
+* [`use_jsvc`](#-tomcat--instance--use_jsvc)
+* [`use_init`](#-tomcat--instance--use_init)
+* [`manage_dirs`](#-tomcat--instance--manage_dirs)
+* [`dir_list`](#-tomcat--instance--dir_list)
+* [`dir_mode`](#-tomcat--instance--dir_mode)
+* [`manage_copy_from_home`](#-tomcat--instance--manage_copy_from_home)
+* [`copy_from_home_list`](#-tomcat--instance--copy_from_home_list)
+* [`copy_from_home_mode`](#-tomcat--instance--copy_from_home_mode)
+* [`service_name`](#-tomcat--instance--service_name)
+* [`install_from_source`](#-tomcat--instance--install_from_source)
+* [`source_url`](#-tomcat--instance--source_url)
+* [`source_strip_first_dir`](#-tomcat--instance--source_strip_first_dir)
+* [`package_ensure`](#-tomcat--instance--package_ensure)
+* [`package_name`](#-tomcat--instance--package_name)
+* [`package_options`](#-tomcat--instance--package_options)
 
-##### <a name="catalina_home"></a>`catalina_home`
+##### <a name="-tomcat--instance--catalina_home"></a>`catalina_home`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the directory where the Apache Tomcat software is installed by a `tomcat::install` resource. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--instance--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the `$CATALINA_BASE` of the Tomcat instance where logs, configuration files, and the 'webapps' directory are managed. For single-instance installs, this is the same as the `catalina_home` parameter Valid options: a string containing an absolute path. `$catalina_home`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="user"></a>`user`
+##### <a name="-tomcat--instance--user"></a>`user`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the owner of the instance directories and files. `$::tomcat::user`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="group"></a>`group`
+##### <a name="-tomcat--instance--group"></a>`group`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the group of the instance directories and files. `$::tomcat::group`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-tomcat--instance--manage_user"></a>`manage_user`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether the user should be managed by this module or not. `$::tomcat::manage_user`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-tomcat--instance--manage_group"></a>`manage_group`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether the group should be managed by this module or not. `$::tomcat::manage_group`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-tomcat--instance--manage_service"></a>`manage_service`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether a `tomcat::service` corresponding to this instance should be declared. Valid options: Boolean `true` (multi-instance installs), `false` ()single-instance installs).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_base"></a>`manage_base`
+##### <a name="-tomcat--instance--manage_base"></a>`manage_base`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether the directory of catalina_base should be managed by Puppet. This might not be preferable in network filesystem environments. `true`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_properties"></a>`manage_properties`
+##### <a name="-tomcat--instance--manage_properties"></a>`manage_properties`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether the `catalina.properties` file is created and managed. If `true`, custom modifications to this file will be overwritten during runs Valid options: Boolean `true`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="java_home"></a>`java_home`
+##### <a name="-tomcat--instance--java_home"></a>`java_home`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the java home to be used when declaring a `tomcat::service` instance. See [tomcat::service](# tomcatservice)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_jsvc"></a>`use_jsvc`
+##### <a name="-tomcat--instance--use_jsvc"></a>`use_jsvc`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether jsvc should be used when declaring a `tomcat::service` instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_init"></a>`use_init`
+##### <a name="-tomcat--instance--use_init"></a>`use_init`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether an init script should be managed when declaring a `tomcat::service` instance. See [tomcat::service](# tomcatservice)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_dirs"></a>`manage_dirs`
+##### <a name="-tomcat--instance--manage_dirs"></a>`manage_dirs`
 
-Data type: `Any`
+Data type: `Boolean`
 
 Determines whether subdirectories for `catalina_base` should be managed as part of tomcat::instance. The default directories are listed in `dir_list`. Valid options: Boolean.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="dir_list"></a>`dir_list`
+##### <a name="-tomcat--instance--dir_list"></a>`dir_list`
 
-Data type: `Any`
+Data type: `Array[String[1]]`
 
 Specifies the subdirectories under `catalina_base` to be managed for an instance (disabled via `manage_dirs` Boolean). Valid options: an array of strings, each being a relative subdirectory to `catalina_base`. `['bin','conf','lib','logs','temp','webapps','work']`.
 
 Default value: `['bin','conf','lib','logs','temp','webapps','work']`
 
-##### <a name="dir_mode"></a>`dir_mode`
+##### <a name="-tomcat--instance--dir_mode"></a>`dir_mode`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies a mode for the managed subdirectories under `catalina_base` for an instance (as specified in `dir_list` and disabled via `manage_dirs` Boolean). Valid option: a string containing a standard Linux mode.
 
 Default value: `'2770'`
 
-##### <a name="manage_copy_from_home"></a>`manage_copy_from_home`
+##### <a name="-tomcat--instance--manage_copy_from_home"></a>`manage_copy_from_home`
 
-Data type: `Any`
+Data type: `Boolean`
 
 Specifies whether to copy the initial config files from `catalina_home` to `catalina_base`. Valid options: Boolean. `true`.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="copy_from_home_list"></a>`copy_from_home_list`
+##### <a name="-tomcat--instance--copy_from_home_list"></a>`copy_from_home_list`
 
-Data type: `Any`
+Data type: `Optional[Variant[Array[String[1]], String[1]]]`
 
 Specifies the full path of config files to copy from `catalina_home` to `catalina_base` for an instance (disabled via `manage_copy_from_home` Boolean). Valid options: array of strings containing path + filename.
 ```
@@ -2310,73 +2306,73 @@ Specifies the full path of config files to copy from `catalina_home` to `catalin
   '${_catalina_base}/conf/web.xml']
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="copy_from_home_mode"></a>`copy_from_home_mode`
+##### <a name="-tomcat--instance--copy_from_home_mode"></a>`copy_from_home_mode`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies the file mode when copying the initial config files from `catalina_home` to `catalina_base`. Valid options: a string containing a standard Linux mode.
 
 Default value: `'0660'`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-tomcat--instance--service_name"></a>`service_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Name of the service when managing the service
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="install_from_source"></a>`install_from_source`
+##### <a name="-tomcat--instance--install_from_source"></a>`install_from_source`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Specifies whether or not the instance should be installed from source.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="source_url"></a>`source_url`
+##### <a name="-tomcat--instance--source_url"></a>`source_url`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 URL to install from.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="source_strip_first_dir"></a>`source_strip_first_dir`
+##### <a name="-tomcat--instance--source_strip_first_dir"></a>`source_strip_first_dir`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Whether or not to strip the first directory when unpacking the source tarball. Defaults to true when installing from source. Requires puppet/archive.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-tomcat--instance--package_ensure"></a>`package_ensure`
 
-Data type: `Any`
+Data type: `Optional[Boolean]`
 
 Ensure for the package resource when installing from package.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-tomcat--instance--package_name"></a>`package_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Name of package when installing from package.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_options"></a>`package_options`
+##### <a name="-tomcat--instance--package_options"></a>`package_options`
 
-Data type: `Any`
+Data type: `Optional[Array[String[1]]]`
 
 Extra options to pass to the package resource.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="tomcatservice"></a>`tomcat::service`
+### <a name="tomcat--service"></a>`tomcat::service`
 
 Service management for Tomcat.
 
@@ -2384,37 +2380,37 @@ Service management for Tomcat.
 
 The following parameters are available in the `tomcat::service` defined type:
 
-* [`catalina_home`](#catalina_home)
-* [`catalina_base`](#catalina_base)
-* [`use_jsvc`](#use_jsvc)
-* [`use_init`](#use_init)
-* [`java_home`](#java_home)
-* [`service_ensure`](#service_ensure)
-* [`service_enable`](#service_enable)
-* [`service_name`](#service_name)
-* [`start_command`](#start_command)
-* [`stop_command`](#stop_command)
-* [`status_command`](#status_command)
-* [`user`](#user)
-* [`wait_timeout`](#wait_timeout)
+* [`catalina_home`](#-tomcat--service--catalina_home)
+* [`catalina_base`](#-tomcat--service--catalina_base)
+* [`use_jsvc`](#-tomcat--service--use_jsvc)
+* [`use_init`](#-tomcat--service--use_init)
+* [`java_home`](#-tomcat--service--java_home)
+* [`service_ensure`](#-tomcat--service--service_ensure)
+* [`service_enable`](#-tomcat--service--service_enable)
+* [`service_name`](#-tomcat--service--service_name)
+* [`start_command`](#-tomcat--service--start_command)
+* [`stop_command`](#-tomcat--service--stop_command)
+* [`status_command`](#-tomcat--service--status_command)
+* [`user`](#-tomcat--service--user)
+* [`wait_timeout`](#-tomcat--service--wait_timeout)
 
-##### <a name="catalina_home"></a>`catalina_home`
+##### <a name="-tomcat--service--catalina_home"></a>`catalina_home`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the root directory of the Tomcat installation. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--service--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_jsvc"></a>`use_jsvc`
+##### <a name="-tomcat--service--use_jsvc"></a>`use_jsvc`
 
 Data type: `Boolean`
 
@@ -2424,81 +2420,81 @@ $CATALINA_HOME/bin/catalina.sh start
 $CATALINA_HOME/bin/catalina.sh stop
 ```
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="use_init"></a>`use_init`
+##### <a name="-tomcat--service--use_init"></a>`use_init`
 
 Data type: `Boolean`
 
 Specifies whether to use a package-provided init script for service management.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="java_home"></a>`java_home`
+##### <a name="-tomcat--service--java_home"></a>`java_home`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies where Java is installed. Only applies if `use_jsvc` is set to `true`. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-tomcat--service--service_ensure"></a>`service_ensure`
 
-Data type: `Any`
+Data type: `Enum['running', 'stopped', 'true', 'false']`
 
 Specifies whether the Tomcat service should be running. Maps to the `ensure` parameter of Puppet's native [service](https://docs.puppetlabs.com/references/latest/type.html#service). Valid options: 'running', 'stopped', `true`, `false`.
 
 Default value: `running`
 
-##### <a name="service_enable"></a>`service_enable`
+##### <a name="-tomcat--service--service_enable"></a>`service_enable`
 
 Data type: `Optional[Boolean]`
 
 Specifies whether to enable the Tomcat service at boot. Only valid if `use_init` is set to `true`. `true`, if `use_init` is set to `true` and `service_ensure` is set to 'running' or `true`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-tomcat--service--service_name"></a>`service_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the name of the Tomcat service. Valid options: a string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="start_command"></a>`start_command`
+##### <a name="-tomcat--service--start_command"></a>`start_command`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Designates a command to start the service. Valid options: a string. `use_init` and `use_jsvc`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="stop_command"></a>`stop_command`
+##### <a name="-tomcat--service--stop_command"></a>`stop_command`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Designates a command to stop the service. Valid options: a string. `use_init` and `use_jsvc`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="status_command"></a>`status_command`
+##### <a name="-tomcat--service--status_command"></a>`status_command`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Designates a command to get the status of the service. Valid options: a string. `use_init` and `use_jsvc`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="user"></a>`user`
+##### <a name="-tomcat--service--user"></a>`user`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 The user of the jsvc process when `use_init => true`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wait_timeout"></a>`wait_timeout`
+##### <a name="-tomcat--service--wait_timeout"></a>`wait_timeout`
 
 Data type: `Integer`
 
@@ -2506,7 +2502,7 @@ The wait timeout set in the jsvc init script when `use_init => true` and `use_js
 
 Default value: `10`
 
-### <a name="tomcatsetenventry"></a>`tomcat::setenv::entry`
+### <a name="tomcat--setenv--entry"></a>`tomcat::setenv::entry`
 
 This define adds an entry to the setenv.sh script.
 
@@ -2514,110 +2510,110 @@ This define adds an entry to the setenv.sh script.
 
 The following parameters are available in the `tomcat::setenv::entry` defined type:
 
-* [`value`](#value)
-* [`ensure`](#ensure)
-* [`catalina_home`](#catalina_home)
-* [`config_file`](#config_file)
-* [`param`](#param)
-* [`name`](#name)
-* [`quote_char`](#quote_char)
-* [`order`](#order)
-* [`addto`](#addto)
-* [`doexport`](#doexport)
-* [`user`](#user)
-* [`group`](#group)
+* [`value`](#-tomcat--setenv--entry--value)
+* [`ensure`](#-tomcat--setenv--entry--ensure)
+* [`catalina_home`](#-tomcat--setenv--entry--catalina_home)
+* [`config_file`](#-tomcat--setenv--entry--config_file)
+* [`param`](#-tomcat--setenv--entry--param)
+* [`name`](#-tomcat--setenv--entry--name)
+* [`quote_char`](#-tomcat--setenv--entry--quote_char)
+* [`order`](#-tomcat--setenv--entry--order)
+* [`addto`](#-tomcat--setenv--entry--addto)
+* [`doexport`](#-tomcat--setenv--entry--doexport)
+* [`user`](#-tomcat--setenv--entry--user)
+* [`group`](#-tomcat--setenv--entry--group)
 
-##### <a name="value"></a>`value`
+##### <a name="-tomcat--setenv--entry--value"></a>`value`
 
-Data type: `Any`
+Data type: `Variant[String[1], Array[String[1]]]`
 
 Provides the value(s) of the managed parameter. Valid options: a string or an array. If passing an array, separate values with a single space.
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-tomcat--setenv--entry--ensure"></a>`ensure`
 
-Data type: `Any`
+Data type: `Enum['present', 'absent']`
 
 Determines whether the fragment should exist in the configuration file. Valid options: 'present', 'absent'.
 
 Default value: `'present'`
 
-##### <a name="catalina_home"></a>`catalina_home`
+##### <a name="-tomcat--setenv--entry--catalina_home"></a>`catalina_home`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Root of the Tomcat installation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="config_file"></a>`config_file`
+##### <a name="-tomcat--setenv--entry--config_file"></a>`config_file`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the configuration file to edit. Valid options: a string containing an absolute path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="param"></a>`param`
+##### <a name="-tomcat--setenv--entry--param"></a>`param`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Specifies a parameter to manage. Valid options: a string. `name` passed in your defined type.
 
 Default value: `$name`
 
-##### <a name="name"></a>`name`
+##### <a name="-tomcat--setenv--entry--name"></a>`name`
 
 `$param`
 
-##### <a name="quote_char"></a>`quote_char`
+##### <a name="-tomcat--setenv--entry--quote_char"></a>`quote_char`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies a character to include before and after the specified value. Valid options: a string (usually a single or double quote).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="order"></a>`order`
+##### <a name="-tomcat--setenv--entry--order"></a>`order`
 
-Data type: `Any`
+Data type: `Variant[String[1], Integer]`
 
 Determines the ordering of your parameters in the configuration file (parameters with lower `order` values appear first.) Valid options: an integer or a string containing an integer. `10`.
 
 Default value: `'10'`
 
-##### <a name="addto"></a>`addto`
+##### <a name="-tomcat--setenv--entry--addto"></a>`addto`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="doexport"></a>`doexport`
+##### <a name="-tomcat--setenv--entry--doexport"></a>`doexport`
 
-Data type: `Any`
+Data type: `Boolean`
 
 Specifies if you want to append export to the entry. Valid options: Boolean
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="user"></a>`user`
+##### <a name="-tomcat--setenv--entry--user"></a>`user`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the owner of the config file. `$::tomcat::user`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="group"></a>`group`
+##### <a name="-tomcat--setenv--entry--group"></a>`group`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the group of the config file. `$::tomcat::group`.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="tomcatwar"></a>`tomcat::war`
+### <a name="tomcat--war"></a>`tomcat::war`
 
 Manage deployment of WAR files.
 
@@ -2625,42 +2621,42 @@ Manage deployment of WAR files.
 
 The following parameters are available in the `tomcat::war` defined type:
 
-* [`catalina_base`](#catalina_base)
-* [`app_base`](#app_base)
-* [`deployment_path`](#deployment_path)
-* [`war_ensure`](#war_ensure)
-* [`war_name`](#war_name)
-* [`war_purge`](#war_purge)
-* [`war_source`](#war_source)
-* [`allow_insecure`](#allow_insecure)
-* [`user`](#user)
-* [`group`](#group)
+* [`catalina_base`](#-tomcat--war--catalina_base)
+* [`app_base`](#-tomcat--war--app_base)
+* [`deployment_path`](#-tomcat--war--deployment_path)
+* [`war_ensure`](#-tomcat--war--war_ensure)
+* [`war_name`](#-tomcat--war--war_name)
+* [`war_purge`](#-tomcat--war--war_purge)
+* [`war_source`](#-tomcat--war--war_source)
+* [`allow_insecure`](#-tomcat--war--allow_insecure)
+* [`user`](#-tomcat--war--user)
+* [`group`](#-tomcat--war--group)
 
-##### <a name="catalina_base"></a>`catalina_base`
+##### <a name="-tomcat--war--catalina_base"></a>`catalina_base`
 
-Data type: `Any`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation. Valid options: a string containing an absolute path. `$::tomcat::catalina_home`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="app_base"></a>`app_base`
+##### <a name="-tomcat--war--app_base"></a>`app_base`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies where to deploy the WAR. Cannot be used in combination with `deployment_path`. Valid options: a string containing a path relative to `$CATALINA_BASE`. `app_base`, Puppet deploys the WAR to your specified `deployment_path`. If you don't specify that either, the WAR deploys to `${catalina_base}/webapps`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="deployment_path"></a>`deployment_path`
+##### <a name="-tomcat--war--deployment_path"></a>`deployment_path`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies where to deploy the WAR. Cannot be used in combination with `app_base`. Valid options: a string containing an absolute path. `deployment_path`, Puppet deploys the WAR to your specified `app_base`. If you don't specify that either, the WAR deploys to `${catalina_base}/webapps`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="war_ensure"></a>`war_ensure`
+##### <a name="-tomcat--war--war_ensure"></a>`war_ensure`
 
 Data type: `Enum['present','absent']`
 
@@ -2668,49 +2664,49 @@ Specifies whether the WAR should exist.
 
 Default value: `'present'`
 
-##### <a name="war_name"></a>`war_name`
+##### <a name="-tomcat--war--war_name"></a>`war_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the name of the WAR. Valid options: a string containing a filename that ends in '.war'. `name` passed in your defined type.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="war_purge"></a>`war_purge`
+##### <a name="-tomcat--war--war_purge"></a>`war_purge`
 
 Data type: `Boolean`
 
 Specifies whether to purge the exploded WAR directory. Only applicable when `war_ensure` is set to 'absent' or `false`.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="war_source"></a>`war_source`
+##### <a name="-tomcat--war--war_source"></a>`war_source`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Specifies the source to deploy the WAR from. Valid options: a string containing a `puppet://`, `http(s)://`, or `ftp://` URL.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="allow_insecure"></a>`allow_insecure`
+##### <a name="-tomcat--war--allow_insecure"></a>`allow_insecure`
 
 Data type: `Boolean`
 
 Specifies if HTTPS errors should be ignored when downloading the war tarball.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="user"></a>`user`
+##### <a name="-tomcat--war--user"></a>`user`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The 'owner' of the tomcat war file.
 
 Default value: `'tomcat'`
 
-##### <a name="group"></a>`group`
+##### <a name="-tomcat--war--group"></a>`group`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The 'group' owner of the tomcat war file.
 
