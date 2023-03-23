@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.4.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v6.4.0) (2023-03-23)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v6.3.0...v6.4.0)
+
+### Added
+
+- \(CONT-366\) Syntax update [\#507](https://github.com/puppetlabs/puppetlabs-tomcat/pull/507) ([LukasAud](https://github.com/LukasAud))
+
+### Fixed
+
+- Update commons-daemon-native version to match Tomcat bundled version [\#510](https://github.com/puppetlabs/puppetlabs-tomcat/pull/510) ([uoe-pjackson](https://github.com/uoe-pjackson))
+- Allow adding and removing attributes  in Context \(\#502\) [\#503](https://github.com/puppetlabs/puppetlabs-tomcat/pull/503) ([uoe-pjackson](https://github.com/uoe-pjackson))
+- Exclude name in resources [\#501](https://github.com/puppetlabs/puppetlabs-tomcat/pull/501) ([kobybr](https://github.com/kobybr))
+- pdksync - \(CONT-189\) Remove support for RedHat6 / OracleLinux6 / Scientific6 [\#500](https://github.com/puppetlabs/puppetlabs-tomcat/pull/500) ([david22swan](https://github.com/david22swan))
+
 ## [v6.3.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v6.3.0) (2022-09-12)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v6.2.0...v6.3.0)
