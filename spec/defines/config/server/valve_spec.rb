@@ -25,8 +25,8 @@ describe 'tomcat::config::server::valve', type: :define do
       ]
       it {
         is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.valves.AccessLogValve').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/conf/server.xml',
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/conf/server.xml',
           'changes' => changes,
         )
       }
@@ -70,8 +70,8 @@ describe 'tomcat::config::server::valve', type: :define do
       # rubocop:enable Layout/LineLength
       it {
         is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-valve').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/server.xml',
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/server.xml',
           'changes' => changes,
         )
       }
@@ -90,8 +90,8 @@ describe 'tomcat::config::server::valve', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.valves.AccessLogValve').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => 'rm Server/Service[#attribute/name=\'Catalina\']/Engine/Valve[#attribute/className=\'org.apache.catalina.valves.AccessLogValve\']',
       )
     }

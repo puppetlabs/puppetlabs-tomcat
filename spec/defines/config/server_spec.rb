@@ -35,8 +35,8 @@ describe 'tomcat::config::server', type: :define do
     ]
     it {
       is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
@@ -61,8 +61,8 @@ describe 'tomcat::config::server', type: :define do
     ]
     it {
       is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
@@ -82,8 +82,8 @@ describe 'tomcat::config::server', type: :define do
     ]
     it {
       is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }

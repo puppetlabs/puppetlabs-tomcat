@@ -25,8 +25,8 @@ describe 'tomcat::config::server::listener', type: :define do
         server_config: '/opt/apache-tomcat/server.xml',
         additional_attributes: {
           'rmiRegistryPortPlatform' => '10001',
-          'rmiServerPortPlatform'   => '10002',
-          'spaces'                  => 'foo bar',
+          'rmiServerPortPlatform' => '10002',
+          'spaces' => 'foo bar',
         },
         attributes_to_remove: ['foo', 'bar', 'baz'],
       }
@@ -43,8 +43,8 @@ describe 'tomcat::config::server::listener', type: :define do
     ]
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test----listener-JmxRemoteLifecycleListener').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
@@ -62,8 +62,8 @@ describe 'tomcat::config::server::listener', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test----listener-org.apache.catalina.core.AprLifecycleListener').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['set Server/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener'],
       )
     }
@@ -80,8 +80,8 @@ describe 'tomcat::config::server::listener', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-default--listener-JmxRemoteLifecycleListener').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'default\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener'], # rubocop:disable Layout/LineLength
       )
     }
@@ -99,8 +99,8 @@ describe 'tomcat::config::server::listener', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-default--listener-JmxRemoteLifecycleListener').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina2\']/Engine[#attribute/name=\'default\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener'], # rubocop:disable Layout/LineLength
       )
     }
@@ -117,8 +117,8 @@ describe 'tomcat::config::server::listener', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina--localhost-listener-JmxRemoteLifecycleListener').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener'], # rubocop:disable Layout/LineLength
       )
     }
@@ -136,8 +136,8 @@ describe 'tomcat::config::server::listener', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2--localhost-listener-JmxRemoteLifecycleListener').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'localhost\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener'], # rubocop:disable Layout/LineLength
       )
     }
@@ -156,8 +156,8 @@ describe 'tomcat::config::server::listener', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-default-localhost-listener-JmxRemoteLifecycleListener').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina2\']/Engine[#attribute/name=\'default\']/Host[#attribute/name=\'localhost\']/Listener[#attribute/className=\'org.apache.catalina.core.AprLifecycleListener\']/#attribute/className org.apache.catalina.core.AprLifecycleListener'], # rubocop:disable Layout/LineLength
       )
     }
@@ -173,8 +173,8 @@ describe 'tomcat::config::server::listener', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test----listener-JmxRemoteLifecycleListener').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['rm Server/Listener[#attribute/className=\'org.apache.catalina.mbeans.JmxRemoteLifecycleListener\']'],
       )
     }

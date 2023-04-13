@@ -21,8 +21,8 @@ describe 'tomcat::config::context::resources', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         additional_attributes: {
-          'cachingAllowed'  => 'true',
-          'cacheMaxSize'    => '100000',
+          'cachingAllowed' => 'true',
+          'cacheMaxSize' => '100000',
         },
         attributes_to_remove: [
           'foobar',

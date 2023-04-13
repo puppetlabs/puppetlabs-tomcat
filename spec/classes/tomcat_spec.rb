@@ -10,8 +10,7 @@ describe 'tomcat', type: :class do
       }
     end
     let :params do
-      {
-      }
+      {}
     end
 
     it { is_expected.not_to contain_file('/opt/apache-tomcat') }

@@ -25,9 +25,9 @@ describe 'tomcat::config::server::connector', type: :define do
         parent_service: 'Catalina2',
         server_config: '/opt/apache-tomcat/server.xml',
         additional_attributes: {
-          'redirectPort'      => '8543',
+          'redirectPort' => '8543',
           'connectionTimeout' => '20000',
-          'spaces'            => 'foo bar',
+          'spaces' => 'foo bar',
         },
         attributes_to_remove: ['foo', 'bar', 'baz'],
       }
@@ -45,8 +45,8 @@ describe 'tomcat::config::server::connector', type: :define do
     ]
     it {
       is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
@@ -60,7 +60,7 @@ describe 'tomcat::config::server::connector', type: :define do
         purge_connectors: true,
         parent_service: 'Catalina2',
         additional_attributes: {
-          'redirectPort'      => '8543',
+          'redirectPort' => '8543',
           'connectionTimeout' => '20000',
         },
         attributes_to_remove: ['foo', 'bar', 'baz'],
@@ -79,8 +79,8 @@ describe 'tomcat::config::server::connector', type: :define do
     ]
     it {
       is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
@@ -96,8 +96,8 @@ describe 'tomcat::config::server::connector', type: :define do
 
     it {
       is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-8180').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Connector[#attribute/port=\'8180\']'],
       )
     }
@@ -112,8 +112,8 @@ describe 'tomcat::config::server::connector', type: :define do
 
     it {
       is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Connector[#attribute/protocol=\'HTTP/1.1\']'],
       )
     }

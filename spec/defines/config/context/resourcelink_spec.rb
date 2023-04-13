@@ -23,7 +23,7 @@ describe 'tomcat::config::context::resourcelink', type: :define do
         resourcelink_type: 'java',
         additional_attributes: {
           'factory' => 'javax.naming.spi.ObjectFactory',
-          'global'  => 'simpleValue',
+          'global' => 'simpleValue',
         },
         attributes_to_remove: [
           'foobar',

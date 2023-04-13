@@ -22,8 +22,8 @@ describe 'tomcat::config::context::manager', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         manager_classname: 'memcached',
         additional_attributes: {
-          'barfoo'  => 'foofoo',
-          'fizz'    => 'buzz',
+          'barfoo' => 'foofoo',
+          'fizz' => 'buzz',
         },
         attributes_to_remove: [
           'foobar',

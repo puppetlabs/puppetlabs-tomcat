@@ -24,9 +24,9 @@ describe 'tomcat::service', type: :define do
 
     it {
       is_expected.to contain_service('tomcat-default').with(
-        'hasstatus'  => false,
+        'hasstatus' => false,
         'hasrestart' => false,
-        'ensure'     => 'running',
+        'ensure' => 'running',
       )
     }
   end
@@ -58,9 +58,9 @@ describe 'tomcat::service', type: :define do
 
     it {
       is_expected.to contain_service('tomcat').with(
-        'hasstatus'  => true,
+        'hasstatus' => true,
         'hasrestart' => true,
-        'ensure'     => 'stopped',
+        'ensure' => 'stopped',
       )
     }
   end

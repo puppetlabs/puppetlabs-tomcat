@@ -22,12 +22,12 @@ describe 'tomcat::config::context::resource', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         resource_type: 'net.sourceforge.jtds.jdbcx.JtdsDataSource',
         additional_attributes: {
-          'auth'            => 'Container',
-          'closeMethod'     => 'closeMethod',
+          'auth' => 'Container',
+          'closeMethod' => 'closeMethod',
           'validationQuery' => 'getdate()',
-          'description'     => 'description',
-          'scope'           => 'Shareable',
-          'singleton'       => 'true',
+          'description' => 'description',
+          'scope' => 'Shareable',
+          'singleton' => 'true',
         },
         attributes_to_remove: [
           'foobar',

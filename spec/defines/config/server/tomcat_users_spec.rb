@@ -39,16 +39,16 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     ]
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => changes,
       )
     }
     it do
       is_expected.to contain_file('/opt/apache-tomcat/test/conf/tomcat-users.xml').with('ensure' => 'file',
-                                                                                        'owner'   => 'tomcat',
-                                                                                        'group'   => 'tomcat',
-                                                                                        'mode'    => '0640',
+                                                                                        'owner' => 'tomcat',
+                                                                                        'group' => 'tomcat',
+                                                                                        'mode' => '0640',
                                                                                         'replace' => false).that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]')
     end
   end
@@ -72,8 +72,8 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     ]
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => changes,
       )
     }
@@ -100,8 +100,8 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     ]
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/users.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/users.xml',
         'changes' => changes,
       )
     }
@@ -122,8 +122,8 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-tomcat-users').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => ['rm tomcat-users/user[#attribute/username=\'foo\']'],
       )
     }
@@ -144,8 +144,8 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-foobar-role-foobar').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => ['set tomcat-users/role[#attribute/rolename=\'foobar\']/#attribute/rolename \'foobar\''],
       )
     }
@@ -164,8 +164,8 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-noname-noname').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => ['set tomcat-users/role[#attribute/rolename=\'noname\']/#attribute/rolename \'noname\''],
       )
     }
@@ -182,8 +182,8 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
 
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-foobar-tomcat-users').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => ['rm tomcat-users/role[#attribute/rolename=\'foobar\']'],
       )
     }

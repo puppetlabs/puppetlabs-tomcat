@@ -44,8 +44,8 @@ describe 'tomcat::config::context::environment', type: :define do
     ]
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => changes,
       )
     }
@@ -60,8 +60,8 @@ describe 'tomcat::config::context::environment', type: :define do
 
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => ['rm Context/Environment[#attribute/name=\'maxExemptions\']'],
       )
     }
@@ -84,8 +84,8 @@ describe 'tomcat::config::context::environment', type: :define do
     ]
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => changes,
       )
     }
@@ -109,8 +109,8 @@ describe 'tomcat::config::context::environment', type: :define do
     ]
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => changes,
       )
     }
@@ -134,8 +134,8 @@ describe 'tomcat::config::context::environment', type: :define do
     ]
     it {
       is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => changes,
       )
     }

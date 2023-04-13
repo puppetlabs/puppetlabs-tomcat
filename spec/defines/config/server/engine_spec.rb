@@ -29,8 +29,8 @@ describe 'tomcat::config::server::engine', type: :define do
     ]
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => changes,
       )
     }
@@ -60,8 +60,8 @@ describe 'tomcat::config::server::engine', type: :define do
     ]
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-engine').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
@@ -87,8 +87,8 @@ describe 'tomcat::config::server::engine', type: :define do
     ]
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => changes,
       )
     }

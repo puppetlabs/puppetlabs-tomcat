@@ -25,7 +25,7 @@ describe 'tomcat::war', type: :define do
     it {
       is_expected.to contain_archive('tomcat::war sample.war').with(
         'source' => '/tmp/sample.war',
-        'path'   => '/opt/apache-tomcat/webapps/sample.war',
+        'path' => '/opt/apache-tomcat/webapps/sample.war',
       )
     }
     it {
@@ -45,13 +45,13 @@ describe 'tomcat::war', type: :define do
     it {
       is_expected.to contain_file('/opt/apache-tomcat/webapps/sample.war').with(
         'ensure' => 'absent',
-        'force'  => 'false',
+        'force' => 'false',
       )
     }
     it {
       is_expected.to contain_file('/opt/apache-tomcat/webapps/sample').with(
         'ensure' => 'absent',
-        'force'  => 'true',
+        'force' => 'true',
       )
     }
   end
@@ -69,8 +69,8 @@ describe 'tomcat::war', type: :define do
 
     it {
       is_expected.to contain_archive('tomcat::war sample.war').with(
-        'source'         => '/tmp/sample.war',
-        'path'           => '/opt/apache-tomcat/test/webapps2/sample2.war',
+        'source' => '/tmp/sample.war',
+        'path' => '/opt/apache-tomcat/test/webapps2/sample2.war',
         'allow_insecure' => true,
       )
     }
@@ -92,7 +92,7 @@ describe 'tomcat::war', type: :define do
     it {
       is_expected.to contain_archive('tomcat::war sample.war').with(
         'source' => '/tmp/sample.war',
-        'path'   => '/opt/apache-tomcat/webapps3/sample.war',
+        'path' => '/opt/apache-tomcat/webapps3/sample.war',
       )
     }
     it {
@@ -113,13 +113,13 @@ describe 'tomcat::war', type: :define do
     it {
       is_expected.to contain_file('/opt/apache-tomcat/webapps/sample.war').with(
         'ensure' => 'absent',
-        'force'  => 'false',
+        'force' => 'false',
       )
     }
     it {
       is_expected.not_to contain_file('/opt/apache-tomcat/webapps/sample').with(
         'ensure' => 'absent',
-        'force'  => 'true',
+        'force' => 'true',
       )
     }
   end
@@ -217,8 +217,8 @@ describe 'tomcat::war', type: :define do
 
       it {
         is_expected.to contain_archive('tomcat::war sample.war').with(
-          'source'         => '/tmp/sample.war',
-          'path'           => '/opt/apache-tomcat/webapps2/sample2.war',
+          'source' => '/tmp/sample.war',
+          'path' => '/opt/apache-tomcat/webapps2/sample2.war',
           'allow_insecure' => true,
         )
       }

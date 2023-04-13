@@ -24,8 +24,8 @@ describe 'tomcat::config::server::service', type: :define do
       ]
       it {
         is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/server.xml',
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/server.xml',
           'changes' => changes,
         )
       }
@@ -45,8 +45,8 @@ describe 'tomcat::config::server::service', type: :define do
       ]
       it {
         is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/test/conf/server.xml',
           'changes' => changes,
         )
       }
@@ -67,7 +67,7 @@ describe 'tomcat::config::server::service', type: :define do
     it {
       is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
         'lens' => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/#attribute/name Catalina'],
       )
     }
@@ -76,8 +76,8 @@ describe 'tomcat::config::server::service', type: :define do
     let :params do
       it {
         is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/test/conf/server.xml',
           'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']'],
         )
       }

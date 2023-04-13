@@ -29,7 +29,7 @@ describe 'tomcat::instance', type: :define do
     it {
       is_expected.to contain_user('tomcat').with(
         'ensure' => 'present',
-        'gid'    => 'tomcat',
+        'gid' => 'tomcat',
       )
     }
     it {
@@ -40,8 +40,8 @@ describe 'tomcat::instance', type: :define do
     it {
       is_expected.to contain_file('/opt/apache-tomcat').with(
         'ensure' => 'directory',
-        'owner'  => 'tomcat',
-        'group'  => 'tomcat',
+        'owner' => 'tomcat',
+        'group' => 'tomcat',
       )
     }
     it {
@@ -71,8 +71,8 @@ describe 'tomcat::instance', type: :define do
     it {
       is_expected.to contain_file('/opt/apache-tomcat/test-tomcat').with(
         'ensure' => 'directory',
-        'owner'  => 'tomcat',
-        'group'  => 'tomcat',
+        'owner' => 'tomcat',
+        'group' => 'tomcat',
       )
     }
   end

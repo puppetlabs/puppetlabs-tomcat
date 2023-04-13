@@ -33,9 +33,9 @@ describe 'tomcat::setenv::entry', type: :define do
   context 'quotes' do
     let :params do
       {
-        'param'       => 'BAR',
-        'value'       => '/bin/true',
-        'quote_char'  => '"',
+        'param' => 'BAR',
+        'value' => '/bin/true',
+        'quote_char' => '"',
         'config_file' => '/opt/apache-tomcat/foo/bin/setenv.sh',
       }
     end
@@ -60,7 +60,7 @@ describe 'tomcat::setenv::entry', type: :define do
   context 'specific config_file' do
     let :params do
       {
-        'value'       => '/bin/true',
+        'value' => '/bin/true',
         'config_file' => '/etc/sysconfig/tomcat',
       }
     end
@@ -73,9 +73,9 @@ describe 'tomcat::setenv::entry', type: :define do
   context 'array' do
     let :params do
       {
-        'param'       => 'BAR',
-        'value'       => ['/bin/true', '/bin/false'],
-        'quote_char'  => '"',
+        'param' => 'BAR',
+        'value' => ['/bin/true', '/bin/false'],
+        'quote_char' => '"',
         'config_file' => '/opt/apache-tomcat/foo/bin/setenv.sh',
       }
     end

@@ -47,7 +47,7 @@ describe 'tomcat::config::server::host', type: :define do
         additional_attributes: {
           'autoDeploy' => 'false',
           'unpackWARs' => 'false',
-          'spaces'     => 'foo bar',
+          'spaces' => 'foo bar',
         },
         attributes_to_remove: ['foo', 'bar', 'baz'],
         aliases: ['able', 'baker', 'charlie'],

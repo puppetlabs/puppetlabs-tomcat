@@ -33,8 +33,8 @@ describe 'tomcat::config::server::realm', type: :define do
     # rubocop:enable Layout/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-LockOutRealm for /opt/apache-tomcat/test').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
@@ -49,9 +49,9 @@ describe 'tomcat::config::server::realm', type: :define do
         server_config: '/opt/apache-tomcat/server.xml',
         additional_attributes: {
           'connectionURL' => 'ldap://localhost',
-          'roleName'      => 'cn',
-          'roleSearch'    => 'member={0}',
-          'spaces'        => 'foo bar',
+          'roleName' => 'cn',
+          'roleSearch' => 'member={0}',
+          'spaces' => 'foo bar',
         },
         attributes_to_remove: ['foo', 'bar', 'baz'],
       }
@@ -72,8 +72,8 @@ describe 'tomcat::config::server::realm', type: :define do
     # rubocop:enable Layout/LineLength
     it {
       is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
@@ -87,7 +87,7 @@ describe 'tomcat::config::server::realm', type: :define do
         realm_ensure: 'present',
         additional_attributes: {
           'connectionURL' => 'ldap://localhost',
-          'roleName'      => 'cn',
+          'roleName' => 'cn',
         },
         attributes_to_remove: ['foo', 'bar'],
       }
@@ -328,9 +328,9 @@ describe 'tomcat::config::server::realm', type: :define do
         realm_ensure: 'present',
         additional_attributes: {
           'connectionURL' => 'ldap://localhost',
-          'roleName'      => 'cn',
-          'roleSearch'    => 'member={0}',
-          'spaces'        => 'foo bar',
+          'roleName' => 'cn',
+          'roleSearch' => 'member={0}',
+          'spaces' => 'foo bar',
         },
       }
     end
