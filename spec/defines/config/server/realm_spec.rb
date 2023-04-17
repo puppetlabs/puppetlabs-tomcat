@@ -78,6 +78,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context 'Purge Realms' do
     let :params do
       {
@@ -116,6 +117,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context 'No class_name' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -141,6 +143,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context 'Duplicate class_name' do
     let :title do
       'first'
@@ -190,6 +193,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context '$realm_ensure absent' do
     let :title do
       'org.apache.catalina.realm.LockOutRealm'
@@ -214,6 +218,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context '$realm_ensure false' do
     let :title do
       'org.apache.catalina.realm.LockOutRealm'
@@ -238,6 +243,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context 'Add Realm with $parent_service and $parent_engine' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -265,6 +271,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context 'Add Realm with $parent_host' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -291,6 +298,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context 'Add Realm with $parent_host and $parent_realm' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -318,6 +326,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context 'Add Realm with $parent_realm only' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -354,6 +363,7 @@ describe 'tomcat::config::server::realm', type: :define do
       )
     }
   end
+
   context 'Failing Tests' do
     context 'Bad realm_ensure' do
       let :params do
@@ -368,6 +378,7 @@ describe 'tomcat::config::server::realm', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'Bad additional_attributes' do
       let :params do
         {
@@ -381,6 +392,7 @@ describe 'tomcat::config::server::realm', type: :define do
         }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
+
     context 'Bad attributes_to_remove' do
       let :params do
         {
@@ -394,6 +406,7 @@ describe 'tomcat::config::server::realm', type: :define do
         }.to raise_error(Puppet::Error, %r{Array})
       end
     end
+
     context 'Bad purge_realms' do
       let :params do
         {
@@ -407,6 +420,7 @@ describe 'tomcat::config::server::realm', type: :define do
         }.to raise_error(Puppet::Error, %r{Boolean})
       end
     end
+
     context 'Purge realms with $realm_ensure => false' do
       let :params do
         {
@@ -421,6 +435,7 @@ describe 'tomcat::config::server::realm', type: :define do
         }.to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
       end
     end
+
     context 'Purge realms with $realm_ensure => absent' do
       let :params do
         {
@@ -435,6 +450,7 @@ describe 'tomcat::config::server::realm', type: :define do
         }.to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

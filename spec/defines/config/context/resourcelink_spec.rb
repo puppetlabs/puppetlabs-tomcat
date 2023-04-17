@@ -46,6 +46,7 @@ describe 'tomcat::config::context::resourcelink', type: :define do
       )
     }
   end
+
   context 'Remove ResourceLink' do
     let :params do
       {

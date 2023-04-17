@@ -54,6 +54,7 @@ describe 'tomcat::instance', type: :define do
       )
     }
   end
+
   context 'install from source, different catalina_base' do
     let :facts do
       default_facts
@@ -80,6 +81,7 @@ describe 'tomcat::instance', type: :define do
       )
     }
   end
+
   context 'install from package' do
     let :facts do
       default_facts
@@ -109,6 +111,7 @@ describe 'tomcat::instance', type: :define do
       }
     end
   end
+
   context 'install from package, set $catalina_base' do
     let :facts do
       default_facts
@@ -127,6 +130,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.to compile }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
   end
+
   context 'install from source, unmanaged home' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -148,6 +152,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat') }
     it { is_expected.to contain_file('/opt/apache-tomcat/foo') }
   end
+
   context 'install from source, unmanaged base' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -169,6 +174,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.to contain_file('/opt/apache-tomcat') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
   end
+
   context 'install from source, unmanaged home and base' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -191,6 +197,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
   end
+
   context 'install from source, unmanaged catalina.properties' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -211,6 +218,7 @@ describe 'tomcat::instance', type: :define do
 
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/catalina.properties') }
   end
+
   context 'legacy install from source, unmanaged home/base' do
     let :pre_condition do
       'class { "tomcat": }'
@@ -228,6 +236,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo') }
   end
+
   context 'install from source, no copy_from_home' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -252,6 +261,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/server.xml') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/conf/web.xml') }
   end
+
   context 'install from source, different copy_from_home_mode' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -276,6 +286,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.to contain_file('/opt/apache-tomcat/foo/conf/server.xml').with_mode('0664') }
     it { is_expected.to contain_file('/opt/apache-tomcat/foo/conf/web.xml').with_mode('0664') }
   end
+
   context 'install from source, different copy_from_home_list' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -327,6 +338,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.to contain_file('/opt/apache-tomcat/foo/webapps') }
     it { is_expected.to contain_file('/opt/apache-tomcat/foo/work') }
   end
+
   context 'install from source, unmanaged dirs' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -355,6 +367,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/webapps') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/work') }
   end
+
   context 'install from source, custom managed dir list' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -385,6 +398,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/webapps') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/work') }
   end
+
   context 'install from source, dir mode' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -413,6 +427,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.to contain_file('/opt/apache-tomcat/foo/webapps').with_mode('0775') }
     it { is_expected.to contain_file('/opt/apache-tomcat/foo/work').with_mode('0775') }
   end
+
   context 'install from source, dir mode with custom dir list' do
     let :pre_condition do
       'tomcat::install { "tomcat6":
@@ -444,6 +459,7 @@ describe 'tomcat::instance', type: :define do
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/webapps') }
     it { is_expected.not_to contain_file('/opt/apache-tomcat/foo/work') }
   end
+
   context 'manage service init with service_name' do
     let :facts do
       default_facts

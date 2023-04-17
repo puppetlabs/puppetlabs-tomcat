@@ -51,6 +51,7 @@ describe 'tomcat::config::server::connector', type: :define do
       )
     }
   end
+
   context 'set all the things with purge_connectors' do
     let :params do
       {
@@ -85,6 +86,7 @@ describe 'tomcat::config::server::connector', type: :define do
       )
     }
   end
+
   context 'remove connector' do
     let :params do
       {
@@ -102,6 +104,7 @@ describe 'tomcat::config::server::connector', type: :define do
       )
     }
   end
+
   context 'remove connector no port' do
     let :params do
       {
@@ -118,6 +121,7 @@ describe 'tomcat::config::server::connector', type: :define do
       )
     }
   end
+
   context 'remove connector with purge_connectors' do
     let :params do
       {
@@ -133,6 +137,7 @@ describe 'tomcat::config::server::connector', type: :define do
       }.to raise_error(Puppet::Error, %r{\$connector_ensure must be set to 'true' or 'present' to use \$purge_connectors})
     end
   end
+
   context 'two connectors with same protocol' do
     let :pre_condition do
       'class { "tomcat": }
@@ -150,6 +155,7 @@ describe 'tomcat::config::server::connector', type: :define do
 
     it { is_expected.to compile }
   end
+
   describe 'failing tests' do
     context 'bad connector_ensure' do
       let :params do
@@ -164,6 +170,7 @@ describe 'tomcat::config::server::connector', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad additional_attributes' do
       let :params do
         {
@@ -177,6 +184,7 @@ describe 'tomcat::config::server::connector', type: :define do
         }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
+
     context 'no port' do
       let :params do
         {
@@ -190,6 +198,7 @@ describe 'tomcat::config::server::connector', type: :define do
         }.to raise_error(Puppet::Error, %r{port must be specified})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

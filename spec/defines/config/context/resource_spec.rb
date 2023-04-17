@@ -54,6 +54,7 @@ describe 'tomcat::config::context::resource', type: :define do
       )
     }
   end
+
   context 'Remove Resource' do
     let :params do
       {

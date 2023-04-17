@@ -38,6 +38,7 @@ describe 'tomcat::config::server::service', type: :define do
       }
     end
   end
+
   context 'remove classname' do
     let :params do
       changes = [
@@ -58,6 +59,7 @@ describe 'tomcat::config::server::service', type: :define do
       }
     end
   end
+
   context 'service ensure without class_name' do
     let :params do
       {
@@ -74,6 +76,7 @@ describe 'tomcat::config::server::service', type: :define do
       )
     }
   end
+
   context 'remove service' do
     let :params do
       it {
@@ -90,6 +93,7 @@ describe 'tomcat::config::server::service', type: :define do
       }
     end
   end
+
   context 'no changes' do
     let :params do
       it { is_expected.not_to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina') }
@@ -99,6 +103,7 @@ describe 'tomcat::config::server::service', type: :define do
       }
     end
   end
+
   describe 'failing tests' do
     context 'bad service_ensure' do
       let :params do
@@ -113,6 +118,7 @@ describe 'tomcat::config::server::service', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad class_name_ensure' do
       let :params do
         {
@@ -126,6 +132,7 @@ describe 'tomcat::config::server::service', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

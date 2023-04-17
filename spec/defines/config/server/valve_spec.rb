@@ -96,6 +96,7 @@ describe 'tomcat::config::server::valve', type: :define do
       )
     }
   end
+
   describe 'Failing tests' do
     let :title do
       'org.apache.catalina.valves.AccessLogValve'
@@ -116,6 +117,7 @@ describe 'tomcat::config::server::valve', type: :define do
         }.to raise_error(Puppet::Error, %r{Please use parameter})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

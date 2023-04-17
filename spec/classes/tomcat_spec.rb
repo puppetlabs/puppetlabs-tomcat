@@ -65,6 +65,7 @@ describe 'tomcat', type: :class do
       }.to raise_error(Puppet::Error, %r{Unsupported osfamily})
     end
   end
+
   context 'on Solaris' do
     let :facts do
       {
@@ -78,6 +79,7 @@ describe 'tomcat', type: :class do
       }.to raise_error(Puppet::Error, %r{Unsupported osfamily})
     end
   end
+
   context 'on OSX' do
     let :facts do
       {

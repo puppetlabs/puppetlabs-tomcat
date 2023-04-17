@@ -45,6 +45,7 @@ describe 'tomcat::config::context::manager', type: :define do
       )
     }
   end
+
   context 'Remove Manager' do
     let :params do
       {

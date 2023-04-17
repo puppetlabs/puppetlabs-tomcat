@@ -49,6 +49,7 @@ describe 'tomcat::config::server::listener', type: :define do
       )
     }
   end
+
   context 'No class_name' do
     let :title do
       'org.apache.catalina.core.AprLifecycleListener'
@@ -68,6 +69,7 @@ describe 'tomcat::config::server::listener', type: :define do
       )
     }
   end
+
   context '$parent_engine, no $parent_service' do
     let :params do
       {
@@ -86,6 +88,7 @@ describe 'tomcat::config::server::listener', type: :define do
       )
     }
   end
+
   context '$parent_engine' do
     let :params do
       {
@@ -105,6 +108,7 @@ describe 'tomcat::config::server::listener', type: :define do
       )
     }
   end
+
   context '$parent_host, no $parent_engine or $parent_service' do
     let :params do
       {
@@ -123,6 +127,7 @@ describe 'tomcat::config::server::listener', type: :define do
       )
     }
   end
+
   context '$parent_host, no $parent_engine' do
     let :params do
       {
@@ -142,6 +147,7 @@ describe 'tomcat::config::server::listener', type: :define do
       )
     }
   end
+
   context '$parent_host' do
     let :params do
       {
@@ -162,6 +168,7 @@ describe 'tomcat::config::server::listener', type: :define do
       )
     }
   end
+
   context 'Remove Listener' do
     let :params do
       {
@@ -179,6 +186,7 @@ describe 'tomcat::config::server::listener', type: :define do
       )
     }
   end
+
   context 'Failing Tests' do
     context 'Bad listener_ensure' do
       let :params do
@@ -193,6 +201,7 @@ describe 'tomcat::config::server::listener', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'Bad additional_attributes' do
       let :params do
         {
@@ -206,6 +215,7 @@ describe 'tomcat::config::server::listener', type: :define do
         }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
+
     context 'Bad attributes_to_remove' do
       let :params do
         {
@@ -219,6 +229,7 @@ describe 'tomcat::config::server::listener', type: :define do
         }.to raise_error(Puppet::Error, %r{Array})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

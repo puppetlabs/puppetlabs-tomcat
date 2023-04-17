@@ -53,6 +53,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
                                                                                         'replace' => false).that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]')
     end
   end
+
   context 'Add User no element' do
     let :title do
       'user-foo'
@@ -79,6 +80,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       )
     }
   end
+
   context 'Add User to empty file' do
     let :title do
       'user-foo'
@@ -113,6 +115,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
                                                                                  'content' => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>').that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]') # rubocop:disable Layout/LineLength
     end
   end
+
   context 'Remove User' do
     let :params do
       {
@@ -130,6 +133,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       )
     }
   end
+
   context 'Add Role with manage_file false' do
     let :title do
       'role-foobar'
@@ -154,6 +158,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
 
     it { is_expected.not_to contain_file('/opt/apache-tomcat/test/conf/tomcat-users.xml') }
   end
+
   context 'Add Role no element_name' do
     let :title do
       'noname'
@@ -173,6 +178,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       )
     }
   end
+
   context 'Remove Role' do
     let :params do
       {
@@ -191,6 +197,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       )
     }
   end
+
   context 'Failing Tests' do
     context 'Bad ensure' do
       let :params do
@@ -205,6 +212,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'Bad manage_file' do
       let :params do
         {
@@ -218,6 +226,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         }.to raise_error(Puppet::Error, %r{Boolean})
       end
     end
+
     context 'Bad roles' do
       let :params do
         {
@@ -231,6 +240,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         }.to raise_error(Puppet::Error, %r{Array})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

@@ -58,6 +58,7 @@ describe 'tomcat::config::context', type: :define do
       )
     }
   end
+
   describe 'failing tests' do
     context 'old augeas' do
       let :facts do

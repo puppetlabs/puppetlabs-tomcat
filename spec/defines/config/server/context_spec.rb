@@ -48,6 +48,7 @@ describe 'tomcat::config::server::context', type: :define do
       )
     }
   end
+
   context 'No doc_base' do
     let :params do
       {
@@ -78,6 +79,7 @@ describe 'tomcat::config::server::context', type: :define do
       )
     }
   end
+
   context 'context with $parent_service' do
     let :params do
       {
@@ -96,6 +98,7 @@ describe 'tomcat::config::server::context', type: :define do
       )
     }
   end
+
   context 'context with $parent_host' do
     let :params do
       {
@@ -114,6 +117,7 @@ describe 'tomcat::config::server::context', type: :define do
       )
     }
   end
+
   context '$parent_engine, no $parent_host' do
     let :params do
       {
@@ -132,6 +136,7 @@ describe 'tomcat::config::server::context', type: :define do
       )
     }
   end
+
   context 'Remove Context' do
     let :params do
       {
@@ -152,6 +157,7 @@ describe 'tomcat::config::server::context', type: :define do
       )
     }
   end
+
   describe 'Failing Tests' do
     context 'bad context_ensure' do
       let :params do
@@ -166,6 +172,7 @@ describe 'tomcat::config::server::context', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'Bad additional_attributes' do
       let :params do
         {
@@ -179,6 +186,7 @@ describe 'tomcat::config::server::context', type: :define do
         }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
+
     context 'Bad attributes_to_remove' do
       let :params do
         {
@@ -192,6 +200,7 @@ describe 'tomcat::config::server::context', type: :define do
         }.to raise_error(Puppet::Error, %r{Array})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

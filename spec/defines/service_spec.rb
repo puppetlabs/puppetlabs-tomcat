@@ -30,6 +30,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'set start/stop/status with jsvc' do
     let :params do
       {
@@ -47,6 +48,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'using init' do
     let :params do
       {
@@ -64,6 +66,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'using init with $catalina_base' do
     let :params do
       {
@@ -77,6 +80,7 @@ describe 'tomcat::service', type: :define do
     # so let's just make sure it compiles
     it { is_expected.to compile }
   end
+
   context 'both jsvc and init with $catalina_base' do
     let :params do
       {
@@ -93,6 +97,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'set start/stop with init' do
     let :params do
       {
@@ -110,6 +115,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'neither jsvc or init' do
     it {
       is_expected.to contain_service('tomcat-default').with(
@@ -119,6 +125,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'default, set start/stop/status' do
     let :params do
       {
@@ -151,6 +158,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'service_enable, set true from defaults' do
     let :params do
       {
@@ -167,6 +175,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'service_enable, set undef from defaults' do
     let :params do
       {
@@ -182,6 +191,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'service_enable, error thrown if use_init is false' do
     let :params do
       {
@@ -194,6 +204,7 @@ describe 'tomcat::service', type: :define do
     # so let's just make sure it compiles
     it { is_expected.to compile }
   end
+
   context 'jsvc true and init true with wait_timeout' do
     let :params do
       {
@@ -214,6 +225,7 @@ describe 'tomcat::service', type: :define do
       )
     }
   end
+
   context 'jsvc true and init true with wait_timeoutl, expect init script contains wait_timeout' do
     let :params do
       {
@@ -227,6 +239,7 @@ describe 'tomcat::service', type: :define do
       is_expected.to contain_file('/etc/init.d/tomcat-default').with_content(%r{^WAIT_TIMEOUT=15$})
     }
   end
+
   describe 'failing tests' do
     context 'bad use_jsvc' do
       let :params do
@@ -241,6 +254,7 @@ describe 'tomcat::service', type: :define do
         }.to raise_error(Puppet::Error, %r{Boolean})
       end
     end
+
     context 'bad use_init' do
       let :params do
         {
@@ -254,6 +268,7 @@ describe 'tomcat::service', type: :define do
         }.to raise_error(Puppet::Error, %r{Boolean})
       end
     end
+
     context 'java_home without use_jsvc warning' do
       let :params do
         {
@@ -263,6 +278,7 @@ describe 'tomcat::service', type: :define do
 
       it { is_expected.to compile }
     end
+
     context 'java_home with start_command' do
       let :params do
         {
@@ -273,6 +289,7 @@ describe 'tomcat::service', type: :define do
 
       it { is_expected.to compile }
     end
+
     context 'bad wait_timeout' do
       let :params do
         {

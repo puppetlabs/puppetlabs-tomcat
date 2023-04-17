@@ -35,6 +35,7 @@ describe 'tomcat::config::server::host', type: :define do
       )
     }
   end
+
   context 'set all the things' do
     let :params do
       {
@@ -76,6 +77,7 @@ describe 'tomcat::config::server::host', type: :define do
       )
     }
   end
+
   context 'empty array of aliases removes old aliases and does not add any' do
     let :params do
       {
@@ -97,6 +99,7 @@ describe 'tomcat::config::server::host', type: :define do
       )
     }
   end
+
   context 'remove the host' do
     let :params do
       {
@@ -112,6 +115,7 @@ describe 'tomcat::config::server::host', type: :define do
       )
     }
   end
+
   describe 'failing tests' do
     context 'no app_base' do
       it do
@@ -120,6 +124,7 @@ describe 'tomcat::config::server::host', type: :define do
         }.to raise_error(Puppet::Error, %r{\$app_base must be specified})
       end
     end
+
     context 'bad additional_attributes' do
       let :params do
         {
@@ -133,6 +138,7 @@ describe 'tomcat::config::server::host', type: :define do
         }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
+
     context 'invalid host_ensure' do
       let :params do
         {
@@ -146,6 +152,7 @@ describe 'tomcat::config::server::host', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'invalid aliases' do
       let :params do
         {
@@ -160,6 +167,7 @@ describe 'tomcat::config::server::host', type: :define do
         }.to raise_error(Puppet::Error, %r{Array})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

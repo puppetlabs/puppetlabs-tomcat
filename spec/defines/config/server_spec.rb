@@ -41,6 +41,7 @@ describe 'tomcat::config::server', type: :define do
       )
     }
   end
+
   context 'custom server_config location' do
     let(:params) do
       {
@@ -67,6 +68,7 @@ describe 'tomcat::config::server', type: :define do
       )
     }
   end
+
   context 'remove optional attributes' do
     let :params do
       {
@@ -88,6 +90,7 @@ describe 'tomcat::config::server', type: :define do
       )
     }
   end
+
   context 'no changes' do
     let :params do
       {
@@ -97,6 +100,7 @@ describe 'tomcat::config::server', type: :define do
 
     it { is_expected.not_to contain_augeas('server-/opt/apache-tomcat/test') }
   end
+
   describe 'failing tests' do
     context 'invalid class_name_ensure' do
       let :params do
@@ -111,6 +115,7 @@ describe 'tomcat::config::server', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'invalid address_ensure' do
       let :params do
         {
@@ -124,6 +129,7 @@ describe 'tomcat::config::server', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

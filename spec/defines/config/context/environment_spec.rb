@@ -50,6 +50,7 @@ describe 'tomcat::config::context::environment', type: :define do
       )
     }
   end
+
   context 'Remove Environment' do
     let :params do
       {
@@ -66,6 +67,7 @@ describe 'tomcat::config::context::environment', type: :define do
       )
     }
   end
+
   context 'No environment_name' do
     let :params do
       {
@@ -90,6 +92,7 @@ describe 'tomcat::config::context::environment', type: :define do
       )
     }
   end
+
   context 'Set override' do
     let :params do
       {
@@ -115,6 +118,7 @@ describe 'tomcat::config::context::environment', type: :define do
       )
     }
   end
+
   context 'Set description' do
     let :params do
       {
@@ -140,6 +144,7 @@ describe 'tomcat::config::context::environment', type: :define do
       )
     }
   end
+
   context 'Failing Tests' do
     context 'Bad ensure' do
       let :params do
@@ -155,6 +160,7 @@ describe 'tomcat::config::context::environment', type: :define do
         }.to raise_error(Puppet::Error, %r{match})
       end
     end
+
     context 'Empty catalina_base' do
       let :params do
         {
@@ -168,6 +174,7 @@ describe 'tomcat::config::context::environment', type: :define do
         }.to raise_error(Puppet::Error, %r{path})
       end
     end
+
     context 'No type' do
       let :params do
         {
@@ -182,6 +189,7 @@ describe 'tomcat::config::context::environment', type: :define do
         }.to raise_error(Puppet::Error, %r{\$type must be specified})
       end
     end
+
     context 'No value' do
       let :params do
         {
@@ -196,6 +204,7 @@ describe 'tomcat::config::context::environment', type: :define do
         }.to raise_error(Puppet::Error, %r{\$value must be specified})
       end
     end
+
     context 'Bad override' do
       let :params do
         {

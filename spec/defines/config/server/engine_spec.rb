@@ -35,6 +35,7 @@ describe 'tomcat::config::server::engine', type: :define do
       )
     }
   end
+
   context 'set all the things' do
     let :params do
       {
@@ -66,6 +67,7 @@ describe 'tomcat::config::server::engine', type: :define do
       )
     }
   end
+
   context 'remove all the things' do
     let :params do
       {
@@ -93,6 +95,7 @@ describe 'tomcat::config::server::engine', type: :define do
       )
     }
   end
+
   describe 'failing tests' do
     context 'bad background_processor_delay ensure' do
       let :params do
@@ -108,6 +111,7 @@ describe 'tomcat::config::server::engine', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad class_name_ensure' do
       let :params do
         {
@@ -122,6 +126,7 @@ describe 'tomcat::config::server::engine', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad jvm_route_ensure' do
       let :params do
         {
@@ -136,6 +141,7 @@ describe 'tomcat::config::server::engine', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad start_stop_threads ensure' do
       let :params do
         {
@@ -150,6 +156,7 @@ describe 'tomcat::config::server::engine', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {

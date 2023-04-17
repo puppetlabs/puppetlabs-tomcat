@@ -306,6 +306,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       end
     end
   end
+
   context 'add a context environment' do
     pp = <<-MANIFEST
       tomcat::config::context::environment { 'testEnvVar':
@@ -324,6 +325,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       end
     end
   end
+
   context 'add a context valve' do
     pp = <<-MANIFEST
       tomcat::config::context::valve { 'testValve':
@@ -346,6 +348,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       end
     end
   end
+
   context 'add multiple context valves with the same class_name' do
     pp = <<-MANIFEST
       tomcat::config::context::valve { 'testValve':
@@ -386,6 +389,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       end
     end
   end
+
   context 'add a context valve with legacy attributes' do
     pp = <<-MANIFEST
       tomcat::config::context::valve { 'testValve':
@@ -408,6 +412,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       end
     end
   end
+
   context 'add multiple context valves with legacy attributes' do
     pp = <<-MANIFEST
       tomcat::config::context::valve { 'testValve':

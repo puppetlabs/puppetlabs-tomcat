@@ -26,10 +26,10 @@ RSpec/DescribeClass:
 #     - 'spec/defines/setenv/entry_spec.rb'
 #     - 'spec/defines/war_spec.rb'
 
-# Offense count: 167
-# This cop supports safe autocorrection (--autocorrect).
-RSpec/EmptyLineAfterExampleGroup:
-  Enabled: false
+# # Offense count: 167
+# # This cop supports safe autocorrection (--autocorrect).
+# RSpec/EmptyLineAfterExampleGroup:
+#   Enabled: false
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
