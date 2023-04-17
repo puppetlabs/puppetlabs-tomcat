@@ -1,16 +1,3 @@
-# Offense count: 1
-# Configuration parameters: AllowComments, AllowEmptyLambdas.
-# Lint/EmptyBlock:
-#   Exclude:
-#     - 'spec/spec_helper.rb'
-
-# Offense count: 1
-# Configuration parameters: ForbiddenDelimiters.
-# ForbiddenDelimiters: (?i-mx:(^|\s)(EO[A-Z]{1}|END)(\s|$))
-Naming/HeredocDelimiterNaming:
-  Exclude:
-    - 'spec/defines/config/server/realm_spec.rb'
-
 # Offense count: 231
 # Configuration parameters: Prefixes, AllowedPatterns.
 # Prefixes: when, with, without

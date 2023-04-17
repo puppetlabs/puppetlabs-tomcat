@@ -38,14 +38,14 @@ end
 
 RSpec.configure do |c|
   c.default_facts = default_facts
-    c.before :each do
-      # set to strictest setting for testing
-      # by default Puppet runs at warning level
-      Puppet.settings[:strict] = :warning
-      Puppet.settings[:strict_variables] = true
-    end
-    c.filter_run_excluding(bolt: true) unless ENV['GEM_BOLT']
-    c.after(:suite) do
+  c.before :each do
+    # set to strictest setting for testing
+    # by default Puppet runs at warning level
+    Puppet.settings[:strict] = :warning
+    Puppet.settings[:strict_variables] = true
+  end
+  c.filter_run_excluding(bolt: true) unless ENV['GEM_BOLT']
+  c.after(:suite) do
     # Filter backtrace noise
     backtrace_exclusion_patterns = [
       %r{spec_helper},

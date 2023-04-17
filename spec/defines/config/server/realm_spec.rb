@@ -146,13 +146,13 @@ describe 'tomcat::config::server::realm', type: :define do
       'first'
     end
     let :pre_condition do
-      <<-END
+      <<-PP
       tomcat::config::server::realm { 'second':
         class_name    => 'org.apache.catalina.realm.JNDIRealm',
         catalina_base => '/opt/apache-tomcat/test',
         realm_ensure  => 'present',
       }
-      END
+      PP
     end
     let :params do
       {
