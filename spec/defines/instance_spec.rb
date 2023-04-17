@@ -27,20 +27,20 @@ describe 'tomcat::instance', type: :define do
     end
 
     it {
-      is_expected.to contain_user('tomcat').with(
+      expect(subject).to contain_user('tomcat').with(
         'ensure' => 'present',
         'gid' => 'tomcat',
       )
     }
 
     it {
-      is_expected.to contain_group('tomcat').with(
+      expect(subject).to contain_group('tomcat').with(
         'ensure' => 'present',
       )
     }
 
     it {
-      is_expected.to contain_file('/opt/apache-tomcat').with(
+      expect(subject).to contain_file('/opt/apache-tomcat').with(
         'ensure' => 'directory',
         'owner' => 'tomcat',
         'group' => 'tomcat',
@@ -48,7 +48,7 @@ describe 'tomcat::instance', type: :define do
     }
 
     it {
-      is_expected.to contain_archive('default-/opt/apache-tomcat/apache-tomcat-8.0.8.tar.gz').with(
+      expect(subject).to contain_archive('default-/opt/apache-tomcat/apache-tomcat-8.0.8.tar.gz').with(
         'extract_path' => '/opt/apache-tomcat', 'user' => 'tomcat',
         'group' => 'tomcat', 'extract_flags' => '--strip 1 -xf'
       )
@@ -67,14 +67,14 @@ describe 'tomcat::instance', type: :define do
     end
 
     it {
-      is_expected.to contain_archive('default-/opt/apache-tomcat/test-tomcat/apache-tomcat-8.0.8.tar.gz').with(
+      expect(subject).to contain_archive('default-/opt/apache-tomcat/test-tomcat/apache-tomcat-8.0.8.tar.gz').with(
         'extract_path' => '/opt/apache-tomcat/test-tomcat', 'user' => 'tomcat',
         'group' => 'tomcat', 'extract_flags' => '--strip 1 -xf'
       )
     }
 
     it {
-      is_expected.to contain_file('/opt/apache-tomcat/test-tomcat').with(
+      expect(subject).to contain_file('/opt/apache-tomcat/test-tomcat').with(
         'ensure' => 'directory',
         'owner' => 'tomcat',
         'group' => 'tomcat',
@@ -105,7 +105,7 @@ describe 'tomcat::instance', type: :define do
       end
 
       it {
-        is_expected.to contain_package('tomcat').with(
+        expect(subject).to contain_package('tomcat').with(
           'install_options' => ['/S'],
         )
       }

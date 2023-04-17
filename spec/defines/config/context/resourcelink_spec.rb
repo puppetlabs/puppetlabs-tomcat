@@ -39,7 +39,7 @@ describe 'tomcat::config::context::resourcelink', type: :define do
       'rm Context/ResourceLink[#attribute/name=\'linkToGlobalResource\']/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resourcelink-linkToGlobalResource').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-resourcelink-linkToGlobalResource').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => changes,
@@ -56,7 +56,7 @@ describe 'tomcat::config::context::resourcelink', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resourcelink-linkToGlobalResource').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-resourcelink-linkToGlobalResource').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => ['rm Context/ResourceLink[#attribute/name=\'linkToGlobalResource\']'],

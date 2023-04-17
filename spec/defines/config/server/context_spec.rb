@@ -41,7 +41,7 @@ describe 'tomcat::config::server::context', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
@@ -72,7 +72,7 @@ describe 'tomcat::config::server::context', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'exampleapp.war\']/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => changes,
@@ -91,7 +91,7 @@ describe 'tomcat::config::server::context', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-test---context-exampleapp.war').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-test---context-exampleapp.war').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'test\']/Engine/Host/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war'],
@@ -110,7 +110,7 @@ describe 'tomcat::config::server::context', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina--localhost-context-exampleapp.war').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina--localhost-context-exampleapp.war').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war'],
@@ -129,7 +129,7 @@ describe 'tomcat::config::server::context', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina---context-exampleapp.war').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina---context-exampleapp.war').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/Engine/Host/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war'],
@@ -150,7 +150,7 @@ describe 'tomcat::config::server::context', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']'],

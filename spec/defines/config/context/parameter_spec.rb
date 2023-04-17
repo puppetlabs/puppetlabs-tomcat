@@ -27,7 +27,7 @@ describe 'tomcat::config::context::parameter', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
@@ -49,7 +49,7 @@ describe 'tomcat::config::context::parameter', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
@@ -68,7 +68,7 @@ describe 'tomcat::config::context::parameter', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
@@ -91,7 +91,7 @@ describe 'tomcat::config::context::parameter', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
@@ -114,7 +114,7 @@ describe 'tomcat::config::context::parameter', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [

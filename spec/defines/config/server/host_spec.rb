@@ -28,7 +28,7 @@ describe 'tomcat::config::server::host', type: :define do
       'set Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/#attribute/appBase webapps',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-host-localhost').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina-host-localhost').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => changes,
@@ -70,7 +70,7 @@ describe 'tomcat::config::server::host', type: :define do
       'set Server/Service[#attribute/name=\'Catalina2\']/Engine/Host[#attribute/name=\'test.example.com\']/Alias[last()+1]/#text \'charlie\'',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-host-localhost').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina2-host-localhost').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
@@ -92,7 +92,7 @@ describe 'tomcat::config::server::host', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/Alias',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-host-localhost').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina-host-localhost').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => changes,
@@ -108,7 +108,7 @@ describe 'tomcat::config::server::host', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-host-localhost').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina-host-localhost').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']'],

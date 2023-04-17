@@ -32,7 +32,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-LockOutRealm for /opt/apache-tomcat/test').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-LockOutRealm for /opt/apache-tomcat/test').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -71,7 +71,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
@@ -110,7 +110,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -136,7 +136,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -172,7 +172,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-first').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-first').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes_one,
@@ -186,7 +186,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-second').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-second').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes_two,
@@ -211,7 +211,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -236,7 +236,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -264,7 +264,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-NewService-AnotherEngine---realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-NewService-AnotherEngine---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -291,7 +291,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost--realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost--realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -319,7 +319,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost-org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost-org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -356,7 +356,7 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina--org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina--org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,

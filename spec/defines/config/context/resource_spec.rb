@@ -47,7 +47,7 @@ describe 'tomcat::config::context::resource', type: :define do
       'rm Context/Resource[#attribute/name=\'jdbc\']/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => changes,
@@ -64,7 +64,7 @@ describe 'tomcat::config::context::resource', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => ['rm Context/Resource[#attribute/name=\'jdbc\']'],

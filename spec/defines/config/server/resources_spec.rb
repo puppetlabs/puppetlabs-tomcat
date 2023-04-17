@@ -42,7 +42,7 @@ describe 'tomcat::config::server::resources', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'parent\']/Resources/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-parent-resources').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-parent-resources').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
@@ -74,7 +74,7 @@ describe 'tomcat::config::server::resources', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'exampleapp.war\']/Resources/#attribute/foobar', # rubocop:disable Layout/LineLength
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war-resources').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war-resources').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => changes,
@@ -92,7 +92,7 @@ describe 'tomcat::config::server::resources', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-test---context-exampleapp.war-resources').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-test---context-exampleapp.war-resources').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => [
@@ -113,7 +113,7 @@ describe 'tomcat::config::server::resources', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina--localhost-context-exampleapp.war-resources').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina--localhost-context-exampleapp.war-resources').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => [
@@ -134,7 +134,7 @@ describe 'tomcat::config::server::resources', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina---context-exampleapp.war-resources').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina---context-exampleapp.war-resources').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => [
@@ -157,7 +157,7 @@ describe 'tomcat::config::server::resources', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war-resources').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war-resources').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => [

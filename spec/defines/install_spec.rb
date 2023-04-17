@@ -29,7 +29,7 @@ describe 'tomcat::install', type: :define do
     end
 
     it {
-      is_expected.to contain_archive('default-/opt/apache-tomcat/test-tomcat/apache-tomcat-8.0.8.tar.gz').with(
+      expect(subject).to contain_archive('default-/opt/apache-tomcat/test-tomcat/apache-tomcat-8.0.8.tar.gz').with(
         'extract_path' => '/opt/apache-tomcat/test-tomcat', 'user' => 'tomcat', 'group' => 'tomcat',
         'extract_flags' => '--strip 1 -xf', 'allow_insecure' => true
       )

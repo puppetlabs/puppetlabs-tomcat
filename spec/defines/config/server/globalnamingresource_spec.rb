@@ -34,11 +34,11 @@ describe 'tomcat::config::server::globalnamingresource', type: :define do
     ]
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource-definition')
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource-definition')
     }
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -60,11 +60,11 @@ describe 'tomcat::config::server::globalnamingresource', type: :define do
     ]
 
     it {
-      is_expected.not_to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource-definition')
+      expect(subject).not_to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource-definition')
     }
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,

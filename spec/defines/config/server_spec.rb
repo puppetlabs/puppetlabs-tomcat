@@ -34,7 +34,7 @@ describe 'tomcat::config::server', type: :define do
       'set Server/#attribute/shutdown SHUTDOWN',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -61,7 +61,7 @@ describe 'tomcat::config::server', type: :define do
       'set Server/#attribute/shutdown SHUTDOWN',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
@@ -83,7 +83,7 @@ describe 'tomcat::config::server', type: :define do
       'rm Server/#attribute/address',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,

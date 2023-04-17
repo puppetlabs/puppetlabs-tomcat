@@ -36,7 +36,7 @@ describe 'tomcat::config::context::resources', type: :define do
       'rm Context/Resources[#attribute]/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resources-attributes').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-resources-attributes').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => changes,
@@ -53,7 +53,7 @@ describe 'tomcat::config::context::resources', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resources-attributes').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-resources-attributes').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => ['rm Context/Resources[#attribute]'],

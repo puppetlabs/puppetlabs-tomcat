@@ -23,14 +23,14 @@ describe 'tomcat::war', type: :define do
     end
 
     it {
-      is_expected.to contain_archive('tomcat::war sample.war').with(
+      expect(subject).to contain_archive('tomcat::war sample.war').with(
         'source' => '/tmp/sample.war',
         'path' => '/opt/apache-tomcat/webapps/sample.war',
       )
     }
 
     it {
-      is_expected.to contain_file('tomcat::war sample.war').with(
+      expect(subject).to contain_file('tomcat::war sample.war').with(
         'ensure' => 'file', 'path' => '/opt/apache-tomcat/webapps/sample.war',
         'owner' => 'tomcat', 'group' => 'tomcat', 'mode' => '0640'
       ).that_subscribes_to('Archive[tomcat::war sample.war]')
@@ -45,14 +45,14 @@ describe 'tomcat::war', type: :define do
     end
 
     it {
-      is_expected.to contain_file('/opt/apache-tomcat/webapps/sample.war').with(
+      expect(subject).to contain_file('/opt/apache-tomcat/webapps/sample.war').with(
         'ensure' => 'absent',
         'force' => 'false',
       )
     }
 
     it {
-      is_expected.to contain_file('/opt/apache-tomcat/webapps/sample').with(
+      expect(subject).to contain_file('/opt/apache-tomcat/webapps/sample').with(
         'ensure' => 'absent',
         'force' => 'true',
       )
@@ -72,7 +72,7 @@ describe 'tomcat::war', type: :define do
     end
 
     it {
-      is_expected.to contain_archive('tomcat::war sample.war').with(
+      expect(subject).to contain_archive('tomcat::war sample.war').with(
         'source' => '/tmp/sample.war',
         'path' => '/opt/apache-tomcat/test/webapps2/sample2.war',
         'allow_insecure' => true,
@@ -80,7 +80,7 @@ describe 'tomcat::war', type: :define do
     }
 
     it {
-      is_expected.to contain_file('tomcat::war sample.war').with(
+      expect(subject).to contain_file('tomcat::war sample.war').with(
         'ensure' => 'file', 'path' => '/opt/apache-tomcat/test/webapps2/sample2.war',
         'owner' => 'tomcat', 'group' => 'tomcat', 'mode' => '0640'
       ).that_subscribes_to('Archive[tomcat::war sample.war]')
@@ -96,14 +96,14 @@ describe 'tomcat::war', type: :define do
     end
 
     it {
-      is_expected.to contain_archive('tomcat::war sample.war').with(
+      expect(subject).to contain_archive('tomcat::war sample.war').with(
         'source' => '/tmp/sample.war',
         'path' => '/opt/apache-tomcat/webapps3/sample.war',
       )
     }
 
     it {
-      is_expected.to contain_file('tomcat::war sample.war').with(
+      expect(subject).to contain_file('tomcat::war sample.war').with(
         'ensure' => 'file', 'path' => '/opt/apache-tomcat/webapps3/sample.war',
         'owner' => 'tomcat', 'group' => 'tomcat', 'mode' => '0640'
       ).that_subscribes_to('Archive[tomcat::war sample.war]')
@@ -119,14 +119,14 @@ describe 'tomcat::war', type: :define do
     end
 
     it {
-      is_expected.to contain_file('/opt/apache-tomcat/webapps/sample.war').with(
+      expect(subject).to contain_file('/opt/apache-tomcat/webapps/sample.war').with(
         'ensure' => 'absent',
         'force' => 'false',
       )
     }
 
     it {
-      is_expected.not_to contain_file('/opt/apache-tomcat/webapps/sample').with(
+      expect(subject).not_to contain_file('/opt/apache-tomcat/webapps/sample').with(
         'ensure' => 'absent',
         'force' => 'true',
       )
@@ -232,7 +232,7 @@ describe 'tomcat::war', type: :define do
       end
 
       it {
-        is_expected.to contain_archive('tomcat::war sample.war').with(
+        expect(subject).to contain_archive('tomcat::war sample.war').with(
           'source' => '/tmp/sample.war',
           'path' => '/opt/apache-tomcat/webapps2/sample2.war',
           'allow_insecure' => true,
@@ -240,7 +240,7 @@ describe 'tomcat::war', type: :define do
       }
 
       it {
-        is_expected.to contain_file('tomcat::war sample.war').with(
+        expect(subject).to contain_file('tomcat::war sample.war').with(
           'ensure' => 'file', 'path' => '/opt/apache-tomcat/webapps2/sample2.war',
           'owner' => 'tomcat2', 'group' => 'tomcat2', 'mode' => '0640'
         ).that_subscribes_to('Archive[tomcat::war sample.war]')

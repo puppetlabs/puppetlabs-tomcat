@@ -28,7 +28,7 @@ describe 'tomcat::config::server::engine', type: :define do
       'set Server/Service[#attribute/name=\'Catalina\']/Engine/#attribute/defaultHost localhost',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => changes,
@@ -60,7 +60,7 @@ describe 'tomcat::config::server::engine', type: :define do
       'set Server/Service[#attribute/name=\'Catalina2\']/Engine/#attribute/startStopThreads 200',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-engine').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina2-engine').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
@@ -88,7 +88,7 @@ describe 'tomcat::config::server::engine', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine/#attribute/startStopThreads',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => changes,

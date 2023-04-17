@@ -23,7 +23,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat-default').with(
+      expect(subject).to contain_service('tomcat-default').with(
         'hasstatus' => false,
         'hasrestart' => false,
         'ensure' => 'running',
@@ -42,7 +42,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat-default').with(
+      expect(subject).to contain_service('tomcat-default').with(
         'hasstatus' => false, 'hasrestart' => false, 'ensure' => 'running',
         'start' => '/bin/true', 'stop' => '/bin/true', 'status' => '/bin/true'
       )
@@ -59,7 +59,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat').with(
+      expect(subject).to contain_service('tomcat').with(
         'hasstatus' => true,
         'hasrestart' => true,
         'ensure' => 'stopped',
@@ -91,7 +91,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat-default').with(
+      expect(subject).to contain_service('tomcat-default').with(
         'hasstatus' => true, 'hasrestart' => true, 'ensure' => 'running',
         'start' => 'service tomcat-default start', 'stop' => 'service tomcat-default stop'
       )
@@ -109,7 +109,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat').with(
+      expect(subject).to contain_service('tomcat').with(
         'hasstatus' => true, 'hasrestart' => true, 'ensure' => 'running',
         'start' => '/bin/true', 'stop' => '/bin/true'
       )
@@ -118,7 +118,7 @@ describe 'tomcat::service', type: :define do
 
   context 'neither jsvc or init' do
     it {
-      is_expected.to contain_service('tomcat-default').with(
+      expect(subject).to contain_service('tomcat-default').with(
         'hasstatus' => false, 'hasrestart' => false, 'ensure' => 'running',
         'start' => "su -s /bin/bash -c 'CATALINA_HOME=/opt/apache-tomcat CATALINA_BASE=/opt/apache-tomcat /opt/apache-tomcat/bin/catalina.sh start' tomcat",
         'stop' => "su -s /bin/bash -c 'CATALINA_HOME=/opt/apache-tomcat CATALINA_BASE=/opt/apache-tomcat /opt/apache-tomcat/bin/catalina.sh stop' tomcat"
@@ -136,7 +136,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat-default').with(
+      expect(subject).to contain_service('tomcat-default').with(
         'hasstatus' => false, 'hasrestart' => false, 'ensure' => 'running',
         'start' => '/bin/true', 'stop' => '/bin/true', 'status' => '/bin/true'
       )
@@ -153,7 +153,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat').with(
+      expect(subject).to contain_service('tomcat').with(
         'enable' => true,
       )
     }
@@ -169,7 +169,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat').with(
+      expect(subject).to contain_service('tomcat').with(
         'hasstatus' => true, 'hasrestart' => true,
         'ensure' => 'running', 'enable' => true
       )
@@ -185,7 +185,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat-default').with(
+      expect(subject).to contain_service('tomcat-default').with(
         'hasstatus' => false, 'hasrestart' => false,
         'ensure' => 'running', 'enable' => nil
       )
@@ -215,7 +215,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_service('tomcat-default').with(
+      expect(subject).to contain_service('tomcat-default').with(
         'hasstatus' => true,
         'hasrestart' => true,
         'ensure' => 'running',
@@ -236,7 +236,7 @@ describe 'tomcat::service', type: :define do
     end
 
     it {
-      is_expected.to contain_file('/etc/init.d/tomcat-default').with_content(%r{^WAIT_TIMEOUT=15$})
+      expect(subject).to contain_file('/etc/init.d/tomcat-default').with_content(%r{^WAIT_TIMEOUT=15$})
     }
   end
 

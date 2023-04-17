@@ -38,7 +38,7 @@ describe 'tomcat::config::context::manager', type: :define do
       'rm Context/Manager[#attribute/className=\'memcached\']/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-manager-memcached').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-manager-memcached').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => changes,
@@ -55,7 +55,7 @@ describe 'tomcat::config::context::manager', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-manager-memcached').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-manager-memcached').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => ['rm Context/Manager[#attribute/className=\'memcached\']'],

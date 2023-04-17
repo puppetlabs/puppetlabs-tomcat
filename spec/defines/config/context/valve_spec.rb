@@ -24,7 +24,7 @@ describe 'tomcat::config::context::valve', type: :define do
         'set $valve/#attribute/className \'org.apache.catalina.valves.AccessLogValve\'',
       ]
       it {
-        is_expected.to contain_augeas('context-/opt/apache-tomcat-valve-org.apache.catalina.valves.AccessLogValve').with(
+        expect(subject).to contain_augeas('context-/opt/apache-tomcat-valve-org.apache.catalina.valves.AccessLogValve').with(
           'lens' => 'Xml.lns',
           'incl' => '/opt/apache-tomcat/conf/context.xml',
           'changes' => changes,
@@ -64,7 +64,7 @@ describe 'tomcat::config::context::valve', type: :define do
         'rm $valve/#attribute/foobar',
       ]
       it {
-        is_expected.to contain_augeas('context-/opt/apache-tomcat/test-valve-valve').with(
+        expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-valve-valve').with(
           'lens' => 'Xml.lns',
           'incl' => '/opt/apache-tomcat/test/conf/context.xml',
           'changes' => changes,
@@ -96,7 +96,7 @@ describe 'tomcat::config::context::valve', type: :define do
         'set $valve/#attribute/pattern \'common\'',
       ]
       it {
-        is_expected.to contain_augeas('context-/opt/apache-tomcat-valve-valve').with(
+        expect(subject).to contain_augeas('context-/opt/apache-tomcat-valve-valve').with(
           'lens' => 'Xml.lns',
           'incl' => '/opt/apache-tomcat/conf/context.xml',
           'changes' => changes,
@@ -116,7 +116,7 @@ describe 'tomcat::config::context::valve', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat-valve-org.apache.catalina.valves.AccessLogValve').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat-valve-org.apache.catalina.valves.AccessLogValve').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/conf/context.xml',
         'changes' => ['rm Context/Valve[#attribute/className=\'org.apache.catalina.valves.AccessLogValve\']'],

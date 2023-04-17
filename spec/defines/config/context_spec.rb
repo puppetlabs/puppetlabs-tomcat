@@ -24,7 +24,7 @@ describe 'tomcat::config::context', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => ['set Context/WatchedResource/#text "WEB-INF/web.xml"'],
@@ -51,7 +51,7 @@ describe 'tomcat::config::context', type: :define do
       'rm Context/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => changes,

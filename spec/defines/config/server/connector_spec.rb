@@ -44,7 +44,7 @@ describe 'tomcat::config::server::connector', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
@@ -79,7 +79,7 @@ describe 'tomcat::config::server::connector', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
@@ -97,7 +97,7 @@ describe 'tomcat::config::server::connector', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-8180').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-8180').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Connector[#attribute/port=\'8180\']'],
@@ -114,7 +114,7 @@ describe 'tomcat::config::server::connector', type: :define do
     end
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Connector[#attribute/protocol=\'HTTP/1.1\']'],
