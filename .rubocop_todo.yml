@@ -16,16 +16,10 @@ RSpec/ExampleLength:
 
 RSpec/NamedSubject:
   Enabled: false
-# Offense count: 128
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: single_line_only, single_statement_only, disallow, require_implicit
-# RSpec/ImplicitSubject:
-#   Enabled: false
 
 # Offense count: 4
-RSpec/MultipleExpectations:
-  Max: 2
+# RSpec/MultipleExpectations:
+#   Max: 2
 
 # Offense count: 30
 # Configuration parameters: AllowedPatterns.

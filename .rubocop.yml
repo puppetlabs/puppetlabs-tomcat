@@ -84,3 +84,5 @@ Style/Documentation:
   - spec/**/*
 Style/WordArray:
   EnforcedStyle: brackets
+RSpec/MultipleExpectations:
+  Max: 3
