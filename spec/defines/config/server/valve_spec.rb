@@ -9,7 +9,7 @@ describe 'tomcat::config::server::valve', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
 
@@ -24,9 +24,9 @@ describe 'tomcat::config::server::valve', type: :define do
         'set $valve/#attribute/className \'org.apache.catalina.valves.AccessLogValve\'',
       ]
       it {
-        is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.valves.AccessLogValve').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/conf/server.xml',
+        expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.valves.AccessLogValve').with(
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/conf/server.xml',
           'changes' => changes,
         )
       }
@@ -47,13 +47,13 @@ describe 'tomcat::config::server::valve', type: :define do
           additional_attributes: {
             'prefix' => 'localhost_access_log',
             'suffix' => '.txt',
-            'pattern' => 'common',
+            'pattern' => 'common'
           },
           uniqueness_attributes: [
             'prefix',
             'suffix',
           ],
-          attributes_to_remove: ['foo', 'bar'],
+          attributes_to_remove: ['foo', 'bar']
         }
       end
 
@@ -69,9 +69,9 @@ describe 'tomcat::config::server::valve', type: :define do
       ]
       # rubocop:enable Layout/LineLength
       it {
-        is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-valve').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/server.xml',
+        expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina2-localhost-valve-valve').with(
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/server.xml',
           'changes' => changes,
         )
       }
@@ -84,18 +84,19 @@ describe 'tomcat::config::server::valve', type: :define do
     end
     let :params do
       {
-        valve_ensure: 'absent',
+        valve_ensure: 'absent'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.valves.AccessLogValve').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina--valve-org.apache.catalina.valves.AccessLogValve').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => 'rm Server/Service[#attribute/name=\'Catalina\']/Engine/Valve[#attribute/className=\'org.apache.catalina.valves.AccessLogValve\']',
       )
     }
   end
+
   describe 'Failing tests' do
     let :title do
       'org.apache.catalina.valves.AccessLogValve'
@@ -105,8 +106,8 @@ describe 'tomcat::config::server::valve', type: :define do
       let :params do
         {
           additional_attributes: {
-            'className' => 'org.apache.catalina.valves.AccessLogValve',
-          },
+            'className' => 'org.apache.catalina.valves.AccessLogValve'
+          }
         }
       end
 
@@ -116,11 +117,12 @@ describe 'tomcat::config::server::valve', type: :define do
         }.to raise_error(Puppet::Error, %r{Please use parameter})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

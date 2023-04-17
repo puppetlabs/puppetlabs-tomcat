@@ -9,7 +9,7 @@ describe 'tomcat::config::server::service', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -23,20 +23,22 @@ describe 'tomcat::config::server::service', type: :define do
         'set Server/Service[#attribute/name=\'Catalina\']/#attribute/className foo',
       ]
       it {
-        is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/server.xml',
+        expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/server.xml',
           'changes' => changes,
         )
       }
+
       {
         catalina_base: '/opt/apache-tomcat/test',
         class_name: 'foo',
         class_name_ensure: 'true',
-        server_config: '/opt/apache-tomcat/server.xml',
+        server_config: '/opt/apache-tomcat/server.xml'
       }
     end
   end
+
   context 'remove classname' do
     let :params do
       changes = [
@@ -44,62 +46,69 @@ describe 'tomcat::config::server::service', type: :define do
         'rm Server/Service[#attribute/name=\'Catalina\']/#attribute/className',
       ]
       it {
-        is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/test/conf/server.xml',
           'changes' => changes,
         )
       }
+
       {
         catalina_base: '/opt/apache-tomcat/test',
-        class_name_ensure: 'false',
+        class_name_ensure: 'false'
       }
     end
   end
+
   context 'service ensure without class_name' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        service_ensure: 'present',
+        service_ensure: 'present'
       }
     end
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
         'lens' => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/#attribute/name Catalina'],
       )
     }
   end
+
   context 'remove service' do
     let :params do
       it {
-        is_expected.to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
-          'lens'    => 'Xml.lns',
-          'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+        expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina').with(
+          'lens' => 'Xml.lns',
+          'incl' => '/opt/apache-tomcat/test/conf/server.xml',
           'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']'],
         )
       }
+
       {
         catalina_base: '/opt/apache-tomcat/test',
-        service_ensure: 'false',
+        service_ensure: 'false'
       }
     end
   end
+
   context 'no changes' do
     let :params do
       it { is_expected.not_to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina') }
+
       {
-        catalina_base: '/opt/apache-tomcat/test',
+        catalina_base: '/opt/apache-tomcat/test'
       }
     end
   end
+
   describe 'failing tests' do
     context 'bad service_ensure' do
       let :params do
         {
-          service_ensure: 'foo',
+          service_ensure: 'foo'
         }
       end
 
@@ -109,10 +118,11 @@ describe 'tomcat::config::server::service', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad class_name_ensure' do
       let :params do
         {
-          class_name_ensure: 'foo',
+          class_name_ensure: 'foo'
         }
       end
 
@@ -122,11 +132,12 @@ describe 'tomcat::config::server::service', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

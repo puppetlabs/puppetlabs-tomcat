@@ -16,9 +16,9 @@ describe 'Acceptance case one', unless: stop_test do
   let :java_home do
     if os[:family].match?(%r{debian|ubuntu})
       if os[:release].start_with?('9')
-        '"/usr/lib/jvm/java-8-openjdk-${::architecture}"'
+        '"/usr/lib/jvm/java-8-openjdk-${facts[\'os\'][\'architecture\']}"'
       else
-        '"/usr/lib/jvm/java-11-openjdk-${::architecture}"'
+        '"/usr/lib/jvm/java-11-openjdk-${facts[\'os\'][\'architecture\']}"'
       end
     elsif os[:family].include?('redhat')
       '"/etc/alternatives/java_sdk"'
@@ -33,7 +33,6 @@ describe 'Acceptance case one', unless: stop_test do
     it 'applies the manifest without error' do
       pp = <<-MANIFEST
         class{'java':}
-        class{'gcc':}
 
         $java_home = #{java_home}
 
@@ -50,7 +49,7 @@ describe 'Acceptance case one', unless: stop_test do
             creates  => "/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix/Makefile",
             cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix",
             path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix",
-            require  => [ Class['gcc'], Class['java'] ],
+            require  => Class['java'],
             provider => shell,
           }
           -> exec { 'make jsvc':
@@ -120,13 +119,15 @@ describe 'Acceptance case one', unless: stop_test do
           value => $java_home,
         }
       MANIFEST
-      idempotent_apply(pp)
+      expect { idempotent_apply(pp) }.not_to raise_error
     end
+
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
+
     it 'is serving a page on port 8080', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8080/war_one/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
@@ -148,8 +149,9 @@ describe 'Acceptance case one', unless: stop_test do
           user           => 'tomcat8',
         }
       MANIFEST
-      apply_manifest(pp)
+      expect { apply_manifest(pp) }.not_to raise_error
     end
+
     it 'is not serving a page on port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7
@@ -171,8 +173,9 @@ describe 'Acceptance case one', unless: stop_test do
           user           => 'tomcat8',
         }
       MANIFEST
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
+
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
@@ -189,8 +192,9 @@ describe 'Acceptance case one', unless: stop_test do
           war_ensure    => absent,
         }
       MANIFEST
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
+
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
       run_shell('curl localhost:80/war_one/hello.jsp') do |r|
         expect(r.stdout).to match(%r{The origin server did not find a current representation for the target resource})
@@ -218,8 +222,9 @@ describe 'Acceptance case one', unless: stop_test do
           user           => 'tomcat8',
         }
       MANIFEST
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
+
     it 'is not able to serve pages over port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7

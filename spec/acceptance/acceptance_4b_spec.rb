@@ -77,18 +77,20 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
+
     it 'contains two realms in config file', retry: 5, retry_wait: 10 do
       run_shell('cat /opt/apache-tomcat40/conf/server.xml') do |r|
         expect(r.stdout).to match(
-          %r{<Realm puppetName="org.apache.catalina.realm.MyRealm1" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm1" otherAttribute="more stuff"><\/Realm>},
+          %r{<Realm puppetName="org.apache.catalina.realm.MyRealm1" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm1" otherAttribute="more stuff"></Realm>},
         )
         expect(r.stdout).to match(
-          %r{<Realm puppetName="org.apache.catalina.realm.MyRealm2" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm2" otherAttribute="more stuff"><\/Realm>},
+          %r{<Realm puppetName="org.apache.catalina.realm.MyRealm2" className="org.apache.catalina.realm.MyRealm" resourceName="MyRealm2" otherAttribute="more stuff"></Realm>},
         )
       end
     end
+
     pp_two = <<-MANIFEST
       tomcat::config::server::realm { 'org.apache.catalina.realm.CombinedRealm':
         catalina_base => '/opt/apache-tomcat40',
@@ -117,7 +119,7 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
       }
     MANIFEST
     it 'is idempotent' do
-      idempotent_apply(pp_two)
+      expect { idempotent_apply(pp_two) }.not_to raise_error
     end
   end
 end

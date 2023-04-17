@@ -26,9 +26,10 @@ describe 'README examples', unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      idempotent_apply(pp)
+      expect { idempotent_apply(pp) }.not_to raise_error
       run_shell('sleep 15')
     end
+
     it 'has the server running on port 8080' do
       run_shell('curl localhost:8080') do |r|
         expect(r.stdout).to match(%r{Apache Tomcat})
@@ -66,9 +67,10 @@ describe 'README examples', unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
       run_shell('sleep 15')
     end
+
     it 'is not serving a page on port 80' do
       run_shell('curl localhost:80/war_one/hello.jsp', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7
@@ -82,6 +84,7 @@ describe 'README examples', unless: stop_test do
       run_shell('rm -rf /opt/tomcat*', expect_failures: true)
       run_shell('rm -rf /opt/apache-tomcat*', expect_failures: true)
     end
+
     { '8' => TOMCAT8_RECENT_SOURCE, '9' => TOMCAT9_RECENT_SOURCE }.each do |key, value|
       context "when tomcat #{key} is installed remove_default_webapps => ['docs', 'examples']" do
         install_tomcat = <<-MANIFEST

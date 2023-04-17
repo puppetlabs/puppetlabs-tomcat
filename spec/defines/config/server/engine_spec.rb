@@ -9,7 +9,7 @@ describe 'tomcat::config::server::engine', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -19,7 +19,7 @@ describe 'tomcat::config::server::engine', type: :define do
   context 'default' do
     let :params do
       {
-        default_host: 'localhost',
+        default_host: 'localhost'
       }
     end
 
@@ -28,13 +28,14 @@ describe 'tomcat::config::server::engine', type: :define do
       'set Server/Service[#attribute/name=\'Catalina\']/Engine/#attribute/defaultHost localhost',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'set all the things' do
     let :params do
       {
@@ -46,7 +47,7 @@ describe 'tomcat::config::server::engine', type: :define do
         jvm_route: 'bar',
         parent_service: 'Catalina2',
         start_stop_threads: '200',
-        server_config: '/opt/apache-tomcat/server.xml',
+        server_config: '/opt/apache-tomcat/server.xml'
       }
     end
 
@@ -59,13 +60,14 @@ describe 'tomcat::config::server::engine', type: :define do
       'set Server/Service[#attribute/name=\'Catalina2\']/Engine/#attribute/startStopThreads 200',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina2-engine').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina2-engine').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'remove all the things' do
     let :params do
       {
@@ -73,7 +75,7 @@ describe 'tomcat::config::server::engine', type: :define do
         background_processor_delay_ensure: 'absent',
         class_name_ensure: 'absent',
         jvm_route_ensure: 'absent',
-        start_stop_threads_ensure: 'absent',
+        start_stop_threads_ensure: 'absent'
       }
     end
 
@@ -86,19 +88,20 @@ describe 'tomcat::config::server::engine', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine/#attribute/startStopThreads',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat-Catalina-engine').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   describe 'failing tests' do
     context 'bad background_processor_delay ensure' do
       let :params do
         {
           default_host: 'localhost',
-          background_processor_delay_ensure: 'foo',
+          background_processor_delay_ensure: 'foo'
         }
       end
 
@@ -108,11 +111,12 @@ describe 'tomcat::config::server::engine', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad class_name_ensure' do
       let :params do
         {
           default_host: 'localhost',
-          class_name_ensure: 'foo',
+          class_name_ensure: 'foo'
         }
       end
 
@@ -122,11 +126,12 @@ describe 'tomcat::config::server::engine', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad jvm_route_ensure' do
       let :params do
         {
           default_host: 'localhost',
-          jvm_route_ensure: 'foo',
+          jvm_route_ensure: 'foo'
         }
       end
 
@@ -136,11 +141,12 @@ describe 'tomcat::config::server::engine', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad start_stop_threads ensure' do
       let :params do
         {
           default_host: 'localhost',
-          start_stop_threads_ensure: 'foo',
+          start_stop_threads_ensure: 'foo'
         }
       end
 
@@ -150,16 +156,17 @@ describe 'tomcat::config::server::engine', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
       let :params do
         {
-          default_host: 'localhost',
+          default_host: 'localhost'
         }
       end
 

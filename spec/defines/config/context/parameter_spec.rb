@@ -9,7 +9,7 @@ describe 'tomcat::config::context::parameter', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
 
@@ -22,14 +22,14 @@ describe 'tomcat::config::context::parameter', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         parameter_name: 'maxExemptions',
-        value: '10',
+        value: '10'
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/name maxExemptions',
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/value 10',
@@ -44,14 +44,14 @@ describe 'tomcat::config::context::parameter', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
           'rm Context/Parameter[#attribute/name=\'maxExemptions\']',
         ],
@@ -63,14 +63,14 @@ describe 'tomcat::config::context::parameter', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
-        value: '10',
+        value: '10'
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/name maxExemptions',
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/value 10',
@@ -86,14 +86,14 @@ describe 'tomcat::config::context::parameter', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         value: '10',
-        override: true,
+        override: true
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/name maxExemptions',
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/value 10',
@@ -109,14 +109,14 @@ describe 'tomcat::config::context::parameter', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         value: '10',
-        description: 'foo bar',
+        description: 'foo bar'
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-parameter-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => [
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/name maxExemptions',
           'set Context/Parameter[#attribute/name=\'maxExemptions\']/#attribute/value 10',

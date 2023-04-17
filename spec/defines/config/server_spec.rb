@@ -9,7 +9,7 @@ describe 'tomcat::config::server', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -23,7 +23,7 @@ describe 'tomcat::config::server', type: :define do
         class_name: 'foo',
         address: 'localhost',
         port: '8005',
-        shutdown: 'SHUTDOWN',
+        shutdown: 'SHUTDOWN'
       }
     end
 
@@ -34,13 +34,14 @@ describe 'tomcat::config::server', type: :define do
       'set Server/#attribute/shutdown SHUTDOWN',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'custom server_config location' do
     let(:params) do
       {
@@ -49,7 +50,7 @@ describe 'tomcat::config::server', type: :define do
         address: 'localhost',
         port: '8005',
         shutdown: 'SHUTDOWN',
-        server_config: '/opt/apache-tomcat/server.xml',
+        server_config: '/opt/apache-tomcat/server.xml'
       }
     end
 
@@ -60,19 +61,20 @@ describe 'tomcat::config::server', type: :define do
       'set Server/#attribute/shutdown SHUTDOWN',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'remove optional attributes' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
         class_name_ensure: 'absent',
-        address_ensure: 'absent',
+        address_ensure: 'absent'
       }
     end
 
@@ -81,27 +83,29 @@ describe 'tomcat::config::server', type: :define do
       'rm Server/#attribute/address',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'no changes' do
     let :params do
       {
-        catalina_base: '/opt/apache-tomcat/test',
+        catalina_base: '/opt/apache-tomcat/test'
       }
     end
 
     it { is_expected.not_to contain_augeas('server-/opt/apache-tomcat/test') }
   end
+
   describe 'failing tests' do
     context 'invalid class_name_ensure' do
       let :params do
         {
-          class_name_ensure: 'foo',
+          class_name_ensure: 'foo'
         }
       end
 
@@ -111,10 +115,11 @@ describe 'tomcat::config::server', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'invalid address_ensure' do
       let :params do
         {
-          address_ensure: 'foo',
+          address_ensure: 'foo'
         }
       end
 
@@ -124,11 +129,12 @@ describe 'tomcat::config::server', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

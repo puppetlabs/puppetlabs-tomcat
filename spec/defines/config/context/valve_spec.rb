@@ -9,7 +9,7 @@ describe 'tomcat::config::context::valve', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
 
@@ -24,7 +24,7 @@ describe 'tomcat::config::context::valve', type: :define do
         'set $valve/#attribute/className \'org.apache.catalina.valves.AccessLogValve\'',
       ]
       it {
-        is_expected.to contain_augeas('context-/opt/apache-tomcat-valve-org.apache.catalina.valves.AccessLogValve').with(
+        expect(subject).to contain_augeas('context-/opt/apache-tomcat-valve-org.apache.catalina.valves.AccessLogValve').with(
           'lens' => 'Xml.lns',
           'incl' => '/opt/apache-tomcat/conf/context.xml',
           'changes' => changes,
@@ -43,7 +43,7 @@ describe 'tomcat::config::context::valve', type: :define do
           additional_attributes: {
             'prefix' => 'localhost_access_log',
             'suffix' => '.txt',
-            'pattern' => 'common',
+            'pattern' => 'common'
           },
           uniqueness_attributes: [
             'prefix',
@@ -51,7 +51,7 @@ describe 'tomcat::config::context::valve', type: :define do
           ],
           attributes_to_remove: [
             'foobar',
-          ],
+          ]
         }
       end
 
@@ -64,13 +64,14 @@ describe 'tomcat::config::context::valve', type: :define do
         'rm $valve/#attribute/foobar',
       ]
       it {
-        is_expected.to contain_augeas('context-/opt/apache-tomcat/test-valve-valve').with(
+        expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-valve-valve').with(
           'lens' => 'Xml.lns',
           'incl' => '/opt/apache-tomcat/test/conf/context.xml',
           'changes' => changes,
         )
       }
     end
+
     context 'with legacy params' do
       let :title do
         'valve'
@@ -81,8 +82,8 @@ describe 'tomcat::config::context::valve', type: :define do
           additional_attributes: {
             'prefix' => 'localhost_access_log',
             'suffix' => '.txt',
-            'pattern' => 'common',
-          },
+            'pattern' => 'common'
+          }
         }
       end
 
@@ -95,7 +96,7 @@ describe 'tomcat::config::context::valve', type: :define do
         'set $valve/#attribute/pattern \'common\'',
       ]
       it {
-        is_expected.to contain_augeas('context-/opt/apache-tomcat-valve-valve').with(
+        expect(subject).to contain_augeas('context-/opt/apache-tomcat-valve-valve').with(
           'lens' => 'Xml.lns',
           'incl' => '/opt/apache-tomcat/conf/context.xml',
           'changes' => changes,
@@ -103,24 +104,26 @@ describe 'tomcat::config::context::valve', type: :define do
       }
     end
   end
+
   context 'Remove Resource' do
     let :title do
       'org.apache.catalina.valves.AccessLogValve'
     end
     let :params do
       {
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat-valve-org.apache.catalina.valves.AccessLogValve').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat-valve-org.apache.catalina.valves.AccessLogValve').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/conf/context.xml',
         'changes' => ['rm Context/Valve[#attribute/className=\'org.apache.catalina.valves.AccessLogValve\']'],
       )
     }
   end
+
   describe 'Failing tests' do
     let :title do
       'org.apache.catalina.valves.AccessLogValve'
@@ -130,8 +133,8 @@ describe 'tomcat::config::context::valve', type: :define do
       let :params do
         {
           additional_attributes: {
-            'className' => 'org.apache.catalina.valves.AccessLogValve',
-          },
+            'className' => 'org.apache.catalina.valves.AccessLogValve'
+          }
         }
       end
 
@@ -141,11 +144,12 @@ describe 'tomcat::config::context::valve', type: :define do
         }.to raise_error(Puppet::Error, %r{Please use parameter})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

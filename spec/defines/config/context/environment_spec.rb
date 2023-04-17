@@ -9,7 +9,7 @@ describe 'tomcat::config::context::environment', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -25,9 +25,9 @@ describe 'tomcat::config::context::environment', type: :define do
         value: '10',
         additional_attributes: {
           'foo' => 'bar',
-          'bar' => 'foo',
+          'bar' => 'foo'
         },
-        attributes_to_remove: ['foobar', 'barfoo'],
+        attributes_to_remove: ['foobar', 'barfoo']
       }
     end
 
@@ -43,35 +43,37 @@ describe 'tomcat::config::context::environment', type: :define do
       'rm Context/Environment[#attribute/name=\'maxExemptions\']/#attribute/barfoo',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Remove Environment' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => ['rm Context/Environment[#attribute/name=\'maxExemptions\']'],
       )
     }
   end
+
   context 'No environment_name' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         type: 'java.lang.Integer',
-        value: '10',
+        value: '10'
       }
     end
 
@@ -83,20 +85,21 @@ describe 'tomcat::config::context::environment', type: :define do
       'rm Context/Environment[#attribute/name=\'maxExemptions\']/#attribute/description',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Set override' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         type: 'java.lang.Integer',
         value: '10',
-        override: true,
+        override: true
       }
     end
 
@@ -108,20 +111,21 @@ describe 'tomcat::config::context::environment', type: :define do
       'rm Context/Environment[#attribute/name=\'maxExemptions\']/#attribute/description',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Set description' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         type: 'java.lang.Integer',
         value: '10',
-        description: 'foo bar',
+        description: 'foo bar'
       }
     end
 
@@ -133,19 +137,20 @@ describe 'tomcat::config::context::environment', type: :define do
       'set Context/Environment[#attribute/name=\'maxExemptions\']/#attribute/description \'foo bar\'',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/foo/conf/context.xml',
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/foo-environment-maxExemptions').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/foo/conf/context.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Failing Tests' do
     context 'Bad ensure' do
       let :params do
         {
           ensure: 'foobar',
-          catalina_base: '/opt/apache-tomcat/foo',
+          catalina_base: '/opt/apache-tomcat/foo'
         }
       end
 
@@ -155,10 +160,11 @@ describe 'tomcat::config::context::environment', type: :define do
         }.to raise_error(Puppet::Error, %r{match})
       end
     end
+
     context 'Empty catalina_base' do
       let :params do
         {
-          catalina_base: '',
+          catalina_base: ''
         }
       end
 
@@ -168,11 +174,12 @@ describe 'tomcat::config::context::environment', type: :define do
         }.to raise_error(Puppet::Error, %r{path})
       end
     end
+
     context 'No type' do
       let :params do
         {
           catalina_base: '/opt/apache-tomcat/foo',
-          value: '10',
+          value: '10'
         }
       end
 
@@ -182,11 +189,12 @@ describe 'tomcat::config::context::environment', type: :define do
         }.to raise_error(Puppet::Error, %r{\$type must be specified})
       end
     end
+
     context 'No value' do
       let :params do
         {
           catalina_base: '/opt/apache-tomcat/foo',
-          type: 'java.lang.Integer',
+          type: 'java.lang.Integer'
         }
       end
 
@@ -196,13 +204,14 @@ describe 'tomcat::config::context::environment', type: :define do
         }.to raise_error(Puppet::Error, %r{\$value must be specified})
       end
     end
+
     context 'Bad override' do
       let :params do
         {
           catalina_base: '/opt/apache-tomcat/foo',
           type: 'java.lang.Integer',
           value: '10',
-          override: 'foobar',
+          override: 'foobar'
         }
       end
 

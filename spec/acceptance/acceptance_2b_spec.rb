@@ -150,24 +150,28 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      idempotent_apply(pp)
+      expect { idempotent_apply(pp) }.not_to raise_error
     end
+
     # test the war
     it 'tomcat8-first should have war deployed by default', retry: 10, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8280/tomcat8/sample/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
+
     it 'tomcat8-second should have war deployed by default', retry: 10, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8281/tomcat8/sample/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
+
     it 'tomcat8078-first should have war deployed by default', retry: 10, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8380/tomcat8078-sample/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
+
     it 'tomcat8078-second should have war deployed by default', retry: 10, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8381/tomcat8078-sample/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
@@ -199,23 +203,27 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
+
     it 'tomcat8-first should not be serving a page on port 8280', retry: 10, retry_wait: 10 do
       run_shell('curl localhost:8280', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7
       end
     end
+
     it 'tomcat8-second should not be serving a page on port 8281', retry: 10, retry_wait: 10 do
       run_shell('curl localhost:8281', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7
       end
     end
+
     it 'tomcat8078-first should not be serving a page on port 8380', retry: 10, retry_wait: 10 do
       run_shell('curl localhost:8380', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7
       end
     end
+
     it 'tomcat8078-second should not be serving a page on port 8381', retry: 10, retry_wait: 10 do
       run_shell('curl localhost:8381', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7
@@ -249,13 +257,15 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
+
     it 'tomcat8-first should not display message when war is not deployed', retry: 10, retry_wait: 10 do
       run_shell('curl localhost:8280/tomcat8-sample/hello.jsp') do |r|
         expect(r.stdout).not_to match(%r{Sample Application JSP Page})
       end
     end
+
     it 'tomcat8078-first should not display message when war is not deployed', retry: 10, retry_wait: 10 do
       run_shell('curl localhost:8380/tomcat8078-sample/hello.jsp') do |r|
         expect(r.stdout).not_to match(%r{Sample Application JSP Page})
@@ -291,13 +301,15 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
+
     it 'tomcat8 should be serving a war on port 8280', retry: 10, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8280/tomcat8-sample/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
+
     it 'tomcat8078 should be serving a war on port 8380', retry: 10, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8380/tomcat8078-sample/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})

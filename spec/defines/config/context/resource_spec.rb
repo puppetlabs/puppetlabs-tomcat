@@ -9,7 +9,7 @@ describe 'tomcat::config::context::resource', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -22,16 +22,16 @@ describe 'tomcat::config::context::resource', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         resource_type: 'net.sourceforge.jtds.jdbcx.JtdsDataSource',
         additional_attributes: {
-          'auth'            => 'Container',
-          'closeMethod'     => 'closeMethod',
+          'auth' => 'Container',
+          'closeMethod' => 'closeMethod',
           'validationQuery' => 'getdate()',
-          'description'     => 'description',
-          'scope'           => 'Shareable',
-          'singleton'       => 'true',
+          'description' => 'description',
+          'scope' => 'Shareable',
+          'singleton' => 'true'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -47,23 +47,24 @@ describe 'tomcat::config::context::resource', type: :define do
       'rm Context/Resource[#attribute/name=\'jdbc\']/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Remove Resource' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test-resource-jdbc').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => ['rm Context/Resource[#attribute/name=\'jdbc\']'],

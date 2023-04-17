@@ -9,7 +9,7 @@ describe 'tomcat::config::context', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -19,12 +19,12 @@ describe 'tomcat::config::context', type: :define do
   context 'Set Context Wathced resource' do
     let :params do
       {
-        catalina_base: '/opt/apache-tomcat/test',
+        catalina_base: '/opt/apache-tomcat/test'
       }
     end
 
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => ['set Context/WatchedResource/#text "WEB-INF/web.xml"'],
@@ -37,11 +37,11 @@ describe 'tomcat::config::context', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         additional_attributes: {
-          'crossContext' => 'true',
+          'crossContext' => 'true'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -51,19 +51,20 @@ describe 'tomcat::config::context', type: :define do
       'rm Context/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('context-/opt/apache-tomcat/test').with(
+      expect(subject).to contain_augeas('context-/opt/apache-tomcat/test').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/context.xml',
         'changes' => changes,
       )
     }
   end
+
   describe 'failing tests' do
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

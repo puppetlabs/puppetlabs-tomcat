@@ -9,7 +9,7 @@ describe 'tomcat::config::server::globalnamingresource', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -23,8 +23,8 @@ describe 'tomcat::config::server::globalnamingresource', type: :define do
         resource_name: 'TestGlobalNamingResource',
         additional_attributes: {
           'type' => 'org.apache.catalina.TestGlobalNamingResource',
-          'description' => 'Test global naming resource',
-        },
+          'description' => 'Test global naming resource'
+        }
       }
     end
 
@@ -34,13 +34,13 @@ describe 'tomcat::config::server::globalnamingresource', type: :define do
     ]
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource-definition')
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource-definition')
     }
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
@@ -51,7 +51,7 @@ describe 'tomcat::config::server::globalnamingresource', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         resource_name: 'TestGlobalNamingResource',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
@@ -60,13 +60,13 @@ describe 'tomcat::config::server::globalnamingresource', type: :define do
     ]
 
     it {
-      is_expected.not_to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource-definition')
+      expect(subject).not_to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource-definition')
     }
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-globalresource-TestGlobalNamingResource').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }

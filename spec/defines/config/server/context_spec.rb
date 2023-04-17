@@ -9,7 +9,7 @@ describe 'tomcat::config::server::context', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -27,11 +27,11 @@ describe 'tomcat::config::server::context', type: :define do
         parent_host: 'localhost',
         server_config: '/opt/apache-tomcat/server.xml',
         additional_attributes: {
-          'path' => '/myapp',
+          'path' => '/myapp'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -41,13 +41,14 @@ describe 'tomcat::config::server::context', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'No doc_base' do
     let :params do
       {
@@ -57,11 +58,11 @@ describe 'tomcat::config::server::context', type: :define do
         parent_engine: 'Catalina',
         parent_host: 'localhost',
         additional_attributes: {
-          'path' => '/exampleapp',
+          'path' => '/exampleapp'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -71,67 +72,71 @@ describe 'tomcat::config::server::context', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'exampleapp.war\']/#attribute/foobar',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/exampleapp/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'context with $parent_service' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/exampleapp',
         context_ensure: 'present',
         doc_base: 'myapp.war',
-        parent_service: 'test',
+        parent_service: 'test'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-test---context-exampleapp.war').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/exampleapp/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-test---context-exampleapp.war').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'test\']/Engine/Host/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war'],
       )
     }
   end
+
   context 'context with $parent_host' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/exampleapp',
         context_ensure: 'present',
         doc_base: 'myapp.war',
-        parent_host: 'localhost',
+        parent_host: 'localhost'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina--localhost-context-exampleapp.war').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/exampleapp/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina--localhost-context-exampleapp.war').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/Engine/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war'],
       )
     }
   end
+
   context '$parent_engine, no $parent_host' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/exampleapp',
         context_ensure: 'present',
         doc_base: 'myapp.war',
-        parent_engine: 'Catalina',
+        parent_engine: 'Catalina'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina---context-exampleapp.war').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/exampleapp/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina---context-exampleapp.war').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => ['set Server/Service[#attribute/name=\'Catalina\']/Engine/Host/Context[#attribute/docBase=\'myapp.war\']/#attribute/docBase myapp.war'],
       )
     }
   end
+
   context 'Remove Context' do
     let :params do
       {
@@ -140,23 +145,24 @@ describe 'tomcat::config::server::context', type: :define do
         doc_base: 'myapp.war',
         parent_service: 'Catalina',
         parent_engine: 'Catalina',
-        parent_host: 'localhost',
+        parent_host: 'localhost'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/exampleapp/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/exampleapp-Catalina-Catalina-localhost-context-exampleapp.war').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/exampleapp/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Engine[#attribute/name=\'Catalina\']/Host[#attribute/name=\'localhost\']/Context[#attribute/docBase=\'myapp.war\']'],
       )
     }
   end
+
   describe 'Failing Tests' do
     context 'bad context_ensure' do
       let :params do
         {
-          context_ensure: 'foo',
+          context_ensure: 'foo'
         }
       end
 
@@ -166,37 +172,40 @@ describe 'tomcat::config::server::context', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'Bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo',
+          additional_attributes: 'foo'
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Hash})
+        }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
+
     context 'Bad attributes_to_remove' do
       let :params do
         {
-          attributes_to_remove: 'foo',
+          attributes_to_remove: 'foo'
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Array})
+        }.to raise_error(Puppet::Error, %r{Array})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

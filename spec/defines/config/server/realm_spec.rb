@@ -9,7 +9,7 @@ describe 'tomcat::config::server::realm', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -21,7 +21,7 @@ describe 'tomcat::config::server::realm', type: :define do
     let :params do
       {
         class_name: 'org.apache.catalina.realm.LockOutRealm',
-        catalina_base: '/opt/apache-tomcat/test',
+        catalina_base: '/opt/apache-tomcat/test'
       }
     end
 
@@ -32,9 +32,9 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-LockOutRealm for /opt/apache-tomcat/test').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-LockOutRealm for /opt/apache-tomcat/test').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
@@ -49,11 +49,11 @@ describe 'tomcat::config::server::realm', type: :define do
         server_config: '/opt/apache-tomcat/server.xml',
         additional_attributes: {
           'connectionURL' => 'ldap://localhost',
-          'roleName'      => 'cn',
-          'roleSearch'    => 'member={0}',
-          'spaces'        => 'foo bar',
+          'roleName' => 'cn',
+          'roleSearch' => 'member={0}',
+          'spaces' => 'foo bar'
         },
-        attributes_to_remove: ['foo', 'bar', 'baz'],
+        attributes_to_remove: ['foo', 'bar', 'baz']
       }
     end
 
@@ -71,13 +71,14 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Purge Realms' do
     let :params do
       {
@@ -87,9 +88,9 @@ describe 'tomcat::config::server::realm', type: :define do
         realm_ensure: 'present',
         additional_attributes: {
           'connectionURL' => 'ldap://localhost',
-          'roleName'      => 'cn',
+          'roleName' => 'cn'
         },
-        attributes_to_remove: ['foo', 'bar'],
+        attributes_to_remove: ['foo', 'bar']
       }
     end
 
@@ -109,13 +110,14 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'No class_name' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -123,7 +125,7 @@ describe 'tomcat::config::server::realm', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -134,31 +136,32 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Duplicate class_name' do
     let :title do
       'first'
     end
     let :pre_condition do
-      <<-END
+      <<-PP
       tomcat::config::server::realm { 'second':
         class_name    => 'org.apache.catalina.realm.JNDIRealm',
         catalina_base => '/opt/apache-tomcat/test',
         realm_ensure  => 'present',
       }
-      END
+      PP
     end
     let :params do
       {
         class_name: 'org.apache.catalina.realm.JNDIRealm',
         catalina_base: '/opt/apache-tomcat/test',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -169,12 +172,13 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-first').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-first').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes_one,
       )
     }
+
     # rubocop:disable Layout/LineLength
     changes_two = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='second' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'second'",
@@ -182,13 +186,14 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-second').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-second').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes_two,
       )
     }
   end
+
   context '$realm_ensure absent' do
     let :title do
       'org.apache.catalina.realm.LockOutRealm'
@@ -196,7 +201,7 @@ describe 'tomcat::config::server::realm', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        realm_ensure: 'absent',
+        realm_ensure: 'absent'
       }
     end
 
@@ -206,13 +211,14 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context '$realm_ensure false' do
     let :title do
       'org.apache.catalina.realm.LockOutRealm'
@@ -220,7 +226,7 @@ describe 'tomcat::config::server::realm', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        realm_ensure: 'absent',
+        realm_ensure: 'absent'
       }
     end
 
@@ -230,13 +236,14 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina---realm-org.apache.catalina.realm.LockOutRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Add Realm with $parent_service and $parent_engine' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -246,7 +253,7 @@ describe 'tomcat::config::server::realm', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         parent_service: 'NewService',
         parent_engine: 'AnotherEngine',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -257,13 +264,14 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-NewService-AnotherEngine---realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-NewService-AnotherEngine---realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Add Realm with $parent_host' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -272,7 +280,7 @@ describe 'tomcat::config::server::realm', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         parent_host: 'localhost',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -283,13 +291,14 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost--realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost--realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Add Realm with $parent_host and $parent_realm' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -299,7 +308,7 @@ describe 'tomcat::config::server::realm', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         parent_host: 'localhost',
         parent_realm: 'org.apache.catalina.realm.LockOutRealm',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -310,13 +319,14 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost-org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina-localhost-org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Add Realm with $parent_realm only' do
     let :title do
       'org.apache.catalina.realm.JNDIRealm'
@@ -328,10 +338,10 @@ describe 'tomcat::config::server::realm', type: :define do
         realm_ensure: 'present',
         additional_attributes: {
           'connectionURL' => 'ldap://localhost',
-          'roleName'      => 'cn',
-          'roleSearch'    => 'member={0}',
-          'spaces'        => 'foo bar',
-        },
+          'roleName' => 'cn',
+          'roleSearch' => 'member={0}',
+          'spaces' => 'foo bar'
+        }
       }
     end
 
@@ -346,99 +356,106 @@ describe 'tomcat::config::server::realm', type: :define do
     ]
     # rubocop:enable Layout/LineLength
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina--org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-Catalina-Catalina--org.apache.catalina.realm.LockOutRealm-realm-org.apache.catalina.realm.JNDIRealm').with(
         'lens' => 'Xml.lns',
         'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Failing Tests' do
     context 'Bad realm_ensure' do
       let :params do
         {
-          realm_ensure: 'foo',
+          realm_ensure: 'foo'
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{(String|foo)})
+        }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'Bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo',
+          additional_attributes: 'foo'
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Hash})
+        }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
+
     context 'Bad attributes_to_remove' do
       let :params do
         {
-          attributes_to_remove: 'foo',
+          attributes_to_remove: 'foo'
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Array})
+        }.to raise_error(Puppet::Error, %r{Array})
       end
     end
+
     context 'Bad purge_realms' do
       let :params do
         {
-          purge_realms: 'true',
+          purge_realms: 'true'
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Boolean})
+        }.to raise_error(Puppet::Error, %r{Boolean})
       end
     end
+
     context 'Purge realms with $realm_ensure => false' do
       let :params do
         {
           realm_ensure: 'absent',
-          purge_realms: true,
+          purge_realms: true
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
+        }.to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
       end
     end
+
     context 'Purge realms with $realm_ensure => absent' do
       let :params do
         {
           realm_ensure: 'absent',
-          purge_realms: true,
+          purge_realms: true
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
+        }.to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

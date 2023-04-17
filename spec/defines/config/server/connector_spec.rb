@@ -9,7 +9,7 @@ describe 'tomcat::config::server::connector', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -25,11 +25,11 @@ describe 'tomcat::config::server::connector', type: :define do
         parent_service: 'Catalina2',
         server_config: '/opt/apache-tomcat/server.xml',
         additional_attributes: {
-          'redirectPort'      => '8543',
+          'redirectPort' => '8543',
           'connectionTimeout' => '20000',
-          'spaces'            => 'foo bar',
+          'spaces' => 'foo bar'
         },
-        attributes_to_remove: ['foo', 'bar', 'baz'],
+        attributes_to_remove: ['foo', 'bar', 'baz']
       }
     end
 
@@ -44,13 +44,14 @@ describe 'tomcat::config::server::connector', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'set all the things with purge_connectors' do
     let :params do
       {
@@ -60,10 +61,10 @@ describe 'tomcat::config::server::connector', type: :define do
         purge_connectors: true,
         parent_service: 'Catalina2',
         additional_attributes: {
-          'redirectPort'      => '8543',
-          'connectionTimeout' => '20000',
+          'redirectPort' => '8543',
+          'connectionTimeout' => '20000'
         },
-        attributes_to_remove: ['foo', 'bar', 'baz'],
+        attributes_to_remove: ['foo', 'bar', 'baz']
       }
     end
 
@@ -78,52 +79,55 @@ describe 'tomcat::config::server::connector', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
     ]
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'remove connector' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
         connector_ensure: 'absent',
-        port: '8180',
+        port: '8180'
       }
     end
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-8180').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-8180').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Connector[#attribute/port=\'8180\']'],
       )
     }
   end
+
   context 'remove connector no port' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        connector_ensure: 'absent',
+        connector_ensure: 'absent'
       }
     end
 
     it {
-      is_expected.to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/server.xml',
+      expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina-connector-').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/server.xml',
         'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']/Connector[#attribute/protocol=\'HTTP/1.1\']'],
       )
     }
   end
+
   context 'remove connector with purge_connectors' do
     let :params do
       {
         catalina_base: 'opt/apache-tomcat/test',
         connector_ensure: 'absent',
-        purge_connectors: true,
+        purge_connectors: true
       }
     end
 
@@ -133,6 +137,7 @@ describe 'tomcat::config::server::connector', type: :define do
       }.to raise_error(Puppet::Error, %r{\$connector_ensure must be set to 'true' or 'present' to use \$purge_connectors})
     end
   end
+
   context 'two connectors with same protocol' do
     let :pre_condition do
       'class { "tomcat": }
@@ -144,17 +149,18 @@ describe 'tomcat::config::server::connector', type: :define do
     end
     let :params do
       {
-        port: '8180',
+        port: '8180'
       }
     end
 
     it { is_expected.to compile }
   end
+
   describe 'failing tests' do
     context 'bad connector_ensure' do
       let :params do
         {
-          connector_ensure: 'foo',
+          connector_ensure: 'foo'
         }
       end
 
@@ -164,10 +170,11 @@ describe 'tomcat::config::server::connector', type: :define do
         }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo',
+          additional_attributes: 'foo'
         }
       end
 
@@ -177,10 +184,11 @@ describe 'tomcat::config::server::connector', type: :define do
         }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
+
     context 'no port' do
       let :params do
         {
-          catalina_base: '/opt/apache-tomcat/test',
+          catalina_base: '/opt/apache-tomcat/test'
         }
       end
 
@@ -190,11 +198,12 @@ describe 'tomcat::config::server::connector', type: :define do
         }.to raise_error(Puppet::Error, %r{port must be specified})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

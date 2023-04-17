@@ -19,20 +19,19 @@ RSpec.configure do |c|
   c.formatter = :documentation
 
   c.before :suite do
-    LitmusHelper.instance.run_shell('puppet module install puppetlabs-gcc')
     LitmusHelper.instance.run_shell('puppet module install puppetlabs-java')
     if os[:family] == 'redhat' && os[:release].to_i < 8
-      LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
+      LitmusHelper.instance.run_shell('puppet module install puppet-epel')
       pp = <<-PUPPETCODE
       # needed by tests
       package { 'curl':
         ensure   => 'latest',
       }
-      if $::osfamily == 'RedHat' {
-        if $::operatingsystemmajrelease == '5' {
+      if $facts['os']['family'] == 'RedHat' {
+        if $facts['os']['release']['major'] == '5' {
           class { 'epel':
-            epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
-            epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
+            epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${facts['os']['release']['major']}-\\$basearch/RPMS.all",
+            epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${facts['os']['release']['major']}-\\$basearch/RPMS.all",
           }
         } else {
           class { 'epel': }
@@ -42,17 +41,18 @@ RSpec.configure do |c|
       LitmusHelper.instance.apply_manifest(pp)
 
       LitmusHelper.instance.run_shell('yum update -y')
-      LitmusHelper.instance.run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss')
+      LitmusHelper.instance.run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss gcc')
     elsif os[:family] == 'redhat' && os[:release].to_i >= 8
       LitmusHelper.instance.run_shell('yum update -y')
-      LitmusHelper.instance.run_shell('yum install make -y')
+      LitmusHelper.instance.run_shell('yum install make gcc -y')
     elsif os[:family] == 'ubuntu'
       LitmusHelper.instance.run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
       LitmusHelper.instance.run_shell('apt-get update', expect_failures: true)
-      LitmusHelper.instance.run_shell('DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools curl wget', expect_failures: true)
+      LitmusHelper.instance.run_shell('DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools curl wget make gcc', expect_failures: true)
       LitmusHelper.instance.run_shell('locale-gen en_US.UTF-8', expect_failures: true)
     elsif os[:family] == 'debian'
-      LitmusHelper.instance.run_shell('apt-get update && apt-get install -y net-tools curl wget locales strace lsof && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen', expect_failures: true)
+      LitmusHelper.instance.run_shell('apt-get update && apt-get install -y net-tools curl wget locales strace lsof make gcc && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen',
+                                      expect_failures: true)
     end
   end
 end

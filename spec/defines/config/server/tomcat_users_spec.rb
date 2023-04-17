@@ -9,7 +9,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -28,7 +28,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         ensure: 'present',
         manage_file: true,
         password: 'bar',
-        roles: ['foo_role', 'bar_role'],
+        roles: ['foo_role', 'bar_role']
       }
     end
 
@@ -38,20 +38,22 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'foo_role,bar_role\'',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => changes,
       )
     }
+
     it do
-      is_expected.to contain_file('/opt/apache-tomcat/test/conf/tomcat-users.xml').with('ensure' => 'file',
-                                                                                        'owner'   => 'tomcat',
-                                                                                        'group'   => 'tomcat',
-                                                                                        'mode'    => '0640',
-                                                                                        'replace' => false).that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]')
+      expect(subject).to contain_file('/opt/apache-tomcat/test/conf/tomcat-users.xml').with('ensure' => 'file',
+                                                                                            'owner' => 'tomcat',
+                                                                                            'group' => 'tomcat',
+                                                                                            'mode' => '0640',
+                                                                                            'replace' => false).that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]')
     end
   end
+
   context 'Add User no element' do
     let :title do
       'user-foo'
@@ -61,7 +63,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         element_name: 'foo',
         password: 'very-secret-password',
-        roles: ['foobar'],
+        roles: ['foobar']
       }
     end
 
@@ -71,13 +73,14 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'foobar\'',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => changes,
       )
     }
   end
+
   context 'Add User to empty file' do
     let :title do
       'user-foo'
@@ -89,7 +92,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         manage_file: true,
         element_name: 'foo',
         password: 'bar',
-        roles: ['role'],
+        roles: ['role']
       }
     end
 
@@ -99,35 +102,38 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       'set tomcat-users/user[#attribute/username=\'foo\']/#attribute/roles \'role\'',
     ]
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/users.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/users.xml',
         'changes' => changes,
       )
     }
+
     it do
-      is_expected.to contain_file('/opt/apache-tomcat/test/conf/users.xml').with('ensure' => 'file', 'owner' => 'tomcat', 'group' => 'tomcat',
-                                                                                 'mode' => '0640', 'replace' => false,
-                                                                                 'content' => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>').that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]') # rubocop:disable Layout/LineLength
+      expect(subject).to contain_file('/opt/apache-tomcat/test/conf/users.xml').with('ensure' => 'file', 'owner' => 'tomcat', 'group' => 'tomcat',
+                                                                                     'mode' => '0640', 'replace' => false,
+                                                                                     'content' => '<?xml version=\'1.0\' encoding=\'utf-8\'?><tomcat-users></tomcat-users>').that_comes_before('Augeas[/opt/apache-tomcat/test-tomcat_users-user-foo-user-foo]') # rubocop:disable Layout/LineLength
     end
   end
+
   context 'Remove User' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
         element_name: 'foo',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-tomcat-users').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-tomcat_users-user-foo-tomcat-users').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => ['rm tomcat-users/user[#attribute/username=\'foo\']'],
       )
     }
   end
+
   context 'Add Role with manage_file false' do
     let :title do
       'role-foobar'
@@ -138,19 +144,21 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         element: 'role',
         element_name: 'foobar',
         manage_file: false,
-        ensure: 'present',
+        ensure: 'present'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-foobar-role-foobar').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-foobar-role-foobar').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => ['set tomcat-users/role[#attribute/rolename=\'foobar\']/#attribute/rolename \'foobar\''],
       )
     }
+
     it { is_expected.not_to contain_file('/opt/apache-tomcat/test/conf/tomcat-users.xml') }
   end
+
   context 'Add Role no element_name' do
     let :title do
       'noname'
@@ -158,54 +166,57 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        element: 'role',
+        element: 'role'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-noname-noname').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-noname-noname').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => ['set tomcat-users/role[#attribute/rolename=\'noname\']/#attribute/rolename \'noname\''],
       )
     }
   end
+
   context 'Remove Role' do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
         element: 'role',
         element_name: 'foobar',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
     it {
-      is_expected.to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-foobar-tomcat-users').with(
-        'lens'    => 'Xml.lns',
-        'incl'    => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
+      expect(subject).to contain_augeas('/opt/apache-tomcat/test-tomcat_users-role-foobar-tomcat-users').with(
+        'lens' => 'Xml.lns',
+        'incl' => '/opt/apache-tomcat/test/conf/tomcat-users.xml',
         'changes' => ['rm tomcat-users/role[#attribute/rolename=\'foobar\']'],
       )
     }
   end
+
   context 'Failing Tests' do
     context 'Bad ensure' do
       let :params do
         {
-          ensure: 'foo',
+          ensure: 'foo'
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{(String|foo)})
+        }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
+
     context 'Bad manage_file' do
       let :params do
         {
-          manage_file: 'true',
+          manage_file: 'true'
         }
       end
 
@@ -215,24 +226,26 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         }.to raise_error(Puppet::Error, %r{Boolean})
       end
     end
+
     context 'Bad roles' do
       let :params do
         {
-          roles: 'foo',
+          roles: 'foo'
         }
       end
 
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Array})
+        }.to raise_error(Puppet::Error, %r{Array})
       end
     end
+
     context 'old augeas' do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 
