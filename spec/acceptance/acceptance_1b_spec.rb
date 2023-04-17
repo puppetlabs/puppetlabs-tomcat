@@ -49,6 +49,7 @@ describe 'Acceptance case one', unless: stop_test do
             creates  => "/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix/Makefile",
             cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix",
             path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix",
+            require  => Class['java'],
             provider => shell,
           }
           -> exec { 'make jsvc':
