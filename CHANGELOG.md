@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.0.0) (2023-04-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v6.4.1...v7.0.0)
+
+### Changed
+
+- \(CONT-802\) - add puppet 8/drop puppet 6 [\#523](https://github.com/puppetlabs/puppetlabs-tomcat/pull/523) ([jordanbreen28](https://github.com/jordanbreen28))
+
 ## [v6.4.1](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v6.4.1) (2023-03-23)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v6.4.0...v6.4.1)
