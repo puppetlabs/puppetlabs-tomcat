@@ -169,7 +169,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
 
     it 'shoud have a service named FooBar and a class names FooBar' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
-        expect(r.stdout).to match(%r{<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"><\/Service>})
+        expect(r.stdout).to match(%r{<Service name="org.apache.catalina.core.StandardService" className="org.apache.catalina.core.StandardService"></Service>})
       end
     end
   end
@@ -187,7 +187,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
 
     it 'has changed the conf.xml file' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
-        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve"><\/Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve"></Valve>})
       end
     end
   end
@@ -206,7 +206,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
 
     it 'has changed the conf.xml file' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/server.xml') do |r|
-        expect(r.stdout).not_to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve"><\/Valve>})
+        expect(r.stdout).not_to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve"></Valve>})
       end
     end
   end
@@ -321,7 +321,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
 
     it 'has changed the context.xml file' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
-        expect(r.stdout).to match(%r{<Environment name="testEnvVar" type="java.lang.String" value="a value with a space"><\/Environment>})
+        expect(r.stdout).to match(%r{<Environment name="testEnvVar" type="java.lang.String" value="a value with a space"></Environment>})
       end
     end
   end
@@ -344,7 +344,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
 
     it 'has changed the context.xml file' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
-        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*><\/Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*></Valve>})
       end
     end
   end
@@ -384,8 +384,8 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
 
     it 'has changed the context.xml file' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
-        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*prefix="localhost_access_log".*><\/Valve>})
-        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*prefix="localhost_access_log_rare".*><\/Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*prefix="localhost_access_log".*></Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*prefix="localhost_access_log_rare".*></Valve>})
       end
     end
   end
@@ -408,7 +408,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
 
     it 'has changed the context.xml file' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
-        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve".*><\/Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve".*></Valve>})
       end
     end
   end
@@ -440,8 +440,8 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
 
     it 'has changed the context.xml file' do
       run_shell('cat /opt/apache-tomcat8/tomcat8/conf/context.xml') do |r|
-        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve".*><\/Valve>})
-        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve2".*><\/Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve".*></Valve>})
+        expect(r.stdout).to match(%r{<Valve className="org.apache.catalina.valves.AccessLogValve".*name="testValve2".*></Valve>})
       end
     end
   end

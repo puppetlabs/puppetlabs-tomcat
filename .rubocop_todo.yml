@@ -22,19 +22,6 @@ RSpec/RepeatedExampleGroupBody:
   Exclude:
     - 'spec/defines/config/server/realm_spec.rb'
 
-# # Offense count: 1
-# Style/MixinUsage:
-#   Exclude:
-#     - 'spec/spec_helper.rb'
-
-# Offense count: 22
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpEscape:
-  Exclude:
-    - 'spec/acceptance/acceptance_3b_spec.rb'
-    - 'spec/acceptance/acceptance_4b_spec.rb'
-    - 'spec/defines/setenv/entry_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
