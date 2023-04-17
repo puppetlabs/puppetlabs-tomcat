@@ -33,7 +33,6 @@ describe 'Acceptance case one', unless: stop_test do
     it 'applies the manifest without error' do
       pp = <<-MANIFEST
         class{'java':}
-        class{'gcc':}
 
         $java_home = #{java_home}
 
@@ -50,7 +49,6 @@ describe 'Acceptance case one', unless: stop_test do
             creates  => "/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix/Makefile",
             cwd      => "/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix",
             path     => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/opt/apache-tomcat/bin/commons-daemon-#{daemon_version}-native-src/unix",
-            require  => [ Class['gcc'], Class['java'] ],
             provider => shell,
           }
           -> exec { 'make jsvc':

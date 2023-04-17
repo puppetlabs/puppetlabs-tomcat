@@ -19,7 +19,7 @@ RSpec.configure do |c|
   c.formatter = :documentation
 
   c.before :suite do
-    LitmusHelper.instance.run_shell('puppet module install puppetlabs-gcc')
+    # LitmusHelper.instance.run_shell('puppet module install puppetlabs-gcc')
     LitmusHelper.instance.run_shell('puppet module install puppetlabs-java')
     if os[:family] == 'redhat' && os[:release].to_i < 8
       LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
@@ -28,11 +28,11 @@ RSpec.configure do |c|
       package { 'curl':
         ensure   => 'latest',
       }
-      if $::osfamily == 'RedHat' {
-        if $::operatingsystemmajrelease == '5' {
+      if $facts['os']['family'] == 'RedHat' {
+        if $facts['os']['release']['major'] == '5' {
           class { 'epel':
-            epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
-            epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
+            epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${facts['os']['release']['major']}-\\$basearch/RPMS.all",
+            epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${facts['os']['release']['major']}-\\$basearch/RPMS.all",
           }
         } else {
           class { 'epel': }
