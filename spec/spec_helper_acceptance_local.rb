@@ -21,7 +21,7 @@ RSpec.configure do |c|
   c.before :suite do
     LitmusHelper.instance.run_shell('puppet module install puppetlabs-java')
     if os[:family] == 'redhat' && os[:release].to_i < 8
-      LitmusHelper.instance.run_shell('puppet module install stahnma-epel')
+      LitmusHelper.instance.run_shell('puppet module install puppet-epel')
       pp = <<-PUPPETCODE
       # needed by tests
       package { 'curl':
@@ -48,10 +48,10 @@ RSpec.configure do |c|
     elsif os[:family] == 'ubuntu'
       LitmusHelper.instance.run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
       LitmusHelper.instance.run_shell('apt-get update', expect_failures: true)
-      LitmusHelper.instance.run_shell('DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools curl wget gcc', expect_failures: true)
+      LitmusHelper.instance.run_shell('DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools curl wget make gcc', expect_failures: true)
       LitmusHelper.instance.run_shell('locale-gen en_US.UTF-8', expect_failures: true)
     elsif os[:family] == 'debian'
-      LitmusHelper.instance.run_shell('apt-get update && apt-get install -y net-tools curl wget locales strace lsof gcc && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen',
+      LitmusHelper.instance.run_shell('apt-get update && apt-get install -y net-tools curl wget locales strace lsof make gcc && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen',
                                       expect_failures: true)
     end
   end
