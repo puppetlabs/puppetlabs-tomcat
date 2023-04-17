@@ -199,7 +199,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{(String|foo)})
+        }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
     context 'Bad manage_file' do
@@ -225,7 +225,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Array})
+        }.to raise_error(Puppet::Error, %r{Array})
       end
     end
     context 'old augeas' do

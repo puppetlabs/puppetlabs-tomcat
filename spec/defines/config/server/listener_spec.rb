@@ -190,7 +190,7 @@ describe 'tomcat::config::server::listener', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{(String|foo)})
+        }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
     context 'Bad additional_attributes' do
@@ -203,7 +203,7 @@ describe 'tomcat::config::server::listener', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Hash})
+        }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
     context 'Bad attributes_to_remove' do
@@ -216,7 +216,7 @@ describe 'tomcat::config::server::listener', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Array})
+        }.to raise_error(Puppet::Error, %r{Array})
       end
     end
     context 'old augeas' do

@@ -364,7 +364,7 @@ describe 'tomcat::config::server::realm', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{(String|foo)})
+        }.to raise_error(Puppet::Error, %r{(String|foo)})
       end
     end
     context 'Bad additional_attributes' do
@@ -377,7 +377,7 @@ describe 'tomcat::config::server::realm', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Hash})
+        }.to raise_error(Puppet::Error, %r{Hash})
       end
     end
     context 'Bad attributes_to_remove' do
@@ -390,7 +390,7 @@ describe 'tomcat::config::server::realm', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Array})
+        }.to raise_error(Puppet::Error, %r{Array})
       end
     end
     context 'Bad purge_realms' do
@@ -403,7 +403,7 @@ describe 'tomcat::config::server::realm', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{Boolean})
+        }.to raise_error(Puppet::Error, %r{Boolean})
       end
     end
     context 'Purge realms with $realm_ensure => false' do
@@ -417,7 +417,7 @@ describe 'tomcat::config::server::realm', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
+        }.to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
       end
     end
     context 'Purge realms with $realm_ensure => absent' do
@@ -431,7 +431,7 @@ describe 'tomcat::config::server::realm', type: :define do
       it do
         expect {
           catalogue
-        }. to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
+        }.to raise_error(Puppet::Error, %r{\$realm_ensure must be set to 'present' to use \$purge_realms})
       end
     end
     context 'old augeas' do

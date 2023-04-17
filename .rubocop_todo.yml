@@ -9,13 +9,13 @@
 
 # Offense count: 15
 # This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAroundMethodCallOperator:
-  Exclude:
-    - 'spec/defines/config/server/context_spec.rb'
-    - 'spec/defines/config/server/listener_spec.rb'
-    - 'spec/defines/config/server/realm_spec.rb'
-    - 'spec/defines/config/server/resources_spec.rb'
-    - 'spec/defines/config/server/tomcat_users_spec.rb'
+# Layout/SpaceAroundMethodCallOperator:
+#   Exclude:
+#     - 'spec/defines/config/server/context_spec.rb'
+#     - 'spec/defines/config/server/listener_spec.rb'
+#     - 'spec/defines/config/server/realm_spec.rb'
+#     - 'spec/defines/config/server/resources_spec.rb'
+#     - 'spec/defines/config/server/tomcat_users_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
