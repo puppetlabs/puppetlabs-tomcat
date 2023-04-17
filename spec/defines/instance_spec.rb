@@ -9,7 +9,7 @@ describe 'tomcat::instance', type: :define do
   let :default_facts do
     {
       os: { family: 'Debian' },
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
     }
   end
   let :title do
@@ -22,7 +22,7 @@ describe 'tomcat::instance', type: :define do
     end
     let :params do
       {
-        source_url: 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
+        source_url: 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
       }
     end
 
@@ -62,7 +62,7 @@ describe 'tomcat::instance', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test-tomcat',
-        source_url: 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
+        source_url: 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz'
       }
     end
 
@@ -89,7 +89,7 @@ describe 'tomcat::instance', type: :define do
     let :params do
       {
         install_from_source: false,
-        package_name: 'tomcat',
+        package_name: 'tomcat'
       }
     end
 
@@ -100,7 +100,7 @@ describe 'tomcat::instance', type: :define do
         {
           install_from_source: false,
           package_name: 'tomcat',
-          package_options: ['/S'],
+          package_options: ['/S']
         }
       end
 
@@ -121,7 +121,7 @@ describe 'tomcat::instance', type: :define do
         install_from_source: false,
         package_name: 'tomcat',
         catalina_home: '/opt/apache-tomcat',
-        catalina_base: '/opt/apache-tomcat/foo',
+        catalina_base: '/opt/apache-tomcat/foo'
       }
     end
 
@@ -145,7 +145,7 @@ describe 'tomcat::instance', type: :define do
     let :params do
       {
         catalina_home: '/opt/apache-tomcat',
-        catalina_base: '/opt/apache-tomcat/foo',
+        catalina_base: '/opt/apache-tomcat/foo'
       }
     end
 
@@ -167,7 +167,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        manage_base: false,
+        manage_base: false
       }
     end
 
@@ -190,7 +190,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        manage_base: false,
+        manage_base: false
       }
     end
 
@@ -212,7 +212,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        manage_properties: false,
+        manage_properties: false
       }
     end
 
@@ -229,7 +229,7 @@ describe 'tomcat::instance', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
-        manage_base: false,
+        manage_base: false
       }
     end
 
@@ -251,7 +251,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        manage_copy_from_home: false,
+        manage_copy_from_home: false
       }
     end
 
@@ -276,7 +276,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        copy_from_home_mode: '0664',
+        copy_from_home_mode: '0664'
       }
     end
 
@@ -301,7 +301,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        copy_from_home_list: '/opt/apache-tomcat/foo/conf/catalina.policy',
+        copy_from_home_list: '/opt/apache-tomcat/foo/conf/catalina.policy'
       }
     end
 
@@ -325,7 +325,7 @@ describe 'tomcat::instance', type: :define do
     let :params do
       {
         catalina_home: '/opt/apache-tomcat',
-        catalina_base: '/opt/apache-tomcat/foo',
+        catalina_base: '/opt/apache-tomcat/foo'
       }
     end
 
@@ -353,7 +353,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        manage_dirs: false,
+        manage_dirs: false
       }
     end
 
@@ -382,7 +382,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        dir_list: ['config', 'webappstest'],
+        dir_list: ['config', 'webappstest']
       }
     end
 
@@ -413,7 +413,7 @@ describe 'tomcat::instance', type: :define do
       {
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
-        dir_mode: '0775',
+        dir_mode: '0775'
       }
     end
 
@@ -443,7 +443,7 @@ describe 'tomcat::instance', type: :define do
         catalina_home: '/opt/apache-tomcat',
         catalina_base: '/opt/apache-tomcat/foo',
         dir_list: ['config', 'webappstest'],
-        dir_mode: '0775',
+        dir_mode: '0775'
       }
     end
 
@@ -470,7 +470,7 @@ describe 'tomcat::instance', type: :define do
         manage_service: true,
         use_jsvc: false,
         use_init: true,
-        service_name: 'tomcat-default',
+        service_name: 'tomcat-default'
       }
     end
 

@@ -11,7 +11,7 @@ describe 'tomcat::setenv::entry', type: :define do
       os: { family: 'Debian' },
       concat_basedir: '/tmp',
       id: 'root',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
     }
   end
   let :title do
@@ -21,7 +21,7 @@ describe 'tomcat::setenv::entry', type: :define do
   context 'no quotes' do
     let :params do
       {
-        'value' => '/bin/true',
+        'value' => '/bin/true'
       }
     end
 
@@ -38,7 +38,7 @@ describe 'tomcat::setenv::entry', type: :define do
         'param' => 'BAR',
         'value' => '/bin/true',
         'quote_char' => '"',
-        'config_file' => '/opt/apache-tomcat/foo/bin/setenv.sh',
+        'config_file' => '/opt/apache-tomcat/foo/bin/setenv.sh'
       }
     end
 
@@ -52,7 +52,7 @@ describe 'tomcat::setenv::entry', type: :define do
   context 'ensure absent' do
     let :params do
       {
-        'value' => '/bin/true',
+        'value' => '/bin/true'
       }
     end
 
@@ -67,7 +67,7 @@ describe 'tomcat::setenv::entry', type: :define do
     let :params do
       {
         'value' => '/bin/true',
-        'config_file' => '/etc/sysconfig/tomcat',
+        'config_file' => '/etc/sysconfig/tomcat'
       }
     end
 
@@ -84,7 +84,7 @@ describe 'tomcat::setenv::entry', type: :define do
         'param' => 'BAR',
         'value' => ['/bin/true', '/bin/false'],
         'quote_char' => '"',
-        'config_file' => '/opt/apache-tomcat/foo/bin/setenv.sh',
+        'config_file' => '/opt/apache-tomcat/foo/bin/setenv.sh'
       }
     end
 
@@ -100,7 +100,7 @@ describe 'tomcat::setenv::entry', type: :define do
       {
         'param' => 'BAR',
         'value' => '/bin/true',
-        'order' => '10',
+        'order' => '10'
       }
     end
 

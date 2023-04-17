@@ -9,7 +9,7 @@ describe 'tomcat::config::context', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -19,7 +19,7 @@ describe 'tomcat::config::context', type: :define do
   context 'Set Context Wathced resource' do
     let :params do
       {
-        catalina_base: '/opt/apache-tomcat/test',
+        catalina_base: '/opt/apache-tomcat/test'
       }
     end
 
@@ -37,11 +37,11 @@ describe 'tomcat::config::context', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         additional_attributes: {
-          'crossContext' => 'true',
+          'crossContext' => 'true'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -64,7 +64,7 @@ describe 'tomcat::config::context', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

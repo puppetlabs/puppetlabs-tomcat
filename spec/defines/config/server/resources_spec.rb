@@ -9,7 +9,7 @@ describe 'tomcat::config::server::resources', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -27,11 +27,11 @@ describe 'tomcat::config::server::resources', type: :define do
         parent_context: 'parent',
         server_config: '/opt/apache-tomcat/server.xml',
         additional_attributes: {
-          'allowLinking' => 'true',
+          'allowLinking' => 'true'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -59,11 +59,11 @@ describe 'tomcat::config::server::resources', type: :define do
         parent_engine: 'Catalina',
         parent_host: 'localhost',
         additional_attributes: {
-          'foo' => 'bar',
+          'foo' => 'bar'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -87,7 +87,7 @@ describe 'tomcat::config::server::resources', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/exampleapp',
         resources_ensure: 'present',
-        parent_service: 'test',
+        parent_service: 'test'
       }
     end
 
@@ -108,7 +108,7 @@ describe 'tomcat::config::server::resources', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/exampleapp',
         resources_ensure: 'present',
-        parent_host: 'localhost',
+        parent_host: 'localhost'
       }
     end
 
@@ -129,7 +129,7 @@ describe 'tomcat::config::server::resources', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/exampleapp',
         resources_ensure: 'present',
-        parent_engine: 'Catalina',
+        parent_engine: 'Catalina'
       }
     end
 
@@ -152,7 +152,7 @@ describe 'tomcat::config::server::resources', type: :define do
         resources_ensure: 'absent',
         parent_service: 'Catalina',
         parent_engine: 'Catalina',
-        parent_host: 'localhost',
+        parent_host: 'localhost'
       }
     end
 
@@ -171,7 +171,7 @@ describe 'tomcat::config::server::resources', type: :define do
     context 'bad resources_ensure' do
       let :params do
         {
-          resources_ensure: 'foo',
+          resources_ensure: 'foo'
         }
       end
 
@@ -185,7 +185,7 @@ describe 'tomcat::config::server::resources', type: :define do
     context 'Bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo',
+          additional_attributes: 'foo'
         }
       end
 
@@ -199,7 +199,7 @@ describe 'tomcat::config::server::resources', type: :define do
     context 'Bad attributes_to_remove' do
       let :params do
         {
-          attributes_to_remove: 'foo',
+          attributes_to_remove: 'foo'
         }
       end
 
@@ -214,7 +214,7 @@ describe 'tomcat::config::server::resources', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

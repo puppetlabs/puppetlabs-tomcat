@@ -9,7 +9,7 @@ describe 'tomcat::install', type: :define do
   let :default_facts do
     {
       os: { family: 'Debian' },
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
     }
   end
   let :title do
@@ -24,7 +24,7 @@ describe 'tomcat::install', type: :define do
       {
         catalina_home: '/opt/apache-tomcat/test-tomcat',
         source_url: 'http://mirror.nexcess.net/apache/tomcat/tomcat-8/v8.0.8/bin/apache-tomcat-8.0.8.tar.gz',
-        allow_insecure: true,
+        allow_insecure: true
       }
     end
 

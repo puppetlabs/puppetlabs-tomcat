@@ -9,7 +9,7 @@ describe 'tomcat::config::server::realm', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -21,7 +21,7 @@ describe 'tomcat::config::server::realm', type: :define do
     let :params do
       {
         class_name: 'org.apache.catalina.realm.LockOutRealm',
-        catalina_base: '/opt/apache-tomcat/test',
+        catalina_base: '/opt/apache-tomcat/test'
       }
     end
 
@@ -51,9 +51,9 @@ describe 'tomcat::config::server::realm', type: :define do
           'connectionURL' => 'ldap://localhost',
           'roleName' => 'cn',
           'roleSearch' => 'member={0}',
-          'spaces' => 'foo bar',
+          'spaces' => 'foo bar'
         },
-        attributes_to_remove: ['foo', 'bar', 'baz'],
+        attributes_to_remove: ['foo', 'bar', 'baz']
       }
     end
 
@@ -88,9 +88,9 @@ describe 'tomcat::config::server::realm', type: :define do
         realm_ensure: 'present',
         additional_attributes: {
           'connectionURL' => 'ldap://localhost',
-          'roleName' => 'cn',
+          'roleName' => 'cn'
         },
-        attributes_to_remove: ['foo', 'bar'],
+        attributes_to_remove: ['foo', 'bar']
       }
     end
 
@@ -125,7 +125,7 @@ describe 'tomcat::config::server::realm', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -161,7 +161,7 @@ describe 'tomcat::config::server::realm', type: :define do
       {
         class_name: 'org.apache.catalina.realm.JNDIRealm',
         catalina_base: '/opt/apache-tomcat/test',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -201,7 +201,7 @@ describe 'tomcat::config::server::realm', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        realm_ensure: 'absent',
+        realm_ensure: 'absent'
       }
     end
 
@@ -226,7 +226,7 @@ describe 'tomcat::config::server::realm', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        realm_ensure: 'absent',
+        realm_ensure: 'absent'
       }
     end
 
@@ -253,7 +253,7 @@ describe 'tomcat::config::server::realm', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         parent_service: 'NewService',
         parent_engine: 'AnotherEngine',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -280,7 +280,7 @@ describe 'tomcat::config::server::realm', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         parent_host: 'localhost',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -308,7 +308,7 @@ describe 'tomcat::config::server::realm', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         parent_host: 'localhost',
         parent_realm: 'org.apache.catalina.realm.LockOutRealm',
-        realm_ensure: 'present',
+        realm_ensure: 'present'
       }
     end
 
@@ -340,8 +340,8 @@ describe 'tomcat::config::server::realm', type: :define do
           'connectionURL' => 'ldap://localhost',
           'roleName' => 'cn',
           'roleSearch' => 'member={0}',
-          'spaces' => 'foo bar',
-        },
+          'spaces' => 'foo bar'
+        }
       }
     end
 
@@ -368,7 +368,7 @@ describe 'tomcat::config::server::realm', type: :define do
     context 'Bad realm_ensure' do
       let :params do
         {
-          realm_ensure: 'foo',
+          realm_ensure: 'foo'
         }
       end
 
@@ -382,7 +382,7 @@ describe 'tomcat::config::server::realm', type: :define do
     context 'Bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo',
+          additional_attributes: 'foo'
         }
       end
 
@@ -396,7 +396,7 @@ describe 'tomcat::config::server::realm', type: :define do
     context 'Bad attributes_to_remove' do
       let :params do
         {
-          attributes_to_remove: 'foo',
+          attributes_to_remove: 'foo'
         }
       end
 
@@ -410,7 +410,7 @@ describe 'tomcat::config::server::realm', type: :define do
     context 'Bad purge_realms' do
       let :params do
         {
-          purge_realms: 'true',
+          purge_realms: 'true'
         }
       end
 
@@ -425,7 +425,7 @@ describe 'tomcat::config::server::realm', type: :define do
       let :params do
         {
           realm_ensure: 'absent',
-          purge_realms: true,
+          purge_realms: true
         }
       end
 
@@ -440,7 +440,7 @@ describe 'tomcat::config::server::realm', type: :define do
       let :params do
         {
           realm_ensure: 'absent',
-          purge_realms: true,
+          purge_realms: true
         }
       end
 
@@ -455,7 +455,7 @@ describe 'tomcat::config::server::realm', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

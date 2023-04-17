@@ -9,7 +9,7 @@ describe 'tomcat::config::server::context', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -27,11 +27,11 @@ describe 'tomcat::config::server::context', type: :define do
         parent_host: 'localhost',
         server_config: '/opt/apache-tomcat/server.xml',
         additional_attributes: {
-          'path' => '/myapp',
+          'path' => '/myapp'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -58,11 +58,11 @@ describe 'tomcat::config::server::context', type: :define do
         parent_engine: 'Catalina',
         parent_host: 'localhost',
         additional_attributes: {
-          'path' => '/exampleapp',
+          'path' => '/exampleapp'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -86,7 +86,7 @@ describe 'tomcat::config::server::context', type: :define do
         catalina_base: '/opt/apache-tomcat/exampleapp',
         context_ensure: 'present',
         doc_base: 'myapp.war',
-        parent_service: 'test',
+        parent_service: 'test'
       }
     end
 
@@ -105,7 +105,7 @@ describe 'tomcat::config::server::context', type: :define do
         catalina_base: '/opt/apache-tomcat/exampleapp',
         context_ensure: 'present',
         doc_base: 'myapp.war',
-        parent_host: 'localhost',
+        parent_host: 'localhost'
       }
     end
 
@@ -124,7 +124,7 @@ describe 'tomcat::config::server::context', type: :define do
         catalina_base: '/opt/apache-tomcat/exampleapp',
         context_ensure: 'present',
         doc_base: 'myapp.war',
-        parent_engine: 'Catalina',
+        parent_engine: 'Catalina'
       }
     end
 
@@ -145,7 +145,7 @@ describe 'tomcat::config::server::context', type: :define do
         doc_base: 'myapp.war',
         parent_service: 'Catalina',
         parent_engine: 'Catalina',
-        parent_host: 'localhost',
+        parent_host: 'localhost'
       }
     end
 
@@ -162,7 +162,7 @@ describe 'tomcat::config::server::context', type: :define do
     context 'bad context_ensure' do
       let :params do
         {
-          context_ensure: 'foo',
+          context_ensure: 'foo'
         }
       end
 
@@ -176,7 +176,7 @@ describe 'tomcat::config::server::context', type: :define do
     context 'Bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo',
+          additional_attributes: 'foo'
         }
       end
 
@@ -190,7 +190,7 @@ describe 'tomcat::config::server::context', type: :define do
     context 'Bad attributes_to_remove' do
       let :params do
         {
-          attributes_to_remove: 'foo',
+          attributes_to_remove: 'foo'
         }
       end
 
@@ -205,7 +205,7 @@ describe 'tomcat::config::server::context', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

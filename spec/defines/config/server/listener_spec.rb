@@ -9,7 +9,7 @@ describe 'tomcat::config::server::listener', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -26,9 +26,9 @@ describe 'tomcat::config::server::listener', type: :define do
         additional_attributes: {
           'rmiRegistryPortPlatform' => '10001',
           'rmiServerPortPlatform' => '10002',
-          'spaces' => 'foo bar',
+          'spaces' => 'foo bar'
         },
-        attributes_to_remove: ['foo', 'bar', 'baz'],
+        attributes_to_remove: ['foo', 'bar', 'baz']
       }
     end
 
@@ -57,7 +57,7 @@ describe 'tomcat::config::server::listener', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        listener_ensure: 'present',
+        listener_ensure: 'present'
       }
     end
 
@@ -76,7 +76,7 @@ describe 'tomcat::config::server::listener', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         listener_ensure: 'present',
         parent_engine: 'default',
-        class_name: 'org.apache.catalina.core.AprLifecycleListener',
+        class_name: 'org.apache.catalina.core.AprLifecycleListener'
       }
     end
 
@@ -96,7 +96,7 @@ describe 'tomcat::config::server::listener', type: :define do
         listener_ensure: 'present',
         parent_engine: 'default',
         parent_service: 'Catalina2',
-        class_name: 'org.apache.catalina.core.AprLifecycleListener',
+        class_name: 'org.apache.catalina.core.AprLifecycleListener'
       }
     end
 
@@ -115,7 +115,7 @@ describe 'tomcat::config::server::listener', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         listener_ensure: 'present',
         parent_host: 'localhost',
-        class_name: 'org.apache.catalina.core.AprLifecycleListener',
+        class_name: 'org.apache.catalina.core.AprLifecycleListener'
       }
     end
 
@@ -135,7 +135,7 @@ describe 'tomcat::config::server::listener', type: :define do
         listener_ensure: 'present',
         parent_host: 'localhost',
         parent_service: 'Catalina2',
-        class_name: 'org.apache.catalina.core.AprLifecycleListener',
+        class_name: 'org.apache.catalina.core.AprLifecycleListener'
       }
     end
 
@@ -156,7 +156,7 @@ describe 'tomcat::config::server::listener', type: :define do
         parent_engine: 'default',
         parent_host: 'localhost',
         parent_service: 'Catalina2',
-        class_name: 'org.apache.catalina.core.AprLifecycleListener',
+        class_name: 'org.apache.catalina.core.AprLifecycleListener'
       }
     end
 
@@ -174,7 +174,7 @@ describe 'tomcat::config::server::listener', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         class_name: 'org.apache.catalina.mbeans.JmxRemoteLifecycleListener',
-        listener_ensure: 'absent',
+        listener_ensure: 'absent'
       }
     end
 
@@ -191,7 +191,7 @@ describe 'tomcat::config::server::listener', type: :define do
     context 'Bad listener_ensure' do
       let :params do
         {
-          listener_ensure: 'foo',
+          listener_ensure: 'foo'
         }
       end
 
@@ -205,7 +205,7 @@ describe 'tomcat::config::server::listener', type: :define do
     context 'Bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo',
+          additional_attributes: 'foo'
         }
       end
 
@@ -219,7 +219,7 @@ describe 'tomcat::config::server::listener', type: :define do
     context 'Bad attributes_to_remove' do
       let :params do
         {
-          attributes_to_remove: 'foo',
+          attributes_to_remove: 'foo'
         }
       end
 
@@ -234,7 +234,7 @@ describe 'tomcat::config::server::listener', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

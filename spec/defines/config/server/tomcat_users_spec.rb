@@ -9,7 +9,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -28,7 +28,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         ensure: 'present',
         manage_file: true,
         password: 'bar',
-        roles: ['foo_role', 'bar_role'],
+        roles: ['foo_role', 'bar_role']
       }
     end
 
@@ -63,7 +63,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         element_name: 'foo',
         password: 'very-secret-password',
-        roles: ['foobar'],
+        roles: ['foobar']
       }
     end
 
@@ -92,7 +92,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         manage_file: true,
         element_name: 'foo',
         password: 'bar',
-        roles: ['role'],
+        roles: ['role']
       }
     end
 
@@ -121,7 +121,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         element_name: 'foo',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
@@ -144,7 +144,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         element: 'role',
         element_name: 'foobar',
         manage_file: false,
-        ensure: 'present',
+        ensure: 'present'
       }
     end
 
@@ -166,7 +166,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        element: 'role',
+        element: 'role'
       }
     end
 
@@ -185,7 +185,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         element: 'role',
         element_name: 'foobar',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
@@ -202,7 +202,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     context 'Bad ensure' do
       let :params do
         {
-          ensure: 'foo',
+          ensure: 'foo'
         }
       end
 
@@ -216,7 +216,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     context 'Bad manage_file' do
       let :params do
         {
-          manage_file: 'true',
+          manage_file: 'true'
         }
       end
 
@@ -230,7 +230,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
     context 'Bad roles' do
       let :params do
         {
-          roles: 'foo',
+          roles: 'foo'
         }
       end
 
@@ -245,7 +245,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

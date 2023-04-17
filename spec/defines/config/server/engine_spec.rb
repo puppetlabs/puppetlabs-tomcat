@@ -9,7 +9,7 @@ describe 'tomcat::config::server::engine', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -19,7 +19,7 @@ describe 'tomcat::config::server::engine', type: :define do
   context 'default' do
     let :params do
       {
-        default_host: 'localhost',
+        default_host: 'localhost'
       }
     end
 
@@ -47,7 +47,7 @@ describe 'tomcat::config::server::engine', type: :define do
         jvm_route: 'bar',
         parent_service: 'Catalina2',
         start_stop_threads: '200',
-        server_config: '/opt/apache-tomcat/server.xml',
+        server_config: '/opt/apache-tomcat/server.xml'
       }
     end
 
@@ -75,7 +75,7 @@ describe 'tomcat::config::server::engine', type: :define do
         background_processor_delay_ensure: 'absent',
         class_name_ensure: 'absent',
         jvm_route_ensure: 'absent',
-        start_stop_threads_ensure: 'absent',
+        start_stop_threads_ensure: 'absent'
       }
     end
 
@@ -101,7 +101,7 @@ describe 'tomcat::config::server::engine', type: :define do
       let :params do
         {
           default_host: 'localhost',
-          background_processor_delay_ensure: 'foo',
+          background_processor_delay_ensure: 'foo'
         }
       end
 
@@ -116,7 +116,7 @@ describe 'tomcat::config::server::engine', type: :define do
       let :params do
         {
           default_host: 'localhost',
-          class_name_ensure: 'foo',
+          class_name_ensure: 'foo'
         }
       end
 
@@ -131,7 +131,7 @@ describe 'tomcat::config::server::engine', type: :define do
       let :params do
         {
           default_host: 'localhost',
-          jvm_route_ensure: 'foo',
+          jvm_route_ensure: 'foo'
         }
       end
 
@@ -146,7 +146,7 @@ describe 'tomcat::config::server::engine', type: :define do
       let :params do
         {
           default_host: 'localhost',
-          start_stop_threads_ensure: 'foo',
+          start_stop_threads_ensure: 'foo'
         }
       end
 
@@ -161,12 +161,12 @@ describe 'tomcat::config::server::engine', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
       let :params do
         {
-          default_host: 'localhost',
+          default_host: 'localhost'
         }
       end
 

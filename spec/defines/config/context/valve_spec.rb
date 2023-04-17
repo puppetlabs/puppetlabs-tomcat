@@ -9,7 +9,7 @@ describe 'tomcat::config::context::valve', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
 
@@ -43,7 +43,7 @@ describe 'tomcat::config::context::valve', type: :define do
           additional_attributes: {
             'prefix' => 'localhost_access_log',
             'suffix' => '.txt',
-            'pattern' => 'common',
+            'pattern' => 'common'
           },
           uniqueness_attributes: [
             'prefix',
@@ -51,7 +51,7 @@ describe 'tomcat::config::context::valve', type: :define do
           ],
           attributes_to_remove: [
             'foobar',
-          ],
+          ]
         }
       end
 
@@ -82,8 +82,8 @@ describe 'tomcat::config::context::valve', type: :define do
           additional_attributes: {
             'prefix' => 'localhost_access_log',
             'suffix' => '.txt',
-            'pattern' => 'common',
-          },
+            'pattern' => 'common'
+          }
         }
       end
 
@@ -111,7 +111,7 @@ describe 'tomcat::config::context::valve', type: :define do
     end
     let :params do
       {
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
@@ -133,8 +133,8 @@ describe 'tomcat::config::context::valve', type: :define do
       let :params do
         {
           additional_attributes: {
-            'className' => 'org.apache.catalina.valves.AccessLogValve',
-          },
+            'className' => 'org.apache.catalina.valves.AccessLogValve'
+          }
         }
       end
 
@@ -149,7 +149,7 @@ describe 'tomcat::config::context::valve', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

@@ -9,7 +9,7 @@ describe 'tomcat::config::context::manager', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -23,11 +23,11 @@ describe 'tomcat::config::context::manager', type: :define do
         manager_classname: 'memcached',
         additional_attributes: {
           'barfoo' => 'foofoo',
-          'fizz' => 'buzz',
+          'fizz' => 'buzz'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -50,7 +50,7 @@ describe 'tomcat::config::context::manager', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 

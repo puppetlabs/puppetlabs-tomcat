@@ -9,7 +9,7 @@ describe 'tomcat::config::context::resourcelink', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -23,11 +23,11 @@ describe 'tomcat::config::context::resourcelink', type: :define do
         resourcelink_type: 'java',
         additional_attributes: {
           'factory' => 'javax.naming.spi.ObjectFactory',
-          'global' => 'simpleValue',
+          'global' => 'simpleValue'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -51,7 +51,7 @@ describe 'tomcat::config::context::resourcelink', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 

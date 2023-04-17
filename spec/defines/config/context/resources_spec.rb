@@ -9,7 +9,7 @@ describe 'tomcat::config::context::resources', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -22,11 +22,11 @@ describe 'tomcat::config::context::resources', type: :define do
         catalina_base: '/opt/apache-tomcat/test',
         additional_attributes: {
           'cachingAllowed' => 'true',
-          'cacheMaxSize' => '100000',
+          'cacheMaxSize' => '100000'
         },
         attributes_to_remove: [
           'foobar',
-        ],
+        ]
       }
     end
 
@@ -48,7 +48,7 @@ describe 'tomcat::config::context::resources', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 

@@ -8,7 +8,7 @@ describe 'tomcat::war', type: :define do
   end
   let :facts do
     {
-      os: { family: 'Debian' },
+      os: { family: 'Debian' }
     }
   end
   let :title do
@@ -18,7 +18,7 @@ describe 'tomcat::war', type: :define do
   context 'basic deployment' do
     let :params do
       {
-        war_source: '/tmp/sample.war',
+        war_source: '/tmp/sample.war'
       }
     end
 
@@ -40,7 +40,7 @@ describe 'tomcat::war', type: :define do
   context 'basic undeployment' do
     let :params do
       {
-        war_ensure: 'absent',
+        war_ensure: 'absent'
       }
     end
 
@@ -67,7 +67,7 @@ describe 'tomcat::war', type: :define do
         war_ensure: 'present',
         war_name: 'sample2.war',
         war_source: '/tmp/sample.war',
-        allow_insecure: true,
+        allow_insecure: true
       }
     end
 
@@ -91,7 +91,7 @@ describe 'tomcat::war', type: :define do
     let :params do
       {
         deployment_path: '/opt/apache-tomcat/webapps3',
-        war_source: '/tmp/sample.war',
+        war_source: '/tmp/sample.war'
       }
     end
 
@@ -114,7 +114,7 @@ describe 'tomcat::war', type: :define do
     let :params do
       {
         war_ensure: 'absent',
-        war_purge: false,
+        war_purge: false
       }
     end
 
@@ -138,7 +138,7 @@ describe 'tomcat::war', type: :define do
       let :params do
         {
           war_name: 'foo',
-          war_source: '/tmp/sample.war',
+          war_source: '/tmp/sample.war'
         }
       end
 
@@ -153,7 +153,7 @@ describe 'tomcat::war', type: :define do
       let :params do
         {
           war_ensure: 'foo',
-          war_source: '/tmp/sample.war',
+          war_source: '/tmp/sample.war'
         }
       end
 
@@ -168,7 +168,7 @@ describe 'tomcat::war', type: :define do
       let :params do
         {
           war_ensure: 'absent',
-          war_purge: 'foo',
+          war_purge: 'foo'
         }
       end
 
@@ -182,7 +182,7 @@ describe 'tomcat::war', type: :define do
     context 'invalid source' do
       let :params do
         {
-          war_source: 'foo',
+          war_source: 'foo'
         }
       end
 
@@ -206,7 +206,7 @@ describe 'tomcat::war', type: :define do
         {
           war_source: '/tmp/sample.war',
           app_base: 'webapps2',
-          deployment_path: '/opt/apache-tomcat/webapps3',
+          deployment_path: '/opt/apache-tomcat/webapps3'
         }
       end
 
@@ -227,7 +227,7 @@ describe 'tomcat::war', type: :define do
           war_source: '/tmp/sample.war',
           allow_insecure: true,
           user: 'tomcat2',
-          group: 'tomcat2',
+          group: 'tomcat2'
         }
       end
 

@@ -9,7 +9,7 @@ describe 'tomcat::config::server::host', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -19,7 +19,7 @@ describe 'tomcat::config::server::host', type: :define do
   context 'defaults' do
     let :params do
       {
-        app_base: 'webapps',
+        app_base: 'webapps'
       }
     end
 
@@ -48,10 +48,10 @@ describe 'tomcat::config::server::host', type: :define do
         additional_attributes: {
           'autoDeploy' => 'false',
           'unpackWARs' => 'false',
-          'spaces' => 'foo bar',
+          'spaces' => 'foo bar'
         },
         attributes_to_remove: ['foo', 'bar', 'baz'],
-        aliases: ['able', 'baker', 'charlie'],
+        aliases: ['able', 'baker', 'charlie']
       }
     end
 
@@ -82,7 +82,7 @@ describe 'tomcat::config::server::host', type: :define do
     let :params do
       {
         app_base: 'webapps',
-        aliases: [],
+        aliases: []
       }
     end
 
@@ -103,7 +103,7 @@ describe 'tomcat::config::server::host', type: :define do
   context 'remove the host' do
     let :params do
       {
-        host_ensure: 'absent',
+        host_ensure: 'absent'
       }
     end
 
@@ -128,7 +128,7 @@ describe 'tomcat::config::server::host', type: :define do
     context 'bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo',
+          additional_attributes: 'foo'
         }
       end
 
@@ -142,7 +142,7 @@ describe 'tomcat::config::server::host', type: :define do
     context 'invalid host_ensure' do
       let :params do
         {
-          host_ensure: 'foo',
+          host_ensure: 'foo'
         }
       end
 
@@ -157,7 +157,7 @@ describe 'tomcat::config::server::host', type: :define do
       let :params do
         {
           app_base: 'webapps',
-          aliases: 'not_an_array',
+          aliases: 'not_an_array'
         }
       end
 
@@ -172,7 +172,7 @@ describe 'tomcat::config::server::host', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

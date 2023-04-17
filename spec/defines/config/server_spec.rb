@@ -9,7 +9,7 @@ describe 'tomcat::config::server', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -23,7 +23,7 @@ describe 'tomcat::config::server', type: :define do
         class_name: 'foo',
         address: 'localhost',
         port: '8005',
-        shutdown: 'SHUTDOWN',
+        shutdown: 'SHUTDOWN'
       }
     end
 
@@ -50,7 +50,7 @@ describe 'tomcat::config::server', type: :define do
         address: 'localhost',
         port: '8005',
         shutdown: 'SHUTDOWN',
-        server_config: '/opt/apache-tomcat/server.xml',
+        server_config: '/opt/apache-tomcat/server.xml'
       }
     end
 
@@ -74,7 +74,7 @@ describe 'tomcat::config::server', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         class_name_ensure: 'absent',
-        address_ensure: 'absent',
+        address_ensure: 'absent'
       }
     end
 
@@ -94,7 +94,7 @@ describe 'tomcat::config::server', type: :define do
   context 'no changes' do
     let :params do
       {
-        catalina_base: '/opt/apache-tomcat/test',
+        catalina_base: '/opt/apache-tomcat/test'
       }
     end
 
@@ -105,7 +105,7 @@ describe 'tomcat::config::server', type: :define do
     context 'invalid class_name_ensure' do
       let :params do
         {
-          class_name_ensure: 'foo',
+          class_name_ensure: 'foo'
         }
       end
 
@@ -119,7 +119,7 @@ describe 'tomcat::config::server', type: :define do
     context 'invalid address_ensure' do
       let :params do
         {
-          address_ensure: 'foo',
+          address_ensure: 'foo'
         }
       end
 
@@ -134,7 +134,7 @@ describe 'tomcat::config::server', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' },
+          augeas: { version: '0.10.0' }
         }
       end
 

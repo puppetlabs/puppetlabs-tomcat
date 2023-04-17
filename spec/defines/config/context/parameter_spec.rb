@@ -9,7 +9,7 @@ describe 'tomcat::config::context::parameter', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
 
@@ -22,7 +22,7 @@ describe 'tomcat::config::context::parameter', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         parameter_name: 'maxExemptions',
-        value: '10',
+        value: '10'
       }
     end
 
@@ -44,7 +44,7 @@ describe 'tomcat::config::context::parameter', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
@@ -63,7 +63,7 @@ describe 'tomcat::config::context::parameter', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
-        value: '10',
+        value: '10'
       }
     end
 
@@ -86,7 +86,7 @@ describe 'tomcat::config::context::parameter', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         value: '10',
-        override: true,
+        override: true
       }
     end
 
@@ -109,7 +109,7 @@ describe 'tomcat::config::context::parameter', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         value: '10',
-        description: 'foo bar',
+        description: 'foo bar'
       }
     end
 

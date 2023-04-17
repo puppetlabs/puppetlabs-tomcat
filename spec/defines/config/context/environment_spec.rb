@@ -9,7 +9,7 @@ describe 'tomcat::config::context::environment', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' },
+      augeas: { version: '1.0.0' }
     }
   end
   let :title do
@@ -25,9 +25,9 @@ describe 'tomcat::config::context::environment', type: :define do
         value: '10',
         additional_attributes: {
           'foo' => 'bar',
-          'bar' => 'foo',
+          'bar' => 'foo'
         },
-        attributes_to_remove: ['foobar', 'barfoo'],
+        attributes_to_remove: ['foobar', 'barfoo']
       }
     end
 
@@ -55,7 +55,7 @@ describe 'tomcat::config::context::environment', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/foo',
-        ensure: 'absent',
+        ensure: 'absent'
       }
     end
 
@@ -73,7 +73,7 @@ describe 'tomcat::config::context::environment', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/foo',
         type: 'java.lang.Integer',
-        value: '10',
+        value: '10'
       }
     end
 
@@ -99,7 +99,7 @@ describe 'tomcat::config::context::environment', type: :define do
         catalina_base: '/opt/apache-tomcat/foo',
         type: 'java.lang.Integer',
         value: '10',
-        override: true,
+        override: true
       }
     end
 
@@ -125,7 +125,7 @@ describe 'tomcat::config::context::environment', type: :define do
         catalina_base: '/opt/apache-tomcat/foo',
         type: 'java.lang.Integer',
         value: '10',
-        description: 'foo bar',
+        description: 'foo bar'
       }
     end
 
@@ -150,7 +150,7 @@ describe 'tomcat::config::context::environment', type: :define do
       let :params do
         {
           ensure: 'foobar',
-          catalina_base: '/opt/apache-tomcat/foo',
+          catalina_base: '/opt/apache-tomcat/foo'
         }
       end
 
@@ -164,7 +164,7 @@ describe 'tomcat::config::context::environment', type: :define do
     context 'Empty catalina_base' do
       let :params do
         {
-          catalina_base: '',
+          catalina_base: ''
         }
       end
 
@@ -179,7 +179,7 @@ describe 'tomcat::config::context::environment', type: :define do
       let :params do
         {
           catalina_base: '/opt/apache-tomcat/foo',
-          value: '10',
+          value: '10'
         }
       end
 
@@ -194,7 +194,7 @@ describe 'tomcat::config::context::environment', type: :define do
       let :params do
         {
           catalina_base: '/opt/apache-tomcat/foo',
-          type: 'java.lang.Integer',
+          type: 'java.lang.Integer'
         }
       end
 
@@ -211,7 +211,7 @@ describe 'tomcat::config::context::environment', type: :define do
           catalina_base: '/opt/apache-tomcat/foo',
           type: 'java.lang.Integer',
           value: '10',
-          override: 'foobar',
+          override: 'foobar'
         }
       end
 
