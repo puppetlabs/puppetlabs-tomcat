@@ -17,20 +17,16 @@ RSpec/ExampleLength:
 RSpec/NamedSubject:
   Enabled: false
 
-# Offense count: 4
-# RSpec/MultipleExpectations:
-#   Max: 2
-
 # Offense count: 30
 # Configuration parameters: AllowedPatterns.
 # AllowedPatterns: ^expect_, ^assert_
-RSpec/NoExpectationExample:
-  Exclude:
-    - 'spec/acceptance/acceptance_1_readme_spec.rb'
-    - 'spec/acceptance/acceptance_1b_spec.rb'
-    - 'spec/acceptance/acceptance_2b_spec.rb'
-    - 'spec/acceptance/acceptance_3b_spec.rb'
-    - 'spec/acceptance/acceptance_4b_spec.rb'
+# RSpec/NoExpectationExample:
+#   Exclude:
+#     - 'spec/acceptance/acceptance_1_readme_spec.rb'
+#     - 'spec/acceptance/acceptance_1b_spec.rb'
+#     - 'spec/acceptance/acceptance_2b_spec.rb'
+#     - 'spec/acceptance/acceptance_3b_spec.rb'
+#     - 'spec/acceptance/acceptance_4b_spec.rb'
 
 # Offense count: 4
 RSpec/RepeatedExampleGroupBody:

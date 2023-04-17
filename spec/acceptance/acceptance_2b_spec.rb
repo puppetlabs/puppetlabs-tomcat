@@ -150,7 +150,7 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      idempotent_apply(pp)
+      expect { idempotent_apply(pp) }.not_to raise_error
     end
 
     # test the war
@@ -203,7 +203,7 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
 
     it 'tomcat8-first should not be serving a page on port 8280', retry: 10, retry_wait: 10 do
@@ -257,7 +257,7 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
 
     it 'tomcat8-first should not display message when war is not deployed', retry: 10, retry_wait: 10 do
@@ -301,7 +301,7 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
 
     it 'tomcat8 should be serving a war on port 8280', retry: 10, retry_wait: 10 do

@@ -77,7 +77,7 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
       }
     MANIFEST
     it 'applies the manifest without error' do
-      apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2])
+      expect { apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
     end
 
     it 'contains two realms in config file', retry: 5, retry_wait: 10 do
@@ -119,7 +119,7 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
       }
     MANIFEST
     it 'is idempotent' do
-      idempotent_apply(pp_two)
+      expect { idempotent_apply(pp_two) }.not_to raise_error
     end
   end
 end
