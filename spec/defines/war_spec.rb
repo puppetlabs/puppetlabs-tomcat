@@ -28,6 +28,7 @@ describe 'tomcat::war', type: :define do
         'path' => '/opt/apache-tomcat/webapps/sample.war',
       )
     }
+
     it {
       is_expected.to contain_file('tomcat::war sample.war').with(
         'ensure' => 'file', 'path' => '/opt/apache-tomcat/webapps/sample.war',
@@ -48,6 +49,7 @@ describe 'tomcat::war', type: :define do
         'force' => 'false',
       )
     }
+
     it {
       is_expected.to contain_file('/opt/apache-tomcat/webapps/sample').with(
         'ensure' => 'absent',
@@ -74,6 +76,7 @@ describe 'tomcat::war', type: :define do
         'allow_insecure' => true,
       )
     }
+
     it {
       is_expected.to contain_file('tomcat::war sample.war').with(
         'ensure' => 'file', 'path' => '/opt/apache-tomcat/test/webapps2/sample2.war',
@@ -95,6 +98,7 @@ describe 'tomcat::war', type: :define do
         'path' => '/opt/apache-tomcat/webapps3/sample.war',
       )
     }
+
     it {
       is_expected.to contain_file('tomcat::war sample.war').with(
         'ensure' => 'file', 'path' => '/opt/apache-tomcat/webapps3/sample.war',
@@ -116,6 +120,7 @@ describe 'tomcat::war', type: :define do
         'force' => 'false',
       )
     }
+
     it {
       is_expected.not_to contain_file('/opt/apache-tomcat/webapps/sample').with(
         'ensure' => 'absent',
@@ -222,6 +227,7 @@ describe 'tomcat::war', type: :define do
           'allow_insecure' => true,
         )
       }
+
       it {
         is_expected.to contain_file('tomcat::war sample.war').with(
           'ensure' => 'file', 'path' => '/opt/apache-tomcat/webapps2/sample2.war',

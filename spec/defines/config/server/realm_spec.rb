@@ -175,6 +175,7 @@ describe 'tomcat::config::server::realm', type: :define do
         'changes' => changes_one,
       )
     }
+
     # rubocop:disable Layout/LineLength
     changes_two = [
       "set Server/Service[#attribute/name='Catalina']/Engine[#attribute/name='Catalina']/Realm[#attribute/puppetName='second' or (count(#attribute/puppetName)=0 and #attribute/className='org.apache.catalina.realm.JNDIRealm')]/#attribute/puppetName 'second'",

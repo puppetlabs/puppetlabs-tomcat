@@ -121,11 +121,13 @@ describe 'Acceptance case one', unless: stop_test do
       MANIFEST
       idempotent_apply(pp)
     end
+
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
       end
     end
+
     it 'is serving a page on port 8080', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:8080/war_one/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
@@ -149,6 +151,7 @@ describe 'Acceptance case one', unless: stop_test do
       MANIFEST
       apply_manifest(pp)
     end
+
     it 'is not serving a page on port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7
@@ -172,6 +175,7 @@ describe 'Acceptance case one', unless: stop_test do
       MANIFEST
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
+
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80/war_one/hello.jsp') do |r|
         expect(r.stdout).to match(%r{Sample Application JSP Page})
@@ -190,6 +194,7 @@ describe 'Acceptance case one', unless: stop_test do
       MANIFEST
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
+
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
       run_shell('curl localhost:80/war_one/hello.jsp') do |r|
         expect(r.stdout).to match(%r{The origin server did not find a current representation for the target resource})
@@ -219,6 +224,7 @@ describe 'Acceptance case one', unless: stop_test do
       MANIFEST
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
+
     it 'is not able to serve pages over port 80', retry: 5, retry_wait: 10 do
       run_shell('curl --retry 10 --retry-delay 15 localhost:80', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7

@@ -79,6 +79,7 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
     it 'applies the manifest without error' do
       apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
+
     it 'contains two realms in config file', retry: 5, retry_wait: 10 do
       run_shell('cat /opt/apache-tomcat40/conf/server.xml') do |r|
         expect(r.stdout).to match(
@@ -89,6 +90,7 @@ describe 'Use two realms within a configuration', docker: true, unless: stop_tes
         )
       end
     end
+
     pp_two = <<-MANIFEST
       tomcat::config::server::realm { 'org.apache.catalina.realm.CombinedRealm':
         catalina_base => '/opt/apache-tomcat40',

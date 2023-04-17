@@ -29,6 +29,7 @@ describe 'README examples', unless: stop_test do
       idempotent_apply(pp)
       run_shell('sleep 15')
     end
+
     it 'has the server running on port 8080' do
       run_shell('curl localhost:8080') do |r|
         expect(r.stdout).to match(%r{Apache Tomcat})
@@ -69,6 +70,7 @@ describe 'README examples', unless: stop_test do
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
       run_shell('sleep 15')
     end
+
     it 'is not serving a page on port 80' do
       run_shell('curl localhost:80/war_one/hello.jsp', expect_failures: true) do |r|
         expect(r.exit_code).to eq 7

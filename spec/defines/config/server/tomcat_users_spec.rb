@@ -44,6 +44,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         'changes' => changes,
       )
     }
+
     it do
       is_expected.to contain_file('/opt/apache-tomcat/test/conf/tomcat-users.xml').with('ensure' => 'file',
                                                                                         'owner' => 'tomcat',
@@ -105,6 +106,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         'changes' => changes,
       )
     }
+
     it do
       is_expected.to contain_file('/opt/apache-tomcat/test/conf/users.xml').with('ensure' => 'file', 'owner' => 'tomcat', 'group' => 'tomcat',
                                                                                  'mode' => '0640', 'replace' => false,
@@ -149,6 +151,7 @@ describe 'tomcat::config::server::tomcat_users', type: :define do
         'changes' => ['set tomcat-users/role[#attribute/rolename=\'foobar\']/#attribute/rolename \'foobar\''],
       )
     }
+
     it { is_expected.not_to contain_file('/opt/apache-tomcat/test/conf/tomcat-users.xml') }
   end
   context 'Add Role no element_name' do

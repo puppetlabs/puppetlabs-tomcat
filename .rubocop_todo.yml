@@ -12,19 +12,19 @@ RSpec/DescribeClass:
 # Offense count: 67
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowConsecutiveOneLiners.
-RSpec/EmptyLineAfterExample:
-  Exclude:
-    - 'spec/acceptance/acceptance_1_readme_spec.rb'
-    - 'spec/acceptance/acceptance_1b_spec.rb'
-    - 'spec/acceptance/acceptance_2b_spec.rb'
-    - 'spec/acceptance/acceptance_3b_spec.rb'
-    - 'spec/acceptance/acceptance_4b_spec.rb'
-    - 'spec/defines/config/server/realm_spec.rb'
-    - 'spec/defines/config/server/service_spec.rb'
-    - 'spec/defines/config/server/tomcat_users_spec.rb'
-    - 'spec/defines/instance_spec.rb'
-    - 'spec/defines/setenv/entry_spec.rb'
-    - 'spec/defines/war_spec.rb'
+# RSpec/EmptyLineAfterExample:
+#   Exclude:
+#     - 'spec/acceptance/acceptance_1_readme_spec.rb'
+#     - 'spec/acceptance/acceptance_1b_spec.rb'
+#     - 'spec/acceptance/acceptance_2b_spec.rb'
+#     - 'spec/acceptance/acceptance_3b_spec.rb'
+#     - 'spec/acceptance/acceptance_4b_spec.rb'
+#     - 'spec/defines/config/server/realm_spec.rb'
+#     - 'spec/defines/config/server/service_spec.rb'
+#     - 'spec/defines/config/server/tomcat_users_spec.rb'
+#     - 'spec/defines/instance_spec.rb'
+#     - 'spec/defines/setenv/entry_spec.rb'
+#     - 'spec/defines/war_spec.rb'
 
 # Offense count: 167
 # This cop supports safe autocorrection (--autocorrect).

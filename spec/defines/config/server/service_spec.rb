@@ -29,6 +29,7 @@ describe 'tomcat::config::server::service', type: :define do
           'changes' => changes,
         )
       }
+
       {
         catalina_base: '/opt/apache-tomcat/test',
         class_name: 'foo',
@@ -50,6 +51,7 @@ describe 'tomcat::config::server::service', type: :define do
           'changes' => changes,
         )
       }
+
       {
         catalina_base: '/opt/apache-tomcat/test',
         class_name_ensure: 'false',
@@ -81,6 +83,7 @@ describe 'tomcat::config::server::service', type: :define do
           'changes' => ['rm Server/Service[#attribute/name=\'Catalina\']'],
         )
       }
+
       {
         catalina_base: '/opt/apache-tomcat/test',
         service_ensure: 'false',
@@ -90,6 +93,7 @@ describe 'tomcat::config::server::service', type: :define do
   context 'no changes' do
     let :params do
       it { is_expected.not_to contain_augeas('server-/opt/apache-tomcat/test-service-Catalina') }
+
       {
         catalina_base: '/opt/apache-tomcat/test',
       }

@@ -26,6 +26,7 @@ describe 'tomcat::setenv::entry', type: :define do
     end
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/bin/setenv.sh') }
+
     it {
       is_expected.to contain_concat__fragment('setenv-FOO').with_content(%r{export FOO=\/bin\/true}).with('target' => '/opt/apache-tomcat/bin/setenv.sh')
     }
@@ -41,6 +42,7 @@ describe 'tomcat::setenv::entry', type: :define do
     end
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/foo/bin/setenv.sh') }
+
     it {
       is_expected.to contain_concat__fragment('setenv-FOO').with_content(%r{export BAR="\/bin\/true"}).with('target' => '/opt/apache-tomcat/foo/bin/setenv.sh')
     }
@@ -53,6 +55,7 @@ describe 'tomcat::setenv::entry', type: :define do
     end
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/bin/setenv.sh') }
+
     it {
       is_expected.to contain_concat__fragment('setenv-FOO').with('target' => '/opt/apache-tomcat/bin/setenv.sh')
     }
@@ -66,6 +69,7 @@ describe 'tomcat::setenv::entry', type: :define do
     end
 
     it { is_expected.to contain_concat('/etc/sysconfig/tomcat') }
+
     it {
       is_expected.to contain_concat__fragment('setenv-FOO').with('target' => '/etc/sysconfig/tomcat')
     }
@@ -81,6 +85,7 @@ describe 'tomcat::setenv::entry', type: :define do
     end
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/foo/bin/setenv.sh') }
+
     it {
       is_expected.to contain_concat__fragment('setenv-FOO').with_content(%r{export BAR="\/bin\/true \/bin\/false"}).with('target' => '/opt/apache-tomcat/foo/bin/setenv.sh')
     }
@@ -95,6 +100,7 @@ describe 'tomcat::setenv::entry', type: :define do
     end
 
     it { is_expected.to contain_concat('/opt/apache-tomcat/bin/setenv.sh') }
+
     it {
       is_expected.to contain_concat__fragment('setenv-FOO').with_content(%r{export BAR=\/bin\/true}).with('target' => '/opt/apache-tomcat/bin/setenv.sh', 'order' => '10')
     }
