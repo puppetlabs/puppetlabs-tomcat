@@ -56,7 +56,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { idempotent_apply(pp) }.not_to raise_error
+      idempotent_apply(pp)
     end
 
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
@@ -81,7 +81,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'is not serving a page on port 8180', retry: 5, retry_wait: 10 do
@@ -100,7 +100,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'is serving a page on port 8180', retry: 5, retry_wait: 10 do
@@ -119,7 +119,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
@@ -143,7 +143,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'is not able to serve pages over port 8180', retry: 5, retry_wait: 10 do
@@ -164,7 +164,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'shoud have a service named FooBar and a class names FooBar' do
@@ -182,7 +182,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the conf.xml file' do
@@ -201,7 +201,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the conf.xml file' do
@@ -222,7 +222,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest to create the engine without error' do
-      expect { apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the conf.xml file #5' do
@@ -243,7 +243,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest to change the settings without error' do
-      expect { apply_manifest(pp_two, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp_two, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the conf.xml file #999' do
@@ -268,7 +268,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest to create the engine without error' do
-      expect { apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp_one, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     # validation
@@ -295,7 +295,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest to remove a engine attribute without error' do
-      expect { apply_manifest(pp_two, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp_two, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the conf.xml file #seperated' do
@@ -316,7 +316,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the context.xml file' do
@@ -339,7 +339,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the context.xml file' do
@@ -379,7 +379,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the context.xml file' do
@@ -403,7 +403,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the context.xml file' do
@@ -435,7 +435,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'has changed the context.xml file' do

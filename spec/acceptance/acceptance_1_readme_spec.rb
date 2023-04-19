@@ -26,7 +26,7 @@ describe 'README examples', unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { idempotent_apply(pp) }.not_to raise_error
+      idempotent_apply(pp)
       run_shell('sleep 15')
     end
 
@@ -67,7 +67,7 @@ describe 'README examples', unless: stop_test do
       }
     MANIFEST
     it 'applies the manifest without error' do
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
       run_shell('sleep 15')
     end
 

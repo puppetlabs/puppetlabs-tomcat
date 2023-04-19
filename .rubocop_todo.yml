@@ -17,6 +17,14 @@ RSpec/ExampleLength:
 RSpec/NamedSubject:
   Enabled: false
 
+RSpec/NoExpectationExample:
+  Exclude:
+    - 'spec/acceptance/acceptance_1_readme_spec.rb'
+    - 'spec/acceptance/acceptance_1b_spec.rb'
+    - 'spec/acceptance/acceptance_2b_spec.rb'
+    - 'spec/acceptance/acceptance_3b_spec.rb'
+    - 'spec/acceptance/acceptance_4b_spec.rb'
+
 # Offense count: 4
 RSpec/RepeatedExampleGroupBody:
   Exclude:

@@ -119,7 +119,7 @@ describe 'Acceptance case one', unless: stop_test do
           value => $java_home,
         }
       MANIFEST
-      expect { idempotent_apply(pp) }.not_to raise_error
+      idempotent_apply(pp)
     end
 
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
@@ -149,7 +149,7 @@ describe 'Acceptance case one', unless: stop_test do
           user           => 'tomcat8',
         }
       MANIFEST
-      expect { apply_manifest(pp) }.not_to raise_error
+      apply_manifest(pp)
     end
 
     it 'is not serving a page on port 80', retry: 5, retry_wait: 10 do
@@ -173,7 +173,7 @@ describe 'Acceptance case one', unless: stop_test do
           user           => 'tomcat8',
         }
       MANIFEST
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do
@@ -192,7 +192,7 @@ describe 'Acceptance case one', unless: stop_test do
           war_ensure    => absent,
         }
       MANIFEST
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'does not have deployed the war', retry: 5, retry_wait: 10 do
@@ -222,7 +222,7 @@ describe 'Acceptance case one', unless: stop_test do
           user           => 'tomcat8',
         }
       MANIFEST
-      expect { apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2]) }.not_to raise_error
+      apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
     end
 
     it 'is not able to serve pages over port 80', retry: 5, retry_wait: 10 do
