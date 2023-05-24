@@ -811,7 +811,7 @@ Default value: `'present'`
 
 ##### <a name="-tomcat--config--server--address"></a>`address`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[Pattern[/^localhost$/], Stdlib::IP::Address]]`
 
 Specifies a TCP/IP address on which to listen for the shutdown command. Maps to the [address XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string.
 
@@ -827,7 +827,7 @@ Default value: `'present'`
 
 ##### <a name="-tomcat--config--server--port"></a>`port`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[String[1], Stdlib::Port]]`
 
 Specifies a port on which to listen for the designated shutdown command. Maps to the [port XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/server.html#Common_Attributes). Valid options: a string containing a port number.
 
@@ -843,7 +843,7 @@ Default value: `undef`
 
 ##### <a name="-tomcat--config--server--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -2001,7 +2001,7 @@ The following parameters are available in the `tomcat::install` defined type:
 
 ##### <a name="-tomcat--install--catalina_home"></a>`catalina_home`
 
-Data type: `String[1]`
+Data type: `Stdlib::Absolutepath`
 
 specifies the directory of the Tomcat installation from which the instance should be created. Valid options: a string containing an absolute path.
 
@@ -2037,7 +2037,18 @@ Default value: `true`
 
 ##### <a name="-tomcat--install--proxy_type"></a>`proxy_type`
 
-Data type: `Optional[Enum['none', 'http', 'https', 'ftp']]`
+Data type:
+
+```puppet
+Optional[
+    Enum[
+      'none',
+      'http',
+      'https',
+      'ftp'
+    ]
+  ]
+```
 
 Specifies the proxy server type used by `proxy_server`. Normally this defaults to the protocol specified in the `proxy_server` URI. `proxy_server`. Valid options: 'none', 'http', 'https', 'ftp'.
 

@@ -36,26 +36,33 @@
 #    Specifies the default webapps to be removed.
 #
 define tomcat::install (
-  String[1] $catalina_home                                   = $name,
-  Boolean $install_from_source                               = true,
+  Stdlib::Absolutepath       $catalina_home          = $name,
+  Boolean                    $install_from_source    = true,
 
   # source options
-  Optional[String[1]] $source_url                            = undef,
-  Boolean $source_strip_first_dir                            = true,
-  Optional[Enum['none', 'http', 'https', 'ftp']] $proxy_type = undef,
-  Optional[String[1]] $proxy_server                          = undef,
-  Boolean $allow_insecure                                    = false,
-  Optional[String[1]] $user                                  = undef,
-  Optional[String[1]] $group                                 = undef,
-  Optional[Boolean]   $manage_user                           = undef,
-  Optional[Boolean]   $manage_group                          = undef,
-  Optional[Boolean] $manage_home                             = undef,
-  Optional[Array[String[1]]] $remove_default_webapps         = undef,
+  Optional[String[1]]        $source_url             = undef,
+  Boolean                    $source_strip_first_dir = true,
+  Optional[
+    Enum[
+      'none',
+      'http',
+      'https',
+      'ftp'
+    ]
+  ]                          $proxy_type             = undef,
+  Optional[String[1]]        $proxy_server           = undef,
+  Boolean                    $allow_insecure         = false,
+  Optional[String[1]]        $user                   = undef,
+  Optional[String[1]]        $group                  = undef,
+  Optional[Boolean]          $manage_user            = undef,
+  Optional[Boolean]          $manage_group           = undef,
+  Optional[Boolean]          $manage_home            = undef,
+  Optional[Array[String[1]]] $remove_default_webapps = undef,
 
   # package options
-  Optional[String[1]]        $package_ensure   = undef,
-  Optional[String[1]]        $package_name     = undef,
-  Optional[Array[String[1]]] $package_options  = undef,
+  Optional[String[1]]        $package_ensure         = undef,
+  Optional[String[1]]        $package_name           = undef,
+  Optional[Array[String[1]]] $package_options        = undef,
 ) {
   include tomcat
   $_user = pick($user, $tomcat::user)
