@@ -103,7 +103,7 @@ define tomcat::config::server::tomcat_users (
   augeas { "${catalina_base}-tomcat_users-${element}-${_element_name}-${name}":
     lens      => 'Xml.lns',
     incl      => $_file,
-    changes   => $changes,
+    changes   => Deferred('tomcat::change', [$changes]),
     show_diff => $show_diff,
   }
 }
