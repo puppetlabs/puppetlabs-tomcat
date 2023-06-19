@@ -122,22 +122,6 @@ describe 'tomcat::config::server::connector', type: :define do
     }
   end
 
-  context 'remove connector with purge_connectors' do
-    let :params do
-      {
-        catalina_base: 'opt/apache-tomcat/test',
-        connector_ensure: 'absent',
-        purge_connectors: true
-      }
-    end
-
-    it do
-      expect {
-        catalogue
-      }.to raise_error(Puppet::Error, %r{\$connector_ensure must be set to 'true' or 'present' to use \$purge_connectors})
-    end
-  end
-
   context 'two connectors with same protocol' do
     let :pre_condition do
       'class { "tomcat": }
@@ -157,6 +141,21 @@ describe 'tomcat::config::server::connector', type: :define do
   end
 
   describe 'failing tests' do
+    context 'remove connector with purge_connectors' do
+      let :params do
+        {
+          connector_ensure: 'absent',
+          purge_connectors: true
+        }
+      end
+
+      it do
+        expect {
+          catalogue
+        }.to raise_error(Puppet::Error, %r{\$connector_ensure must be set to 'present' to use \$purge_connectors})
+      end
+    end
+
     context 'bad connector_ensure' do
       let :params do
         {

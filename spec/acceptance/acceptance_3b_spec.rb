@@ -132,7 +132,7 @@ describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
   context 'remove the connector' do
     pp = <<-MANIFEST
       tomcat::config::server::connector { 'tomcat8-http':
-        connector_ensure => absent,
+        connector_ensure => 'absent',
         catalina_base    => '/opt/apache-tomcat8/tomcat8',
         port             => '8180',
         notify           => Tomcat::Service['tomcat8'],

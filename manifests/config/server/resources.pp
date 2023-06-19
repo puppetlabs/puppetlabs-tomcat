@@ -30,7 +30,7 @@ define tomcat::config::server::resources (
   Optional[String[1]]            $parent_context        = undef,
   Hash                           $additional_attributes = {},
   Array[String[1]]               $attributes_to_remove  = [],
-  Optional[String[1]]            $server_config         = undef,
+  Optional[Stdlib::Absolutepath] $server_config         = undef,
   Boolean                        $show_diff             = true,
 ) {
   include tomcat

@@ -103,7 +103,7 @@ describe 'Acceptance case one', unless: stop_test do
         }
         tomcat::config::server::connector { 'tomcat8-ajp':
           catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
-          connector_ensure      => absent,
+          connector_ensure      => 'absent',
           port                  => '8309',
         }
         tomcat::war { 'war_one.war':

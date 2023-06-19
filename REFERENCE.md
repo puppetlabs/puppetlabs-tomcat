@@ -47,6 +47,10 @@
 * `tomcat::instance::copy_from_home`: Private define to copy a conf file from catalina_home to catalina_base
 * `tomcat::instance::dependencies`
 
+### Functions
+
+* [`tomcat::change`](#tomcat--change): This function exists for usage of a returning the input params that is a deferred function Will be used for deferring the values at agent lev
+
 ## Classes
 
 ### <a name="tomcat"></a>`tomcat`
@@ -879,7 +883,7 @@ The following parameters are available in the `tomcat::config::server::connector
 
 ##### <a name="-tomcat--config--server--connector--catalina_base"></a>`catalina_base`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the base directory of the Tomcat installation to manage. Valid options: a string containing an absolute path.
 
@@ -895,7 +899,7 @@ Default value: `'present'`
 
 ##### <a name="-tomcat--config--server--connector--port"></a>`port`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[String[1], Stdlib::Port]]`
 
 Sets a TCP port on which to create a server socket. Maps to the [port XML attribute](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Common_Attributes). Valid options: a string.
 
@@ -947,7 +951,7 @@ Default value: `undef`
 
 ##### <a name="-tomcat--config--server--connector--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1046,7 +1050,7 @@ Default value: `[]`
 
 ##### <a name="-tomcat--config--server--context--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1180,7 +1184,7 @@ Default value: `'present'`
 
 ##### <a name="-tomcat--config--server--engine--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1261,7 +1265,7 @@ Default value: `[]`
 
 ##### <a name="-tomcat--config--server--globalnamingresource--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1352,7 +1356,7 @@ Default value: `[]`
 
 ##### <a name="-tomcat--config--server--host--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1459,7 +1463,7 @@ Default value: `[]`
 
 ##### <a name="-tomcat--config--server--listener--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1581,7 +1585,7 @@ Default value: `undef`
 
 ##### <a name="-tomcat--config--server--realm--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1680,7 +1684,7 @@ Default value: `[]`
 
 ##### <a name="-tomcat--config--server--resources--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1743,7 +1747,7 @@ Default value: `'present'`
 
 ##### <a name="-tomcat--config--server--service--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -1959,7 +1963,7 @@ Default value: `[]`
 
 ##### <a name="-tomcat--config--server--valve--server_config"></a>`server_config`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a server.xml file to manage. Valid options: a string containing an absolute path.
 
@@ -2722,4 +2726,26 @@ Data type: `String[1]`
 The 'group' owner of the tomcat war file.
 
 Default value: `'tomcat'`
+
+## Functions
+
+### <a name="tomcat--change"></a>`tomcat::change`
+
+Type: Ruby 4.x API
+
+This function exists for usage of a returning the input params that is a deferred function
+Will be used for deferring the values at agent level
+
+#### `tomcat::change(Any $arg)`
+
+This function exists for usage of a returning the input params that is a deferred function
+Will be used for deferring the values at agent level
+
+Returns: `Any`
+
+##### `arg`
+
+Data type: `Any`
+
+
 

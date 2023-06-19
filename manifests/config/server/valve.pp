@@ -33,7 +33,7 @@ define tomcat::config::server::valve (
   Hash                           $additional_attributes = {},
   Array                          $attributes_to_remove  = [],
   Array                          $uniqueness_attributes = [],
-  Optional[String[1]]            $server_config         = undef,
+  Optional[Stdlib::Absolutepath] $server_config         = undef,
   Boolean                        $show_diff             = true,
 ) {
   include tomcat

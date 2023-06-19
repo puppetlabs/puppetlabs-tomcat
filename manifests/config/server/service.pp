@@ -18,7 +18,7 @@ define tomcat::config::server::service (
   Optional[String[1]]            $class_name        = undef,
   Enum['present','absent']       $class_name_ensure = 'present',
   Enum['present','absent']       $service_ensure    = 'present',
-  Optional[String[1]]            $server_config     = undef,
+  Optional[Stdlib::Absolutepath] $server_config     = undef,
   Boolean                        $show_diff         = true,
 ) {
   include tomcat
