@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.2.0) - 2023-06-20
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.1.0...v7.2.0)
+
 ## [v7.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.1.0) - 2023-05-31
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.0.0...v7.1.0)
@@ -12,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 
 - (CONT-588) - allow deferred function for change [#533](https://github.com/puppetlabs/puppetlabs-tomcat/pull/533) ([Ramesh7](https://github.com/Ramesh7))
+- pdksync - (MAINT) - Allow Stdlib 9.x [#532](https://github.com/puppetlabs/puppetlabs-tomcat/pull/532) ([LukasAud](https://github.com/LukasAud))
 
 ### Fixed
 
