@@ -51,11 +51,11 @@ case "`uname`" in
   ;;
 esac
 
-CATALINA_BASE=<%= @_catalina_base %>
-CATALINA_HOME=<%= @_catalina_home %>
-JAVA_HOME=<%= @java_home %>
-TOMCAT_USER=<%= @_user %>
-WAIT_TIMEOUT=<%= @wait_timeout %>
+CATALINA_BASE=<%= $_catalina_base %>
+CATALINA_HOME=<%= $_catalina_home %>
+JAVA_HOME=<%= $java_home %>
+TOMCAT_USER=<%= $_user %>
+WAIT_TIMEOUT=<%= $wait_timeout %>
 
 # Use the maximum available, or set MAX_FD != -1 to use that
 test ".$MAX_FD" = . && MAX_FD="maximum"
