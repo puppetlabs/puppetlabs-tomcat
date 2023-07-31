@@ -24,16 +24,16 @@
 #   Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 #
 define tomcat::config::server::connector (
-  Optional[String[1]] $catalina_base         = undef,
-  Enum['present','absent'] $connector_ensure = 'present',
-  Optional[String[1]] $port                  = undef,
-  String[1] $protocol                        = $name,
-  String[1] $parent_service                  = 'Catalina',
-  Hash $additional_attributes                = {},
-  Array $attributes_to_remove                = [],
-  Optional[Boolean] $purge_connectors        = undef,
-  Optional[String[1]] $server_config         = undef,
-  Boolean $show_diff                         = true,
+  Optional[Stdlib::Absolutepath]             $catalina_base         = undef,
+  Enum['present','absent']                   $connector_ensure      = 'present',
+  Optional[Variant[String[1], Stdlib::Port]] $port                  = undef,
+  String[1]                                  $protocol              = $name,
+  String[1]                                  $parent_service        = 'Catalina',
+  Hash                                       $additional_attributes = {},
+  Array                                      $attributes_to_remove  = [],
+  Optional[Boolean]                          $purge_connectors      = undef,
+  Optional[Stdlib::Absolutepath]             $server_config         = undef,
+  Boolean                                    $show_diff             = true,
 ) {
   include tomcat
   $_catalina_base = pick($catalina_base, $tomcat::catalina_home)
@@ -56,7 +56,7 @@ define tomcat::config::server::connector (
   }
 
   if $_purge_connectors and ($connector_ensure == 'absent') {
-    fail('$connector_ensure must be set to \'true\' or \'present\' to use $purge_connectors')
+    fail('$connector_ensure must be set to \'present\' to use $purge_connectors')
   }
 
   if $server_config {

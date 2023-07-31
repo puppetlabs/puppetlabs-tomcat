@@ -30,7 +30,7 @@ define tomcat::config::server::context (
   Optional[String[1]]            $parent_host           = undef,
   Hash                           $additional_attributes = {},
   Array                          $attributes_to_remove  = [],
-  Optional[String[1]]            $server_config         = undef,
+  Optional[Stdlib::Absolutepath] $server_config         = undef,
   Boolean                        $show_diff             = true,
 ) {
   include tomcat
