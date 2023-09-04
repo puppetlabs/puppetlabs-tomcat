@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "source": "http://github.com/puppetlabs/puppetlabs-tomcat",
   "project_page": "https://github.com/puppetlabs/puppetlabs-tomcat",
-  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
+  "issues_url": "https://github.com/puppetlabs/puppetlabs-tomcat/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
