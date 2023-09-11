@@ -4,7 +4,7 @@ require 'spec_helper_acceptance'
 
 stop_test = SKIP_TOMCAT_8
 
-describe 'Tomcat Install source -defaults', docker: true, unless: stop_test do
+describe 'Tomcat Install source -defaults', :docker, unless: stop_test do
   after :all do
     run_shell('pkill -f tomcat', expect_failures: true)
     run_shell('rm -rf /opt/tomcat*', expect_failures: true)

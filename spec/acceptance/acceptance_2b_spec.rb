@@ -2,7 +2,7 @@
 
 require 'spec_helper_acceptance'
 
-describe 'Two different installations with two instances each of Tomcat 8 in the same manifest', docker: true do
+describe 'Two different installations with two instances each of Tomcat 8 in the same manifest', :docker do
   after :all do
     run_shell('pkill -f tomcat', expect_failures: true)
     run_shell('rm -rf /opt/tomcat*', expect_failures: true)
