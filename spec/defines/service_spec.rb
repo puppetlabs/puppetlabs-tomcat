@@ -8,7 +8,14 @@ describe 'tomcat::service', type: :define do
   end
   let :facts do
     {
-      os: { family: 'Debian' }
+      os: {
+        architecture: 'amd64',
+        family: 'Debian',
+        hardware: 'x86_64',
+        name: 'Debian',
+        release: { full: '11.1', major: '11', minor: '1' },
+        selinux: { enabled: false }
+      }
     }
   end
   let :title do
