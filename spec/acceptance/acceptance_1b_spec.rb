@@ -119,7 +119,7 @@ describe 'Acceptance case one', unless: stop_test do
           value => $java_home,
         }
       MANIFEST
-      idempotent_apply(pp)
+      apply_manifest(pp)
     end
 
     it 'is serving a page on port 80', retry: 5, retry_wait: 10 do

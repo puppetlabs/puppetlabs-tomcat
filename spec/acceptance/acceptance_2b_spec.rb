@@ -150,7 +150,7 @@ describe 'Two different installations with two instances each of Tomcat 8 in the
       }
     MANIFEST
     it 'applies the manifest without error' do
-      idempotent_apply(pp)
+      apply_manifest(pp)
     end
 
     # test the war
