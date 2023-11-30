@@ -1,6 +1,8 @@
 ---
 ".gitlab-ci.yml":
   delete: true
+.rubocop.yml:
+  include_todos: true
 .gitpod.Dockerfile:
   unmanaged: false
 .gitpod.yml:
