@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.2.0) - 2023-12-08
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.1.0...v7.2.0)
+
+### Added
+
+- CONT-1149-erb_to_epp_conversion_tomcat [#541](https://github.com/puppetlabs/puppetlabs-tomcat/pull/541) ([praj1001](https://github.com/praj1001))
+
+### Fixed
+
+- Update var types [#536](https://github.com/puppetlabs/puppetlabs-tomcat/pull/536) ([Joris29](https://github.com/Joris29))
+
 ## [v7.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.1.0) - 2023-05-31
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.0.0...v7.1.0)
@@ -12,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 
 - (CONT-588) - allow deferred function for change [#533](https://github.com/puppetlabs/puppetlabs-tomcat/pull/533) ([Ramesh7](https://github.com/Ramesh7))
+- pdksync - (MAINT) - Allow Stdlib 9.x [#532](https://github.com/puppetlabs/puppetlabs-tomcat/pull/532) ([LukasAud](https://github.com/LukasAud))
 
 ### Fixed
 
@@ -90,13 +103,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v5.1.0...v6.0.0)
 
+### Changed
+- [IAC-1690] - Remove tomcat7 as is EOL [#459](https://github.com/puppetlabs/puppetlabs-tomcat/pull/459) ([daianamezdrea](https://github.com/daianamezdrea))
+
 ### Added
 
 - (MODULES-9520) Allow removal of webapps [#456](https://github.com/puppetlabs/puppetlabs-tomcat/pull/456) ([daianamezdrea](https://github.com/daianamezdrea))
 - Accept Datatype Sensitive for Secrets [#454](https://github.com/puppetlabs/puppetlabs-tomcat/pull/454) ([cocker-cc](https://github.com/cocker-cc))
-
-### Changed
-- [IAC-1690] - Remove tomcat7 as is EOL [#459](https://github.com/puppetlabs/puppetlabs-tomcat/pull/459) ([daianamezdrea](https://github.com/daianamezdrea))
 
 ### Fixed
 
@@ -163,13 +176,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v3.1.0...v4.0.0)
 
+### Changed
+- (MAINT) Make ensurable enums consistent [#367](https://github.com/puppetlabs/puppetlabs-tomcat/pull/367) ([smortex](https://github.com/smortex))
+
 ### Added
 
 - (FM-8699) - Addition of Support for CentOS 8 [#374](https://github.com/puppetlabs/puppetlabs-tomcat/pull/374) ([david22swan](https://github.com/david22swan))
 - Add Resources support [#368](https://github.com/puppetlabs/puppetlabs-tomcat/pull/368) ([smortex](https://github.com/smortex))
-
-### Changed
-- (MAINT) Make ensurable enums consistent [#367](https://github.com/puppetlabs/puppetlabs-tomcat/pull/367) ([smortex](https://github.com/smortex))
 
 ### Fixed
 
@@ -279,14 +292,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/1.7.0...2.0.0)
 
+### Changed
+- (maint Remove validate calls and update lint/docs [#223](https://github.com/puppetlabs/puppetlabs-tomcat/pull/223) ([hunner](https://github.com/hunner))
+
 ### Added
 
 - add support for allow_insecure parameter [#231](https://github.com/puppetlabs/puppetlabs-tomcat/pull/231) ([hunner](https://github.com/hunner))
 - add support for valves in context.xml [#213](https://github.com/puppetlabs/puppetlabs-tomcat/pull/213) ([simonrondelez](https://github.com/simonrondelez))
 - Implement beaker-module_install_helper [#196](https://github.com/puppetlabs/puppetlabs-tomcat/pull/196) ([wilson208](https://github.com/wilson208))
-
-### Changed
-- (maint Remove validate calls and update lint/docs [#223](https://github.com/puppetlabs/puppetlabs-tomcat/pull/223) ([hunner](https://github.com/hunner))
 
 ### Fixed
 
