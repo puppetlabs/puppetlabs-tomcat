@@ -43,7 +43,7 @@ RSpec.configure do |c|
       LitmusHelper.instance.run_shell('yum update -y')
       LitmusHelper.instance.run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss gcc')
     elsif os[:family] == 'redhat' && os[:release].to_i >= 8
-      LitmusHelper.instance.run_shell('yum update -y')
+      LitmusHelper.instance.run_shell('yum update -y || true')
       LitmusHelper.instance.run_shell('yum install make gcc -y')
     elsif os[:family] == 'ubuntu'
       LitmusHelper.instance.run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
