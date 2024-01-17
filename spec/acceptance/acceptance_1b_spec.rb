@@ -15,13 +15,15 @@ describe 'Acceptance case one', unless: stop_test do
 
   let :java_home do
     if os[:family].match?(%r{debian|ubuntu})
+      architecture = (os[:arch] == 'aarch64') ? 'arm64' : 'amd64'
+
       if os[:release].start_with?('9')
-        '"/usr/lib/jvm/java-8-openjdk-${facts[\'os\'][\'architecture\']}"'
+        "/usr/lib/jvm/java-8-openjdk-#{architecture}"
       else
-        '"/usr/lib/jvm/java-11-openjdk-${facts[\'os\'][\'architecture\']}"'
+        "/usr/lib/jvm/java-11-openjdk-#{architecture}"
       end
     elsif os[:family].include?('redhat')
-      '"/etc/alternatives/java_sdk"'
+      '/etc/alternatives/java_sdk'
     else
       'undef'
     end
@@ -34,7 +36,7 @@ describe 'Acceptance case one', unless: stop_test do
       pp = <<-MANIFEST
         class{'java':}
 
-        $java_home = #{java_home}
+        $java_home = '#{java_home}'
 
         class jsvc {
           archive { 'commons-daemon-native.tar.gz':
@@ -138,7 +140,7 @@ describe 'Acceptance case one', unless: stop_test do
   context 'Stop tomcat with verification!!!' do
     it 'applies the manifest without error' do
       pp = <<-MANIFEST
-        $java_home = #{java_home}
+        $java_home = '#{java_home}'
 
         tomcat::service { 'jsvc-default':
           service_ensure => stopped,
@@ -162,7 +164,7 @@ describe 'Acceptance case one', unless: stop_test do
   context 'Start Tomcat with verification' do
     it 'applies the manifest without error' do
       pp = <<-MANIFEST
-        $java_home = #{java_home}
+        $java_home = '#{java_home}'
 
         tomcat::service { 'jsvc-default':
           service_ensure => running,
@@ -205,7 +207,7 @@ describe 'Acceptance case one', unless: stop_test do
   context 'remove the connector with verification' do
     it 'applies the manifest without error' do
       pp = <<-MANIFEST
-        $java_home = #{java_home}
+        $java_home = '#{java_home}'
 
         tomcat::config::server::connector { 'tomcat8-jsvc':
           connector_ensure => 'absent',
