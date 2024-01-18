@@ -17,4 +17,3 @@ jobs:
     secrets: "inherit"
     with:
       runs_on: "ubuntu-20.04"
-      flags: "--exclude-platforms '[\"Ubuntu-22.04-arm\"]'"
