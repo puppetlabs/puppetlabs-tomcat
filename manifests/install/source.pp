@@ -36,7 +36,7 @@ define tomcat::install::source (
   }
 
   archive { "${name}-${catalina_home}/${filename}":
-    path           => "/tmp/${name}-${filename}",
+    path           => "/tmp/${filename}",
     source         => $source_url,
     extract        => true,
     extract_path   => $catalina_home,
