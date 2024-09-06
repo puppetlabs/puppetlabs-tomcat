@@ -3,8 +3,7 @@
 require 'spec_helper_acceptance'
 
 # puppetlabs-gcc doesn't work on sles
-SKIP_GCC = (os[:family] == 'sles')
-stop_test = SKIP_TOMCAT_8 || SKIP_GCC
+stop_test = (os[:family] == 'sles')
 
 describe 'Acceptance case one', unless: stop_test do
   after :all do
@@ -29,7 +28,7 @@ describe 'Acceptance case one', unless: stop_test do
     end
   end
 
-  let(:daemon_version) { '1.3.4' }
+  let(:daemon_version) { '1.4.0' }
 
   context 'Initial install Tomcat and verification' do
     it 'applies the manifest without error' do
@@ -70,54 +69,54 @@ describe 'Acceptance case one', unless: stop_test do
 
         # The default
         tomcat::install { '/opt/apache-tomcat':
-          user           => 'tomcat8',
-          group          => 'tomcat8',
-          source_url     => '#{TOMCAT8_RECENT_SOURCE}',
+          user           => 'tomcat9',
+          group          => 'tomcat9',
+          source_url     => '#{TOMCAT9_RECENT_SOURCE}',
           allow_insecure => true,
         }
         -> class { 'jsvc': } ->
         tomcat::instance { 'tomcat_one':
-          catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
-          user          => 'tomcat8',
-          group         => 'tomcat8',
+          catalina_base => '/opt/apache-tomcat/tomcat9-jsvc',
+          user          => 'tomcat9',
+          group         => 'tomcat9',
           java_home     => $java_home,
           use_jsvc      => true,
         }
-        tomcat::config::server { 'tomcat8-jsvc':
-          catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+        tomcat::config::server { 'tomcat9-jsvc':
+          catalina_base => '/opt/apache-tomcat/tomcat9-jsvc',
           port          => '80',
         }
-        tomcat::config::server::connector { 'tomcat8-jsvc':
-          catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        tomcat::config::server::connector { 'tomcat9-jsvc':
+          catalina_base         => '/opt/apache-tomcat/tomcat9-jsvc',
           port                  => '80',
           protocol              => 'HTTP/1.1',
           additional_attributes => {
             'redirectPort' => '443'
           },
         }
-        tomcat::config::server::connector { 'tomcat8-jsvc-8080':
-          catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        tomcat::config::server::connector { 'tomcat9-jsvc-8080':
+          catalina_base         => '/opt/apache-tomcat/tomcat9-jsvc',
           port                  => '8080',
           protocol              => 'HTTP/1.1',
           additional_attributes => {
             'redirectPort' => '443'
           },
         }
-        tomcat::config::server::connector { 'tomcat8-ajp':
-          catalina_base         => '/opt/apache-tomcat/tomcat8-jsvc',
+        tomcat::config::server::connector { 'tomcat9-ajp':
+          catalina_base         => '/opt/apache-tomcat/tomcat9-jsvc',
           connector_ensure      => 'absent',
           port                  => '8309',
         }
         tomcat::war { 'war_one.war':
-          user  => 'tomcat8',
-          group => 'tomcat8',
-          catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+          user  => 'tomcat9',
+          group => 'tomcat9',
+          catalina_base  => '/opt/apache-tomcat/tomcat9-jsvc',
           war_source     => '#{SAMPLE_WAR}',
           allow_insecure => true,
         }
         tomcat::setenv::entry { 'JAVA_HOME':
-          user  => 'tomcat8',
-          group => 'tomcat8',
+          user  => 'tomcat9',
+          group => 'tomcat9',
           value => $java_home,
         }
       MANIFEST
@@ -145,10 +144,10 @@ describe 'Acceptance case one', unless: stop_test do
         tomcat::service { 'jsvc-default':
           service_ensure => stopped,
           catalina_home  => '/opt/apache-tomcat',
-          catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+          catalina_base  => '/opt/apache-tomcat/tomcat9-jsvc',
           use_jsvc       => true,
           java_home      => $java_home,
-          user           => 'tomcat8',
+          user           => 'tomcat9',
         }
       MANIFEST
       apply_manifest(pp)
@@ -169,10 +168,10 @@ describe 'Acceptance case one', unless: stop_test do
         tomcat::service { 'jsvc-default':
           service_ensure => running,
           catalina_home  => '/opt/apache-tomcat',
-          catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+          catalina_base  => '/opt/apache-tomcat/tomcat9-jsvc',
           use_jsvc       => true,
           java_home      => $java_home,
-          user           => 'tomcat8',
+          user           => 'tomcat9',
         }
       MANIFEST
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
@@ -189,7 +188,7 @@ describe 'Acceptance case one', unless: stop_test do
     it 'applies the manifest without error' do
       pp = <<-MANIFEST
         tomcat::war { 'war_one.war':
-          catalina_base => '/opt/apache-tomcat/tomcat8-jsvc',
+          catalina_base => '/opt/apache-tomcat/tomcat9-jsvc',
           war_source    => '#{SAMPLE_WAR}',
           war_ensure    => absent,
         }
@@ -209,19 +208,19 @@ describe 'Acceptance case one', unless: stop_test do
       pp = <<-MANIFEST
         $java_home = '#{java_home}'
 
-        tomcat::config::server::connector { 'tomcat8-jsvc':
+        tomcat::config::server::connector { 'tomcat9-jsvc':
           connector_ensure => 'absent',
-          catalina_base    => '/opt/apache-tomcat/tomcat8-jsvc',
+          catalina_base    => '/opt/apache-tomcat/tomcat9-jsvc',
           port             => '80',
           notify           => Tomcat::Service['jsvc-default']
         }
         tomcat::service { 'jsvc-default':
           service_ensure => running,
           catalina_home  => '/opt/apache-tomcat',
-          catalina_base  => '/opt/apache-tomcat/tomcat8-jsvc',
+          catalina_base  => '/opt/apache-tomcat/tomcat9-jsvc',
           java_home      => $java_home,
           use_jsvc       => true,
-          user           => 'tomcat8',
+          user           => 'tomcat9',
         }
       MANIFEST
       apply_manifest(pp, catch_failures: true, acceptable_exit_codes: [0, 2])
