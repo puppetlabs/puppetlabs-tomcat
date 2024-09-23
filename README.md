@@ -125,6 +125,10 @@ tomcat::instance { 'my_tomcat_app':
     port                  => $https_port,
     protocol              => $http_version,
     purge_connectors      => true,
+    cert_key_file         => '/path/to/key.pem',
+    cert_file             => '/path/to/cert.pem',
+    cert_chain_file       => '/path/to/chain.pem',
+    cert_type             => 'RSA',
     additional_attributes => {
       'SSLEnabled'          => bool2str($https_enabled),
       'maxThreads'          => $https_connector_max_threads,
