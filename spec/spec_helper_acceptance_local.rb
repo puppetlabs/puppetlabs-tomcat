@@ -71,23 +71,16 @@ def latest_tomcat_tarball_url(version)
   "#{mirror_url}/tomcat/tomcat-#{version}/v#{latest_version}/bin/apache-tomcat-#{latest_version}.tar.gz"
 end
 
-latest8 = latest_tomcat_tarball_url('8')
 latest9 = latest_tomcat_tarball_url('9')
+latest10 = latest_tomcat_tarball_url('10')
 # Please note that these URLs are http and therefore insecure. To remedy this you can change them to https, although some additional work may be required to match the required protocols of the server.
-TOMCAT8_RECENT_VERSION = ENV['TOMCAT8_RECENT_VERSION'] || latest8
-TOMCAT8_RECENT_SOURCE = latest8
-puts "TOMCAT8_RECENT_SOURCE is #{TOMCAT8_RECENT_SOURCE.inspect}"
 
 TOMCAT9_RECENT_VERSION = ENV['TOMCAT9_RECENT_VERSION'] || latest9
 TOMCAT9_RECENT_SOURCE = latest9
 puts "TOMCAT9_RECENT_SOURCE is #{TOMCAT9_RECENT_SOURCE.inspect}"
 
+TOMCAT10_RECENT_VERSION = ENV['TOMCAT10_RECENT_VERSION'] || latest10
+TOMCAT10_RECENT_SOURCE = latest10
+puts "TOMCAT10_RECENT_SOURCE is #{TOMCAT10_RECENT_SOURCE.inspect}"
+
 SAMPLE_WAR = 'https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war'
-
-confine_8_array = [
-  (os[:family].include?('redhat') &&  os[:release].start_with?('5')),
-  (os[:family].include?('suse')   &&  os[:release].start_with?('11')),
-]
-
-# Tomcat 8 needs java 1.7 or newer
-SKIP_TOMCAT_8 = confine_8_array.any?

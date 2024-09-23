@@ -2,9 +2,7 @@
 
 require 'spec_helper_acceptance'
 
-stop_test = SKIP_TOMCAT_8
-
-describe 'Use two realms within a configuration', :docker, unless: stop_test do
+describe 'Use two realms within a configuration', :docker do
   after :all do
     run_shell('pkill -f tomcat', expect_failures: true)
     run_shell('rm -rf /opt/tomcat*', expect_failures: true)
@@ -20,7 +18,7 @@ describe 'Use two realms within a configuration', :docker, unless: stop_test do
       class { 'java':}
       class { 'tomcat': catalina_home => '/opt/apache-tomcat40', }
       tomcat::install { '/opt/apache-tomcat40':
-        source_url     => '#{TOMCAT8_RECENT_SOURCE}',
+        source_url     => '#{TOMCAT9_RECENT_SOURCE}',
         allow_insecure => true,
       }
       tomcat::instance { 'tomcat40':}

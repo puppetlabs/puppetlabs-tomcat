@@ -19,7 +19,7 @@ describe 'README examples', unless: stop_test do
     pp = <<-MANIFEST
       class{'java':}
       tomcat::install { '/opt/tomcat':
-        source_url => '#{TOMCAT8_RECENT_SOURCE}',
+        source_url => '#{TOMCAT9_RECENT_SOURCE}',
       }
       tomcat::instance { 'default':
         catalina_home => '/opt/tomcat',
@@ -85,7 +85,7 @@ describe 'README examples', unless: stop_test do
       run_shell('rm -rf /opt/apache-tomcat*', expect_failures: true)
     end
 
-    { '8' => TOMCAT8_RECENT_SOURCE, '9' => TOMCAT9_RECENT_SOURCE }.each do |key, value|
+    { '9' => TOMCAT9_RECENT_SOURCE, '10' => TOMCAT10_RECENT_SOURCE }.each do |key, value|
       context "when tomcat #{key} is installed remove_default_webapps => ['docs', 'examples']" do
         install_tomcat = <<-MANIFEST
         tomcat::install { '/opt/tomcat#{key}':
