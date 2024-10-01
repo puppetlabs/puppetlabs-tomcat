@@ -103,13 +103,14 @@ define tomcat::config::server::connector (
       $sslhostconfig_path = "Server/Service/Connector[#attribute/port='${port}']"
 
       $_sslhostconfig_changes = [
-        "set ${sslhostconfig_path}/Certificate/#attribute/certificateKeyFile ${cert_key_file}",
-        "set ${sslhostconfig_path}/Certificate/#attribute/certificateFile ${cert_file}",
-        "set ${sslhostconfig_path}/Certificate/#attribute/certificateChainFile ${cert_chain_file}",
-        "set ${sslhostconfig_path}/Certificate/#attribute/type ${cert_type}",
+        "set ${sslhostconfig_path}/SSLHostConfig/Certificate/#attribute/certificateKeyFile ${cert_key_file}",
+        "set ${sslhostconfig_path}/SSLHostConfig/Certificate/#attribute/certificateFile ${cert_file}",
+        "set ${sslhostconfig_path}/SSLHostConfig/Certificate/#attribute/certificateChainFile ${cert_chain_file}",
+        "set ${sslhostconfig_path}/SSLHostConfig/Certificate/#attribute/type ${cert_type}",
       ]
     } else {
       $_sslhostconfig_changes = undef
+      notice('No certificate parameters provided, skipping SSLHostConfig configuration')
     }
 
     if ! empty(any2array($attributes_to_remove)) {

@@ -38,10 +38,10 @@ describe 'tomcat::config::server::connector', type: :define do
     end
 
     sslhostconfig_changes = [
-      "set Server/Service/Connector[#attribute/port='8180']/Certificate/#attribute/certificateKeyFile /path/to/cert.key",
-      "set Server/Service/Connector[#attribute/port='8180']/Certificate/#attribute/certificateFile /path/to/cert.pem",
-      "set Server/Service/Connector[#attribute/port='8180']/Certificate/#attribute/certificateChainFile /path/to/chain.pem",
-      "set Server/Service/Connector[#attribute/port='8180']/Certificate/#attribute/type RSA",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateKeyFile /path/to/cert.key",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateFile /path/to/cert.pem",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateChainFile /path/to/chain.pem",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/type RSA",
     ]
 
     changes = [
@@ -85,10 +85,10 @@ describe 'tomcat::config::server::connector', type: :define do
     end
 
     sslhostconfig_changes = [
-      "set Server/Service/Connector[#attribute/port='8180']/Certificate/#attribute/certificateKeyFile /path/to/cert.key",
-      "set Server/Service/Connector[#attribute/port='8180']/Certificate/#attribute/certificateFile /path/to/cert.pem",
-      "set Server/Service/Connector[#attribute/port='8180']/Certificate/#attribute/certificateChainFile /path/to/chain.pem",
-      "set Server/Service/Connector[#attribute/port='8180']/Certificate/#attribute/type RSA",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateKeyFile /path/to/cert.key",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateFile /path/to/cert.pem",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateChainFile /path/to/chain.pem",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/type RSA",
     ]
 
     changes = [
