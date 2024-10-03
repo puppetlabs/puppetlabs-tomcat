@@ -110,7 +110,6 @@ define tomcat::config::server::connector (
       ]
     } else {
       $_sslhostconfig_changes = undef
-      notice('No certificate parameters provided, skipping SSLHostConfig configuration')
     }
 
     if ! empty(any2array($attributes_to_remove)) {
