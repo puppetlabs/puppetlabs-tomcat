@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v7.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.2.0) - 2023-12-08
+## [v7.3.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.3.0) - 2024-10-10
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.2.0...v7.3.0)
+
+### Added
+
+- Adding support for sslhostconfig options [#569](https://github.com/puppetlabs/puppetlabs-tomcat/pull/569) ([malikparvez](https://github.com/malikparvez))
+
+## [v7.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.2.0) - 2024-01-09
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.1.0...v7.2.0)
 
@@ -36,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v6.4.1...v7.0.0)
 
 ### Changed
+
 - (CONT-802) - add puppet 8/drop puppet 6 [#523](https://github.com/puppetlabs/puppetlabs-tomcat/pull/523) ([jordanbreen28](https://github.com/jordanbreen28))
 
 ## [v6.4.1](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v6.4.1) - 2023-03-23
@@ -104,6 +113,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v5.1.0...v6.0.0)
 
 ### Changed
+
 - [IAC-1690] - Remove tomcat7 as is EOL [#459](https://github.com/puppetlabs/puppetlabs-tomcat/pull/459) ([daianamezdrea](https://github.com/daianamezdrea))
 
 ### Added
@@ -132,6 +142,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v4.3.0...v5.0.0)
 
 ### Changed
+
 - pdksync - Remove Puppet 5 from testing and bump minimal version to 6.0.0 [#431](https://github.com/puppetlabs/puppetlabs-tomcat/pull/431) ([carabasdaniel](https://github.com/carabasdaniel))
 
 ## [v4.3.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v4.3.0) - 2020-12-14
@@ -177,6 +188,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v3.1.0...v4.0.0)
 
 ### Changed
+
 - (MAINT) Make ensurable enums consistent [#367](https://github.com/puppetlabs/puppetlabs-tomcat/pull/367) ([smortex](https://github.com/smortex))
 
 ### Added
@@ -207,6 +219,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/2.5.0...v3.0.0)
 
 ### Changed
+
 - pdksync - (MODULES-8444) - Raise lower Puppet bound [#347](https://github.com/puppetlabs/puppetlabs-tomcat/pull/347) ([david22swan](https://github.com/david22swan))
 
 ### Fixed
@@ -293,6 +306,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/1.7.0...2.0.0)
 
 ### Changed
+
 - (maint Remove validate calls and update lint/docs [#223](https://github.com/puppetlabs/puppetlabs-tomcat/pull/223) ([hunner](https://github.com/hunner))
 
 ### Added
@@ -418,7 +432,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Fixed
 
 - [#puppethack] Validate that catalina_base does not to end with / [#102](https://github.com/puppetlabs/puppetlabs-tomcat/pull/102) ([igalic](https://github.com/igalic))
-- Wrap username attribute in quotes. [#100](https://github.com/puppetlabs/puppetlabs-tomcat/pull/100) ([bcornies](https://github.com/bcornies))
+- Wrap username attribute in quotes. [#100](https://github.com/puppetlabs/puppetlabs-tomcat/pull/100) ([bryancornies](https://github.com/bryancornies))
 
 ## [1.3.1](https://github.com/puppetlabs/puppetlabs-tomcat/tree/1.3.1) - 2015-07-21
 
