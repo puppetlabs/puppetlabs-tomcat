@@ -29,9 +29,20 @@ describe 'tomcat::config::server::connector', type: :define do
           'connectionTimeout' => '20000',
           'spaces' => 'foo bar'
         },
-        attributes_to_remove: ['foo', 'bar', 'baz']
+        attributes_to_remove: ['foo', 'bar', 'baz'],
+        cert_key_file: '/path/to/cert.key',
+        cert_file: '/path/to/cert.pem',
+        cert_chain_file: '/path/to/chain.pem',
+        cert_type: 'RSA'
       }
     end
+
+    sslhostconfig_changes = [
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateKeyFile /path/to/cert.key",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateFile /path/to/cert.pem",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateChainFile /path/to/chain.pem",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/type RSA",
+    ]
 
     changes = [
       'set Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/port 8180',
@@ -42,7 +53,8 @@ describe 'tomcat::config::server::connector', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/foo',
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/bar',
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
-    ]
+    ].concat(sslhostconfig_changes)
+
     it {
       expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
         'lens' => 'Xml.lns',
@@ -64,9 +76,20 @@ describe 'tomcat::config::server::connector', type: :define do
           'redirectPort' => '8543',
           'connectionTimeout' => '20000'
         },
-        attributes_to_remove: ['foo', 'bar', 'baz']
+        attributes_to_remove: ['foo', 'bar', 'baz'],
+        cert_key_file: '/path/to/cert.key',
+        cert_file: '/path/to/cert.pem',
+        cert_chain_file: '/path/to/chain.pem',
+        cert_type: 'RSA'
       }
     end
+
+    sslhostconfig_changes = [
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateKeyFile /path/to/cert.key",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateFile /path/to/cert.pem",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/certificateChainFile /path/to/chain.pem",
+      "set Server/Service/Connector[#attribute/port='8180']/SSLHostConfig/Certificate/#attribute/type RSA",
+    ]
 
     changes = [
       'rm Server//Connector[#attribute/protocol=\'AJP/1.3\'][#attribute/port!=\'8180\']',
@@ -77,7 +100,8 @@ describe 'tomcat::config::server::connector', type: :define do
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/foo',
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/bar',
       'rm Server/Service[#attribute/name=\'Catalina2\']/Connector[#attribute/port=\'8180\']/#attribute/baz',
-    ]
+    ].concat(sslhostconfig_changes)
+
     it {
       expect(subject).to contain_augeas('server-/opt/apache-tomcat/test-Catalina2-connector-8180').with(
         'lens' => 'Xml.lns',
