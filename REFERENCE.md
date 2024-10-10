@@ -880,6 +880,10 @@ The following parameters are available in the `tomcat::config::server::connector
 * [`purge_connectors`](#-tomcat--config--server--connector--purge_connectors)
 * [`server_config`](#-tomcat--config--server--connector--server_config)
 * [`show_diff`](#-tomcat--config--server--connector--show_diff)
+* [`cert_key_file`](#-tomcat--config--server--connector--cert_key_file)
+* [`cert_file`](#-tomcat--config--server--connector--cert_file)
+* [`cert_chain_file`](#-tomcat--config--server--connector--cert_chain_file)
+* [`cert_type`](#-tomcat--config--server--connector--cert_type)
 
 ##### <a name="-tomcat--config--server--connector--catalina_base"></a>`catalina_base`
 
@@ -964,6 +968,38 @@ Data type: `Boolean`
 Specifies display differences when augeas changes files, defaulting to true. Valid options: true or false.
 
 Default value: `true`
+
+##### <a name="-tomcat--config--server--connector--cert_key_file"></a>`cert_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Specifies the path to the private key file. Valid options: a string containing an absolute path.
+
+Default value: `undef`
+
+##### <a name="-tomcat--config--server--connector--cert_file"></a>`cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Specifies the path to the certificate file. Valid options: a string containing an absolute path.
+
+Default value: `undef`
+
+##### <a name="-tomcat--config--server--connector--cert_chain_file"></a>`cert_chain_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Specifies the path to the certificate chain file. Valid options: a string containing an absolute path.
+
+Default value: `undef`
+
+##### <a name="-tomcat--config--server--connector--cert_type"></a>`cert_type`
+
+Data type: `String[1]`
+
+Specifies the type of certificate. Valid options: a string. 'RSA'.
+
+Default value: `'RSA'`
 
 ### <a name="tomcat--config--server--context"></a>`tomcat::config::server::context`
 
