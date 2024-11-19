@@ -18,6 +18,8 @@ describe 'Acceptance case one', unless: stop_test do
 
       if os[:release].start_with?('9')
         "/usr/lib/jvm/java-8-openjdk-#{architecture}"
+      elsif os[:release].start_with?('12')
+        "/usr/lib/jvm/java-17-openjdk-#{architecture}"
       else
         "/usr/lib/jvm/java-11-openjdk-#{architecture}"
       end
