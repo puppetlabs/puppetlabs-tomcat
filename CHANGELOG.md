@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.4.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.4.0) - 2024-12-16
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.3.0...v7.4.0)
+
+### Added
+
+- (CAT-2101) Add support for Debian-12 [#571](https://github.com/puppetlabs/puppetlabs-tomcat/pull/571) ([skyamgarp](https://github.com/skyamgarp))
+
+### Fixed
+
+- (CAT-2158) Upgrade rexml to address CVE-2024-49761 [#573](https://github.com/puppetlabs/puppetlabs-tomcat/pull/573) ([amitkarsale](https://github.com/amitkarsale))
+
 ## [v7.3.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.3.0) - 2024-10-10
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.2.0...v7.3.0)
