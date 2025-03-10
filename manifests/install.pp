@@ -109,7 +109,7 @@ define tomcat::install (
         default => Resource['tomcat::install::package', $package_name]
       }
 
-      file { "remove ${folder}" :
+      file { "remove ${catalina_home} ${folder}" :
         ensure  => absent,
         path    => "${catalina_home}/webapps/${folder}",
         recurse => true,
