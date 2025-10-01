@@ -61,12 +61,12 @@ def latest_tomcat_tarball_url(version)
   require 'net/http'
   page = Net::HTTP.get(URI("https://tomcat.apache.org/download-#{version}0.cgi"))
 
-  url = ((match = page.match(%r{https?://.*?apache-tomcat-(.{4,9}).tar.gz})) && match[0])
+  url = (match = page.match(%r{https?://.*?apache-tomcat-(.{4,9}).tar.gz})) && match[0]
   return url if url
 
-  mirror_url = ((match = page.match(%r{<strong>(https?://.*?)/</strong>})) && match[1])
+  mirror_url = (match = page.match(%r{<strong>(https?://.*?)/</strong>})) && match[1]
   page = Net::HTTP.get(URI("#{mirror_url}/tomcat/tomcat-#{version}/"))
-  latest_version = ((match = page.match(%r{href="v(.{4,9})/"})) && match[1])
+  latest_version = (match = page.match(%r{href="v(.{4,9})/"})) && match[1]
 
   "#{mirror_url}/tomcat/tomcat-#{version}/v#{latest_version}/bin/apache-tomcat-#{latest_version}.tar.gz"
 end
