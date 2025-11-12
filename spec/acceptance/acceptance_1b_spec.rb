@@ -30,7 +30,11 @@ describe 'Acceptance case one', unless: stop_test do
     end
   end
 
-  let(:daemon_version) { '1.4.0' }
+  # NOTE: If tests fail manually apply the below manifest to debug.
+  # If it then shows an error regarding the commons-daemon-<daemon_version>-native-src
+  #   update the daemon_version variable below to match the version found by navigating to
+  #   /opt/apache-tomcat/bin/ and checking the shipped version of commons-daemon-native-src.
+  let(:daemon_version) { '1.4.1' }
 
   context 'Initial install Tomcat and verification' do
     it 'applies the manifest without error' do
