@@ -3,8 +3,8 @@
 require 'spec_helper_acceptance'
 
 confine_array = [
-  (os[:family] =~ %r{debian|ubuntu} &&  os[:release] == '18.04'),
-  (os[:family].include?('redhat')   &&  os[:release].start_with?('5')),
+  os[:family] =~ %r{debian|ubuntu} &&  os[:release] == '18.04',
+  os[:family].include?('redhat')   &&  os[:release].start_with?('5'),
 ]
 stop_test = confine_array.any?
 
