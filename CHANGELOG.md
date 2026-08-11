@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v8.0.0) - 2026-08-11
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.4.0...v8.0.0)
+
+### Changed
+
+- (CAT-2396) Prepare module for Puppetcore / Drop Support for Puppet 7 [#580](https://github.com/puppetlabs/puppetlabs-tomcat/pull/580) ([david22swan](https://github.com/david22swan))
+
+### Other
+
+- fix(MODULES-11856): Raise puppetlabs/concat upper version bound to 11.0.0 [#586](https://github.com/puppetlabs/puppetlabs-tomcat/pull/586) ([imaqsood](https://github.com/imaqsood))
+- (MODULES-11840) Allow puppetlabs/stdlib 10.x [#584](https://github.com/puppetlabs/puppetlabs-tomcat/pull/584) ([imaqsood](https://github.com/imaqsood))
+- Update link for contributing documentation [#583](https://github.com/puppetlabs/puppetlabs-tomcat/pull/583) ([jst-cyr](https://github.com/jst-cyr))
+- (CAT-2296) Update github runner image to ubuntu-24.04 [#579](https://github.com/puppetlabs/puppetlabs-tomcat/pull/579) ([shubhamshinde360](https://github.com/shubhamshinde360))
+
 ## [v7.4.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v7.4.0) - 2024-12-16
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v7.3.0...v7.4.0)
@@ -164,7 +179,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 
 - pdksync - (feat) - Add support for Puppet 7 [#422](https://github.com/puppetlabs/puppetlabs-tomcat/pull/422) ([daianamezdrea](https://github.com/daianamezdrea))
-- Refactor valve types [#415](https://github.com/puppetlabs/puppetlabs-tomcat/pull/415) ([h-haaks](https://github.com/h-haaks))
 
 ### Fixed
 
@@ -249,7 +263,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
-- (maint) - Ubuntu 18.04 issues fix [#333](https://github.com/puppetlabs/puppetlabs-tomcat/pull/333) ([david22swan](https://github.com/david22swan))
 - pdksync - (FM-7655) Fix rubygems-update for ruby < 2.3 [#330](https://github.com/puppetlabs/puppetlabs-tomcat/pull/330) ([tphoney](https://github.com/tphoney))
 - [MODULES-7547] Update globalnamingresource class, and add tests [#305](https://github.com/puppetlabs/puppetlabs-tomcat/pull/305) ([jplindquist](https://github.com/jplindquist))
 
@@ -310,7 +323,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Fixed
 
 - (MODULES-5589) - add user/group to war file [#254](https://github.com/puppetlabs/puppetlabs-tomcat/pull/254) ([pmcmaw](https://github.com/pmcmaw))
-- fix lint warnings [#252](https://github.com/puppetlabs/puppetlabs-tomcat/pull/252) ([PascalBourdier](https://github.com/PascalBourdier))
 - (MODULES-5396) move tomcat::config::properties declaration out of else block [#238](https://github.com/puppetlabs/puppetlabs-tomcat/pull/238) ([jimethn](https://github.com/jimethn))
 
 ## [2.0.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/2.0.0) - 2017-08-24
