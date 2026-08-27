@@ -9,10 +9,39 @@
   unmanaged: false
 .github/workflows/auto_release.yml:
   unmanaged: false
+# MODULES-11727: ci.yml and nightly.yml are maintained by hand because their Spec jobs
+# carry a customisation pdk-templates cannot express -- the `additional_packages` input
+# (no such key in the templates), needed so puppet_litmus's bolt/patron native extension
+# can build on the Puppet 9 (Ruby 4) lane. Their Acceptance jobs also carry
+# disable_apparmor: true (AppArmor's unix-chkpwd profile denies the PAM password-check
+# helper the capabilities it needs to read /etc/shadow inside a container, causing
+# intermittent Rocky-8 "Authentication failed" errors -- see the flags/with comments in
+# ci.yml) -- another input pdk-templates doesn't support yet. Leaving either job managed
+# means the scheduled `pdk update` PR silently reverts Puppet 9 support. acceptance_flags
+# below is kept in step with the hand-written `flags:` so these can go back to template
+# management once pdk-templates supports additional_packages/disable_apparmor.
 .github/workflows/ci.yml:
-  unmanaged: false
+  unmanaged: true
+  acceptance_flags:
+    - '--nightly'
+    - '--platform-exclude centos-7'
+    - '--platform-exclude oraclelinux-7'
+    - '--platform-exclude scientific-7'
+    - '--collection-platform-exclude 9:redhat-7'
+    - '--collection-platform-exclude 9:debian-10'
+    - '--collection-platform-exclude 9:ubuntu-18.04'
+    - '--collection-platform-exclude 9:ubuntu-20.04'
 .github/workflows/nightly.yml:
-  unmanaged: false
+  unmanaged: true
+  acceptance_flags:
+    - '--nightly'
+    - '--platform-exclude centos-7'
+    - '--platform-exclude oraclelinux-7'
+    - '--platform-exclude scientific-7'
+    - '--collection-platform-exclude 9:redhat-7'
+    - '--collection-platform-exclude 9:debian-10'
+    - '--collection-platform-exclude 9:ubuntu-18.04'
+    - '--collection-platform-exclude 9:ubuntu-20.04'
 .github/workflows/release.yml:
   unmanaged: false
 .appveyor.yml:
