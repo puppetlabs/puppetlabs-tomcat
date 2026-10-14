@@ -33,6 +33,7 @@
     - '--collection-platform-exclude 9:ubuntu-20.04'
 .github/workflows/nightly.yml:
   unmanaged: true
+  cron: '20 2 * * *'
   acceptance_flags:
     - '--nightly'
     - '--platform-exclude centos-7'
