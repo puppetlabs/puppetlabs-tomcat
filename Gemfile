@@ -65,7 +65,7 @@ group :development do
   gem "rspec-retry", '= 0.4.5',                  require: false, platforms: [:ruby]
 end
 group :development, :release_prep do
-  gem "puppet-strings", '~> 4.0',         require: false
+  gem "puppet-strings", '~> 4.0', '!= 4.1.3', require: false
   # ~> 9.0 depends on puppet-lint ~> 5.0 and puppetlabs-syntax (see Rakefile) instead of
   # puppet-syntax; 8.0.0 pinned puppet-lint ~> 4.0, which conflicted with
   # voxpupuli-puppet-lint-plugins ~> 7.0's puppet-lint ~> 5.1 requirement.
