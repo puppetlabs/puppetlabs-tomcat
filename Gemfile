@@ -108,3 +108,9 @@ extra_gemfiles.each do |gemfile|
   # rubocop:enable Security/Eval
 end
 # vim: syntax=ruby
+
+# required to use puppet 8.10 on Ruby 3.4+
+if RUBY_VERSION >= '3.4'
+  gem 'ostruct', '< 1'
+  gem 'syslog', '< 1'
+end
