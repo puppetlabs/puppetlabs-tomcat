@@ -40,8 +40,8 @@ RSpec.configure do |c|
       PUPPETCODE
       LitmusHelper.instance.apply_manifest(pp)
 
-      LitmusHelper.instance.run_shell('yum update -y')
-      LitmusHelper.instance.run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss gcc')
+      LitmusHelper.instance.run_shell('yum update -y --setopt=skip_if_unavailable=true')
+      LitmusHelper.instance.run_shell('yum install -y --setopt=skip_if_unavailable=true crontabs tar wget openssl iproute which initscripts nss gcc')
     elsif os[:family] == 'redhat' && os[:release].to_i >= 8
       LitmusHelper.instance.run_shell('yum update -y || true')
       LitmusHelper.instance.run_shell('yum install make gcc -y')
