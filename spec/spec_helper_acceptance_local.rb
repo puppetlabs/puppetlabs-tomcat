@@ -21,7 +21,7 @@ RSpec.configure do |c|
   c.before :suite do
     LitmusHelper.instance.run_shell('puppet module install puppetlabs-java')
     if os[:family] == 'redhat' && os[:release].to_i < 8
-      LitmusHelper.instance.run_shell('puppet module install puppet-epel')
+      LitmusHelper.instance.run_shell('puppet module install puppet-epel --version 5.0.0')
       pp = <<-PUPPETCODE
       # needed by tests
       package { 'curl':
