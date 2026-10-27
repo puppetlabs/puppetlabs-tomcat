@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.2.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v8.2.0) - 2026-10-27
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v8.1.0...v8.2.0)
+
+### Added
+
+- (MODULES-11996) Allow puppet/archive 9.x [#595](https://github.com/puppetlabs/puppetlabs-tomcat/pull/595) ([imaqsood](https://github.com/imaqsood))
+
 ## [v8.1.0](https://github.com/puppetlabs/puppetlabs-tomcat/tree/v8.1.0) - 2026-09-03
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tomcat/compare/v8.0.0...v8.1.0)
