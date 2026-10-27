@@ -21,7 +21,7 @@ RSpec.configure do |c|
   c.before :suite do
     LitmusHelper.instance.run_shell('puppet module install puppetlabs-java')
     if os[:family] == 'redhat' && os[:release].to_i < 8
-      LitmusHelper.instance.run_shell('puppet module install puppet-epel')
+      LitmusHelper.instance.run_shell('puppet module install puppet-epel --version 5.0.0')
       pp = <<-PUPPETCODE
       # needed by tests
       package { 'curl':
@@ -40,8 +40,8 @@ RSpec.configure do |c|
       PUPPETCODE
       LitmusHelper.instance.apply_manifest(pp)
 
-      LitmusHelper.instance.run_shell('yum update -y')
-      LitmusHelper.instance.run_shell('yum install -y crontabs tar wget openssl iproute which initscripts nss gcc')
+      LitmusHelper.instance.run_shell("yum update -y --disablerepo='puppet*-nightly'")
+      LitmusHelper.instance.run_shell("yum install -y --disablerepo='puppet*-nightly' crontabs tar wget openssl iproute which initscripts nss gcc")
     elsif os[:family] == 'redhat' && os[:release].to_i >= 8
       LitmusHelper.instance.run_shell('yum update -y || true')
       LitmusHelper.instance.run_shell('yum install make gcc -y')
