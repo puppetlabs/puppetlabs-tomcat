@@ -25,7 +25,7 @@ jobs:
       # redhat-7/debian-10/ubuntu-18.04/ubuntu-20.04 have no Puppet 9 agent build (nightly
       # install 404s); collection-platform-exclude drops just their Puppet 9 acceptance run
       # while keeping Puppet 8 acceptance for them.
-      flags: "--nightly --platform-exclude centos-7 --platform-exclude oraclelinux-7 --platform-exclude scientific-7 --collection-platform-exclude 9:redhat-7 --collection-platform-exclude 9:debian-10 --collection-platform-exclude 9:ubuntu-18.04 --collection-platform-exclude 9:ubuntu-20.04"
+      flags: "--platform-exclude centos-7 --platform-exclude oraclelinux-7 --platform-exclude scientific-7 --platform-exclude 9:redhat-7 --platform-exclude 9:debian-10 --platform-exclude 9:ubuntu-18.04 --platform-exclude 9:ubuntu-20.04"
       # voxpupuli-puppet-lint-plugins 7.0 (needed for Puppet 9 support) requires
       # ruby >= 3.2; the default (3.1) can no longer resolve the :development group.
       ruby_version: "3.2"
