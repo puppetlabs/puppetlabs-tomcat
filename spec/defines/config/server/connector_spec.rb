@@ -9,7 +9,7 @@ describe 'tomcat::config::server::connector', type: :define do
   let :facts do
     {
       os: { family: 'Debian' },
-      augeas: { version: '1.0.0' }
+      augeas: { version: '1.0.0' },
     }
   end
   let :title do
@@ -27,13 +27,13 @@ describe 'tomcat::config::server::connector', type: :define do
         additional_attributes: {
           'redirectPort' => '8543',
           'connectionTimeout' => '20000',
-          'spaces' => 'foo bar'
+          'spaces' => 'foo bar',
         },
         attributes_to_remove: ['foo', 'bar', 'baz'],
         cert_key_file: '/path/to/cert.key',
         cert_file: '/path/to/cert.pem',
         cert_chain_file: '/path/to/chain.pem',
-        cert_type: 'RSA'
+        cert_type: 'RSA',
       }
     end
 
@@ -74,13 +74,13 @@ describe 'tomcat::config::server::connector', type: :define do
         parent_service: 'Catalina2',
         additional_attributes: {
           'redirectPort' => '8543',
-          'connectionTimeout' => '20000'
+          'connectionTimeout' => '20000',
         },
         attributes_to_remove: ['foo', 'bar', 'baz'],
         cert_key_file: '/path/to/cert.key',
         cert_file: '/path/to/cert.pem',
         cert_chain_file: '/path/to/chain.pem',
-        cert_type: 'RSA'
+        cert_type: 'RSA',
       }
     end
 
@@ -116,7 +116,7 @@ describe 'tomcat::config::server::connector', type: :define do
       {
         catalina_base: '/opt/apache-tomcat/test',
         connector_ensure: 'absent',
-        port: '8180'
+        port: '8180',
       }
     end
 
@@ -133,7 +133,7 @@ describe 'tomcat::config::server::connector', type: :define do
     let :params do
       {
         catalina_base: '/opt/apache-tomcat/test',
-        connector_ensure: 'absent'
+        connector_ensure: 'absent',
       }
     end
 
@@ -157,7 +157,7 @@ describe 'tomcat::config::server::connector', type: :define do
     end
     let :params do
       {
-        port: '8180'
+        port: '8180',
       }
     end
 
@@ -169,7 +169,7 @@ describe 'tomcat::config::server::connector', type: :define do
       let :params do
         {
           connector_ensure: 'absent',
-          purge_connectors: true
+          purge_connectors: true,
         }
       end
 
@@ -183,7 +183,7 @@ describe 'tomcat::config::server::connector', type: :define do
     context 'bad connector_ensure' do
       let :params do
         {
-          connector_ensure: 'foo'
+          connector_ensure: 'foo',
         }
       end
 
@@ -197,7 +197,7 @@ describe 'tomcat::config::server::connector', type: :define do
     context 'bad additional_attributes' do
       let :params do
         {
-          additional_attributes: 'foo'
+          additional_attributes: 'foo',
         }
       end
 
@@ -211,7 +211,7 @@ describe 'tomcat::config::server::connector', type: :define do
     context 'no port' do
       let :params do
         {
-          catalina_base: '/opt/apache-tomcat/test'
+          catalina_base: '/opt/apache-tomcat/test',
         }
       end
 
@@ -226,7 +226,7 @@ describe 'tomcat::config::server::connector', type: :define do
       let :facts do
         {
           os: { family: 'Debian' },
-          augeas: { version: '0.10.0' }
+          augeas: { version: '0.10.0' },
         }
       end
 
