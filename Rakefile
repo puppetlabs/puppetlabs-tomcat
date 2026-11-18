@@ -3,7 +3,8 @@
 require 'bundler'
 require 'puppet_litmus/rake_tasks' if Gem.loaded_specs.key? 'puppet_litmus'
 require 'puppetlabs_spec_helper/rake_tasks'
-require 'puppetlabs-syntax/tasks/puppetlabs-syntax'
+require 'puppet-syntax/tasks/puppet-syntax' if Gem.loaded_specs.key? 'puppet-syntax'
+require 'puppetlabs-syntax/tasks/puppetlabs-syntax' if Gem.loaded_specs.key? 'puppetlabs-syntax'
 require 'puppet-strings/tasks' if Gem.loaded_specs.key? 'puppet-strings'
 
 PuppetLint.configuration.send('disable_relative')
@@ -13,10 +14,6 @@ PuppetLint.configuration.send('disable_class_inherits_from_params_class')
 PuppetLint.configuration.send('disable_autoloader_layout')
 PuppetLint.configuration.send('disable_documentation')
 PuppetLint.configuration.send('disable_single_quote_string_with_variables')
-# strict_indent is disabled because voxpupuli-puppet-lint-plugins ~> 7.0 (needed for
-# Puppet 9 support) pulls in puppet-lint-strict_indent-check 5.x, whose expected
-# indentation for multi-line arrays/hashes conflicts with these manifests' existing
-# (correctly-formatted-for-3.x) layout. See MODULES-11727.
 PuppetLint.configuration.send('disable_strict_indent')
 PuppetLint.configuration.fail_on_warnings = true
 PuppetLint.configuration.ignore_paths = [".vendor/**/*.pp", ".bundle/**/*.pp", "pkg/**/*.pp", "spec/**/*.pp", "tests/**/*.pp", "types/**/*.pp", "vendor/**/*.pp", "examples/*.pp", "bundle/**/*.pp"]

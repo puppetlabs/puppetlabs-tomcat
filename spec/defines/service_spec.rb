@@ -14,8 +14,8 @@ describe 'tomcat::service', type: :define do
         hardware: 'x86_64',
         name: 'Debian',
         release: { full: '11.1', major: '11', minor: '1' },
-        selinux: { enabled: false }
-      }
+        selinux: { enabled: false },
+      },
     }
   end
   let :title do
@@ -25,7 +25,7 @@ describe 'tomcat::service', type: :define do
   context 'using jsvc' do
     let :params do
       {
-        use_jsvc: true
+        use_jsvc: true,
       }
     end
 
@@ -44,7 +44,7 @@ describe 'tomcat::service', type: :define do
         use_jsvc: true,
         start_command: '/bin/true',
         stop_command: '/bin/true',
-        status_command: '/bin/true'
+        status_command: '/bin/true',
       }
     end
 
@@ -61,7 +61,7 @@ describe 'tomcat::service', type: :define do
       {
         use_init: true,
         service_name: 'tomcat',
-        service_ensure: 'stopped'
+        service_ensure: 'stopped',
       }
     end
 
@@ -79,7 +79,7 @@ describe 'tomcat::service', type: :define do
       {
         use_init: true,
         service_name: 'tomcat',
-        catalina_base: '/opt/apache-tomcat/foo'
+        catalina_base: '/opt/apache-tomcat/foo',
       }
     end
 
@@ -93,7 +93,7 @@ describe 'tomcat::service', type: :define do
       {
         use_jsvc: true,
         use_init: true,
-        catalina_base: '/opt/apache-tomcat/foo'
+        catalina_base: '/opt/apache-tomcat/foo',
       }
     end
 
@@ -111,7 +111,7 @@ describe 'tomcat::service', type: :define do
         use_init: true,
         start_command: '/bin/true',
         stop_command: '/bin/true',
-        service_name: 'tomcat'
+        service_name: 'tomcat',
       }
     end
 
@@ -138,7 +138,7 @@ describe 'tomcat::service', type: :define do
       {
         start_command: '/bin/true',
         stop_command: '/bin/true',
-        status_command: '/bin/true'
+        status_command: '/bin/true',
       }
     end
 
@@ -155,7 +155,7 @@ describe 'tomcat::service', type: :define do
       {
         use_init: true,
         service_name: 'tomcat',
-        service_enable: true
+        service_enable: true,
       }
     end
 
@@ -171,7 +171,7 @@ describe 'tomcat::service', type: :define do
       {
         use_init: true,
         service_name: 'tomcat',
-        service_ensure: 'running'
+        service_ensure: 'running',
       }
     end
 
@@ -187,7 +187,7 @@ describe 'tomcat::service', type: :define do
     let :params do
       {
         use_init: false,
-        service_ensure: 'running'
+        service_ensure: 'running',
       }
     end
 
@@ -203,7 +203,7 @@ describe 'tomcat::service', type: :define do
     let :params do
       {
         use_init: false,
-        service_enable: true
+        service_enable: true,
       }
     end
 
@@ -217,7 +217,7 @@ describe 'tomcat::service', type: :define do
       {
         use_jsvc: true,
         use_init: true,
-        wait_timeout: 15
+        wait_timeout: 15,
       }
     end
 
@@ -238,7 +238,7 @@ describe 'tomcat::service', type: :define do
       {
         use_jsvc: true,
         use_init: true,
-        wait_timeout: 15
+        wait_timeout: 15,
       }
     end
 
@@ -251,7 +251,7 @@ describe 'tomcat::service', type: :define do
     context 'bad use_jsvc' do
       let :params do
         {
-          use_jsvc: 'foo'
+          use_jsvc: 'foo',
         }
       end
 
@@ -265,7 +265,7 @@ describe 'tomcat::service', type: :define do
     context 'bad use_init' do
       let :params do
         {
-          use_init: 'foo'
+          use_init: 'foo',
         }
       end
 
@@ -279,7 +279,7 @@ describe 'tomcat::service', type: :define do
     context 'java_home without use_jsvc warning' do
       let :params do
         {
-          java_home: 'foo'
+          java_home: 'foo',
         }
       end
 
@@ -290,7 +290,7 @@ describe 'tomcat::service', type: :define do
       let :params do
         {
           java_home: 'foo',
-          start_command: '/bin/true'
+          start_command: '/bin/true',
         }
       end
 
@@ -300,7 +300,7 @@ describe 'tomcat::service', type: :define do
     context 'bad wait_timeout' do
       let :params do
         {
-          wait_timeout: 'foo'
+          wait_timeout: 'foo',
         }
       end
 
